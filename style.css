@@ -41,7 +41,7 @@ h1{
 }
 
 .nav-links a {
-    color: #fff;
+    color: #000000;
     text-decoration: none;
     font-size: 18px;
     padding: 10px 15px;
@@ -84,7 +84,7 @@ h1{
 /* Hero Section */
 .hero {
     position: relative;
-    height: 75vh;
+    height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -93,8 +93,19 @@ h1{
     background-size: cover;
     background-position: center;
     color: #fff;
+    z-index: 1;
 }
 
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Adjust color and opacity */
+    z-index: -1000;
+}
 .hero-content h1 {
     font-size: 48px;
     margin: 0;
@@ -107,20 +118,22 @@ h1{
 
 /* Image Grid Section */
 .image-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 40px 20px;
+    display: flex;
+    width: 100%;
+    padding: 40px 0;
     background-color: #0080ff;
 }
 
 .grid-item {
+    flex: 1;
     text-align: center;
+    padding: 10px;
 }
 
 .grid-item img {
     width: 100%;
-    height: 200px;
+    height: auto;
+    max-height: 400px;
     object-fit: cover;
     border-radius: 10px;
 }
@@ -128,9 +141,8 @@ h1{
 .grid-item p {
     font-size: 18px;
     margin: 10px 0 0;
-    color: #000;
+    color: #fff;
 }
-
 
 
 
