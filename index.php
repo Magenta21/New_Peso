@@ -24,26 +24,11 @@
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <span class="navbar-text text-white w-100 text-center">
-                <button class="dropbtn"> Home </button>
-                <div class="dropdown">
-                <button class="dropbtn">Applicant</button>
-                <div class="dropdown-content">
-                <a href="#">training</a>
-                <a href="#">Employment</a>
-                </div>
-              </div>
-              <div class="dropdown">
-                <button class="dropbtn">Employer</button>
-                <div class="dropdown-content">
-                <a href="#">Direct Hire</a>
-                <a href="#">Local Hire</a>
-                <a href="#">Local LB</a>
-                <a href="#">Overseas</a>
-                </div>
-              </div>
-              <button class="dropbtn"> News </button>
-              <button class="dropbtn"> Educational Institutions </button>
-              <button class="dropbtn"> Jobs </button>
+                <a href="#">HOME</a>
+                <a href="#">APPLICANT</a>
+                <a href="employer/employer_login.php">EMPLOYER</a>
+                <a href="#">EDUCATIONAL INSTITUTIONS</a>
+                <a href="#">JOBS</a>
             </span>
         </div>
     </nav>
@@ -123,7 +108,7 @@
                     </div>
 
                 </div>
-                <div class="block">
+                <div class="block mb-4">
                     <h3>Organizatinal Outcome</h3>
                         <ul class="b">
                             <li>Full employment opportunities for all</li>
@@ -135,6 +120,21 @@
             </div>
         </div>
     </div>
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mt-2">
+                    <h6>REPUBLIC OF THE PHILIPPINES</h6>
+                    <p>All content is in the publick domain unless otherwise stated</p>
+                </div>
+                <div class="col-md-4 mt-2">
+                <h6>CONTACT US</h6>
+                </div>
+                <div class="col-md-4 mt-2">
+                <h6>GOVERNMENT LINKS</h6>
+                </div>
+            </div>
+        </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
