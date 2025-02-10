@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+    color: white;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+}
+
+
+.banner {
+    position: relative;
+    text-align: center;
+    color: white;
+    background: url('../../img/bg1.png') no-repeat center center/cover;
+    height: 85vh;
+}
+
+.banner h1 {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+}
+
+.image-container {
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.profile {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 
+        0 4px 10px rgba(0, 0, 0, 0.3), /* Shadow */
+        0 0 15px rgba(0, 255, 255, 0.6); /* Glow */
+    height: 300px;
+    text-align: center;
+}
+
+.profile .image-container {
+    margin: 0 auto 10px;
+}
+
+.block {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Soft shadow */
+    color: rgb(0, 0, 0);
+    text-align: center;
+}
+
+.obejective {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 
+        0 4px 10px rgba(0, 0, 0, 0.3), /* Shadow */
+        0 0 15px rgba(0, 255, 255, 0.6); /* Glow */
+    height: 350px;
+    text-align: center;
+}
+ul.a {
+    list-style-type: circle;
+    text-align: justify;
+}
+ul.b {
+    list-style-type: circle;
+    text-align: justify;
+}
+h3,h2 {
+    color: #007bff ;
+}
+
+a {
+	color: #18272F;
+  position: relative;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+a::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform .3s ease-in-out;
+}
+
+a:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+  .footer {
+    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+    color: white;
+    height: 150px;
+    width: 100%;
+    text-align: center;
+}
+
