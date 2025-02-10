@@ -26,12 +26,12 @@
     <div class="container mt-md-5">
         <div class="row justify-content-center sm-margin">
             <div class="form-container">
-                <form id="registrationForm" method="POST" action="process.php">
+                <form id="registrationForm" method="POST" action="process/register_process.php">
                     <!-- Step 1 -->
                     <div class="form-step active">
                         <h2>Step 1: Personal Information</h2>
                         <input type="text" name="first_name" placeholder="First Name" required>
-                        <input type="text" name="last_name" placeholder="Last Name" required>
+                        <input type="text" name="last_name" placeholder="Last Name" required> 
                         <button type="button" class="next-btn">Next</button>
                     </div>
 
