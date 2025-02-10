@@ -1,4 +1,4 @@
-    <?php include('../db.php'); ?>
+<?php include('../db.php'); ?>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -27,53 +27,9 @@
                 <div class="form-container">
                     <form id="registrationForm" method="POST" action="process/register_process.php">
                         
-                        <!-- Step 1 -->
-                        <div class="form-step active">
-                            <h2>Step 1: Personal Information</h2>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h6>First Name</h6>
-                                    <input type="text" name="first_name" placeholder="First Name" required>
-                                </div>
-                            
-                                <div class="col-md-6">
-                                    <h6>Last Name</h6>
-                                    <input type="text" name="last_name" placeholder="Last Name" required>
-                                </div> 
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h6>Birth date</h6>
-                                    <input type="date" name="birth_date" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <h6>Contact Number</h6>
-                                    <input type="text" name="Contact_Number" placeholder="Contact Number" required>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h6>Gender</h6>
-                                        <div class="form-group d-flex align-items-center gap-3">
-                                            <div>
-                                                <input type="radio" id="male" name="gender" value="Male" required>
-                                                <label for="male">Male</label>
-                                            </div>
-                                            <div>
-                                                <input type="radio" id="female" name="gender" value="Female" required>
-                                                <label for="female">Female</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <button type="button" class="next-btn" disabled>Next</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Step 2 -->
-                        <div class="form-step">
-                            <h2>Step 2: Login Credentials</h2>
+                     <!-- Step 1 -->
+                     <div class="form-step">
+                            <h2>Step 1: Login Credentials</h2>
                             <div class="row">
                                 <div class="col-md-6">
                                     <h6>Username</h6>
@@ -94,10 +50,64 @@
                                     <p id="confirmPasswordWarning" style="color: red; display: none;">Passwords do not match.</p>
                                 </div>
                             </div>
-                            <button type="button" class="prev-btn">Previous</button>
+                            
                             <button type="button" class="next-btn" disabled>Next</button>
                         </div>
 
+                        <!-- Step 2 -->
+                        <div class="form-step">
+                            <h2>Step 2: Personal Information</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>First Name</h6>
+                                    <input type="text" name="first_name" placeholder="First Name" required>
+                                </div>
+                            
+                                <div class="col-md-6">
+                                    <h6>Last Name</h6>
+                                    <input type="text" name="last_name" placeholder="Last Name" required>
+                                </div> 
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Birth date</h6>
+                                    <input type="date" name="birth_date" required>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h6>Contact Number</h6>
+                                    <input type="text" name="Contact_Number" placeholder="Contact Number" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Gender</h6>
+                                        <div class="form-group d-flex align-items-center gap-3">
+                                            <div>
+                                                <input type="radio" id="male" name="gender" value="Male" required>
+                                                <label for="male">Male</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="female" name="gender" value="Female" required>
+                                                <label for="female">Female</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="col-md-6">
+                                            <h6>Present Address</h6>
+                                            <input type="text" name="Present_Address" placeholder="Enter your Address">
+                                        </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-md-6">
+                                        <button type="button" class="prev-btn">Previous</button>
+                                        <button type="button" class="next-btn" disabled>Next</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                       
                         <!-- Step 3 -->
                         <div class="form-step">
                             <h2>Step 3: Company Information</h2>

@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <span class="navbar-text text-white w-100 text-center">
                 <a href="#">HOME</a>
-                <a href="#">APPLICANT</a>
+                <a href="Applicant/applicant_login.php">APPLICANT</a>
                 <a href="#">trainings</a>
                 <a href="#">OFW</a>
                 <a href="employer/employer_login.php">EMPLOYER</a>
