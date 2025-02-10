@@ -30,8 +30,15 @@
                     <!-- Step 1 -->
                     <div class="form-step active">
                         <h2>Step 1: Personal Information</h2>
-                        <input type="text" name="first_name" placeholder="First Name" required>
-                        <input type="text" name="last_name" placeholder="Last Name" required> 
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" name="first_name" placeholder="First Name" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <input type="text" name="last_name" placeholder="Last Name" required>
+                            </div> 
+                        </div>
                         <button type="button" class="next-btn">Next</button>
                     </div>
 
