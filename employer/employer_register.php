@@ -39,6 +39,16 @@
                                 <input type="text" name="last_name" placeholder="Last Name" required>
                             </div> 
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" name="first_name" placeholder="First Name" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <input type="text" name="last_name" placeholder="Last Name" required>
+                            </div> 
+                        </div>
                         <button type="button" class="next-btn">Next</button>
                     </div>
 

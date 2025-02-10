@@ -9,6 +9,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
 }
+
 .header {
     background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
     color: white;
@@ -19,11 +20,12 @@ body {
 
 .form-container {
     background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 700px;
-    max-width: 100%;
+    padding: 3rem; /* Increase padding for a more spacious feel */
+    border-radius: 12px; /* Slightly larger border-radius for a modern look */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
+    width: 600px; /* Increased width */
+    max-width: 100%; /* Ensures it doesn't exceed the viewport */
+    
 }
 
 form {
@@ -70,3 +72,4 @@ button.prev-btn {
 button:hover {
     opacity: 0.9;
 }
+
