@@ -28,6 +28,8 @@
             <div class="form-container">
                 <form id="registrationForm" method="POST" action="process/register_process.php">
                     <!-- Step 1 -->
+
+                    
                     <div class="form-step active">
                         <h2>Step 1: Personal Information</h2>
                         <div class="row">
@@ -54,10 +56,14 @@
 
                     <!-- Step 2 -->
                     <div class="form-step">
+                        <div class=row> 
+                        <div class="col-md-12">
                         <h2>Step 2: Contact Details</h2>
                         <input type="email" name="email" placeholder="Email" required>
                         <button type="button" class="prev-btn">Previous</button>
                         <button type="button" class="next-btn">Next</button>
+                        </div>
+                        </div>
                     </div>
 
                     <!-- Step 3 -->
@@ -67,6 +73,58 @@
                         <input type="password" name="confirm_password" placeholder="Confirm Password" required>
                         <button type="button" class="prev-btn">Previous</button>
                         <button type="button" class="next-btn">Next</button>
+                    </div>
+
+                    <div class="form-step">
+                    <h2>Step 4: Company Information </h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6> Company Name</h6>
+                                <input type="text" name="Company_Name" placeholder="Company Name" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h6>Company President</h6>
+                                <input type="text" name="Company_President" placeholder="Company President" required>
+                            </div> 
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6>Company Address</h6>
+                                <input type="text" name="Company_Address" placeholder="Company Address" required>
+                            </div>
+                        </div>
+
+                             
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>HR Official Email</h6>
+                                <input type="text" name="HR_Email" placeholder="HR Official Email" required>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h6>HR Manager</h6>
+                                <input type="text" name="HR_Manager" placeholder="Hr Manager Name" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h6>Company Contact Number</h6>
+                                <input type="text" name="Contact_Number" placeholder="Company Contact Number" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h6>Company Email</h6>
+                                <input type="text" name="Company_Email" placeholder="Company Email" required>
+                                
+                            </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="prev-btn">Previous</button>
+                                <button type="button" class="next-btn">Next</button>
+                            </div>
+                        </div>   
+                        </div>
                     </div>
 
                     <!-- Step 4 -->
