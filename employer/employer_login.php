@@ -6,28 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Applicant Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="nav.css">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
     <div class="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <!-- First Column: Aligned to the left -->
+                <div class="col-md-2 col-xxl-3 text-start">
                     <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
                 </div>
-                <div class="col-md-8">
-                    <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
+                <!-- Second Column: Centered -->
+                <div class="col-md-8 col-xxl-6 text-center">
+                    <h3 style="margin-top: 5px; font-weight: 700; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
                 </div>
             </div>
         </div>
+    </div>
 
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-5">
+    <div class="container mt-md-4">
+        <div class="row justify-content-center sm-margin">
+            <div class="col-md-8 col-xxl-10 marg-large">
                 <div class="card login-form">
-                    <div class="card-body">
+                    <div class="card-body p-5">
                         <h2 class="card-title text-center">Employer Login</h2>
                         <div class="logol">
                             <img src="../img/logo_peso.png" alt="Logo">
@@ -36,7 +38,7 @@
                         <form action="../php/login.php" method="POST">
                             <div class="form-group">
                                 <p>Please sign in</p>
-                                <input type="text" name="user_input" class="form-control mb-3" placeholder="Username/Email">
+                                <input type="text" name="user_input" class="form-control mb-3 " placeholder="Username/Email">
                                 <input type="password" name="password" class="form-control" placeholder="Password">
                             </div>
                             <div class="forgot mt-3">
@@ -44,7 +46,7 @@
                             </div>
                             <button type="submit" class="btn btn-primary sign mb-3">Login</button>
                             <div class="form-group">
-                                <p class="signup">Don't have an account? <a href="applicant_register.html">Signup</a></p>
+                                <p class="signup">Don't have an account? <a href="employer_register.php">Signup</a></p>
                             </div>
                         </form>
                     </div>

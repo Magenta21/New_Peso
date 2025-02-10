@@ -1,8 +1,9 @@
 body {
+	font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-image: url('../img/bg_login.png'); /* Replace with your image */
+    background-image: url('../../img/bg_login.png'); /* Replace with your image */
     background-color: #333;
     background-size: cover;
     background-position: center;
@@ -139,3 +140,39 @@ table td {
     width: 100%;
     text-align: center;
 }
+
+/* Responsive design */
+
+@media (min-width: 1400px) {
+	.marg-large {
+	  margin-top: 5%; /* Customize as needed */
+	}
+	.card{
+		height: 700px;
+		padding-top: 80px;
+		padding-left: 100px;
+		padding-right: 100px;
+	}
+  }
+@media (min-width: 0px) and (max-width: 767px) {
+    .header {
+		background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+		color: white;
+		height: 50px;
+		text-align: center;
+    }
+	.marg-large {
+		margin: 5% -5px; /* Customize as needed */
+		padding: 0;
+		background-color: white;
+	  }
+	.card{
+		height: 500px;
+		background-color: white;
+	}
+	.sm-margin{
+		margin: 15% -5px; /* Customize as needed */
+		padding: 0;
+		width: 100%;
+	}
+  }
