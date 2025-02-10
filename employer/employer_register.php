@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div class="container mt-md-5">
+    <div class="container-fluid mt-md-5">
         <div class="row justify-content-center sm-margin">
             <div class="form-container">
                 <form id="registrationForm" method="POST" action="process/register_process.php">
