@@ -1,57 +1,53 @@
-<!-- applicant_login.html -->
+<?php
+session_start();
+if (isset($_SESSION['user'])) {
+    header("Location: dashboard.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Applicant Login</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Employer Login - Municipality of Los Banos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <div class="header">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <!-- First Column: Aligned to the left -->
-                <div class="col-md-2 col-xxl-3 text-start">
-                    <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
-                </div>
-                <!-- Second Column: Centered -->
-                <div class="col-md-8 col-xxl-6 text-center">
-                    <h3 style="margin-top: 5px; font-weight: 700; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container mt-md-4">
-        <div class="row justify-content-center sm-margin">
-            <div class="col-md-8 col-xxl-10 marg-large">
-                <div class="card login-form">
-                    <div class="card-body p-5">
-                        <h2 class="card-title text-center">Employer Login</h2>
-                        <div class="logol">
-                            <img src="../img/logo_peso.png" alt="Logo">
-                        </div>
-
-                        <form action="../php/login.php" method="POST">
-                            <div class="form-group">
-                                <p>Please sign in</p>
-                                <input type="text" name="user_input" class="form-control mb-3 " placeholder="Username/Email">
-                                <input type="password" name="password" class="form-control" placeholder="Password">
-                            </div>
-                            <div class="forgot mt-3">
-                                <a data-toggle="modal" data-target="#forgotPasswordModal1" href="#">Forgot Password?</a>
-                            </div>
-                            <button type="submit" class="btn btn-primary sign mb-3">Login</button>
-                            <div class="form-group">
-                                <p class="signup">Don't have an account? <a href="employer_register.php">Signup</a></p>
-                            </div>
-                        </form>
+        <div class="header">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-2 col-xxl-3 text-start">
+                        <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+                    </div>
+                    <div class="col-md-8 col-xxl-6 text-center">
+                        <h3 style="margin-top: 5px; font-weight: 700; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
                     </div>
                 </div>
             </div>
+        </div>
+    
+    <div class="container-fluid d-flex justify-content-center align-items-center mt-5">
+        <div class="row front-box">
+            <div class="col-md-6">
+                <div class="form-container">
+                    <h3>Employer Login</h3>
+                    <form action="login.php" method="POST">
+                        <div class="mb-3 mt-3">
+                            <input type="text" name="username" class="form-control" placeholder="Username/Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <p class="mt-3"><a data-toggle="modal" data-target="#forgotPasswordModal1" href="#">Forgot Password?</a></p>
+                        <p>Don't have an account? <a href="register.php">Sign Up</a></p>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6 image-container"></div>
         </div>
     </div>
 
@@ -60,7 +56,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" style="color: black;">Employer Forgot Password</h5>
+                    <h5 class="modal-title" style="color: black;">Applicant Forgot Password</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
