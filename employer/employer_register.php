@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div class="container-fluid mt-md-5">
+    <div class="container-fluid mt-md-3">
         <div class="row justify-content-center sm-margin">
             <div class="form-container">
                 <form id="registrationForm" method="POST" action="process/register_process.php">
@@ -51,6 +51,7 @@
                             </div>
                         </div>
                         <button type="button" class="next-btn" disabled>Next</button>
+                        <p class="mt-3 text-center">Already have an account? <a href="employer_login.php">Sign In</a></p>
                     </div>
                     
                     <!-- Step 2 (Previously Step 1) -->
@@ -106,6 +107,28 @@
                             <div class="col-md-6">
                                 <h6>Company President</h6>
                                 <input type="text" name="Company_President" placeholder="Company President" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6>Company Address</h6>
+                                <input type="text" name="Company_add" placeholder="Company add" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Human Resource Manager</h6>
+                                <input type="text" name="hr_Name" placeholder="hr Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Human Resource Contact</h6>
+                                <input type="number" name="hr_contact" placeholder="hr Contact" min="1" max="11" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6>Company Email</h6>
+                                <input type="text" name="Company_email" placeholder="Company email" required>
                             </div>
                         </div>
                         <button type="button" class="prev-btn">Previous</button>
