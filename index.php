@@ -110,7 +110,7 @@
                     </div>
 
                 </div>
-                <div class="block mb-4">
+                <div class="block block-bg mb-4">
                     <h3>Organizatinal Outcome</h3>
                         <ul class="b">
                             <li>Full employment opportunities for all</li>
