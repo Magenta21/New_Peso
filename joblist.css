@@ -1,12 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
 }
 
 h2 {
     text-align: center;
 }
-
+.header {
+    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+    color: white;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+}
 table {
     width: 100%;
     border-collapse: collapse;
@@ -58,4 +69,27 @@ tr.job-row:hover {
 
 .close:hover {
     color: red;
+}
+
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    text-decoration: none;
+    background-color: #8B0000;
+    color: white;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.pagination span {
+    font-size: 18px;
+    margin: 0 10px;
+}
+
+.pagination a:hover {
+    background-color: #FF0000;
 }
