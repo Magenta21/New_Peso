@@ -18,7 +18,7 @@ $totalJobs = $totalRow['total'];
 $totalPages = ceil($totalJobs / $limit);
 
 // Fetch jobs with limit and offset
-$query = "SELECT id, job_title, company_name, salary, vacant FROM job_post WHERE is_active = 1 LIMIT $start, $limit";
+$query = "SELECT id, job_title, company_name, salary, vacant, work_location FROM job_post WHERE is_active = 1 LIMIT $start, $limit";
 $result = $conn->query($query);
 ?>
 
@@ -29,8 +29,9 @@ $result = $conn->query($query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Listings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="joblist.css">
-    <script src="joblist.js"></script>
+    <script src="joblist.js" defer></script>
 </head>
 <body>
 
@@ -38,38 +39,42 @@ $result = $conn->query($query);
     <div class="container">
         <div class="row">
             <div class="col-md-2">
-                <img src="img/logolb.png" alt="lblogo" style="height: 50px;">
+                <a href="index.php" style="display: block; text-decoration: none;">
+                    <img src="img/logolb.png" alt="lblogo" style="height: 50px;">
+                </a>
             </div>
             <div class="col-md-8">
                 <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">Job Listings</h3>
             </div>
         </div>
     </div>
-</div>  
+</div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Job Title</th>
-            <th>Company Name</th>
-            <th>Salary</th>
-            <th>Vacancies</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($row = $result->fetch_assoc()) { ?>
-            <tr class="job-row" data-id="<?= $row['id'] ?>">
-                <td><?= htmlspecialchars($row['job_title']) ?></td>
-                <td><?= htmlspecialchars($row['company_name']) ?></td>
-                <td><?= htmlspecialchars($row['salary']) ?></td>
-                <td><?= htmlspecialchars($row['vacant']) ?></td>
-            </tr>
-        <?php } ?>
-    </tbody>
-</table>
+<div class="container container-fluid">
+    <?php while ($row = $result->fetch_assoc()) { ?>
+        <div class="row job-row p-3 mt-2 border rounded mb-3 shadow-sm" data-id="<?= htmlspecialchars($row['id']) ?>" style="cursor: pointer;">
+            <div class="col-md-2 pt-5 justify-content-center">
+                <img src="img/mission.png" alt="Profile 1" class="img-fluid" style="width: 100px; height: 100px;">
+            </div>
+            <div class="col-md-8 row justify-content-start">
+                <div class="col-md-12 pt-3 text-start">
+                    <div class="col"><p class="text-start"><i class="bi bi-suitcase-lg"></i> <?= htmlspecialchars($row['job_title']) ?></p></div>
+                    <div class="col"><p class="text-start"><i class="bi bi-buildings"></i> <?= htmlspecialchars($row['company_name']) ?></p></div>
+                    <div class="col"><p class="text-start"><i class="bi bi-pin-map"></i> <?= htmlspecialchars($row['work_location']) ?></p></div>
+                    <div class="col"><p class="text-start"><i class="bi bi-cash"></i> <?= htmlspecialchars($row['salary']) ?></p></div>
+                </div>
+            </div>
+            <div class="col-md-2 pt-5 text-start">
+                <span class="ms-2 fs-5">
+                    <?= htmlspecialchars($row['vacant']) ?> openings
+                </span>
+            </div>
+        </div>
+    <?php } ?>
+</div>
 
 <!-- Pagination Links -->
-<div class="pagination">
+<div class="pagination justify-content-center">
     <?php if ($page > 1): ?>
         <a href="?page=<?= $page - 1 ?>" class="prev">Previous</a>
     <?php endif; ?>
@@ -81,10 +86,11 @@ $result = $conn->query($query);
     <?php endif; ?>
 </div>
 
+
 <!-- Modal -->
 <div id="jobModal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="close text-end">&times;</span> <!-- Close button -->
         <h3 id="modalTitle"></h3>
         <p><strong>Company:</strong> <span id="modalCompany"></span></p>
         <p><strong>Job Type:</strong> <span id="modalJobType"></span></p>
@@ -97,6 +103,5 @@ $result = $conn->query($query);
         <p><strong>Posted On:</strong> <span id="modalDate"></span></p>
     </div>
 </div>
-
 </body>
 </html>
