@@ -2,7 +2,7 @@
 include 'db.php';
 
 // Define the number of results per page
-$limit = 1;
+$limit = 3;
 
 // Get the current page number from URL, default is page 1
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;

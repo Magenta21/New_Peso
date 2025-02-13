@@ -33,7 +33,7 @@ if (isset($_SESSION['user'])) {
         <div class="row front-box">
             <div class="col-md-6">
                 <div class="form-container">
-                    <h3>Trainees Login</h3>
+                    <h3>Institution Login</h3>
                     <form action="login.php" method="POST">
                         <div class="mb-3 mt-3">
                             <input type="text" name="username" class="form-control" placeholder="Username/Email" required>
