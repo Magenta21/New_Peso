@@ -30,7 +30,7 @@
                 <a href="employer/employer_login.php">EMPLOYER</a>
                 <a href="institutions/institution_login.php">EDUCATIONAL INSTITUTIONS</a>
                 <a href="joblist.php">JOBS</a>
-                <a href="#">News</a>
+                <a href="news.php">News</a>
             </span>
         </div>
     </nav>

@@ -1,0 +1,26 @@
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}   
+
+.header {
+    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+    color: white;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+}
+
+
+.banner {
+    position: relative;
+    text-align: center;
+    color: white;
+    background: url('img/bg1.png') no-repeat center center/cover;
+    height: 85vh;
+}
