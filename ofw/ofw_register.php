@@ -75,6 +75,7 @@
                         </div>
                         <div class="col-md-6">
                             <h6>Date of Birth</h6>
+                            <input type="date" name="Date_of_birth"> 
                         </div>
                     <button type="button" class="prev-btn">Previous</button>
                     <button type="button" class="next-btn disabled">Next</button>

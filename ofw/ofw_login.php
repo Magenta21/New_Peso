@@ -20,7 +20,9 @@ if (isset($_SESSION['user'])) {
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-md-2 col-xxl-3 text-start">
+                        <a href="../index.php" style="display: block; text-decoration: none;">
                         <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+                        </a>
                     </div>
                     <div class="col-md-8 col-xxl-6 text-center">
                         <h3 style="margin-top: 5px; font-weight: 700; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
@@ -29,6 +31,21 @@ if (isset($_SESSION['user'])) {
             </div>
         </div>
     
+        <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <span class="navbar-text text-white w-100 text-center">
+                <a href="../index.php">HOME</a>
+                <a href="../Applicant/applicant_login.php">APPLICANT</a>
+                <a href="../training/training_login.php">TRAININGS</a>
+                <a href="#">OFW</a>
+                <a href="../employer/employer_login.php">EMPLOYER</a>
+                <a href="institutions/institution_login.php">EDUCATIONAL INSTITUTIONS</a>
+                <a href="joblist.php">JOBS</a>
+                <a href="#">News</a>
+            </span>
+        </div>
+    </nav>
+
     <div class="container-fluid d-flex justify-content-center align-items-center mt-5">
         <div class="row front-box">
             <div class="col-md-6">

@@ -11,16 +11,19 @@ if (isset($_SESSION['user'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employer Login - Municipality of Los Banos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Applicant - Municipality of Los Banos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
         <div class="header">
+        
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-md-2 col-xxl-3 text-start">
+                    <a href="../index.php" style="display: block; text-decoration: none;">
                         <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+                    </a>
                     </div>
                     <div class="col-md-8 col-xxl-6 text-center">
                         <h3 style="margin-top: 5px; font-weight: 700; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
@@ -28,6 +31,10 @@ if (isset($_SESSION['user'])) {
                 </div>
             </div>
         </div>
+
+       
+    <div class="banner">
+    </div>
     
     <div class="container-fluid d-flex justify-content-center align-items-center mt-5">
         <div class="row front-box">
@@ -75,5 +82,6 @@ if (isset($_SESSION['user'])) {
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
 </body>
 </html>

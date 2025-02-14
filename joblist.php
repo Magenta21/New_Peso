@@ -39,7 +39,7 @@ $result = $conn->query($query);
     <div class="container">
         <div class="row">
             <div class="col-md-2">
-                <a href="index.php" style="display: block; text-decoration: none;">
+            <a href="index.php" style="display: block; text-decoration: none;">
                     <img src="img/logolb.png" alt="lblogo" style="height: 50px;">
                 </a>
             </div>
