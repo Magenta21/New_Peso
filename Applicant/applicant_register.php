@@ -53,6 +53,9 @@
                             
                             <button type="button" class="next-btn" disabled>Next</button>
                         </div>
+                        
+                    <p class="mt-3 text-center">Already have an account? <a href="applicant_login.php">Sign In</a></p>
+                </div>
 
                         <!-- Step 2 -->
                         <div class="form-step">
