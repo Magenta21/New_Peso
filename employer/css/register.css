@@ -73,4 +73,15 @@ button:hover {
     opacity: 0.9;
 }
 
+#passwordWarning, #confirmPasswordWarning {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}
+
+input:invalid {
+    border: 1px solid red;
+}
+
 
