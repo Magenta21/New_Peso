@@ -23,136 +23,164 @@
     </div>
 </div>
 
+<!-- Step Progress Bar -->
+<div class="step-container">
+    <div class="step active">Step 1</div>
+    <div class="step">Step 2</div>
+    <div class="step">Step 3</div>
+    <div class="step">Step 4</div>
+</div>
+
 <div class="container-fluid mt-md-3">
     <div class="row justify-content-center sm-margin">
-        <div class="form-container">
-            <form id="registrationForm" method="POST" action="process/register_process.php">
-                
-                <!-- Step 1 -->
+        <div class="container">
+            <form id="registrationForm" action="register_process.php" method="POST">
+                <!-- Step 1: Email & Password (Now the first step) -->
                 <div class="form-step active">
-                    <h2>Step 1: Login Credentials</h2>
+                    <h2>Step 1: Account Details</h2>
                     <div class="row">
                         <div class="col-md-6">
-                            <h6>Username</h6>
-                            <input type="text" name="Username" placeholder="Enter Username" required>
+                            <label for="text">Username:</label>
+                            <input type="text" id="username" name="username" required>
+                            <span class="error-message"></span>
                         </div>
+
                         <div class="col-md-6">
-                            <h6>Email</h6>
-                            <input type="email" name="email" placeholder="Enter Email" required>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Password</h6>
-                            <input type="password" id="password" name="Password" placeholder="Enter Password" required>
-                            <p id="passwordWarning" style="color: red; display: none;">Password must contain at least one numeric character.</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Confirm Password</h6>
-                            <input type="password" id="confirm_password" name="Confirm_Password" placeholder="Confirm Password" required>
-                            <p id="confirmPasswordWarning" style="color: red; display: none;">Passwords do not match.</p>
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                            <span class="error-message"></span>
                         </div>
                     </div>
-                    <button type="button" class="next-btn" disabled>Next</button>
-                    <p class="mt-3 text-center">Already have an account? <a href="employer_login.php">Sign In</a></p>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" required>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="confirmPassword">Confirm Password:</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <button type="button" onclick="nextStep()">Next</button>
+                    </div>
                 </div>
-                
-                <!-- Step 2 -->
+
+                <!-- Step 2: Personal Information -->
                 <div class="form-step">
-                    <h2>Step 2: Personal Information</h2>
+                    <h4>Step 2: Personal Information</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="fname">First name:</label>
+                            <input type="text" id="fname" name="fname" required>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="lname">Last name:</label>
+                            <input type="text" id="lname" name="lname" required>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
-                            <h6>First Name</h6>
-                            <input type="text" name="first_name" placeholder="First Name" required>
+                            <label for="Cnum">Contact Number</label>
+                            <input type="number" id="Cnum" name="Cnum" require>
+                            <span class="error-message"></span>
                         </div>
                         <div class="col-md-6">
-                            <h6>Last Name</h6>
-                            <input type="text" name="last_name" placeholder="Last Name" required>
-                        </div> 
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" require>
+                            <span class="error-message"></span>
+                        </div>
                     </div>
-                    <button type="button" class="prev-btn">Previous</button>
-                    <button type="button" class="next-btn" disabled>Next</button>
+                    <div class="row">
+                        <div class="col-md6">
+                            <button type="button" onclick="prevStep()">Previous</button>
+                            <button type="button" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
                 </div>
-                
-                <!-- Step 3 -->
+
+                <!-- Step 3: Address -->
                 <div class="form-step">
-                    <h2>Step 3: Company Information</h2>
-                    <button type="button" class="prev-btn">Previous</button>
-                    <button type="button" class="next-btn" disabled>Next</button>
+                    <h2>Step 3: Company details</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="companyname">Company Name</label>
+                            <input type="text" id="cname" name="cname"  required>
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="president">President</label>
+                            <input type="text" id="president" name="president"  required>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="companyadd">Company Address</label>
+                            <input type="text" id="companyadd" name="companyadd"  required>
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="president">President</label>
+                            <input type="text" id="president" name="president"  required>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="companynum">Contact Number</label>
+                            <input type="text" id="companynum" name="companynum"  required>
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="companyemail">Email</label>
+                            <input type="text" id="companyemail" name="companyemail"  required>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="button" onclick="prevStep()">Previous</button>
+                            <button type="button" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
                 </div>
-                
-                <!-- Step 4 -->
+
+                <!-- Step 4: Phone Number -->
                 <div class="form-step">
-                    <h2>Step 4: Review & Submit</h2>
-                    <button type="button" class="prev-btn">Previous</button>
-                    <button type="submit" id="submit-btn" disabled>Submit</button>
+                    <h2>Step 4: Picture</h2>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="pic">Company Picture:</label>
+                            <input type="file" id="pic" name="pic" required>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <button type="button" onclick="prevStep()">Previous</button>
+                            <button type="submit">Submit</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const formSteps = document.querySelectorAll(".form-step");
-    const nextBtns = document.querySelectorAll(".next-btn");
-    const prevBtns = document.querySelectorAll(".prev-btn");
-    const submitBtn = document.getElementById("submit-btn");
-
-    let currentStep = 0;
-
-    function showStep(stepIndex) {
-        formSteps.forEach((step, index) => {
-            step.style.display = index === stepIndex ? "block" : "none";
-        });
-    }
-
-    // Ensure validatePassword() is properly defined
-    function validatePassword() {
-        const password = document.getElementById("password").value;
-        const confirmPassword = document.getElementById("confirm_password").value;
-        const passwordWarning = document.getElementById("passwordWarning");
-        const confirmPasswordWarning = document.getElementById("confirmPasswordWarning");
-
-        let passwordValid = /\d/.test(password);
-        let passwordsMatch = password === confirmPassword && password !== "";
-
-        passwordWarning.style.display = passwordValid ? "none" : "block";
-        confirmPasswordWarning.style.display = passwordsMatch ? "none" : "block";
-
-        return passwordValid && passwordsMatch;
-    }
-
-    function validateStep(stepIndex) {
-        let step = formSteps[stepIndex];
-        let inputs = step.querySelectorAll("input[required]");
-        let allFilled = Array.from(inputs).every(input => input.value.trim() !== "");
-
-        if (stepIndex === 0) {
-            return allFilled && validatePassword();
-        }
-        return allFilled;
-    }
-
-    nextBtns.forEach((button) => {
-        button.addEventListener("click", function () {
-            if (validateStep(currentStep)) {
-                currentStep++;
-                showStep(currentStep);
-            }
-        });
-    });
-
-    prevBtns.forEach((button) => {
-        button.addEventListener("click", function () {
-            if (currentStep > 0) {
-                currentStep--;
-                showStep(currentStep);
-            }
-        });
-    });
-
-    showStep(currentStep);
-});
-</script>
-
+<script src="js/register.js"></script>
 </body>
 </html>

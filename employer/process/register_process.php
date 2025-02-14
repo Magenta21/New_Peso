@@ -1,20 +1,31 @@
 <?php
-include('../../db.php');
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
+    $fullname = $_POST['fullname'];
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password = $_POST['password'];
+    $address = $_POST['address'];
+    $phone = $_POST['phone'];
 
-    $sql = "INSERT INTO users (fname, lname, email, password) VALUES ('$first_name', '$last_name', '$email', '$password')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Registration successful!";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+    if (empty($fullname) || empty($email) || empty($password) || empty($address) || empty($phone) || empty($username)) {
+        echo "All fields are required!";
+        exit;
     }
 
-    $conn->close();
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Invalid email format!";
+        exit;
+    }
+
+    if (strlen($password) < 6) {
+        echo "Password must be at least 6 characters!";
+        exit;
+    }
+
+    if (!preg_match("/^\d{10}$/", $phone)) {
+        echo "Invalid phone number!";
+        exit;
+    }
+
+    echo "Registration Successful!";
 }
 ?>
