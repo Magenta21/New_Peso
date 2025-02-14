@@ -2,7 +2,7 @@
 include 'db.php';
 
 // Define the number of results per page
-$limit = 1;
+$limit = 5;
 
 // Get the current page number from URL, default is page 1
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -29,6 +29,7 @@ $result = $conn->query($query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Listings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="joblist.css">
     <script src="joblist.js" defer></script>
@@ -49,11 +50,11 @@ $result = $conn->query($query);
         </div>
     </div>
 </div>
-
+    
 <div class="container container-fluid">
     <?php while ($row = $result->fetch_assoc()) { ?>
-        <div class="row job-row p-3 mt-2 border rounded mb-3 shadow-sm" data-id="<?= htmlspecialchars($row['id']) ?>" style="cursor: pointer;">
-            <div class="col-md-2 pt-5 justify-content-center">
+        <div class="row job-row border rounded mb-3 shadow-sm" data-id="<?= htmlspecialchars($row['id']) ?>" style="cursor: pointer;">
+            <div class="col-md-2 justify-content-center">
                 <img src="img/mission.png" alt="Profile 1" class="img-fluid" style="width: 100px; height: 100px;">
             </div>
             <div class="col-md-8 row justify-content-start">
@@ -103,5 +104,6 @@ $result = $conn->query($query);
         <p><strong>Posted On:</strong> <span id="modalDate"></span></p>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
