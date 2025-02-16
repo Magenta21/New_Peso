@@ -33,13 +33,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 // Update modal content
-                document.getElementById("modalTitle").textContent = data.job_title || "N/A";
                 document.getElementById("modalCompany").textContent = data.company_name || "N/A";
+                document.getElementById("modalLocation").textContent = data.work_location || "N/A";
                 document.getElementById("modalJobType").textContent = data.job_type || "N/A";
                 document.getElementById("modalSalary").textContent = data.salary || "N/A";
-                document.getElementById("modalVacant").textContent = data.vacant || "N/A";
-                document.getElementById("modalLocation").textContent = data.work_location || "N/A";
-                document.getElementById("modalEducation").textContent = data.education || "N/A";
                 document.getElementById("modalDescription").textContent = data.job_description || "N/A";
                 document.getElementById("modalRequirement").textContent = data.requirement || "N/A";
                 document.getElementById("modalDate").textContent = data.date_posted || "N/A";

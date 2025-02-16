@@ -45,7 +45,7 @@ th {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1050; /* Increase z-index */
+    z-index: 1050; /* Ensure modal is above other content */
     left: 0;
     top: 0;
     width: 100%;
@@ -55,7 +55,7 @@ th {
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: #f4ecec;
     margin: auto;
     padding: 20px;
     width: 50%;
@@ -125,14 +125,14 @@ th {
     padding: 2px; /* Remove extra padding */
 }
 
-a {
-	color: #18272F;
+a.navlink {
+  color: #ffffff;
   position: relative;
   text-decoration: none;
   margin-left: 20px;
 }
 
-a::before {
+a.navlink::before {
   content: '';
   position: absolute;
   width: 100%;
@@ -146,8 +146,13 @@ a::before {
   transition: transform .3s ease-in-out;
 }
 
-a:hover::before {
+a.navlink:hover::before {
   transform-origin: left;
   transform: scaleX(1);
 }
-
+.h2nd{
+    background-color: #18272F;
+    height: auto;
+    text-align: center;
+    padding: 10px;
+}
