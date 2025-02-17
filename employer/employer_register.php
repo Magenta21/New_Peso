@@ -36,7 +36,7 @@
 <div class="container-fluid mt-md-3">
     <div class="row justify-content-center sm-margin">
         <div class="container">
-            <form id="registrationForm" action="process/register_process.php" method="POST">
+            <form id="registrationForm" action="process/register_process.php" method="POST" enctype="multipart/form-data">
                 <!-- Step 1: Email & Password (Now the first step) -->
                 <div class="form-step active">
                     <h2>Step 1: Account Details</h2>
