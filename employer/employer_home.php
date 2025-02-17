@@ -1,3 +1,30 @@
+<?php
+include '../db.php';
+session_start();
+
+$employerid = $_SESSION['employer_id'];
+// Check if the employer is logged in
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: employer_login.php");
+    exit();
+}
+
+$sql = "SELECT * FROM employer WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $employerid);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if (!$result) {
+    die("Invalid query: " . $conn->error); 
+}
+
+$row = $result->fetch_assoc();
+if (!$row) {
+    die("User not found.");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +46,7 @@
                 </div>
                 <div class="col-md-2 mt-1">
                 <?php if (!empty($row['photo'])): ?>
-                    <img id="preview" src="../img/profile/<?php echo $row['photo']; ?>" alt="Profile Image" class="img-fluid" style="width: 40px; height: 40px;">
+                    <img id="preview" src="uploads/<?php echo $row['company_photo']; ?>" alt="Profile Image" class="img-fluid" style="width: 40px; height: 40px;">
                     <?php else: ?>
                         <img src="../img/user-placeholder.png" alt="Profile Picture" class="img-fluid" style="width: 40px; height: 40px;">
                     <?php endif; ?>

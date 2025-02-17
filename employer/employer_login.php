@@ -1,11 +1,3 @@
-<?php
-session_start();
-if (isset($_SESSION['user'])) {
-    header("Location: dashboard.php");
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +29,7 @@ if (isset($_SESSION['user'])) {
             <div class="col-md-6">
                 <div class="form-container">
                     <h3>Employer Login</h3>
-                    <form action="login.php" method="POST">
+                    <form action="process/login_process.php" method="POST">
                         <div class="mb-3 mt-3">
                             <input type="text" name="username" class="form-control" placeholder="Username/Email" required>
                         </div>
