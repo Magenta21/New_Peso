@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="header">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-2">
                     <img src="img/logolb.png" alt="lblogo" style="height: 50px;">
@@ -19,19 +19,18 @@
                 </div>
             </div>
         </div>
-
     </div>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <span class="navbar-text text-white w-100 text-center">
                 <a href="#">HOME</a>
                 <a href="Applicant/applicant_login.php">APPLICANT</a>
-                <a href="training/trainning_login.php">TRAININGS</a>
+                <a href="training/training_login.php">TRAININGS</a>
                 <a href="ofw/ofw_login.php">OFW</a>
                 <a href="employer/employer_login.php">EMPLOYER</a>
-                <a href="#">EDUCATIONAL INSTITUTIONS</a>
+                <a href="institutions/institution_login.php">EDUCATIONAL INSTITUTIONS</a>
                 <a href="joblist.php">JOBS</a>
-                <a href="news.php">NEWS</a>
+                <a href="news.php">News</a>
             </span>
         </div>
     </nav>
@@ -111,7 +110,7 @@
                     </div>
 
                 </div>
-                <div class="block mb-4">
+                <div class="block block-bg mb-4">
                     <h3>Organizatinal Outcome</h3>
                         <ul class="b">
                             <li>Full employment opportunities for all</li>

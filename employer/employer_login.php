@@ -1,11 +1,3 @@
-<?php
-session_start();
-if (isset($_SESSION['user'])) {
-    header("Location: dashboard.php");
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +12,9 @@ if (isset($_SESSION['user'])) {
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-md-2 col-xxl-3 text-start">
+                    <a href="../index.php" style="display: block; text-decoration: none;">
                         <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+                    </a>
                     </div>
                     <div class="col-md-8 col-xxl-6 text-center">
                         <h3 style="margin-top: 5px; font-weight: 700; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
@@ -29,12 +23,13 @@ if (isset($_SESSION['user'])) {
             </div>
         </div>
     
+       
     <div class="container-fluid d-flex justify-content-center align-items-center mt-5">
         <div class="row front-box">
             <div class="col-md-6">
                 <div class="form-container">
                     <h3>Employer Login</h3>
-                    <form action="login.php" method="POST">
+                    <form action="process/login_process.php" method="POST">
                         <div class="mb-3 mt-3">
                             <input type="text" name="username" class="form-control" placeholder="Username/Email" required>
                         </div>
