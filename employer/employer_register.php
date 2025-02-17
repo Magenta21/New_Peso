@@ -14,7 +14,9 @@
     <div class="container-fluid">
         <div class="row align-items-center">
             <div class="col-md-2 col-xxl-3 text-start">
+            <a href="../index.php" style="display: block; text-decoration: none;">
                 <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+            </a>
             </div>
             <div class="col-md-8 col-xxl-6 text-center">
                 <h3 style="margin-top: 5px; font-weight: 700; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
@@ -34,7 +36,7 @@
 <div class="container-fluid mt-md-3">
     <div class="row justify-content-center sm-margin">
         <div class="container">
-            <form id="registrationForm" action="register_process.php" method="POST">
+            <form id="registrationForm" action="process/register_process.php" method="POST">
                 <!-- Step 1: Email & Password (Now the first step) -->
                 <div class="form-step active">
                     <h2>Step 1: Account Details</h2>

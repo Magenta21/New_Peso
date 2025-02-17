@@ -2,7 +2,7 @@
 include "db.php";
 
 // Pagination settings
-$limit = 1; // Number of news per page
+$limit = 5; // Number of news per page
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $start = ($page - 1) * $limit;
 
