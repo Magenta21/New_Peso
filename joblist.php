@@ -70,24 +70,26 @@ $result = $conn->query($query);
 
 <div class="container container-fluid">
     <?php while ($row = $result->fetch_assoc()) { ?>
-        <div class="row job-row border rounded mb-3 shadow-sm" data-id="<?= htmlspecialchars($row['id']) ?>" style="cursor: pointer;">
-            <div class="col-md-2 justify-content-center">
-                <img src="img/mission.png" alt="Profile 1" class="img-fluid" style="width: 100px; height: 100px;">
-            </div>
-            <div class="col-md-8 row justify-content-start">
-                <div class="col-md-12 pt-3 text-start">
-                    <div class="col"><p class="text-start"><i class="bi bi-suitcase-lg"></i> <?= htmlspecialchars($row['job_title']) ?></p></div>
-                    <div class="col"><p class="text-start"><i class="bi bi-buildings"></i> <?= htmlspecialchars($row['company_name']) ?></p></div>
-                    <div class="col"><p class="text-start"><i class="bi bi-pin-map"></i> <?= htmlspecialchars($row['work_location']) ?></p></div>
-                    <div class="col"><p class="text-start"><i class="bi bi-cash"></i> <?= htmlspecialchars($row['salary']) ?></p></div>
+        <a href="jobdetails.php?id=<?= htmlspecialchars($row['id']) ?>" class="text-decoration-none text-dark">
+            <div class="row job-row border rounded mb-3 shadow-sm" style="cursor: pointer;">
+                <div class="col-md-2 justify-content-center">
+                    <img src="img/mission.png" alt="Profile 1" class="img-fluid" style="width: 100px; height: 100px;">
+                </div>
+                <div class="col-md-8 row justify-content-start">
+                    <div class="col-md-12 pt-3 text-start">
+                        <div class="col"><p class="text-start"><i class="bi bi-suitcase-lg"></i> <?= htmlspecialchars($row['job_title']) ?></p></div>
+                        <div class="col"><p class="text-start"><i class="bi bi-buildings"></i> <?= htmlspecialchars($row['company_name']) ?></p></div>
+                        <div class="col"><p class="text-start"><i class="bi bi-pin-map"></i> <?= htmlspecialchars($row['work_location']) ?></p></div>
+                        <div class="col"><p class="text-start"><i class="bi bi-cash"></i> <?= htmlspecialchars($row['salary']) ?></p></div>
+                    </div>
+                </div>
+                <div class="col-md-2 pt-5 text-start">
+                    <span class="ms-2 fs-5">
+                        <?= htmlspecialchars($row['vacant']) ?> openings
+                    </span>
                 </div>
             </div>
-            <div class="col-md-2 pt-5 text-start">
-                <span class="ms-2 fs-5">
-                    <?= htmlspecialchars($row['vacant']) ?> openings
-                </span>
-            </div>
-        </div>
+        </a>
     <?php } ?>
 </div>
 
@@ -104,21 +106,5 @@ $result = $conn->query($query);
     <?php endif; ?>
 </div>
 
-<!-- Modal -->
-<div id="jobModal" class="modal">
-    <div class="modal-content">
-        <span class="close text-end">&times;</span> <!-- Close button -->
-        <h3 id="modalTitle"></h3>
-        <p><strong>Company:</strong> <span id="modalCompany"></span></p>
-        <p><strong>Job Type:</strong> <span id="modalJobType"></span></p>
-        <p><strong>Salary:</strong> <span id="modalSalary"></span></p>
-        <p><strong>Vacancies:</strong> <span id="modalVacant"></span></p>
-        <p><strong>Location:</strong> <span id="modalLocation"></span></p>
-        <p><strong>Education:</strong> <span id="modalEducation"></span></p>
-        <p><strong>Description:</strong> <span id="modalDescription"></span></p>
-        <p><strong>Requirements:</strong> <span id="modalRequirement"></span></p>
-        <p><strong>Posted On:</strong> <span id="modalDate"></span></p>
-    </div>
-</div>
 </body>
 </html>
