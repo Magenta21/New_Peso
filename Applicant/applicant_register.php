@@ -122,7 +122,8 @@
                                 </select>
                                 <span class="error-message"></span>
                             </div>
-
+                        </div>    
+                        <div class="row">
                             <div class="col-md-12"> 
                                 <label for="Present_Address">Present Address:</label>
                                 <input type="text" id="Present_Address" name="Present_Address" required>
@@ -145,38 +146,40 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="tertiary_school_name">Tertiary School Name</label>
-                            <input type="text" id="tertiary_school_name" name="tertiary_school_name"  required>
+                            <input type="text" id="school_name1" name="school_name1"  required>
                             <span class="error-message"></span>
                         </div>
                 
                         <div class="col-md-6">
-                            <label for="year_graduated">Year Graduated</label>
-                            <input type="date" id="year1_graduated" name="year1_graduated"  required>
+                            <label for="year_graduated1">Year Graduated</label>
+                            <input type="date" id="year_graduated1" name="year_graduated1"  required>
                             <span class="error-message"></span>
                         </div>
-                            <div class="row">
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
-                            <label for="award_recieved">Awards Recieved</label>
-                            <input type="text" id="award1_recieved" name="award1_recieved"  required>
+                            <label for="award_recieved1">Awards Recieved</label>
+                            <input type="text" id="award_recieved1" name="award_recieved1"  required>
                             <span class="error-message"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <label for="graduated_school_name">Graduated School Name</label>
-                            <input type="text" id="graduated_school_name" name="graduated_school_name"  required>
+                            <input type="text" id="school_name2" name="school_name2"  required>
                             <span class="error-message"></span>
                         </div>
                 
-                        <div class="col-md-6">  
-                            <label for="year_graduated">Year Graduated</label>
-                            <input type="date" id="year2_graduated" name="year2_graduated" required>
+                        <div class="col-md-6">
+                            <label for="year_graduated2">Year Graduated</label>
+                            <input type="date" id="year_graduated2" name="year_graduated2"  required>
                             <span class="error-message"></span>
                         </div>
-                            <div class="row">
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
-                            <label for="award_recieved">Awards Recieved</label>
-                            <input type="text" id="award2_recieved" name="award2_recieved" required>
+                            <label for="award_recieved2">Awards Recieved</label>
+                            <input type="text" id="award_recieved2" name="award_recieved2"  required>
                             <span class="error-message"></span>
                         </div>
                     </div>

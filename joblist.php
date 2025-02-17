@@ -38,7 +38,7 @@ $result = $conn->query($query);
 <body>
 
 <div class="header">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
                 <a href="index.php" style="display: block; text-decoration: none;">
