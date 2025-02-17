@@ -69,7 +69,9 @@
                     </div>
 
                     <div class="row">
-                        <button type="button" onclick="nextStep()">Next</button>
+                        <div class="col-md-6">
+                            <button type="button" onclick="nextStep()">Next</button>
+                        </div>
                     </div>
                 </div>
 
