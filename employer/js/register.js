@@ -4,7 +4,7 @@ const stepIndicators = document.querySelectorAll(".step");
 
 function showStep(step) {
     formSteps.forEach((formStep, index) => {
-        formStep.classList.toggle("active", index === step);
+        formStep.style.display = index === step ? "block" : "none";
     });
 
     stepIndicators.forEach((indicator, index) => {
@@ -13,15 +13,19 @@ function showStep(step) {
 }
 
 window.nextStep = function () {
-    const inputs = formSteps[currentStep].querySelectorAll("input");
+    const inputs = formSteps[currentStep].querySelectorAll("input, select");
     let valid = true;
 
     inputs.forEach((input) => {
         const errorMessage = input.nextElementSibling;
-        errorMessage.textContent = "";
+        if (errorMessage) {
+            errorMessage.textContent = ""; // Clear previous error
+        }
 
         if (!input.value.trim()) {
-            errorMessage.textContent = "This field is required.";
+            if (errorMessage) {
+                errorMessage.textContent = "This field is required.";
+            }
             valid = false;
         } else if (input.type === "email" && !/^\S+@\S+\.\S+$/.test(input.value)) {
             errorMessage.textContent = "Invalid email format.";
@@ -37,15 +41,23 @@ window.nextStep = function () {
                 errorMessage.textContent = "Passwords do not match.";
                 valid = false;
             }
-        } else if (input.type === "tel" && !/^\d{10}$/.test(input.value)) {
-            errorMessage.textContent = "Invalid phone number.";
+        } else if (input.id === "Cnum" && !/^\d{10,}$/.test(input.value)) {
+            errorMessage.textContent = "Invalid phone number format.";
+            valid = false;
+        } else if (input.tagName.toLowerCase() === "select" && input.value === "") {
+            errorMessage.textContent = "Please select an option.";
+            valid = false;
+        } else if (input.type === "file" && input.files.length === 0) {
+            errorMessage.textContent = "Please upload a file.";
             valid = false;
         }
     });
 
     if (valid) {
-        currentStep++;
-        showStep(currentStep);
+        if (currentStep < formSteps.length - 1) {
+            currentStep++;
+            showStep(currentStep);
+        }
     }
 };
 
@@ -56,4 +68,9 @@ window.prevStep = function () {
     }
 };
 
-document.addEventListener("DOMContentLoaded", () => showStep(currentStep));
+// Ensure only one step is shown at a time
+document.addEventListener("DOMContentLoaded", () => {
+    formSteps.forEach((formStep, index) => {
+        formStep.style.display = index === 0 ? "block" : "none";
+    });
+});

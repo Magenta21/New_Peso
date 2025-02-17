@@ -102,12 +102,7 @@
                             <input type="number" id="Cnum" name="Cnum" require>
                             <span class="error-message"></span>
                         </div>
-                        <div class="col-md-6">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" require>
-                            <span class="error-message"></span>
-                        </div>
-                    </div>
+                    </div>  
                     <div class="row">
                         <div class="col-md6">
                             <button type="button" onclick="prevStep()">Previous</button>
@@ -138,8 +133,8 @@
                             <span class="error-message"></span>
                         </div>
                         <div class="col-md-6">
-                            <label for="president">President</label>
-                            <input type="text" id="president" name="president"  required>
+                            <label for="president">Human Resource Manager</label>
+                            <input type="text" id="human_resource_manager" name="hr_manager"  required>
                             <span class="error-message"></span>
                         </div>
                     </div>
@@ -150,10 +145,23 @@
                             <span class="error-message"></span>
                         </div>
                         <div class="col-md-6">
-                            <label for="companyemail">Email</label>
-                            <input type="text" id="companyemail" name="companyemail"  required>
+                            <label for="companyemail">Company  Email</label>
+                            <input type="text" id="companyemail" name="cmail"  required>
                             <span class="error-message"></span>
                         </div>
+                        <div class="row">
+                    <div class="col-md-12">
+                            <label for="employmentType">Employment Type:</label>
+                            <select id="employmentType" name="employertype" required>
+                                <option value="">Select</option>
+                                <option value="local_agencies">Local Agencies</option>
+                                <option value="direct_hire">Direct Hire</option>
+                                <option value="overseas">Overseas</option>
+                                <option value="local_lb">Local LB</option>
+                            </select>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
