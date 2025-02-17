@@ -145,41 +145,42 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="tertiary_school_name">Tertiary School Name</label>
-                            <input type="text" id="second_school_name" name="second_school_name"  required>
+                            <input type="text" id="tertiary_school_name" name="tertiary_school_name"  required>
                             <span class="error-message"></span>
                         </div>
                 
                         <div class="col-md-6">
                             <label for="year_graduated">Year Graduated</label>
-                            <input type="date" id="year_graduated" name="year_graduated"  required>
+                            <input type="date" id="year1_graduated" name="year1_graduated"  required>
                             <span class="error-message"></span>
                         </div>
                             <div class="row">
                         <div class="col-md-6">
                             <label for="award_recieved">Awards Recieved</label>
-                            <input type="text" id="award_recieved" name="award_recieved"  required>
+                            <input type="text" id="award1_recieved" name="award1_recieved"  required>
                             <span class="error-message"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <label for="graduated_school_name">Graduated School Name</label>
-                            <input type="text" id="second_school_name" name="second_school_name"  required>
+                            <input type="text" id="graduated_school_name" name="graduated_school_name"  required>
                             <span class="error-message"></span>
                         </div>
                 
-                        <div class="col-md-6">
+                        <div class="col-md-6">  
                             <label for="year_graduated">Year Graduated</label>
-                            <input type="date" id="year_graduated" name="year_graduated"  required>
+                            <input type="date" id="year2_graduated" name="year2_graduated" required>
                             <span class="error-message"></span>
                         </div>
                             <div class="row">
                         <div class="col-md-6">
                             <label for="award_recieved">Awards Recieved</label>
-                            <input type="text" id="award_recieved" name="award_recieved"  required>
+                            <input type="text" id="award2_recieved" name="award2_recieved" required>
                             <span class="error-message"></span>
                         </div>
                     </div>
+                    
                     <div class="row">
                         <div class="col-md-6">
                             <button type="button" onclick="prevStep()">Previous</button>
