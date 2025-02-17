@@ -46,8 +46,8 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 
-        0 4px 10px rgba(0, 0, 0, 0.3), /* Shadow */
-        0 0 15px rgba(0, 255, 255, 0.6); /* Glow */
+        0 4px 10px rgba(51, 51, 51, 0.3); /* Shadow */
+       
     height: 300px;
     text-align: center;
 }
@@ -70,8 +70,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 
-        0 4px 10px rgba(0, 0, 0, 0.3), /* Shadow */
-        0 0 15px rgba(0, 255, 255, 0.6); /* Glow */
+    0 4px 10px rgba(51, 51, 51, 0.3); /* Shadow */
     height: 350px;
     text-align: center;
 }

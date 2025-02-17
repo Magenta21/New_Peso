@@ -26,11 +26,12 @@
             <span class="navbar-text text-white w-100 text-center">
                 <a href="#">HOME</a>
                 <a href="Applicant/applicant_login.php">APPLICANT</a>
-                <a href="training/trainning_login.php">trainings</a>
+                <a href="training/trainning_login.php">TRAININGS</a>
                 <a href="ofw/ofw_login.php">OFW</a>
                 <a href="employer/employer_login.php">EMPLOYER</a>
                 <a href="#">EDUCATIONAL INSTITUTIONS</a>
                 <a href="joblist.php">JOBS</a>
+                <a href="news.php">NEWS</a>
             </span>
         </div>
     </nav>
