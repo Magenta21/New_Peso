@@ -28,6 +28,7 @@ $result = $conn->query($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Listings</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
@@ -40,7 +41,7 @@ $result = $conn->query($query);
     <div class="container">
         <div class="row">
             <div class="col-md-2">
-            <a href="index.php" style="display: block; text-decoration: none;">
+                <a href="index.php" style="display: block; text-decoration: none;">
                     <img src="img/logolb.png" alt="lblogo" style="height: 50px;">
                 </a>
             </div>
@@ -50,7 +51,23 @@ $result = $conn->query($query);
         </div>
     </div>
 </div>
-    
+
+<!-- Add the navigation bar here -->
+<nav class="h2nd">
+    <div>
+        <span class="navbar-text text-white w-100 text-center">
+            <a class="navlink" href="index.php">HOME</a>
+            <a class="navlink" href="Applicant/applicant_login.php">APPLICANT</a>
+            <a class="navlink" href="training/training_login.php">TRAININGS</a>
+            <a class="navlink" href="ofw/ofw_login.php">OFW</a>
+            <a class="navlink" href="employer/employer_login.php">EMPLOYER</a>
+            <a class="navlink" href="institutions/institution_login.php">EDUCATIONAL INSTITUTIONS</a>
+            <a class="navlink" href="#">JOBS</a>
+            <a class="navlink" href="news.php">News</a>
+        </span>
+    </div>
+</nav>
+
 <div class="container container-fluid">
     <?php while ($row = $result->fetch_assoc()) { ?>
         <div class="row job-row border rounded mb-3 shadow-sm" data-id="<?= htmlspecialchars($row['id']) ?>" style="cursor: pointer;">
@@ -87,7 +104,6 @@ $result = $conn->query($query);
     <?php endif; ?>
 </div>
 
-
 <!-- Modal -->
 <div id="jobModal" class="modal">
     <div class="modal-content">
@@ -104,6 +120,5 @@ $result = $conn->query($query);
         <p><strong>Posted On:</strong> <span id="modalDate"></span></p>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
