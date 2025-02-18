@@ -36,7 +36,7 @@
 <div class="container-fluid mt-md-3">
     <div class="row justify-content-center sm-margin">
         <div class="container">
-            <form id="registrationForm" action="process/register_process.php" method="POST">
+            <form id="registrationForm" action="register_process.php" method="POST">
                 <!-- Step 1: Email & Password (Now the first step) -->
                 <div class="form-step active">
                     <h2>Step 1: Account Details</h2>
@@ -71,98 +71,119 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <button type="button" onclick="nextStep()">Next</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Step 2: Personal Information -->
-                <div class="form-step">
-                    <h4>Step 2: Personal Information</h4>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label for="fname">First name:</label>
-                            <input type="text" id="fname" name="fname" required>
-                            <span class="error-message"></span>
-                        </div>
-                    </div>
+                    <!-- Step 2: Personal Information -->
+                    <div class="form-step">
+                        <h4>Step 2: Personal Information</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="fname">First name:</label>
+                                <input type="text" id="fname" name="fname" required>
+                                <span class="error-message"></span>
+                            </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label for="lname">Last name:</label>
-                            <input type="text" id="lname" name="lname" required>
-                            <span class="error-message"></span>
+                            <div class="col-md-4">
+                                <label for="mname">Middle name:</label>
+                                <input type="text" id="mname" name="mname">
+                                <span class="error-message"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="lname">Last name:</label>
+                                <input type="text" id="lname" name="lname" required>
+                                <span class="error-message"></span>
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="Cnum">Contact Number:</label>
+                                <input type="number" id="Cnum" name="Cnum" required>
+                                <span class="error-message"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="age">Age:</label>
+                                <input type="number" id="age" name="age" required>
+                                <span class="error-message"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="sex">Sex:</label>
+                                <select id="sex" name="sex" required>
+                                    <option value="">Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                                <span class="error-message"></span>
+                            </div>
+                        </div>    
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <label for="Present_Address">Present Address:</label>
+                                <input type="text" id="Present_Address" name="present_add" required>
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="Cnum">Contact Number</label>
-                            <input type="number" id="Cnum" name="Cnum" require>
-                            <span class="error-message"></span>
-                        </div>
-                    </div>  
-                    <div class="row">
-                        <div class="col-md6">
                             <button type="button" onclick="prevStep()">Previous</button>
                             <button type="button" onclick="nextStep()">Next</button>
                         </div>
                     </div>
                 </div>
 
+
                 <!-- Step 3: Address -->
                 <div class="form-step">
-                    <h2>Step 3: Company details</h2>
+                    <h2>Step 3: Educational Backgrounds</h2>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="companyname">Company Name</label>
-                            <input type="text" id="cname" name="cname"  required>
+                            <label for="tertiary_school_name">Tertiary School Name</label>
+                            <input type="text" id="school_name1" name="school_name1"  required>
                             <span class="error-message"></span>
                         </div>
+                
                         <div class="col-md-6">
-                            <label for="president">President</label>
-                            <input type="text" id="president" name="president"  required>
-                            <span class="error-message"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="companyadd">Company Address</label>
-                            <input type="text" id="companyadd" name="companyadd"  required>
-                            <span class="error-message"></span>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="president">Human Resource Manager</label>
-                            <input type="text" id="human_resource_manager" name="hr_manager"  required>
+                            <label for="year_graduated1">Year Graduated</label>
+                            <input type="date" id="year_graduated1" name="year_graduated1"  required>
                             <span class="error-message"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="companynum">Contact Number</label>
-                            <input type="text" id="companynum" name="companynum"  required>
+                            <label for="award_recieved1">Awards Recieved</label>
+                            <input type="text" id="award_recieved1" name="award_recieved1"  required>
                             <span class="error-message"></span>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
-                            <label for="companyemail">Company  Email</label>
-                            <input type="text" id="companyemail" name="cmail"  required>
+                            <label for="graduated_school_name">Graduated School Name</label>
+                            <input type="text" id="school_name2" name="school_name2"  required>
                             <span class="error-message"></span>
                         </div>
-                        <div class="row">
-                    <div class="col-md-12">
-                            <label for="employmentType">Employment Type:</label>
-                            <select id="employmentType" name="employertype" required>
-                                <option value="">Select</option>
-                                <option value="local_agencies">Local Agencies</option>
-                                <option value="direct_hire">Direct Hire</option>
-                                <option value="overseas">Overseas</option>
-                                <option value="local_lb">Local LB</option>
-                            </select>
+                
+                        <div class="col-md-6">
+                            <label for="year_graduated2">Year Graduated</label>
+                            <input type="date" id="year_graduated2" name="year_graduated2"  required>
                             <span class="error-message"></span>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="award_recieved2">Awards Recieved</label>
+                            <input type="text" id="award_recieved2" name="award_recieved2"  required>
+                            <span class="error-message"></span>
+                        </div>
                     </div>
+                    
                     <div class="row">
                         <div class="col-md-6">
                             <button type="button" onclick="prevStep()">Previous</button>
@@ -176,7 +197,7 @@
                     <h2>Step 4: Picture</h2>
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="pic">Company Picture:</label>
+                            <label for="pic">Profile  Picture:</label>
                             <input type="file" id="pic" name="pic" required>
                             <span class="error-message"></span>
                         </div>
