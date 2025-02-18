@@ -47,14 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contact = $_POST['Cnum'];
     $dob = $_POST['dob'];
     $sex = $_POST['sex'];
-    $presentadd = $_POST['present_add'];
+    $presentadd = $_POST['present_address'];
     $tertiary_school = $_POST['school_name1'];
     $tertiary_graduate = $_POST['year_graduated1'];
-    $tertiary_award = $_POST['award_received1'];
+    $tertiary_award = $_POST['award_recieved1'];
     $college_school = $_POST['school_name2'];
     $college_graduate = $_POST['year_graduated2'];
-    $college_award = $_POST['award_received2'];
-    $pic = $_POST['pic'];
+    $college_award = $_POST['award_recieved2'];
+    $pic = $_FILES['pic'];
 
     // Generate OTP
     $otp = rand(100000, 999999);
@@ -62,8 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validation
     if (empty($username) || empty($email) || empty($password) || empty($fname) || empty($mname) || empty($lname) || empty($contact) || 
-        empty($age) || empty($sex) || empty($presentadd) || empty($tertiary_school) || empty($tertiary_graduate) || 
-        empty($tertiary_award) || empty($college_school) || empty($college_graduate) || empty($college_award) || empty($pic)) {
+        empty($dob) || empty($sex) || empty($presentadd) || empty($tertiary_school) || empty($tertiary_graduate) || 
+        empty($college_school) || empty($college_graduate) || empty($pic)) {
         echo "All fields are required!";
         exit;
     }
@@ -89,15 +89,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Handle Image Upload
     $picPath = "";
-    if ($compic['error'] == 0) {
-        $fileName = basename($compic["name"]);
+    if ($pic['error'] == 0) {
+        $fileName = basename($pic["name"]);
         $targetFilePath = $uploadDir . $fileName;
         $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
 
         // Allowed file formats
         $allowedFormats = array("jpg", "jpeg", "png", "gif");
         if (in_array($fileType, $allowedFormats)) {
-            if (move_uploaded_file($compic["tmp_name"], $targetFilePath)) {
+            if (move_uploaded_file($pic["tmp_name"], $targetFilePath)) {
                 $picPath = $targetFilePath;
             } else {
                 echo "Error uploading file!";
@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Database connection using PDO
     $host = "localhost";
-    $dbname = "peso2";
+    $dbname = "pesoo";
     $db_username = "root";
     $db_password = "";
 
@@ -128,30 +128,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Prepare SQL statement
         // Store OTP and expiry in the database
-        $stmt = $pdo->prepare("INSERT INTO applicant_profile (username, email, password, fname,mname, lname, contact_no, dob, sex, house_address, tetiary_school, tertiaty_graduated, tetiary_award, college_school, college_graduated, college_award, photo, otp, otp_expiry, is_verified) 
-        VALUES (:username, :email, :password, :fname, :mname, :lname, :contact, :dob, :sex, :presentadd, :tertiary_school, :tertiary_graduate, :tertiary_award, :college_school, :college_graduate, :college_award, :pic, :otp, :otp_expiry, 0)");
+        $stmt = $pdo->prepare("INSERT INTO applicant_profile (username, email, password, fname, mname, lname, contact_no, dob, sex, house_address, 
+        tertiary_school, tertiary_graduated, tertiary_award, college_school, college_graduated, college_award, photo, otp, otp_expiry, is_verified) 
+        VALUES (:username, :email, :password, :fname, :mname, :lname, :contact, :dob, :sex, :presentadd, :tertiary_school, :tertiary_graduate, 
+        :tertiary_award, :college_school, :college_graduate, :college_award, :pic, :otp, :otp_expiry, 0)");
+
 
         // Bind parameters
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $hashed_password);
         $stmt->bindParam(':fname', $fname);
-        $stmt->bindParam(':$mname ', $$mname );
+        $stmt->bindParam(':mname', $mname); // Fixed
         $stmt->bindParam(':lname', $lname);
         $stmt->bindParam(':contact', $contact);
-        $stmt->bindParam(':dob', $dob );
+        $stmt->bindParam(':dob', $dob);
         $stmt->bindParam(':sex', $sex);
-        $stmt->bindParam(':presentadd', $present_add);
-        $stmt->bindParam(':tertiary_school', $school_name1);
-        $stmt->bindParam(':tertiary_graduate', $year_graduated1);
-        $stmt->bindParam(':tertiary_award', $award_received1);
-        $stmt->bindParam(':college_school', $school_name2);
-        $stmt->bindParam(':college_graduate', $year_graduated2);
-        $stmt->bindParam(':college_award', $award_received2);
+        $stmt->bindParam(':presentadd', $presentadd); // Corrected variable name
+        $stmt->bindParam(':tertiary_school', $tertiary_school);
+        $stmt->bindParam(':tertiary_graduate', $tertiary_graduate);
+        $stmt->bindParam(':tertiary_award', $tertiary_award);
+        $stmt->bindParam(':college_school', $college_school);
+        $stmt->bindParam(':college_graduate', $college_graduate);
+        $stmt->bindParam(':college_award', $college_award);
+        $stmt->bindParam(':pic', $picPath);
         $stmt->bindParam(':otp', $otp);
         $stmt->bindParam(':otp_expiry', $otp_expiry);
-        $stmt->bindParam(':otp', $otp);
-        $stmt->bindParam(':otp_expiry', $otp_expiry);
+        
 
         // Execute query
         if ($stmt->execute()) {

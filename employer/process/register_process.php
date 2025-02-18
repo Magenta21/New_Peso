@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Database connection using PDO
     $host = "localhost";
-    $dbname = "peso2";
+    $dbname = "pesoo";
     $db_username = "root";
     $db_password = "";
 
@@ -142,8 +142,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':cmail', $comemail);
         $stmt->bindParam(':employertype', $employertype);
         $stmt->bindParam(':pic', $picPath);
-        $stmt->bindParam(':otp', $otp);
-        $stmt->bindParam(':otp_expiry', $otp_expiry);
         $stmt->bindParam(':otp', $otp);
         $stmt->bindParam(':otp_expiry', $otp_expiry);
         // Execute query

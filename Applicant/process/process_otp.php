@@ -5,11 +5,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $otp = $_POST['otp'];
 
-    $pdo = new PDO("mysql:host=localhost;dbname=peso2;charset=utf8", "root", "");
+    $pdo = new PDO("mysql:host=localhost;dbname=pesoo;charset=utf8", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Fetch OTP details from database
-    $stmt = $pdo->prepare("SELECT otp, otp_expiry FROM employer WHERE email = :email AND is_verified = 0");
+    $stmt = $pdo->prepare("SELECT otp, otp_expiry FROM applicant_profile WHERE email = :email AND is_verified = 0");
     $stmt->bindParam(':email', $email);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user['otp'] == $otp && $current_time <= $otp_expiry) {
             // Mark account as verified
-            $stmt = $pdo->prepare("UPDATE employer SET is_verified = 1 WHERE email = :email");
+            $stmt = $pdo->prepare("UPDATE applicant_profile SET is_verified = 1 WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();
 

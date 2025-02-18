@@ -36,7 +36,7 @@
 <div class="container-fluid mt-md-3">
     <div class="row justify-content-center sm-margin">
         <div class="container">
-            <form id="registrationForm" action="process/register_process.php" method="POST">
+            <form id="registrationForm" action="process/register_process.php" method="POST" enctype="multipart/form-data">
                 <!-- Step 1: Email & Password (Now the first step) -->
                 <div class="form-step active">
                     <h2>Step 1: Account Details</h2>
@@ -159,7 +159,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="award_recieved1">Awards Recieved</label>
-                            <input type="text" id="award_recieved1" name="award_recieved1"  required>
+                            <input type="text" id="award_recieved1" name="award_recieved1">
                             <span class="error-message"></span>
                         </div>
                     </div>
@@ -179,7 +179,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="award_recieved2">Awards Recieved</label>
-                            <input type="text" id="award_recieved2" name="award_recieved2"  required>
+                            <input type="text" id="award_recieved2" name="award_recieved2">
                             <span class="error-message"></span>
                         </div>
                     </div>
