@@ -30,13 +30,13 @@
     <div class="step active">Step 1</div>
     <div class="step">Step 2</div>
     <div class="step">Step 3</div>
-    <div class="step">Step 4</div>
+    
 </div>
 
 <div class="container-fluid mt-md-3">
     <div class="row justify-content-center sm-margin">
         <div class="container">
-            <form id="registrationForm" action="register_process.php" method="POST">
+            <form id="registrationForm" action="process/register_process.php" method="POST">
                 <!-- Step 1: Email & Password (Now the first step) -->
                 <div class="form-step active">
                     <h2>Step 1: Account Details</h2>
@@ -107,13 +107,13 @@
                                 <span class="error-message"></span>
                             </div>
 
-                            <div class="col-md-4">
-                                <label for="age">Age:</label>
-                                <input type="number" id="age" name="age" required>
-                                <span class="error-message"></span>
-                            </div>
+                        <div class="col-md-4">
+                            <label for="dob">Date of Birth:</label>
+                            <input type="date" id="dob" name="dob" required>
+                            <span class="error-message"></span>
+                        </div>
 
-                            <div class="col-md-4">
+                        <div class="col-md-4">
                                 <label for="sex">Sex:</label>
                                 <select id="sex" name="sex" required>
                                     <option value="">Select</option>
@@ -126,7 +126,7 @@
                         <div class="row">
                             <div class="col-md-12"> 
                                 <label for="Present_Address">Present Address:</label>
-                                <input type="text" id="Present_Address" name="present_add" required>
+                                <input type="text" id="Present_Address" name="present_address" required>
                                 <span class="error-message"></span>
                             </div>
                         </div>
@@ -140,61 +140,10 @@
                 </div>
 
 
-                <!-- Step 3: Address -->
-                <div class="form-step">
-                    <h2>Step 3: Educational Backgrounds</h2>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="tertiary_school_name">Tertiary School Name</label>
-                            <input type="text" id="school_name1" name="school_name1"  required>
-                            <span class="error-message"></span>
-                        </div>
-                
-                        <div class="col-md-6">
-                            <label for="year_graduated1">Year Graduated</label>
-                            <input type="date" id="year_graduated1" name="year_graduated1"  required>
-                            <span class="error-message"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="award_recieved1">Awards Recieved</label>
-                            <input type="text" id="award_recieved1" name="award_recieved1"  required>
-                            <span class="error-message"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="graduated_school_name">Graduated School Name</label>
-                            <input type="text" id="school_name2" name="school_name2"  required>
-                            <span class="error-message"></span>
-                        </div>
-                
-                        <div class="col-md-6">
-                            <label for="year_graduated2">Year Graduated</label>
-                            <input type="date" id="year_graduated2" name="year_graduated2"  required>
-                            <span class="error-message"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="award_recieved2">Awards Recieved</label>
-                            <input type="text" id="award_recieved2" name="award_recieved2"  required>
-                            <span class="error-message"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6">
-                            <button type="button" onclick="prevStep()">Previous</button>
-                            <button type="button" onclick="nextStep()">Next</button>
-                        </div>
-                    </div>
-                </div>
-
+               
                 <!-- Step 4: Phone Number -->
                 <div class="form-step">
-                    <h2>Step 4: Picture</h2>
+                    <h2>Step 3: Picture</h2>
                     <div class="row">
                         <div class="col-md-12">
                             <label for="pic">Profile  Picture:</label>
