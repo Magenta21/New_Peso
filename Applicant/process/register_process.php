@@ -56,10 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $college_award = $_POST['award_recieved2'];
     $pic = $_FILES['pic'];
 
-    // Generate OTP
-    $otp = rand(100000, 999999);
-    $otp_expiry = date('Y-m-d H:i:s', strtotime('+10 minutes'));
-
     // Validation
     if (empty($username) || empty($email) || empty($password) || empty($fname) || empty($mname) || empty($lname) || empty($contact) || 
         empty($dob) || empty($sex) || empty($presentadd) || empty($tertiary_school) || empty($tertiary_graduate) || 
