@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Database connection using PDO
     $host = "localhost";
-    $dbname = "pesoo";
+    $dbname = "peso2";
     $db_username = "root";
     $db_password = "";
 

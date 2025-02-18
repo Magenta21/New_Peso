@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mname = $_POST['mname'];
     $lname = $_POST['lname'];
     $contact = $_POST['Cnum'];
-    $age = $_POST['age'];
+    $dob = $_POST['dob'];
     $sex = $_POST['sex'];
     $presentadd = $_POST['present_add'];
     $tertiary_school = $_POST['school_name1'];
@@ -128,28 +128,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Prepare SQL statement
         // Store OTP and expiry in the database
-        $stmt = $pdo->prepare("INSERT INTO employer (username, email, password, fname, lname, tel_num, company_name, president, company_address, hr, company_contact, company_email, types_of_employer, company_photo, otp, otp_expiry, is_verified) 
-        VALUES (:username, :email, :password, :fname, :lname, :contact, :cname, :president, :companyadd, :hr_manager, :companynum, :cmail, :employertype, :pic, :otp, :otp_expiry, 0)");
+        $stmt = $pdo->prepare("INSERT INTO applicant_profile (username, email, password, fname,mname, lname, contact_no, dob, sex, house_address, tetiary_school, tertiaty_graduated, tetiary_award, college_school, college_graduated, college_award, photo, otp, otp_expiry, is_verified) 
+        VALUES (:username, :email, :password, :fname, :mname, :lname, :contact, :dob, :sex, :presentadd, :tertiary_school, :tertiary_graduate, :tertiary_award, :college_school, :college_graduate, :college_award, :pic, :otp, :otp_expiry, 0)");
 
         // Bind parameters
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $hashed_password);
         $stmt->bindParam(':fname', $fname);
+        $stmt->bindParam(':$mname ', $$mname );
         $stmt->bindParam(':lname', $lname);
         $stmt->bindParam(':contact', $contact);
-        $stmt->bindParam(':cname', $cname);
-        $stmt->bindParam(':president', $pres);
-        $stmt->bindParam(':companyadd', $companyadd);
-        $stmt->bindParam(':hr_manager', $hr);
-        $stmt->bindParam(':companynum', $Compphone);
-        $stmt->bindParam(':cmail', $comemail);
-        $stmt->bindParam(':employertype', $employertype);
-        $stmt->bindParam(':pic', $picPath);
+        $stmt->bindParam(':dob', $dob );
+        $stmt->bindParam(':sex', $sex);
+        $stmt->bindParam(':presentadd', $present_add);
+        $stmt->bindParam(':tertiary_school', $school_name1);
+        $stmt->bindParam(':tertiary_graduate', $year_graduated1);
+        $stmt->bindParam(':tertiary_award', $award_received1);
+        $stmt->bindParam(':college_school', $school_name2);
+        $stmt->bindParam(':college_graduate', $year_graduated2);
+        $stmt->bindParam(':college_award', $award_received2);
         $stmt->bindParam(':otp', $otp);
         $stmt->bindParam(':otp_expiry', $otp_expiry);
         $stmt->bindParam(':otp', $otp);
         $stmt->bindParam(':otp_expiry', $otp_expiry);
+
         // Execute query
         if ($stmt->execute()) {
             if (sendOtpEmail($email, $otp)) {
