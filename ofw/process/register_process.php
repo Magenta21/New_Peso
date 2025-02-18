@@ -74,11 +74,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    if (!preg_match("/^\d{10}$/", $contact) || !preg_match("/^\d{10}$/", $Compphone)) {
+        echo "Invalid phone number!";
+        exit;
+    }
+
     // Hash the password before storing
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Create a folder for the company
-    $uploadDir = "../uploads/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $cname) . "/";
+    $uploadDir = "uploads/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $cname) . "/";
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
@@ -115,17 +120,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $db_username, $db_password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Set timezone to Manila, Philippines
-        date_default_timezone_set('Asia/Manila');
-
-        // Generate OTP
-        $otp = rand(100000, 999999);
-        $otp_expiry = date('Y-m-d H:i:s', strtotime('+10 minutes')); // Expiry in Manila Time
-
         // Prepare SQL statement
-        // Store OTP and expiry in the database
         $stmt = $pdo->prepare("INSERT INTO employer (username, email, password, fname, lname, tel_num, company_name, president, company_address, hr, company_contact, company_email, types_of_employer, company_photo, otp, otp_expiry, is_verified) 
-        VALUES (:username, :email, :password, :fname, :lname, :contact, :cname, :president, :companyadd, :hr_manager, :companynum, :cmail, :employertype, :pic, :otp, :otp_expiry, 0)");
+                               VALUES (:username, :email, :password, :fname, :lname, :contact, :cname, :president, :companyadd, :hr_manager, :companynum, :cmail, :employertype, :pic, :otp, :otp_expiry, 0)");
 
         // Bind parameters
         $stmt->bindParam(':username', $username);
@@ -144,13 +141,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':pic', $picPath);
         $stmt->bindParam(':otp', $otp);
         $stmt->bindParam(':otp_expiry', $otp_expiry);
-        $stmt->bindParam(':otp', $otp);
-        $stmt->bindParam(':otp_expiry', $otp_expiry);
+
         // Execute query
         if ($stmt->execute()) {
             if (sendOtpEmail($email, $otp)) {
                 // Redirect to OTP verification page
-                header("Location: ../otp_verification.php?email=" . urlencode($email));
+                header("Location: otp_verification.php?email=" . urlencode($email));
                 exit();
             } else {
                 echo "Failed to send OTP email!";
