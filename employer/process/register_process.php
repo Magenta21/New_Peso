@@ -53,8 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $employertype = $_POST['employertype'];
     $compic = $_FILES['pic'];
 
-
-
     // Validation
     if (empty($username) || empty($email) || empty($password) || empty($fname) || empty($lname) || empty($contact) || 
         empty($cname) || empty($pres) || empty($companyadd) || empty($hr) || empty($Compphone) || empty($comemail)) {
@@ -140,8 +138,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':cmail', $comemail);
         $stmt->bindParam(':employertype', $employertype);
         $stmt->bindParam(':pic', $picPath);
-        $stmt->bindParam(':otp', $otp);
-        $stmt->bindParam(':otp_expiry', $otp_expiry);
         $stmt->bindParam(':otp', $otp);
         $stmt->bindParam(':otp_expiry', $otp_expiry);
         // Execute query

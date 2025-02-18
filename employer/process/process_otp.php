@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             echo "OTP Verified! Your account is now activated. <a href='../employer_login.php'>Login</a>";
         } else {
-            echo "Invalid or expired OTP. <a href='otp_verification.php?email=" . urlencode($email) . "'>Try Again</a>";
+            echo "Invalid or expired OTP. <a href='../otp_verification.php?email=" . urlencode($email) . "'>Try Again</a>";
         }
     } else {
         echo "No account found!";
