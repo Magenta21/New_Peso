@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $otp = $_POST['otp'];
 
-    $pdo = new PDO("mysql:host=localhost;dbname=peso2;charset=utf8", "root", "");
+    $pdo = new PDO("mysql:host=localhost;dbname=pesoo;charset=utf8", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Fetch OTP details from database
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             echo "OTP Verified! Your account is now activated. <a href='../employer_login.php'>Login</a>";
         } else {
-            echo "Invalid or expired OTP. <a href='otp_verification.php?email=" . urlencode($email) . "'>Try Again</a>";
+            echo "Invalid or expired OTP. <a href='../otp_verification.php?email=" . urlencode($email) . "'>Try Again</a>";
         }
     } else {
         echo "No account found!";

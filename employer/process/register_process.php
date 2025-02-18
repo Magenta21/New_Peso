@@ -53,10 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $employertype = $_POST['employertype'];
     $compic = $_FILES['pic'];
 
-    // Generate OTP
-    $otp = rand(100000, 999999);
-    $otp_expiry = date('Y-m-d H:i:s', strtotime('+10 minutes'));
-
     // Validation
     if (empty($username) || empty($email) || empty($password) || empty($fname) || empty($lname) || empty($contact) || 
         empty($cname) || empty($pres) || empty($companyadd) || empty($hr) || empty($Compphone) || empty($comemail)) {
