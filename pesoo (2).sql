@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2025 at 01:30 AM
+-- Generation Time: Feb 18, 2025 at 04:00 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `peso2`
+-- Database: `pesoo`
 --
 
 -- --------------------------------------------------------
@@ -73,8 +73,12 @@ CREATE TABLE `applicant_profile` (
   `pagibig_no` int(255) NOT NULL,
   `philhealth_no` int(255) NOT NULL,
   `passport_no` int(255) NOT NULL,
-  `school_graduate` varchar(255) NOT NULL,
-  `year_graduate` date NOT NULL,
+  `tertiary_school` varchar(255) NOT NULL,
+  `tertiary_graduated` date NOT NULL,
+  `tertiary_award` varchar(255) NOT NULL,
+  `college_school` varchar(255) NOT NULL,
+  `college_graduated` date NOT NULL,
+  `college_award` varchar(255) NOT NULL,
   `course` varchar(255) NOT NULL,
   `work_location` varchar(255) NOT NULL,
   `disability` varchar(255) NOT NULL,
@@ -91,8 +95,8 @@ CREATE TABLE `applicant_profile` (
 -- Dumping data for table `applicant_profile`
 --
 
-INSERT INTO `applicant_profile` (`id`, `username`, `password`, `is_verified`, `otp`, `otp_expiry`, `reset_token`, `reset_token_expiry`, `email`, `fname`, `lname`, `mname`, `dob`, `pob`, `age`, `height`, `sex`, `civil_status`, `contact_no`, `landline`, `photo`, `house_address`, `tin`, `sss_no`, `pagibig_no`, `philhealth_no`, `passport_no`, `school_graduate`, `year_graduate`, `course`, `work_location`, `disability`, `selected_option`, `four_ps`, `prefix`, `relegion`, `employment_status`, `resume`, `applicant_type`) VALUES
-(1, '', '$2y$10$GnlvJC8gnDDX8hYfcZkFpevSo8U8WobaLhgzzVHrToC9P2YlBqMs2', '', '', '0000-00-00 00:00:00.000000', '', '', 'PirateKinGG0001a@gmail.com', 'jervvin', 'gg', '', '0000-00-00', '', 0, 0, '', '', 0, '', '', '', 0, 0, 0, 0, 0, '', '0000-00-00', '', '', '', '', '', '', '', '', '', 'Training');
+INSERT INTO `applicant_profile` (`id`, `username`, `password`, `is_verified`, `otp`, `otp_expiry`, `reset_token`, `reset_token_expiry`, `email`, `fname`, `lname`, `mname`, `dob`, `pob`, `age`, `height`, `sex`, `civil_status`, `contact_no`, `landline`, `photo`, `house_address`, `tin`, `sss_no`, `pagibig_no`, `philhealth_no`, `passport_no`, `tertiary_school`, `tertiary_graduated`, `tertiary_award`, `college_school`, `college_graduated`, `college_award`, `course`, `work_location`, `disability`, `selected_option`, `four_ps`, `prefix`, `relegion`, `employment_status`, `resume`, `applicant_type`) VALUES
+(1, '', '$2y$10$GnlvJC8gnDDX8hYfcZkFpevSo8U8WobaLhgzzVHrToC9P2YlBqMs2', '', '', '0000-00-00 00:00:00.000000', '', '', 'PirateKinGG0001a@gmail.com', 'jervvin', 'gg', '', '0000-00-00', '', 0, 0, '', '', 0, '', '', '', 0, 0, 0, 0, 0, '', '0000-00-00', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 'Training');
 
 -- --------------------------------------------------------
 
@@ -216,10 +220,8 @@ CREATE TABLE `employer` (
   `otp_expiry` datetime(6) NOT NULL,
   `reset_token` varchar(6) NOT NULL,
   `reset_token_expiry` datetime(6) NOT NULL,
-  `photo` varchar(255) NOT NULL,
   `types_of_employer` enum('local_agencies','direct_hire','Overseas','local_lb') NOT NULL,
   `fname` varchar(255) NOT NULL,
-  `mname` varchar(255) NOT NULL,
   `lname` varchar(255) NOT NULL,
   `company_name` varchar(255) NOT NULL,
   `company_address` varchar(255) NOT NULL,
@@ -231,13 +233,6 @@ CREATE TABLE `employer` (
   `hr_email` varchar(255) NOT NULL,
   `company_photo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `employer`
---
-
-INSERT INTO `employer` (`id`, `username`, `password`, `email`, `is_verified`, `otp`, `otp_expiry`, `reset_token`, `reset_token_expiry`, `photo`, `types_of_employer`, `fname`, `mname`, `lname`, `company_name`, `company_address`, `company_contact`, `hr`, `president`, `tel_num`, `company_email`, `hr_email`, `company_photo`) VALUES
-(10, 'Melany.Volkman', '$2y$10$7kzt8feiypKtMfELwjWp.OQnYJXP/vdZF.U8QX0b3iNVhPq.DkmZW', 'pesolosbanos4@gmail.com', 1, '325259', '2025-02-17 15:49:47.000000', '', '0000-00-00 00:00:00.000000', '', 'local_agencies', 'Collin', '', 'Bogisich', 'Raina Baumbach', 'Heidenreich - Stokes', 'Barton, VonRueden and Mayert', 'Eum quas asperiores.', 'Harum eveniet quisquam temporibus quas et quam repellat.', '324', 'Hayes - Oberbrunner', '', '../uploads/Raina_Baumbach/33.jpg');
 
 -- --------------------------------------------------------
 
@@ -306,7 +301,7 @@ CREATE TABLE `job_post` (
 --
 
 INSERT INTO `job_post` (`id`, `employer_id`, `job_title`, `company_name`, `job_type`, `salary`, `job_description`, `selected_option`, `vacant`, `requirement`, `work_location`, `education`, `remarks`, `date_posted`, `is_active`) VALUES
-(1, 0, 'saleslady', 'Ayala Mall', 'Saleslady', '10000', 'asd', '', 3, 'PSA\r\n', 'CAlamba', 'n/A', '', '0000-00-00', 1),
+(1, 0, 'saleslady', 'Ayala Mall', 'Saleslady', '10000', 'asd\nASDASD\nASDASD\nASDA\nSDAS\nDAS\nDAD', '', 3, 'PSA\r\n', 'CAlamba', 'n/A', '', '0000-00-00', 1),
 (2, 0, 'saleslady', 'Ayala Mall', 'Mason', '10000', 'asd', '', 3, 'PSA\r\n', 'CAlamba', 'n/A', '', '0000-00-00', 1),
 (3, 0, 'welding', 'welding incorporation', 'Welder ', '10000', 'Malakas pangangatawanan', '', 22, 'Malaki muscle ', 'Bay,Laguna', '', 'N/A', '0000-00-00', 1),
 (4, 0, 'Mason', 'Mason incorporation', 'masonary', '10000', 'Malakas pangangatawanan', '', 22, 'Malaki muscle ', 'Bay,Laguna', '', 'N/A', '0000-00-00', 1),
@@ -415,11 +410,11 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`id`, `title`, `image`, `description`, `schedule_date`, `create_at`) VALUES
-(1, 'New Tech Innovation Announced', 'news/i1.webp', 'A breakthrough in AI technology has been announced, revolutionizing automation.', '2025-03-01', '2025-02-17 02:45:38'),
-(2, 'Local Sports Team Wins Championship', 'news/i2.webp', 'The city celebrates as the home team claims victory in the national championship.', '2025-03-05', '2025-02-17 02:46:05'),
-(3, 'Weather Alert: Heavy Rain Expected', 'news/i3.webp', 'Meteorologists warn of incoming heavy rainfall and possible flooding.', '2025-02-25', '2025-02-17 02:46:12'),
-(4, 'New Legislation Passed for Green Energy', 'news/i4.webp', 'The government has approved a new bill promoting renewable energy solutions.', '2025-03-10', '2025-02-17 02:46:19'),
-(5, 'Upcoming Music Festival Lineup Revealed', 'news/i5.webp', 'Top artists are set to perform at the annual summer music festival.', '2025-03-15', '2025-02-17 02:46:29');
+(1, 'New Tech Innovation Announced', 'news/i1.webp', 'A breakthrough in AI technology has been announced, revolutionizing automation.', '2025-03-01', '2025-02-16 18:45:38'),
+(2, 'Local Sports Team Wins Championship', 'news/i2.webp', 'The city celebrates as the home team claims victory in the national championship.', '2025-03-05', '2025-02-16 18:46:05'),
+(3, 'Weather Alert: Heavy Rain Expected', 'news/i3.webp', 'Meteorologists warn of incoming heavy rainfall and possible flooding.', '2025-02-25', '2025-02-16 18:46:12'),
+(4, 'New Legislation Passed for Green Energy', 'news/i4.webp', 'The government has approved a new bill promoting renewable energy solutions.', '2025-03-10', '2025-02-16 18:46:19'),
+(5, 'Upcoming Music Festival Lineup Revealed', 'news/i5.webp', 'Top artists are set to perform at the annual summer music festival.', '2025-03-15', '2025-02-16 18:46:29');
 
 -- --------------------------------------------------------
 
@@ -904,7 +899,7 @@ ALTER TABLE `documents_files`
 -- AUTO_INCREMENT for table `employer`
 --
 ALTER TABLE `employer`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `graduates`

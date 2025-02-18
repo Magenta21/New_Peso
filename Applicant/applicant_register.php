@@ -107,13 +107,13 @@
                                 <span class="error-message"></span>
                             </div>
 
-                            <div class="col-md-4">
-                                <label for="age">Age:</label>
-                                <input type="number" id="age" name="age" required>
-                                <span class="error-message"></span>
-                            </div>
+                        <div class="col-md-4">
+                            <label for="dob">Date of Birth:</label>
+                            <input type="date" id="dob" name="dob" required>
+                            <span class="error-message"></span>
+                        </div>
 
-                            <div class="col-md-4">
+                        <div class="col-md-4">
                                 <label for="sex">Sex:</label>
                                 <select id="sex" name="sex" required>
                                     <option value="">Select</option>
@@ -126,7 +126,7 @@
                         <div class="row">
                             <div class="col-md-12"> 
                                 <label for="Present_Address">Present Address:</label>
-                                <input type="text" id="Present_Address" name="Present_Address" required>
+                                <input type="text" id="Present_Address" name="present_address" required>
                                 <span class="error-message"></span>
                             </div>
                         </div>
