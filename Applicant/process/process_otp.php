@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
+        date_default_timezone_set('Asia/Manila'); 
         $current_time = date('Y-m-d H:i:s'); // Current Manila time
         $otp_expiry = $user['otp_expiry'];
 

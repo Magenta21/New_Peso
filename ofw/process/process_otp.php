@@ -9,28 +9,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Fetch OTP details from database
-    $stmt = $pdo->prepare("SELECT otp, otp_expiry FROM applicant_profile WHERE email = :email AND is_verified = 0");
+    $stmt = $pdo->prepare("SELECT otp, otp_expiry FROM ofw_profile WHERE email = :email AND is_verified = 0");
     $stmt->bindParam(':email', $email);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
+        date_default_timezone_set('Asia/Manila'); // Ensure Manila time is used
         $current_time = date('Y-m-d H:i:s'); // Current Manila time
         $otp_expiry = $user['otp_expiry'];
-
-        if ($user['otp'] == $otp && $current_time <= $otp_expiry) {
+    
+        // Debugging: Check fetched OTP and expiry time
+        // var_dump($user['otp'], $otp, $current_time, $otp_expiry);
+    
+        // Ensure both OTP values are treated as strings before comparing
+        if (strval($user['otp']) === strval($otp) && $current_time <= $otp_expiry) {
             // Mark account as verified
-            $stmt = $pdo->prepare("UPDATE applicant_profile SET is_verified = 1 WHERE email = :email");
+            $stmt = $pdo->prepare("UPDATE ofw_profile SET is_verified = 1 WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();
-
+    
             echo "OTP Verified! Your account is now activated. <a href='../applicant_login.php'>Login</a>";
         } else {
-            echo "Invalid or expired OTP. <a href='otp_verification.php?email=" . urlencode($email) . "'>Try Again</a>";
+            echo "Invalid or expired OTP. <a href='../otp_verification.php?email=" . urlencode($email) . "'>Try Again</a>";
         }
     } else {
         echo "No account found!";
     }
+    
 }
 
 ?>

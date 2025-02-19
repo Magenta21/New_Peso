@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Fetch user details by username or email
-        $stmt = $pdo->prepare("SELECT * FROM applicant_profile WHERE (username = :username OR email = :email) AND is_verified = 1");
+        $stmt = $pdo->prepare("SELECT * FROM ofw_profile WHERE (username = :username OR email = :email) AND is_verified = 1");
         $stmt->bindParam(':username', $usernameOrEmail);
         $stmt->bindParam(':email', $usernameOrEmail);
         $stmt->execute();
@@ -20,13 +20,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user && password_verify($password, $user['password'])) {
             // Set session variables
-            $_SESSION['employer_id'] = $user['id'];
+            $_SESSION['ofw_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['company_name'] = $user['company_name'];
             $_SESSION['logged_in'] = true;
 
             // Redirect to employer dashboard
-            header("Location: ../applicant_home.php");
+            header("Location: ../ofw_home.php");
             exit();
         } else {
             echo "Invalid credentials or account not verified.";
