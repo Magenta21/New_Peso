@@ -54,12 +54,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $college_school = $_POST['school_name2'];
     $college_graduate = $_POST['year_graduated2'];
     $college_award = $_POST['award_recieved2'];
+    $user_type = $_POST['applicanttype'];
     $pic = $_FILES['pic'];
 
     // Validation
     if (empty($username) || empty($email) || empty($password) || empty($fname) || empty($mname) || empty($lname) || empty($contact) || 
         empty($dob) || empty($sex) || empty($presentadd) || empty($tertiary_school) || empty($tertiary_graduate) || 
-        empty($college_school) || empty($college_graduate) || empty($pic)) {
+        empty($college_school) || empty($college_graduate) || empty($user_type) || empty($pic)) {
         echo "All fields are required!";
         exit;
     }
@@ -125,9 +126,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Prepare SQL statement
         // Store OTP and expiry in the database
         $stmt = $pdo->prepare("INSERT INTO applicant_profile (username, email, password, fname, mname, lname, contact_no, dob, sex, house_address, 
-        tertiary_school, tertiary_graduated, tertiary_award, college_school, college_graduated, college_award, photo, otp, otp_expiry, is_verified) 
+        tertiary_school, tertiary_graduated, tertiary_award, college_school, college_graduated, college_award, applicant_type, photo, otp, otp_expiry, is_verified) 
         VALUES (:username, :email, :password, :fname, :mname, :lname, :contact, :dob, :sex, :presentadd, :tertiary_school, :tertiary_graduate, 
-        :tertiary_award, :college_school, :college_graduate, :college_award, :pic, :otp, :otp_expiry, 0)");
+        :tertiary_award, :college_school, :college_graduate, :college_award, :user_type, :pic, :otp, :otp_expiry, 0)");
 
 
         // Bind parameters
@@ -147,6 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':college_school', $college_school);
         $stmt->bindParam(':college_graduate', $college_graduate);
         $stmt->bindParam(':college_award', $college_award);
+        $stmt->bindParam(':user_type', $user_type);
         $stmt->bindParam(':pic', $picPath);
         $stmt->bindParam(':otp', $otp);
         $stmt->bindParam(':otp_expiry', $otp_expiry);

@@ -41,25 +41,43 @@ window.nextStep = function () {
                 errorMessage.textContent = "Passwords do not match.";
                 valid = false;
             }
-        } else if (input.id === "Cnum" && !/^\d{10,}$/.test(input.value)) {
-            errorMessage.textContent = "Invalid phone number format.";
-            valid = false;
         } else if (input.tagName.toLowerCase() === "select" && input.value === "") {
             errorMessage.textContent = "Please select an option.";
-            valid = false;
-        } else if (input.type === "file" && input.files.length === 0) {
-            errorMessage.textContent = "Please upload a file.";
             valid = false;
         }
     });
 
-    if (valid) {
+    if (valid && currentStep === 0) {
+        // Check if username and email are taken
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+
+        fetch("process/check_availability.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}`,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.usernameTaken) {
+                    document.getElementById("username").nextElementSibling.textContent = "Username is already taken.";
+                } else if (data.emailTaken) {
+                    document.getElementById("email").nextElementSibling.textContent = "Email is already registered.";
+                } else {
+                    // Move to next step if username and email are available
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            })
+            .catch((error) => console.error("Error:", error));
+    } else if (valid) {
         if (currentStep < formSteps.length - 1) {
             currentStep++;
             showStep(currentStep);
         }
     }
 };
+
 
 window.prevStep = function () {
     if (currentStep > 0) {

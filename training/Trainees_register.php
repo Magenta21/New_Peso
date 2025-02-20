@@ -36,7 +36,7 @@
 <div class="container-fluid mt-md-3">
     <div class="row justify-content-center sm-margin">
         <div class="container">
-            <form id="registrationForm" action="register_process.php" method="POST">
+            <form id="registrationForm" action="process/register_process.php" method="POST" enctype="multipart/form-data">
                 <!-- Step 1: Email & Password (Now the first step) -->
                 <div class="form-step active">
                     <h2>Step 1: Account Details</h2>
@@ -44,13 +44,13 @@
                         <div class="col-md-6">
                             <label for="text">Username:</label>
                             <input type="text" id="username" name="username" required>
-                            <span class="error-message"></span>
+                            <span class="error-message" id="username-error"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label for="email">Email:</label>
                             <input type="email" id="email" name="email" required>
-                            <span class="error-message"></span>
+                            <span class="error-message" id="email-error"></span>
                         </div>
                     </div>
 
@@ -107,13 +107,13 @@
                                 <span class="error-message"></span>
                             </div>
 
-                            <div class="col-md-4">
-                                <label for="age">Age:</label>
-                                <input type="number" id="age" name="age" required>
-                                <span class="error-message"></span>
-                            </div>
+                        <div class="col-md-4">
+                            <label for="dob">Date of Birth:</label>
+                            <input type="date" id="dob" name="dob" required>
+                            <span class="error-message"></span>
+                        </div>
 
-                            <div class="col-md-4">
+                        <div class="col-md-4">
                                 <label for="sex">Sex:</label>
                                 <select id="sex" name="sex" required>
                                     <option value="">Select</option>
@@ -126,7 +126,7 @@
                         <div class="row">
                             <div class="col-md-12"> 
                                 <label for="Present_Address">Present Address:</label>
-                                <input type="text" id="Present_Address" name="Present_Address" required>
+                                <input type="text" id="Present_Address" name="present_address" required>
                                 <span class="error-message"></span>
                             </div>
                         </div>
@@ -159,7 +159,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="award_recieved1">Awards Recieved</label>
-                            <input type="text" id="award_recieved1" name="award_recieved1"  required>
+                            <input type="text" id="award_recieved1" name="award_recieved1">
                             <span class="error-message"></span>
                         </div>
                     </div>
@@ -179,7 +179,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="award_recieved2">Awards Recieved</label>
-                            <input type="text" id="award_recieved2" name="award_recieved2"  required>
+                            <input type="text" id="award_recieved2" name="award_recieved2">
+                            <input type="hidden" name="applicanttype" value="Training">
                             <span class="error-message"></span>
                         </div>
                     </div>

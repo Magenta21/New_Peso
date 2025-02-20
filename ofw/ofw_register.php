@@ -44,13 +44,13 @@
                         <div class="col-md-6">
                             <label for="text">Username:</label>
                             <input type="text" id="username" name="username" required>
-                            <span class="error-message"></span>
+                            <span class="error-message" id="username-error"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label for="email">Email:</label>
                             <input type="email" id="email" name="email" required>
-                            <span class="error-message"></span>
+                            <span class="error-message" id="email-error"></span>
                         </div>
                     </div>
 
