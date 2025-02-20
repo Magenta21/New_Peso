@@ -140,10 +140,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="companynum">Contact Number</label>
-                            <input type="text" id="companynum" name="companynum"  required>
+                            <label for="Cnum">Contact Number</label>
+                            <input type="number" id="companynum" name="companynum" require>
                             <span class="error-message"></span>
                         </div>
+                       
                         <div class="col-md-6">
                             <label for="companyemail">Company  Email</label>
                             <input type="text" id="companyemail" name="cmail"  required>
