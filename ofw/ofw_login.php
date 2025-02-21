@@ -30,21 +30,6 @@ if (isset($_SESSION['user'])) {
                 </div>
             </div>
         </div>
-    
-        <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <span class="navbar-text text-white w-100 text-center">
-                <a href="../index.php">HOME</a>
-                <a href="../Applicant/applicant_login.php">APPLICANT</a>
-                <a href="../training/training_login.php">TRAININGS</a>
-                <a href="#">OFW</a>
-                <a href="../employer/employer_login.php">EMPLOYER</a>
-                <a href="institutions/institution_login.php">EDUCATIONAL INSTITUTIONS</a>
-                <a href="joblist.php">JOBS</a>
-                <a href="#">News</a>
-            </span>
-        </div>
-    </nav>
 
     <div class="container-fluid d-flex justify-content-center align-items-center mt-5">
         <div class="row front-box">
