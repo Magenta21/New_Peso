@@ -104,7 +104,7 @@ if (!$row_emp) {
 
 <div class="container container-fluid">
     <?php while ($row = $result->fetch_assoc()) { ?>
-        <a href="jobdetails.php?id=<?= htmlspecialchars($row['id']) ?>" class="text-decoration-none text-dark">
+        <a href="jobdetails.php?id=<?= urlencode(base64_encode($row['id'])) ?>" class="text-decoration-none text-dark">
             <div class="row job-row border rounded mb-3 shadow-sm" style="cursor: pointer;">
                 <div class="col-md-8 row justify-content-start">
                     <div class="col-md-12 pt-3 text-start">

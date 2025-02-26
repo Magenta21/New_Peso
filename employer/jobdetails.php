@@ -1,12 +1,29 @@
 <?php
-include 'db.php';
+include '../db.php';
+
+session_start();
+
+$employerid = $_SESSION['employer_id'];
+// Check if the employer is logged in
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: employer_login.php");
+    exit();
+}
+
 
 if (!isset($_GET['id'])) {
     echo "<p>Invalid job listing.</p>";
     exit;
 }
 
-$jobId = (int)$_GET['id'];
+if (isset($_GET['id'])) {
+    $jobId = base64_decode($_GET['id']);
+    if (!is_numeric($jobId)) {
+        die('Invalid ID');
+    }
+} else {
+    die('ID not specified');
+}
 
 // Fetch job details
 $query = "SELECT * FROM job_post WHERE id = $jobId";
@@ -18,6 +35,21 @@ if ($result->num_rows === 0) {
 }
 
 $job = $result->fetch_assoc();
+
+$sql = "SELECT * FROM employer WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $employerid);
+$stmt->execute();
+$result_emp = $stmt->get_result();
+
+if (!$result_emp) {
+    die("Invalid query: " . $conn->error); 
+}
+
+$row_emp = $result_emp->fetch_assoc();
+if (!$row_emp) {
+    die("User not found.");
+}
 ?>
 
 <!DOCTYPE html>
@@ -56,26 +88,49 @@ $job = $result->fetch_assoc();
             font-size: 20px;
             cursor: pointer;
         }
+    .header {
+        background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+        color: white;
+        height: 50px;
+        width: 100%;
+        text-align: center;
+    }
     </style>
 </head>
 <body>
+
 <div class="header">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <a href="index.php" style="display: block; text-decoration: none;">
-                    <img src="img/logolb.png" alt="lblogo" style="height: 50px;">
-                </a>
-            </div>
-            <div class="col-md-8">
-                <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">Job Listings</h3>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+                </div>
+                <div class="col-md-8">
+                    <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
+                </div>
+                <div class="col-md-2 mt-1 position-relative">
+                    <div class="dropdown">
+                        <a href="#" class="text-decoration-none mt-5" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?php if (!empty($row_emp['company_photo'])): ?>
+                                <img id="preview" src="<?php echo $row_emp['company_photo']; ?>" alt="Profile Image" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
+                            <?php else: ?>
+                                <img src="../img/user-placeholder.png" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
+                            <?php endif; ?>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
-</div>
 
 <div class="container mt-5">
-    <a href="joblist.php" class="btn btn-primary mb-3"><i class="bi bi-arrow-left"></i> Back to Job Listings</a>
+    <a href="job_list.php" class="btn btn-primary mb-3"><i class="bi bi-arrow-left"></i> Back to Job Listings</a>
     <p><strong>Posted:</strong> <?= htmlspecialchars($job['date_posted']) ?></p>
 
     <div class="card shadow p-4">
