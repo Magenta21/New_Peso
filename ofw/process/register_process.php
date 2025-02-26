@@ -70,8 +70,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Hash the password before storing
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Create a folder for the company
+    // Define upload directory (absolute for saving, relative for database)
     $uploadDir = "../uploads/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $username) . "/";
+    $relativeDir = "uploads/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $username) . "/"; // This will be stored in DB
+
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
@@ -80,14 +82,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $picPath = "";
     if ($pic['error'] == 0) {
         $fileName = basename($pic["name"]);
-        $targetFilePath = $uploadDir . $fileName;
+        $targetFilePath = $uploadDir . $fileName; // Full path for saving
+        $dbFilePath = $relativeDir . $fileName; // Relative path for database
         $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
 
         // Allowed file formats
         $allowedFormats = array("jpg", "jpeg", "png", "gif");
         if (in_array($fileType, $allowedFormats)) {
             if (move_uploaded_file($pic["tmp_name"], $targetFilePath)) {
-                $picPath = $targetFilePath;
+                $picPath = $dbFilePath; // Store only the relative path
             } else {
                 echo "Error uploading file!";
                 exit;
@@ -97,6 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
     }
+
 
     // Database connection using PDO
     $host = "localhost";
