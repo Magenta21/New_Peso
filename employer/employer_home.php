@@ -67,8 +67,9 @@ if (!$row) {
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <span class="navbar-text text-white w-100 text-center">
-                <a class="navlink" href="#">Job Post</a>
-                <a class="navlink" href="#">Job list</a>
+                <a class="navlink" href="employer_home.php">Home</a>
+                <a class="navlink" href="post_job.php">Job Post</a>
+                <a class="navlink" href="job_list.php">Job list</a>
                 <a class="navlink" href="#">Current Employer</a>
                 <a class="navlink" href="#about">About Us</a>
             </span>
@@ -177,7 +178,40 @@ if (!$row) {
                 </div>
             </div>
         </div>
+        <script>
+            // Function to add an initial bullet point when the page loads
+            function addInitialBullet() {
+                const textarea = document.getElementById('req');
+                textarea.value = '• '; // Add a bullet point
+                textarea.setSelectionRange(2, 2); // Set the cursor position right after the bullet
+            }
 
+            // Call the function when the DOM is fully loaded
+            document.addEventListener('DOMContentLoaded', function () {
+                addInitialBullet();
+            });
+
+            document.getElementById('req').addEventListener('keydown', function (event) {
+                // Check if the "Enter" key was pressed
+                if (event.key === 'Enter') {
+                    const textarea = event.target;
+                    const cursorPosition = textarea.selectionStart; // Get cursor position
+
+                    // Split the content into lines by the newline character
+                    const beforeText = textarea.value.slice(0, cursorPosition);
+                    const afterText = textarea.value.slice(cursorPosition);
+
+                    // Add a bullet point at the new line
+                    textarea.value = `${beforeText}\n• ` + afterText;
+
+                    // Prevent default behavior (such as a plain new line without a bullet)
+                    event.preventDefault();
+
+                    // Move the cursor right after the bullet point
+                    textarea.setSelectionRange(cursorPosition + 3, cursorPosition + 3);
+                }
+            });
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
