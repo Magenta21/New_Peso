@@ -1,5 +1,5 @@
 <?php
-include '../db.php';
+include '../../db.php';
 session_start();
 
 $employerid = $_SESSION['employer_id'];
@@ -21,28 +21,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $requirement = $_POST['requirement'];
     $datePosted = $_POST['date_posted'];
 
-    // Update the job post in the database using PDO
-    $query = "UPDATE job_post SET job_title = :job_title, company_name = :company_name, job_type = :job_type, salary = :salary, 
-              work_location = :work_location, job_description = :job_description, requirement = :requirement, date_posted = :date_posted 
-              WHERE id = :job_id AND employer_id = :employer_id";
-    
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam(':job_title', $jobTitle);
-    $stmt->bindParam(':company_name', $companyName);
-    $stmt->bindParam(':job_type', $jobType);
-    $stmt->bindParam(':salary', $salary);
-    $stmt->bindParam(':work_location', $workLocation);
-    $stmt->bindParam(':job_description', $jobDescription);
-    $stmt->bindParam(':requirement', $requirement);
-    $stmt->bindParam(':date_posted', $datePosted);
-    $stmt->bindParam(':job_id', $jobId, PDO::PARAM_INT);
-    $stmt->bindParam(':employer_id', $employerid, PDO::PARAM_INT);
+    // Prepare SQL query using '?' placeholders for mysqli
+    $query = "UPDATE job_post SET job_title = ?, company_name = ?, job_type = ?, salary = ?, 
+              work_location = ?, job_description = ?, requirement = ?, date_posted = ? 
+              WHERE id = ? AND employer_id = ?";
 
-    if ($stmt->execute()) {
-        header("Location: joblist.php?success=Job updated successfully");
-        exit();
+    if ($stmt = $conn->prepare($query)) {
+        // Bind parameters with correct data types
+        $stmt->bind_param("ssssssssii", $jobTitle, $companyName, $jobType, $salary, 
+                          $workLocation, $jobDescription, $requirement, $datePosted, $jobId, $employerid);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            header("Location: ../job_list.php?success=Job updated successfully");
+            exit();
+        } else {
+            echo "<p>Error updating job post: " . $stmt->error . "</p>";
+        }
+
+        // Close statement
+        $stmt->close();
     } else {
-        echo "<p>Error updating job post.</p>";
+        echo "<p>SQL Error: " . $conn->error . "</p>";
     }
+
+    // Close connection
+    $conn->close();
 }
 ?>

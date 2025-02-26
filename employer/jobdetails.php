@@ -129,39 +129,52 @@ if (!$row_emp) {
 
     </div>
 
-<div class="container mt-5">
+    <div class="container mt-3">
     <a href="job_list.php" class="btn btn-primary mb-3"><i class="bi bi-arrow-left"></i> Back to Job Listings</a>
     <p><strong>Posted:</strong> <?= htmlspecialchars($job['date_posted']) ?></p>
 
-    <div class="card shadow p-4">
-        <div class="row">
-            <!-- Left Column -->
-            <div class="col-md-6">
-                <p><strong>Company</strong></p>
-                <div class="skeleton"><?= htmlspecialchars($job['company_name']) ?></div>
+    <form method="POST" action="process/update_job.php"> 
+        <div class="card shadow p-4">
+            <div class="row">
+                <!-- Left Column -->
+                <div class="col-md-6">
+                    <p><strong>Company</strong></p>
+                    <input type="text" name="company_name" class="form-control skeleton" value="<?= htmlspecialchars($job['company_name']) ?>" >
 
-                <p><strong>Job Type</strong></p>
-                <div class="skeleton"><?= htmlspecialchars($job['job_type']) ?></div>
+                    <p><strong>Job Type</strong></p>
+                    <input type="text" name="job_type" class="form-control skeleton" value="<?= htmlspecialchars($job['job_type']) ?>" >
 
-                <p><strong>Description</strong></p>
-                <div class="scrollable-box"><?= nl2br(htmlspecialchars($job['job_description'])) ?></div>
+                    <p><strong>Description</strong></p>
+                    <textarea name="job_description" class="form-control scrollable-box" rows="5" ><?= htmlspecialchars($job['job_description']) ?></textarea>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-md-6">
+                    <p><strong>Title</strong></p>
+                    <input type="text" name="job_title" class="form-control skeleton" value="<?= htmlspecialchars($job['job_title']) ?>" >
+                    
+                    <p><strong>Location</strong></p>
+                    <input type="text" name="work_location" class="form-control skeleton" value="<?= htmlspecialchars($job['work_location']) ?>" >
+
+                    <p><strong>Salary</strong></p>
+                    <input type="text" name="salary" class="form-control skeleton" value="<?= htmlspecialchars($job['salary']) ?>" >
+
+                    <p><strong>Requirements</strong></p>
+                    <textarea name="requirement" class="form-control scrollable-box" rows="5" ><?= htmlspecialchars($job['requirement']) ?></textarea>
+                </div>
             </div>
-
-            <!-- Right Column -->
-            <div class="col-md-6">
-                <p><strong>Location</strong></p>
-                <div class="skeleton"><?= htmlspecialchars($job['work_location']) ?></div>
-
-                <p><strong>Salary</strong></p>
-                <div class="skeleton"><?= htmlspecialchars($job['salary']) ?></div>
-
-                <p><strong>Requirements</strong></p>
-                <div class="scrollable-box"><?= nl2br(htmlspecialchars($job['requirement'])) ?></div>
+            <div class="row">
+                <div class="col-md-12 mt-3">
+                    <input type="hidden" name="date_posted" value="<?php echo date('Y-m-d'); ?>">
+                    <input type="hidden" name="job_id" value="<?php echo $jobId?>">
+                    <!-- <input type="hidden" name="job_title" value="<?= htmlspecialchars($job['job_title']) ?>"> -->
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
             </div>
         </div>
-    </div>
-
+    </form>
 </div>
+
 
 </body>
 </html>
