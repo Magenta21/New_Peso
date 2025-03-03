@@ -18,16 +18,16 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $start = ($page - 1) * $limit;
 
 // Fetch total number of jobs
-$totalQuery = "SELECT COUNT(id) AS total FROM job_post WHERE employer_id = $employerid";
+$totalQuery = "SELECT COUNT(id) AS total FROM current_employee WHERE employer_id = $employerid";
 $totalResult = $conn->query($totalQuery);
 $totalRow = $totalResult->fetch_assoc();
-$totalJobs = $totalRow['total'];
+$totalemployee = $totalRow['total'];
 
 // Calculate total pages
-$totalPages = ceil($totalJobs / $limit);
+$totalPages = ceil($totalemployee / $limit);
 
 // Fetch jobs with limit and offset
-$query = "SELECT id, job_title, company_name, salary, vacant, work_location, is_active FROM job_post WHERE employer_id = $employerid ORDER BY date_posted DESC LIMIT $start, $limit";
+$query = "SELECT * FROM current_employee WHERE employer_id = $employerid ORDER BY date_posted DESC LIMIT $start, $limit";
 $result = $conn->query($query);
 
 
@@ -107,7 +107,7 @@ if (!$row_emp) {
             <div class="row job-row border rounded mb-3 shadow-sm" style="cursor: pointer;">
                 <div class="col-md-6 row justify-content-start">
                     <div class="col-md-12 pt-3 text-start">
-                        <div class="col"><p class="text-start"><i class="bi bi-suitcase-lg"></i> <?= htmlspecialchars($row['job_title']) ?></p></div>
+                        <div class="col"><p class="text-start"><i class="bi bi-suitcase-lg"></i> <?= htmlspecialchars($row['']) ?></p></div>
                         <div class="col"><p class="text-start"><i class="bi bi-buildings"></i> <?= htmlspecialchars($row['company_name']) ?></p></div>
                         <div class="col"><p class="text-start"><i class="bi bi-pin-map"></i> <?= htmlspecialchars($row['work_location']) ?></p></div>
                         <div class="col"><p class="text-start"><i class="bi bi-cash"></i> <?= htmlspecialchars($row['salary']) ?></p></div>

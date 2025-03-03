@@ -1,51 +1,162 @@
 <?php
-include '../../db.php';
-session_start();
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
-$employerid = $_SESSION['employer_id'];
-// Check if the employer is logged in
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: employer_login.php");
-    exit();
+// Load Composer's autoloader
+require '../../vendor/autoload.php';
+
+// Function to send OTP Email
+function sendOtpEmail($email, $otp) {
+    $mail = new PHPMailer(true);
+    try {
+        // SMTP Server settings
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'jervinguevarra123@gmail.com'; // Use your Gmail
+        $mail->Password = 'wdul asom bddj yhfd'; // Use an App Password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        // Sender & Recipient
+        $mail->setFrom('jervinguevarra123@gmail.com', 'PESO-lb.ph');
+        $mail->addAddress($email);
+
+        // Email Content
+        $mail->isHTML(true);
+        $mail->Subject = 'OTP Verification';
+        $mail->Body = 'Your OTP for email verification is: <b>' . $otp . '</b>. It will expire in 10 minutes.';
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
-    $jobId = $_POST['job_id'];
-    $jobTitle = $_POST['job_title'];
-    $companyName = $_POST['company_name'];
-    $jobType = $_POST['job_type'];
-    $salary = $_POST['salary'];
-    $workLocation = $_POST['work_location'];
-    $jobDescription = $_POST['job_description'];
-    $requirement = $_POST['requirement'];
-    $datePosted = $_POST['date_posted'];
+// Check if the request is POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $contact = $_POST['Cnum'];
+    $cname = $_POST['cname'];
+    $pres = $_POST['president'];
+    $companyadd = $_POST['companyadd'];
+    $hr = $_POST['hr_manager'];
+    $Compphone = $_POST['companynum'];
+    $comemail = $_POST['cmail'];
+    $employertype = $_POST['employertype'];
+    $compic = $_FILES['pic'];
 
-    // Prepare SQL query using '?' placeholders for mysqli
-    $query = "UPDATE job_post SET job_title = ?, company_name = ?, job_type = ?, salary = ?, 
-              work_location = ?, job_description = ?, requirement = ?, date_posted = ? 
-              WHERE id = ? AND employer_id = ?";
-    
-    if ($stmt = $conn->prepare($query)) {
-        // Bind parameters with correct data types
-        $stmt->bind_param("ssssssssii", $jobTitle, $companyName, $jobType, $salary, 
-                          $workLocation, $jobDescription, $requirement, $datePosted, $jobId, $employerid);
-
-        // Execute the statement
-        if ($stmt->execute()) {
-            header("Location: joblist.php?success=Job updated successfully");
-            exit();
-        } else {
-            echo "<p>Error updating job post: " . $stmt->error . "</p>";
-        }
-
-        // Close statement
-        $stmt->close();
-    } else {
-        echo "<p>SQL Error: " . $conn->error . "</p>";
+    // Validation
+    if (empty($username) || empty($email) || empty($password) || empty($fname) || empty($lname) || empty($contact) || 
+        empty($cname) || empty($pres) || empty($companyadd) || empty($hr) || empty($Compphone) || empty($comemail)) {
+        echo "All fields are required!";
+        exit;
     }
 
-    // Close connection
-    $conn->close();
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Invalid email format!";
+        exit;
+    }
+
+    if (strlen($password) < 6) {
+        echo "Password must be at least 6 characters!";
+        exit;
+    }
+
+    // Hash the password before storing
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Create a folder for the company
+    $uploadDir = "../uploads/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $cname) . "/";
+    $dbPath = "uploads/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $cname) . "/"; // This will be stored in the database    
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+
+    // Handle Image Upload
+    $picPath = "";
+    if ($compic['error'] == 0) {
+        $fileName = basename($compic["name"]);
+        $targetFilePath = $uploadDir . $fileName;
+        $dbFilePath = $dbPath . $fileName; // This is what gets stored in the database
+        $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+    
+        // Allowed file formats
+        $allowedFormats = array("jpg", "jpeg", "png", "gif");
+        if (in_array($fileType, $allowedFormats)) {
+            if (move_uploaded_file($compic["tmp_name"], $targetFilePath)) {
+                $picPath = $dbFilePath; // Store relative path in database
+            } else {
+                echo "Error uploading file!";
+                exit;
+            }
+        } else {
+            echo "Invalid file format!";
+            exit;
+        }
+    }
+    
+
+    // Database connection using PDO
+    $host = "localhost";
+    $dbname = "pesoo";
+    $db_username = "root";
+    $db_password = "";
+
+    try {
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $db_username, $db_password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Set timezone to Manila, Philippines
+        date_default_timezone_set('Asia/Manila');
+
+        // Generate OTP
+        $otp = rand(100000, 999999);
+        $otp_expiry = date('Y-m-d H:i:s', strtotime('+10 minutes')); // Expiry in Manila Time
+
+        // Prepare SQL statement
+        // Store OTP and expiry in the database
+        $stmt = $pdo->prepare("INSERT INTO employer (username, email, password, fname, lname, tel_num, company_name, president, company_address, hr, company_contact, company_email, types_of_employer, company_photo, otp, otp_expiry, is_verified) 
+        VALUES (:username, :email, :password, :fname, :lname, :contact, :cname, :president, :companyadd, :hr_manager, :companynum, :cmail, :employertype, :pic, :otp, :otp_expiry, 0)");
+
+        // Bind parameters
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $hashed_password);
+        $stmt->bindParam(':fname', $fname);
+        $stmt->bindParam(':lname', $lname);
+        $stmt->bindParam(':contact', $contact);
+        $stmt->bindParam(':cname', $cname);
+        $stmt->bindParam(':president', $pres);
+        $stmt->bindParam(':companyadd', $companyadd);
+        $stmt->bindParam(':hr_manager', $hr);
+        $stmt->bindParam(':companynum', $Compphone);
+        $stmt->bindParam(':cmail', $comemail);
+        $stmt->bindParam(':employertype', $employertype);
+        $stmt->bindParam(':pic', $picPath);
+        $stmt->bindParam(':otp', $otp);
+        $stmt->bindParam(':otp_expiry', $otp_expiry);
+        // Execute query
+        if ($stmt->execute()) {
+            if (sendOtpEmail($email, $otp)) {
+                // Redirect to OTP verification page
+                header("Location: ../otp_verification.php?email=" . urlencode($email));
+                exit();
+            } else {
+                echo "Failed to send OTP email!";
+            }
+        } else {
+            echo "Error in registration!";
+        }
+    } catch (PDOException $e) {
+        die("Database error: " . $e->getMessage());
+    }
 }
 ?>

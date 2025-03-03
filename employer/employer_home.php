@@ -70,7 +70,7 @@ if (!$row) {
                 <a class="navlink" href="employer_home.php">Home</a>
                 <a class="navlink" href="post_job.php">Job Post</a>
                 <a class="navlink" href="job_list.php">Job list</a>
-                <a class="navlink" href="#">Current Employer</a>
+                <a class="navlink" href="employees.php">Employers</a>
                 <a class="navlink" href="#about">About Us</a>
             </span>
         </div>
