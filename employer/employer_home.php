@@ -54,7 +54,7 @@ if (!$row) {
                             <?php endif; ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                            <li><a class="dropdown-item" href="employer_profile.php">Profile</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
                         </ul>
@@ -71,7 +71,7 @@ if (!$row) {
                 <a class="navlink" href="post_job.php">Job Post</a>
                 <a class="navlink" href="job_list.php">Job list</a>
                 <a class="navlink" href="employees.php">Employers</a>
-                <a class="navlink" href="#about">About Us</a>
+                                
             </span>
         </div>
     </nav>

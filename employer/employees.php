@@ -31,12 +31,12 @@ if (!$row_emp) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Listings</title>
+    <title>Employees</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/joblist.css">
+    <link rel="stylesheet" href="css/employees.css">
 </head>
 <body>
 
@@ -59,7 +59,7 @@ if (!$row_emp) {
                             <?php endif; ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                            <li><a class="dropdown-item" href="employer_profile.php">Profile</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
                         </ul>
@@ -79,57 +79,36 @@ if (!$row_emp) {
             </span>
         </div>
     </nav>
-    <div class="container-fluid d-flex justify-content-center align-items-center mt-5">
-        <div class="d-flex justify-content-between align-items-center">
+    <div class="container mt-4">
+        <div class="container mt-4 mb-3">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="toggleButton" href="#" role="tab">Job List</a>
+                    <a class="nav-link active" id="toggleButton" href="#" role="tab">Employees List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="toggleButton4" href="#" role="tab">Recommended Job</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="toggleButton2" href="#" role="tab">Saved Job</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="toggleButton3" href="#" role="tab">Applied Job</a>
+                    <a class="nav-link" id="toggleButton4" href="#" role="tab">Add employees</a>
                 </li>
             </ul>
-
         </div>
 
 
 
+
+
         <div class="row align-items-start"  style="margin-top:-1.6rem;">
-            <div id="jobListContainer" class="employers">
+            <div id="employerlist" class="employers">
                 <?php 
                     error_reporting(E_ALL);
                     ini_set('display_errors', 1);
-                    include '#'; 
+                    include 'employees/employees_list.php'; 
                 ?>
             </div>
 
-            <div id="recomendedJobListContainer" class="employers">
+            <div id="addemployerlist" class="employers">
                 <?php 
                     error_reporting(E_ALL);
                     ini_set('display_errors', 1);
-                    include '#'; 
-                ?>
-            </div>
-
-            <div id="savedJobListContainer" class="employers">
-                <?php 
-                    error_reporting(E_ALL);
-                    ini_set('display_errors', 1);
-                    include '#'; 
-                ?>
-            </div>
-
-            <div id="appliedJobListContainer" class="employers">
-                <?php 
-                    error_reporting(E_ALL);
-                    ini_set('display_errors', 1);
-                    include '#'; 
+                    include 'employees/addemployees.php'; 
                 ?>
             </div>
         </div>
@@ -143,27 +122,17 @@ if (!$row_emp) {
         });
 
         // Show the job list by default
-        document.getElementById('jobListContainer').style.display = 'block';
+        document.getElementById('employerlist').style.display = 'block';
 
         // Button event listeners for showing the respective job list
         document.getElementById('toggleButton').addEventListener('click', function (event) {
             event.preventDefault(); // Prevent default anchor click behavior
-            toggleJobList('jobListContainer', this);
-        });
-
-        document.getElementById('toggleButton2').addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default anchor click behavior
-            toggleJobList('savedJobListContainer', this);
-        });
-
-        document.getElementById('toggleButton3').addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default anchor click behavior
-            toggleJobList('appliedJobListContainer', this);
+            toggleJobList('employerlist', this);
         });
 
         document.getElementById('toggleButton4').addEventListener('click', function (event) {
             event.preventDefault(); // Prevent default anchor click behavior
-            toggleJobList('recomendedJobListContainer', this);
+            toggleJobList('addemployerlist', this);
         });
 
         // Function to toggle job lists
