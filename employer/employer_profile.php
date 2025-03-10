@@ -35,6 +35,7 @@ if (!$row) {
     <title>Profile Settings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
@@ -165,17 +166,30 @@ if (!$row) {
             </div>
             
             <div id="documents" class="tab-content" style="display:none;">
-                <form action="upload_documents.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
-                    <div class="mb-3">
-                        <label class="form-label">Upload Resume:</label>
-                        <input type="file" name="resume" class="form-control" required>
+                <div class="card mb-4">
+                        <div class="card-header">Documents</div>
+                        <div class="card-body">
+                            <div id="eligibility-container">
+                                <!-- Initial Row -->
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" name="eligibility[]" placeholder="Documents Name">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control" name="exam_date[]">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="file" class="form-control" name="license[]">
+                                    </div>
+                                    <div class="col-md-1 text-center">
+                                        <button type="button" class="btn btn-danger" onclick="removeInputGroup(this)">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="addInputGroup()">Add Another Set</button>
+                            <button type="button" class="btn btn-success" onclick="saveEligibilityData()">Save Eligibility</button>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Upload Cover Letter:</label>
-                        <input type="file" name="cover_letter" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Upload</button>
-                </form>
             </div>
         </div>
     </div>
@@ -197,6 +211,54 @@ if (!$row) {
                 }
                 reader.readAsDataURL(file);
             }
+        }
+
+        function addInputGroup() {
+            const container = $("#eligibility-container");
+            const newRow = $(`
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="documents_name[]" placeholder="Documents Name">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" class="form-control" name="date_upload[]">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="file" class="form-control" name="file[]">
+                    </div>
+                    <div class="col-md-1 text-center">
+                        <button type="button" class="btn btn-danger" onclick="removeInputGroup(this)">Remove</button>
+                    </div>
+                </div>
+            `);
+            container.append(newRow);
+        }
+
+        function saveEligibilityData() {
+            const formData = new FormData();
+            formData.append('type', 'documents');
+            formData.append('documents_name', $('input[name="documents_name[]"]').last().val());
+            formData.append('date_upload', $('input[name="date_upload[]"]').last().val());
+            formData.append('file', $('input[name="file[]"]').last()[0].files[0]);
+
+            $.ajax({
+                url: 'process/save_data.php',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    alert(response === 'success' ? 'Data saved successfully!' : 'Error saving data.');
+                }
+            });
+        }
+
+        function removeInputGroup(button) {
+            $(button).closest('.row').remove();
+        }
+
+        function removeTrainingGroup(button) {
+            $(button).closest('.row').remove();
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
