@@ -3,16 +3,16 @@ include "../db.php";
 
 session_start();
 
-$employerid = $_SESSION['employer_id'];
+$applicantid = $_SESSION['applicant_id'];
 // Check if the employer is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: employer_login.php");
     exit();
 }
 
-$sql = "SELECT * FROM employer WHERE id = ?";
+$sql = "SELECT * FROM applicant_profile WHERE id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $employerid);
+$stmt->bind_param("i", $applicantid);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -24,21 +24,6 @@ $row = $result->fetch_assoc();
 if (!$row) {
     die("User not found.");
 }
-
-// Fetch documents related to the employer
-$sql_new = "SELECT * FROM documents WHERE employer_id = ?";  // Change employer_id as per your database structure
-$stmt_new = $conn->prepare($sql_new);
-$stmt_new->bind_param("i", $employerid);
-$stmt_new->execute();
-$result_new = $stmt_new->get_result();
-
-// Fetch all rows
-$documents = [];
-while ($row_new = $result_new->fetch_assoc()) {
-    $documents[] = $row_new;
-}
-
-$stmt_new->close();
 ?>
 
 
@@ -67,7 +52,7 @@ $stmt_new->close();
                     <div class="dropdown">
                         <a href="#" class="text-decoration-none mt-5" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <?php if (!empty($row['company_photo'])): ?>
-                                <img id="preview" src="<?php echo $row['company_photo']; ?>" alt="Profile Image" class="profile-pic img-fluid rounded-circle" style="width: 40px; height: 40px;">
+                                <img id="preview" src="<?php echo $row['photo']; ?>" alt="Profile Image" class="profile-pic img-fluid rounded-circle" style="width: 40px; height: 40px;">
                             <?php else: ?>
                                 <img src="../img/user-placeholder.png" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
                             <?php endif; ?>
@@ -106,8 +91,8 @@ $stmt_new->close();
                 <form action="save_profile.php" method="post" class="needs-validation" novalidate>
                     <div class="text-center">
                         <input type="file" id="fileInput" class="d-none" onchange="updateProfilePic(event)">
-                        <?php if (!empty($row['company_photo'])): ?>
-                            <img src="<?php echo $row['company_photo']; ?>" alt="Profile Picture" class="profile-pic rounded-circle border" id="profilePic" onclick="document.getElementById('fileInput').click();">
+                        <?php if (!empty($row['photo'])): ?>
+                            <img src="<?php echo $row['photo']; ?>" alt="Profile Picture" class="profile-pic rounded-circle border" id="profilePic" onclick="document.getElementById('fileInput').click();">
                         <?php else: ?>
                             <img src="../img/user-placeholder.png" alt="Profile Picture" class="profile-pic rounded-circle border" id="profilePic" onclick="document.getElementById('fileInput').click();">
                         <?php endif; ?>
@@ -182,43 +167,33 @@ $stmt_new->close();
             
             <div id="documents" class="tab-content" style="display:none;">
                 <div class="card mb-4">
-                    <div class="card-header">Documents</div>
+                        <div class="card-header">Documents</div>
                         <div class="card-body">
-                            <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
-                                <div id="eligibility-container">
-                                    <?php 
-                                    // Loop through the fetched documents and display them in the form
-                                    foreach ($documents as $index => $doc) { 
-                                    ?>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="documents_name[]" value="<?php echo htmlspecialchars($doc['document_type']); ?>" placeholder="Document Name" required>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="date" class="form-control" name="date_upload[]" value="<?php echo isset($row['created_at']) ? htmlspecialchars($row['created_at']) : ''; ?>" required>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="file" class="form-control" name="file[]">
-                                            <!-- If there's an existing file, show a link to it -->
-                                            <?php if (!empty($doc['document_file'])): ?>
-                                                <a href="process/<?php echo $doc['document_file']; ?>" target="_blank">View File</a>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="col-md-1 text-center">
-                                            <button type="button" class="btn btn-danger" onclick="removeInputGroup(this)">Remove</button>
-                                        </div>
+                            <div id="eligibility-container">
+                                <!-- Initial Row -->
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" name="eligibility[]" placeholder="Documents Name">
                                     </div>
-                                    <?php } ?>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control" name="exam_date[]">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="file" class="form-control" name="license[]">
+                                    </div>
+                                    <div class="col-md-1 text-center">
+                                        <button type="button" class="btn btn-danger" onclick="removeInputGroup(this)">Remove</button>
+                                    </div>
                                 </div>
-                                <button type="button" class="btn btn-primary" onclick="addInputGroup()">Add Another Set</button>
-                                <button type="submit" class="btn btn-success">Save Eligibility</button>
-                            </form>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="addInputGroup()">Add Another Set</button>
+                            <button type="button" class="btn btn-success" onclick="saveEligibilityData()">Save Eligibility</button>
                         </div>
-                </div>
+                    </div>
             </div>
         </div>
     </div>
-
+    
     <script>
         function switchTab(event, tabName) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
@@ -226,19 +201,30 @@ $stmt_new->close();
             document.querySelectorAll('.btn-outline-primary').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
         }
+        
+        function updateProfilePic(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profilePic').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
 
         function addInputGroup() {
             const container = $("#eligibility-container");
             const newRow = $(`
                 <div class="row mb-3">
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="documents_name[]" placeholder="Document Name" required>
+                        <input type="text" class="form-control" name="documents_name[]" placeholder="Documents Name">
                     </div>
                     <div class="col-md-3">
-                        <input type="date" class="form-control" name="date_upload[]" required>
+                        <input type="date" class="form-control" name="date_upload[]">
                     </div>
                     <div class="col-md-3">
-                        <input type="file" class="form-control" name="file[]" required>
+                        <input type="file" class="form-control" name="file[]">
                     </div>
                     <div class="col-md-1 text-center">
                         <button type="button" class="btn btn-danger" onclick="removeInputGroup(this)">Remove</button>
@@ -248,11 +234,33 @@ $stmt_new->close();
             container.append(newRow);
         }
 
+        function saveEligibilityData() {
+            const formData = new FormData();
+            formData.append('type', 'documents');
+            formData.append('documents_name', $('input[name="documents_name[]"]').last().val());
+            formData.append('date_upload', $('input[name="date_upload[]"]').last().val());
+            formData.append('file', $('input[name="file[]"]').last()[0].files[0]);
+
+            $.ajax({
+                url: 'process/save_data.php',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    alert(response === 'success' ? 'Data saved successfully!' : 'Error saving data.');
+                }
+            });
+        }
+
         function removeInputGroup(button) {
             $(button).closest('.row').remove();
         }
-    </script>
 
+        function removeTrainingGroup(button) {
+            $(button).closest('.row').remove();
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,8 +1,7 @@
 <?php
 include '../db.php';
-
 $applicantid = $_SESSION['applicant_id'];
-// Check if the employer is logged in
+// Check if the applicant is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: applicant_login.php");
     exit();
@@ -27,6 +26,33 @@ $totalPages = ceil($totalemployee / $limit);
 // Fetch jobs with limit and offset
 $query = "SELECT * FROM job_post WHERE is_active = 1 ORDER BY date_posted DESC LIMIT $start, $limit";
 $result = $conn->query($query);
+
+// Fetch applicant's profile (including preferred job and skills)
+$applicantQuery = "SELECT preferred_occupation, selected_option FROM applicant_profile WHERE id = ?";
+$stmt = $conn->prepare($applicantQuery);
+$stmt->bind_param('i', $applicantid);
+$stmt->execute();
+$applicant = $stmt->get_result()->fetch_assoc();
+
+$preferredOccupation = strtolower($applicant['preferred_occupation']);
+$applicantSkills = array_map('trim', explode(',', strtolower($applicant['selected_option']))); // Skills as an array
+
+// Function to compare occupation and skills
+function isMatch($preferredOccupation, $applicantSkills, $jobTitle, $requiredSkills) {
+    // Compare occupation using fuzzy matching (using similar_text and levenshtein)
+    similar_text($preferredOccupation, $jobTitle, $percent);
+    $levenshteinDistance = levenshtein($preferredOccupation, $jobTitle);
+    $length = max(strlen($preferredOccupation), strlen($jobTitle));
+    $levenshteinPercent = (1 - ($levenshteinDistance / $length)) * 100;
+    $occupationMatch = max($percent, $levenshteinPercent) >= 40; // 40% similarity threshold for occupation match
+
+    // Compare skills
+    $jobSkills = array_map('trim', explode(',', strtolower($requiredSkills)));
+    $commonSkills = array_intersect($applicantSkills, $jobSkills);
+    $skillsMatch = count($commonSkills) > 0; // At least one skill match is required
+
+    return $occupationMatch || $skillsMatch; // Match if occupation or skills match
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +60,7 @@ $result = $conn->query($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List</title>
+    <title>Job Listings</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
@@ -43,7 +69,9 @@ $result = $conn->query($query);
 <body>
 
 <div class="table container mt-1">
-<?php while ($row = $result->fetch_assoc()) { ?>
+<?php while ($row = $result->fetch_assoc()) {
+    // Check if the job title and/or skills match the applicant's preferences
+    if (isMatch($preferredOccupation, $applicantSkills, strtolower($row['job_title']), $row['selected_option'])) { ?>
         <a href="jobdetails.php?id=<?= urlencode(base64_encode($row['id'])) ?>" class="text-decoration-none text-dark">
             <div class="row job-row border rounded mb-3 shadow-sm" style="cursor: pointer;">
                 <div class="col-md-6 row justify-content-start">
@@ -62,18 +90,18 @@ $result = $conn->query($query);
                 </div>
                 
                 <div class="col-md-2 pt-5 text-start">
-                <form action="process/hide.php" method="post">
-                    <input type="hidden" name="job_id" value="<?= $row['id'] ?>">
-                    <button type="submit" class="btn btn-sm <?= $row['is_active'] == 1 ? 'btn-success' : 'btn-danger' ?> toggle-status"
-                        data-id="<?= $row['id'] ?>" 
-                        data-status="<?= $row['is_active'] ?>">
-                        <?= $row['is_active'] == 1 ? 'Active' : 'Inactive' ?>
-                    </button>
-                </form>
+                    <form action="process/hide.php" method="post">
+                        <input type="hidden" name="job_id" value="<?= $row['id'] ?>">
+                        <button type="submit" class="btn btn-sm <?= $row['is_active'] == 1 ? 'btn-success' : 'btn-danger' ?> toggle-status"
+                            data-id="<?= $row['id'] ?>" 
+                            data-status="<?= $row['is_active'] ?>">
+                            <?= $row['is_active'] == 1 ? 'Active' : 'Inactive' ?>
+                        </button>
+                    </form>
                 </div>
             </div>
         </a>
-    <?php } ?>
+    <?php } } ?>
 </div>
 
 <!-- Pagination Links -->

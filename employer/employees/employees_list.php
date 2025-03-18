@@ -1,10 +1,10 @@
 <?php
 include '../db.php';
 
-$applicantid = $_SESSION['applicant_id'];
+$employerid = $_SESSION['employer_id'];
 // Check if the employer is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: applicant_login.php");
+    header("Location: employer_login.php");
     exit();
 }
 
@@ -16,7 +16,7 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $start = ($page - 1) * $limit;
 
 // Fetch total number of jobs
-$totalQuery = "SELECT COUNT(id) AS total FROM job_post";
+$totalQuery = "SELECT COUNT(id) AS total FROM current_employee WHERE employer_id = $employerid";
 $totalResult = $conn->query($totalQuery);
 $totalRow = $totalResult->fetch_assoc();
 $totalemployee = $totalRow['total'];
@@ -25,7 +25,7 @@ $totalemployee = $totalRow['total'];
 $totalPages = ceil($totalemployee / $limit);
 
 // Fetch jobs with limit and offset
-$query = "SELECT * FROM job_post WHERE is_active = 1 ORDER BY date_posted DESC LIMIT $start, $limit";
+$query = "SELECT * FROM current_employee WHERE employer_id = $employerid ORDER BY lname ASC LIMIT $start, $limit";
 $result = $conn->query($query);
 ?>
 
@@ -43,33 +43,34 @@ $result = $conn->query($query);
 <body>
 
 <div class="table container mt-1">
-<?php while ($row = $result->fetch_assoc()) { ?>
-        <a href="jobdetails.php?id=<?= urlencode(base64_encode($row['id'])) ?>" class="text-decoration-none text-dark">
+    <?php while ($row = $result->fetch_assoc()) { $fullname = $row['lname'] .' '. $row['fname'] . ' ' . $row['mname']; ?>
+
+        <a href="#.php?id=<?= urlencode(base64_encode($row['id'])) ?>" class="text-decoration-none text-dark">
             <div class="row job-row border rounded mb-3 shadow-sm" style="cursor: pointer;">
                 <div class="col-md-6 row justify-content-start">
                     <div class="col-md-12 pt-3 text-start">
-                        <div class="col"><p class="text-start"><i class="bi bi-suitcase-lg"></i> <?= htmlspecialchars($row['job_title']) ?></p></div>
-                        <div class="col"><p class="text-start"><i class="bi bi-buildings"></i> <?= htmlspecialchars($row['company_name']) ?></p></div>
-                        <div class="col"><p class="text-start"><i class="bi bi-pin-map"></i> <?= htmlspecialchars($row['work_location']) ?></p></div>
-                        <div class="col"><p class="text-start"><i class="bi bi-cash"></i> <?= htmlspecialchars($row['salary']) ?></p></div>
+                        <div class="col"><p class="text-start"><i class="bi bi-suitcase-lg"></i> <?= $fullname ?></p></div>
+                        <div class="col"><p class="text-start"><i class="bi bi-buildings"></i> <?= htmlspecialchars($row['age']) ?></p></div>
+                        <div class="col"><p class="text-start"><i class="bi bi-pin-map"></i> <?= htmlspecialchars($row['houseaddress']) ?></p></div>
+                        <div class="col"><p class="text-start"><i class="bi bi-cash"></i> <?= htmlspecialchars($row['position']) ?></p></div>
                     </div>
                 </div>
 
                 <div class="col-md-4 pt-5 text-start">
                     <span class="ms-5 fs-5">
-                        <?= htmlspecialchars($row['vacant']) ?> openings
+                        <?= htmlspecialchars($row['gender']) ?>
                     </span>
                 </div>
                 
                 <div class="col-md-2 pt-5 text-start">
-                <form action="process/hide.php" method="post">
+                <!-- <form action="process/hide.php" method="post">
                     <input type="hidden" name="job_id" value="<?= $row['id'] ?>">
                     <button type="submit" class="btn btn-sm <?= $row['is_active'] == 1 ? 'btn-success' : 'btn-danger' ?> toggle-status"
                         data-id="<?= $row['id'] ?>" 
                         data-status="<?= $row['is_active'] ?>">
                         <?= $row['is_active'] == 1 ? 'Active' : 'Inactive' ?>
                     </button>
-                </form>
+                </form> -->
                 </div>
             </div>
         </a>
