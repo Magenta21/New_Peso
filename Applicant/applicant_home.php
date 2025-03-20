@@ -41,32 +41,40 @@ if (!$row_emp) {
 <body>
 
 <div class="header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <!-- Logo Section -->
+            <div class="col-md-2 col-xxl-3 text-start">
+                <a href="../index.php" style="display: block; text-decoration: none;">
                     <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
-                </div>
-                <div class="col-md-8">
-                    <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
-                </div>
-                <div class="col-md-2 mt-1 position-relative">
-                    <div class="dropdown">
-                        <a href="#" class="text-decoration-none mt-5" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?php if (!empty($row_emp['photo'])): ?>
-                                <img id="preview" src="<?php echo $row_emp['photo']; ?>" alt="Profile Image" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
-                            <?php else: ?>
-                                <img src="../img/user-placeholder.png" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
-                            <?php endif; ?>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="applicant_profile.php">Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
-                        </ul>
-                    </div>
+                </a>
+            </div>
+            
+            <!-- Municipality Name Section -->
+            <div class="col-md-8 col-xxl-6 text-center">
+                <h3 style="margin-top: 5px; font-weight: 700; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
+            </div>
+
+            <!-- Profile Picture Section -->
+            <div class="col-md-2 col-xxl-3 text-end">
+                <div class="dropdown">
+                    <a href="#" class="text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?php if (!empty($row_emp['photo'])): ?>
+                            <img id="preview" src="<?php echo $row_emp['photo']; ?>" alt="Profile Image" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
+                        <?php else: ?>
+                            <img src="../img/user-placeholder.png" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
+                        <?php endif; ?>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="applicant_profile.php">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
     </div>
     <div class="container mt-4">
@@ -77,6 +85,12 @@ if (!$row_emp) {
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="toggleButton4" href="#" role="tab">Recommeded Job</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" id="toggleButton" href="#" role="tab">Saved Job</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" id="toggleButton" href="#" role="tab">Applied Job</a>
                 </li>
             </ul>
         </div>

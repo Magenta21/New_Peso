@@ -103,9 +103,9 @@ $stmt_new->close();
                 <button class="btn btn-outline-primary" onclick="switchTab(event, 'documents')">Documents</button>
             </div>
             <div id="profile" class="tab-content">
-                <form action="save_profile.php" method="post" class="needs-validation" novalidate>
+                <form action="process/save_profile.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                     <div class="text-center">
-                        <input type="file" id="fileInput" class="d-none" onchange="updateProfilePic(event)">
+                        <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)">
                         <?php if (!empty($row['company_photo'])): ?>
                             <img src="<?php echo $row['company_photo']; ?>" alt="Profile Picture" class="profile-pic rounded-circle border" id="profilePic" onclick="document.getElementById('fileInput').click();">
                         <?php else: ?>
@@ -126,11 +126,11 @@ $stmt_new->close();
                     </div>
                     <div class="mb-3">
                         <label class="form-label">First name:</label>
-                        <input type="text" name="website" class="form-control" value="<?php echo isset($row['fname']) ? htmlspecialchars($row['fname']) : ''; ?>" require >
+                        <input type="text" name="fname" class="form-control" value="<?php echo isset($row['fname']) ? htmlspecialchars($row['fname']) : ''; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Last name:</label>
-                        <input type="password" name="password" class="form-control" value="<?php echo isset($row['lname']) ? htmlspecialchars($row['lname']) : ''; ?>" required>
+                        <input type="text" name="lname" class="form-control" value="<?php echo isset($row['lname']) ? htmlspecialchars($row['lname']) : ''; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Contact number:</label>
@@ -138,17 +138,18 @@ $stmt_new->close();
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Save</button>
                 </form>
+
             </div>
             
             <div id="company_details" class="tab-content" style="display:none;">
-                <form action="save_company_details.php" method="post" class="needs-validation" novalidate>
+                <form action="process/save_company_details.php" method="post" class="needs-validation" novalidate>
                     <div class="mb-3">
                         <label class="form-label">Company Name:</label>
                         <input type="text" name="company_name" class="form-control" value="<?php echo isset($row['company_name']) ? htmlspecialchars($row['company_name']) : ''; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">President</label>
-                        <input type="text" name="company_address" class="form-control" value="<?php echo isset($row['president']) ? htmlspecialchars($row['president']) : ''; ?>" required>
+                        <input type="text" name="president" class="form-control" value="<?php echo isset($row['president']) ? htmlspecialchars($row['president']) : ''; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Company Address:</label>
@@ -156,28 +157,28 @@ $stmt_new->close();
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Human Resource Manager</label>
-                        <input type="text" name="company_address" class="form-control" value="<?php echo isset($row['hr']) ? htmlspecialchars($row['hr']) : ''; ?>" required>
+                        <input type="text" name="hr" class="form-control" value="<?php echo isset($row['hr']) ? htmlspecialchars($row['hr']) : ''; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Contact Number</label>
-                        <input type="text" name="company_address" class="form-control" value="<?php echo isset($row['company_contact']) ? htmlspecialchars($row['company_contact']) : ''; ?>" required>
+                        <input type="text" name="company_contact" class="form-control" value="<?php echo isset($row['company_contact']) ? htmlspecialchars($row['company_contact']) : ''; ?>" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Company Email </label>
-                        <input type="text" name="company_address" class="form-control" value="<?php echo isset($row['company_email']) ? htmlspecialchars($row['company_name']) : ''; ?>" required>
+                        <label class="form-label">Company Email</label>
+                        <input type="text" name="company_email" class="form-control" value="<?php echo isset($row['company_email']) ? htmlspecialchars($row['company_email']) : ''; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Employment Type:</label>
                         <select name="employment_type" class="form-control" required>
-                            <option value="Local Agencies" <?php echo (isset($row['type_of_employer']) && $row['type_of_employer'] == 'local_agencies') ? 'selected' : ''; ?>>Local Agencies </option>           
-                            <option value="Local Lb" <?php echo (isset($row['type_of_employer']) && $row['type_of_employer'] == 'local_lb') ? 'selected' : ''; ?>>Los banos Agencies </option>
+                            <option value="Local Agencies" <?php echo (isset($row['type_of_employer']) && $row['type_of_employer'] == 'local_agencies') ? 'selected' : ''; ?>>Local Agencies</option>           
+                            <option value="Local Lb" <?php echo (isset($row['type_of_employer']) && $row['type_of_employer'] == 'local_lb') ? 'selected' : ''; ?>>Los Banos Agencies</option>
                             <option value="Overseas" <?php echo (isset($row['type_of_employer']) && $row['type_of_employer'] == 'Overseas') ? 'selected' : ''; ?>>Overseas</option>
-                            <option value="Direct Hire" <?php echo (isset($row['type_of_employer']) && $row['type_of_employer'] == 'direct_hire') ? 'selected' : ''; ?>>Overseas</option>
+                            <option value="Direct Hire" <?php echo (isset($row['type_of_employer']) && $row['type_of_employer'] == 'direct_hire') ? 'selected' : ''; ?>>Direct Hire</option>
                         </select>
                     </div>
-                    
                     <button type="submit" class="btn btn-primary w-100">Save</button>
                 </form>
+
             </div>
             
             <div id="documents" class="tab-content" style="display:none;">
