@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.header {
+    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+    color: white;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+}
+.container {
+    width: 800px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: start;
+}
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+.tabs button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+.tabs button.active {
+    border-bottom: 2px solid blue;
+    font-weight: bold;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+.input-group input {
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.save-btn {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+a.navlink {
+	color: #ffffff;
+	position: relative;
+	text-decoration: none;
+	margin-left: 20px;
+  }
+  
+  a.navlink::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    bottom: 0;
+    left: 0;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+  }
+  
+  a.navlink:hover::before {
+    transform-origin: left;
+    transform: scaleX(1);
+  }
