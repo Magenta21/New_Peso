@@ -25,9 +25,20 @@ if (!$row) {
     die("User not found.");
 }
 
+// Training data
+$sql_training = "SELECT * FROM training WHERE user_id = ?";
+$stmt_training = $conn->prepare($sql_training);
+$stmt_training->bind_param("i", $applicant_profile);
+$stmt_training->execute();
+$result_training = $stmt_training->get_result();
 
+// License data
+$sql_license = "SELECT * FROM license WHERE user_id = ?";
+$stmt_license = $conn->prepare($sql_license);
+$stmt_license->bind_param("i", $applicant_profile);
+$stmt_license->execute();
+$result_license = $stmt_license->get_result();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +79,6 @@ if (!$row) {
                 </div>
             </div>
         </div>
-
     </div>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
@@ -77,297 +87,461 @@ if (!$row) {
                 <a class="navlink" href="post_job.php">Job Post</a>
                 <a class="navlink" href="job_list.php">Job list</a>
                 <a class="navlink" href="employees.php">Employers</a>
-                
             </span>
         </div>
     </nav>
 
-    <div class="container mt-2">
+    <div class="container-xxl mt-2">
         <div class="card p-4 shadow">
-            <div class="tabs d-flex justify-content-center mb-3">
-                <button class="btn btn-outline-primary me-2 active" onclick="switchTab(event, 'profile')">Profile</button>
-                <button class="btn btn-outline-primary me-2" onclick="switchTab(event, 'educational_background')">Educational Background</button>
-                <button class="btn btn-outline-primary" onclick="switchTab(event, 'documents')">Documents</button>
-            </div>
-            <div id="profile" class="tab-content">
-                <form action="process/save_profile.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <div class="row">
+                <div class="col-md-3">
+                
+                    <!-- Vertical List for Tabs (Navigation) -->
+                    <div class="list-group">
                         <div class="text-center">
-                            <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)">
-                            <?php if (!empty($row['photo'])): ?>
-                                <img src="<?php echo $row['photo']; ?>" alt="Profile Picture" class="profile-pic rounded-circle border" id="profilePic" onclick="document.getElementById('fileInput').click();">
+                            <?php if(!empty($row['photo'])): ?>
+                                <img src="<?php echo $row['photo']; ?>" alt="Profile Picture" class="profile-pic rounded-circle border mb-5" id="profilePic" onclick="document.getElementById('fileInput').click();">
                             <?php else: ?>
-                                <img src="../img/user-placeholder.png" alt="Profile Picture" class="profile-pic rounded-circle border" id="profilePic" onclick="document.getElementById('fileInput').click();">
+                                <img src="../img/user-placeholder.png" alt="Profile Picture" class="profile-pic rounded-circle border mb-5" id="profilePic" onclick="document.getElementById('fileInput').click();">
                             <?php endif; ?>
                         </div>
-                        <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Username:</label>
-                                <input type="text" name="name" class="form-control" value="<?php echo isset($row['username']) ? htmlspecialchars($row['username']) : ''; ?>" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Email:</label>
-                                <input type="email" name="email" class="form-control" value="<?php echo isset($row['email']) ? htmlspecialchars($row['email']) : ''; ?>" required>
-                            </div>
-                        </div>
-                    
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Password:</label>
-                                <input type="password" name="pass" class="form-control" value="<?php echo isset($row['password']) ? htmlspecialchars($row['password']) : ''; ?>" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">First name:</label>
-                                <input type="text" name="fname" class="form-control" value="<?php echo isset($row['fname']) ? htmlspecialchars($row['fname']) : ''; ?>" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Last name:</label>
-                                <input type="text" name="lname" class="form-control" value="<?php echo isset($row['lname']) ? htmlspecialchars($row['lname']) : ''; ?>" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Contact number:</label>
-                                <input type="tel" name="contact" class="form-control" value="<?php echo isset($row['contact_no']) ? htmlspecialchars($row['contact_no']) : ''; ?>" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Date of Birth:</label>
-                                <input type="date" name="dob" class="form-control" value="<?php echo isset($row['dob']) ? htmlspecialchars($row['dob']) : ''; ?>" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Place Of Birth:</label>
-                                <input type="text" name="pob" class="form-control" value="<?php echo isset($row['pob']) ? htmlspecialchars($row['pob']) : ''; ?>" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Religion:</label>
-                                <input type="text" name="religion" class="form-control" value="<?php echo isset($row['religion']) ? htmlspecialchars($row['religion']) : ''; ?>" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Present Address:</label>
-                                <input type="text" name="address" class="form-control" value="<?php echo isset($row['present_address']) ? htmlspecialchars($row['religion']) : ''; ?>" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Civil Status:</label>
-                                <select name="civil_status" class="form-control" required>
-                                    <option value="single" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'single' ? 'selected' : ''; ?>>Single</option>
-                                    <option value="married" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'married' ? 'selected' : ''; ?>>Married</option>
-                                    <option value="widowed" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'widowed' ? 'selected' : ''; ?>>Widowed</option>
-                                    <option value="separated" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'separated' ? 'selected' : ''; ?>>Separated</option>
-                                    <option value="live_in" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'live_in' ? 'selected' : ''; ?>>Live-In</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Sex:</label>
-                            <select name="sex" class="form-control" required>
-                                <option value="male" <?php echo isset($row['sex']) && $row['sex'] == 'male' ? 'selected' : ''; ?>>Male</option>
-                                <option value="female" <?php echo isset($row['sex']) && $row['sex'] == 'female' ? 'selected' : ''; ?>>Female</option>
-                            </select>
-                        </div>
+                        <button class="list-group-item list-group-item-action active" onclick="switchTab(event, 'profile')">Profile</button>
+                        <button class="list-group-item list-group-item-action" onclick="switchTab(event, 'educational_background')">Educational Background</button>
+                        <button class="list-group-item list-group-item-action" onclick="switchTab(event, 'employment_status')">Employment Status</button>
+                        <button class="list-group-item list-group-item-action" onclick="switchTab(event, 'tvo')">Techinical/ Vocational and Other training</button>
+                        <button class="list-group-item list-group-item-action" onclick="switchTab(event, 'ld')">Languange and Dialect</button>
+                        <button class="list-group-item list-group-item-action" onclick="switchTab(event, 'ep')">Eligibility and profesional license</button>
+                        <button class="list-group-item list-group-item-action" onclick="switchTab(event, 'we')">Work Experience</button>
+                        <button class="list-group-item list-group-item-action" onclick="switchTab(event, 'ss')">Skills </button>
                     </div>
                 </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Height:</label>
-                                <input type="text" name="height" class="form-control" value="<?php echo isset($row['height']) ? htmlspecialchars($row['lname']) : ''; ?>" required>
+                <div class="col-md-9">
+                    <!-- Content for Tabs -->
+                    <div id="profile" class="tab-content" style="display:block;">
+                        <form action="process/save_profile.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        <div class="text-center">
+                                    <!-- <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)"> -->
+                                    <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                            <label class="form-label">Username:</label>
+                                            <input type="text" name="name" class="form-control" value="<?php echo isset($row['username']) ? htmlspecialchars($row['username']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="form-label">Password:</label>
+                                            <input type="password" name="pass" class="form-control" value="<?php echo isset($row['password']) ? htmlspecialchars($row['password']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                            <label class="form-label">Email:</label>
+                                            <input type="email" name="email" class="form-control" value="<?php echo isset($row['email']) ? htmlspecialchars($row['email']) : ''; ?>" required>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                            <label class="form-label">First name:</label>
+                                            <input type="text" name="fname" class="form-control" value="<?php echo isset($row['fname']) ? htmlspecialchars($row['fname']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                            <label class="form-label">Middle name:</label>
+                                            <input type="text" name="mname" class="form-control" value="<?php echo isset($row['mname']) ? htmlspecialchars($row['mname']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                            <label class="form-label">Last name:</label>
+                                            <input type="text" name="lname" class="form-control" value="<?php echo isset($row['lname']) ? htmlspecialchars($row['lname']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="form-label">Contact number:</label>
+                                            <input type="tel" name="contact" class="form-control" value="<?php echo isset($row['contact_no']) ? htmlspecialchars($row['contact_no']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="form-label">Date of Birth:</label>
+                                            <input type="date" name="dob" class="form-control" value="<?php echo isset($row['dob']) ? htmlspecialchars($row['dob']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="form-label">Place Of Birth:</label>
+                                            <input type="text" name="pob" class="form-control" value="<?php echo isset($row['pob']) ? htmlspecialchars($row['pob']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="form-label">Religion:</label>
+                                            <input type="text" name="religion" class="form-control" value="<?php echo isset($row['religion']) ? htmlspecialchars($row['religion']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="form-label">Present Address:</label>
+                                            <input type="text" name="address" class="form-control" value="<?php echo isset($row['present_address']) ? htmlspecialchars($row['present_address']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="form-label">Civil Status:</label>
+                                            <select name="civil_status" class="form-control" required>
+                                                <option value="single" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'single' ? 'selected' : ''; ?>>Single</option>
+                                                <option value="married" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'married' ? 'selected' : ''; ?>>Married</option>
+                                                <option value="widowed" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'widowed' ? 'selected' : ''; ?>>Widowed</option>
+                                                <option value="separated" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'separated' ? 'selected' : ''; ?>>Separated</option>
+                                                <option value="live_in" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'live_in' ? 'selected' : ''; ?>>Live-In</option>
+                                            </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                            <label class="form-label">Sex:</label>
+                                            <select name="sex" class="form-control" required>
+                                                <option value="male" <?php echo isset($row['sex']) && $row['sex'] == 'male' ? 'selected' : ''; ?>>Male</option>
+                                                <option value="female" <?php echo isset($row['sex']) && $row['sex'] == 'female' ? 'selected' : ''; ?>>Female</option>
+                                            </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                            <label class="form-label">Height:</label>
+                                            <input type="text" name="height" class="form-control" value="<?php echo isset($row['height']) ? htmlspecialchars($row['height']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="form-label">Tin:</label>
+                                            <input type="tel" name="tin" class="form-control" value="<?php echo isset($row['tin']) ? htmlspecialchars($row['tin']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="form-label">GSIS/SSS Number.:</label>
+                                            <input type="text" name="sss_no" class="form-control" value="<?php echo isset($row['sss_no']) ? htmlspecialchars($row['sss_no']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="form-label">Pag Ibig Number:</label>
+                                            <input type="text" name="pag_ibig_number" class="form-control" value="<?php echo isset($row['pagibig_no']) ? htmlspecialchars($row['pagibig_no']) : ''; ?>" required>
+                                    </div>
+                                            <div class="col-md-6">
+                                            <label class="form-label">Philhealth number:</label>
+                                            <input type="text" name="philhealth_no" class="form-control" value="<?php echo isset($row['philhealth_no']) ? htmlspecialchars($row['philhealth_no']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="form-label">Landline:</label>
+                                            <input type="text" name="landline" class="form-control" value="<?php echo isset($row['landline']) ? htmlspecialchars($row['landline']) : ''; ?>" required>
+                                    </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Tin:</label>
-                                <input type="tel" name="tin" class="form-control" value="<?php echo isset($row['tin']) ? htmlspecialchars($row['contact_no']) : ''; ?>" required>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                        <label class="form-label">Disability:</label>
+                                        <select name="disability" class="form-control" id="disability" required>
+                                            <option value="none" <?php echo isset($row['disability']) && $row['disability'] == 'none' ? 'selected' : ''; ?>>None</option>
+                                            <option value="visual" <?php echo isset($row['disability']) && $row['disability'] == 'visual' ? 'selected' : ''; ?>>Visual</option>
+                                            <option value="hearing" <?php echo isset($row['disability']) && $row['disability'] == 'hearing' ? 'selected' : ''; ?>>Hearing</option>
+                                            <option value="speech" <?php echo isset($row['disability']) && $row['disability'] == 'speech' ? 'selected' : ''; ?>>Speech</option>
+                                            <option value="physical" <?php echo isset($row['disability']) && $row['disability'] == 'physical' ? 'selected' : ''; ?>>Physical</option>
+                                            <option value="others" <?php echo isset($row['disability']) && $row['disability'] == 'others' ? 'selected' : ''; ?>>Specify</option>
+                                        </select>
+                                </div>
+
+                                <div class="col-md-6 mt-4" id="disability_specify_container" style="display:none;">
+                                    <!-- Text input for specifying 'others' -->
+                                    <input type="text" name="disability_specify" id="disability_specify" class="form-control mt-2" placeholder="Please specify" value="<?php echo isset($row['disability_specify']) ? htmlspecialchars($row['disability_specify']) : ''; ?>" />
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                        <label class="form-label">Are you a 4Ps beneficiary?:</label>
+                                        <select name="four_ps" class="form-control" id="four_ps" required>
+                                            <option value="yes" <?php echo isset($row['four_ps']) && $row['four_ps'] == 'yes' ? 'selected' : ''; ?>>Yes</option>
+                                            <option value="no" <?php echo isset($row['four_ps']) && $row['four_ps'] == 'no' ? 'selected' : ''; ?>>No</option>
+                                        </select>
+                                </div>
+
+                                <div class="col-md-6" id="household_id_container" style="display:none;">
+                                        <label class="form-label">If yes, Household ID No.:</label>
+                                        <input type="tel" name="household_id" class="form-control" value="<?php echo isset($row['household_id']) ? htmlspecialchars($row['household_id']) : ''; ?>" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 mt-4">Save</button>
+                        </form>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">GSIS/SSS Number.:</label>
-                                <input type="text" name="sss_no" class="form-control" value="<?php echo isset($row['sss_no']) ? htmlspecialchars($row['lname']) : ''; ?>" required>
+                    <div id="educational_background" class="tab-content" style="display:none;">
+                        <form action="process/save_educational_background.php" method="post" class="needs-validation" novalidate>
+                           <!-- Educational Background Form -->
+                           <h3>Tertiary</h3>   
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label">School Name</label>
+                                    <input type="text" name="school_name" class="form-control" value="<?php echo isset($row['tertiary_school']) ? htmlspecialchars($row['tertiary_school']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Year Graduated</label>
+                                    <input type="date" name="tertiary_graduated" class="form-control" value="<?php echo isset($row['tertiary_graduated']) ? htmlspecialchars($row['tertiary_graduated']) : ''; ?>" required>
+                                </div>
+                        
+                                <div class="col-md-6">
+                                    <label class="form-label">Award Recieved</label>
+                                    <input type="text" name="award_recieved" class="form-control" value="<?php echo isset($row['tertiary_award']) ? htmlspecialchars($row['tertiary_award']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Course</label>
+                                    <input type="text" name="course" class="form-control" value="<?php echo isset($row['course']) ? htmlspecialchars($row['course']) : ''; ?>" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Pag Ibig Number:</label>
-                                <input type="text" name="pag_ibig_number" class="form-control" value="<?php echo isset($row['pagibig_no']) ? htmlspecialchars($row['contact_no']) : ''; ?>" required>
+                            <h3>Graduate Studies</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label">School Name</label>
+                                    <input type="text" name="school_name" class="form-control" value="<?php echo isset($row['college_school']) ? htmlspecialchars($row['college_graduated']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Year Graduated</label>
+                                    <input type="date" name="college_graduated" class="form-control" value="<?php echo isset($row['college_graduated']) ? htmlspecialchars($row['college_graduated']) : ''; ?>" required>
+                                </div>
+                        
+                                <div class="col-md-6">
+                                    <label class="form-label">Award Recieved</label>
+                                    <input type="text" name="college_award" class="form-control" value="<?php echo isset($row['college_award']) ? htmlspecialchars($row['college_award']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Course</label>
+                                    <input type="text" name="course" class="form-control" value="<?php echo isset($row['course']) ? htmlspecialchars($row['course']) : ''; ?>" required>
+                                </div>
                             </div>
-                        </div>
+                                <button type="submit" class="btn btn-primary w-100">Save</button>
+                        </form>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">PhilHealth Number:</label>
-                                <input type="text" name="philhealth_no" class="form-control" value="<?php echo isset($row['philhealth_no']) ? htmlspecialchars($row['lname']) : ''; ?>" required>
+                    <div id="employment_status" class="tab-content" style="display:none;">
+                        <form action="process/save_employment_status.php" method="post" class="needs-validation" novalidate>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="preferred-location" class="form-label">Preferred Work Location:</label>
+                                    <select class="form-select" id="preferred-location" name="preferred_work_location" required>
+                                        <option value="local" <?php echo isset($row['preferred_work_location']) && $row['preferred_work_location'] == 'local' ? 'selected' : ''; ?>>Local</option>
+                                        <option value="overseas" <?php echo isset($row['preferred_work_location']) && $row['preferred_work_location'] == 'overseas' ? 'selected' : ''; ?>>Overseas</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="expected_salary" class="form-label">Expected Salary:</label>
+                                    <input type="text" name="expected_salary" class="form-control" value="<?php echo isset($row['expected_salary']) ? htmlspecialchars($row['expected_salary']) : ''; ?>" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Landline:</label>
-                                <input type="text" name="landline" class="form-control" value="<?php echo isset($row['landline']) ? htmlspecialchars($row['contact_no']) : ''; ?>" required>
+                            <!-- Local Locations Input Fields (Displayed in a row) -->
+                            <div id="local-location-fields" class="row" style="display:none;">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="local-location-1" class="info">1 - City/Municipality:</label>
+                                        <input type="text" class="form-control" id="local-location-1" name="local_location_1" placeholder="City/Municipality" value="<?php echo isset($row['local_location_1']) ? htmlspecialchars($row['local_location_1']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="local-location-2" class="info">2 - City/Municipality:</label>
+                                        <input type="text" class="form-control" id="local-location-2" name="local_location_2" placeholder="City/Municipality" value="<?php echo isset($row['local_location_2']) ? htmlspecialchars($row['local_location_2']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="local-location-3" class="info">3 - City/Municipality:</label>
+                                        <input type="text" class="form-control" id="local-location-3" name="local_location_3" placeholder="City/Municipality" value="<?php echo isset($row['local_location_3']) ? htmlspecialchars($row['local_location_3']) : ''; ?>" required>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Disability:</label>
-                                <select name="disability" class="form-control" id="disability" required>
-                                    <option value="none" <?php echo isset($row['disability']) && $row['disability'] == 'none' ? 'selected' : ''; ?>>None</option>
-                                    <option value="visual" <?php echo isset($row['disability']) && $row['disability'] == 'visual' ? 'selected' : ''; ?>>Visual</option>
-                                    <option value="hearing" <?php echo isset($row['disability']) && $row['disability'] == 'hearing' ? 'selected' : ''; ?>>Hearing</option>
-                                    <option value="speech" <?php echo isset($row['disability']) && $row['disability'] == 'speech' ? 'selected' : ''; ?>>Speech</option>
-                                    <option value="physical" <?php echo isset($row['disability']) && $row['disability'] == 'physical' ? 'selected' : ''; ?>>Physical</option>
-                                    <option value="others" <?php echo isset($row['disability']) && $row['disability'] == 'others' ? 'selected' : ''; ?>>Specify</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 mt-4" id="disability_specify_container" style="display:none;">
-                            <!-- Text input for specifying 'others' -->
-                            <input type="text" name="disability_specify" id="disability_specify" class="form-control mt-2" placeholder="Please specify" value="<?php echo isset($row['disability_specify']) ? htmlspecialchars($row['disability_specify']) : ''; ?>" />
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Are you a 4Ps beneficiary?:</label>
-                                <select name="four_ps" class="form-control" id="four_ps" required>
-                                    <option value="yes" <?php echo isset($row['four_ps']) && $row['four_ps'] == 'yes' ? 'selected' : ''; ?>>Yes</option>
-                                    <option value="no" <?php echo isset($row['four_ps']) && $row['four_ps'] == 'no' ? 'selected' : ''; ?>>No</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6" id="household_id_container" style="display:none;">
-                            <div class="mb-3">
-                                <label class="form-label">If yes, Household ID No.:</label>
-                                <input type="tel" name="household_id" class="form-control" value="<?php echo isset($row['household_id']) ? htmlspecialchars($row['household_id']) : ''; ?>" required>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Save</button>
-                </form>
-            </div>
-
-            <div id="educational_background" class="tab-content" style="display:none;">
-                <form action="process/save_educational_background.php" method="post" class="needs-validation" novalidate>
-                 <h3>Tertiary</h3>   
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="form-label">School Name</label>
-                        <input type="text" name="school_name" class="form-control" value="<?php echo isset($row['tertiary_school']) ? htmlspecialchars($row['tertiary_school']) : ''; ?>" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Year Graduated</label>
-                        <input type="date" name="tertiary_graduated" class="form-control" value="<?php echo isset($row['tertiary_graduated']) ? htmlspecialchars($row['tertiary_graduated']) : ''; ?>" required>
-                    </div>
-               
-                    <div class="col-md-6">
-                        <label class="form-label">Award Recieved</label>
-                        <input type="text" name="award_recieved" class="form-control" value="<?php echo isset($row['tertiary_award']) ? htmlspecialchars($row['tertiary_award']) : ''; ?>" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Course</label>
-                        <input type="text" name="course" class="form-control" value="<?php echo isset($row['course']) ? htmlspecialchars($row['course']) : ''; ?>" required>
-                    </div>
-                </div>
-                <h3>Graduate Studies</h3>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="form-label">School Name</label>
-                        <input type="text" name="school_name" class="form-control" value="<?php echo isset($row['college_school']) ? htmlspecialchars($row['college_graduated']) : ''; ?>" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Year Graduated</label>
-                        <input type="date" name="college_graduated" class="form-control" value="<?php echo isset($row['college_graduated']) ? htmlspecialchars($row['college_graduated']) : ''; ?>" required>
-                    </div>
-               
-                    <div class="col-md-6">
-                        <label class="form-label">Award Recieved</label>
-                        <input type="text" name="college_award" class="form-control" value="<?php echo isset($row['college_award']) ? htmlspecialchars($row['college_award']) : ''; ?>" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Course</label>
-                        <input type="text" name="course" class="form-control" value="<?php echo isset($row['course']) ? htmlspecialchars($row['course']) : ''; ?>" required>
-                    </div>
-                </div>
-                    <button type="submit" class="btn btn-primary w-100">Save</button>
-                </form>
-            </div>
-            
-            <div id="documents" class="tab-content" style="display:none;">
-                <div class="card mb-4">
-                    <div class="card-header">Documents</div>
-                        <div class="card-body">
-                            <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
-                                <div id="eligibility-container">
-                                    <?php 
-                                    // Loop through the fetched documents and display them in the form
-                                    foreach ($documents as $index => $doc) { 
-                                    ?>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="documents_name[]" value="<?php echo htmlspecialchars($doc['document_type']); ?>" placeholder="Document Name" required>
+                            <!-- Overseas Locations Input Fields (Displayed in a row) -->
+                            <div id="overseas-location-fields" class="row" style="display:none;">
+                                <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="overseas-location-1" class="info">1 - Country:</label>
+                                            <input type="text" class="form-control" id="overseas-location-1" name="overseas_location_1" placeholder="Country" value="<?php echo isset($row['overseas_location_1']) ? htmlspecialchars($row['overseas_location_1']) : ''; ?>" required>
                                         </div>
-                                        <div class="col-md-3">
-                                            <input type="date" class="form-control" name="date_upload[]" value="<?php echo isset($row['created_at']) ? htmlspecialchars($row['created_at']) : ''; ?>" required>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="overseas-location-2" class="info">2 - Country:</label>
+                                            <input type="text" class="form-control" id="overseas-location-2" name="overseas_location_2" placeholder="Country" value="<?php echo isset($row['overseas_location_2']) ? htmlspecialchars($row['overseas_location_2']) : ''; ?>" required>
                                         </div>
-                                        <div class="col-md-3">
-                                            <input type="file" class="form-control" name="file[]">
-                                            <!-- If there's an existing file, show a link to it -->
-                                            <?php if (!empty($doc['document_file'])): ?>
-                                                <a href="process/<?php echo $doc['document_file']; ?>" target="_blank">View File</a>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="overseas-location-3" class="info">3 - Country:</label>
+                                            <input type="text" class="form-control" id="overseas-location-3" name="overseas_location_3" placeholder="Country" value="<?php echo isset($row['overseas_location_3']) ? htmlspecialchars($row['overseas_location_3']) : ''; ?>" required>
+                                        </div>
+                                </div>
+                            </div>
+                            <!-- Preferred Occupation Input Fields in a Row -->
+                                Preferred Occupation
+                                <div class="row">
+                                    <div class="col-md-3 mb-3">
+                                        <input type="text" class="form-control" id="occupation-1" name="preferred_occupation1" placeholder="1- Occupation" value="<?php echo isset($row['preferred_occupation1']) ? htmlspecialchars($row['preferred_occupation1']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <input type="text" class="form-control" id="occupation-2" name="preferred_occupation2" placeholder="2- Occupation" value="<?php echo isset($row['preferred_occupation2']) ? htmlspecialchars($row['preferred_occupation2']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <input type="text" class="form-control" id="occupation-3" name="preferred_occupation3" placeholder="3- Occupation" value="<?php echo isset($row['preferred_occupation3']) ? htmlspecialchars($row['preferred_occupation3']) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <input type="text" class="form-control" id="occupation-4" name="preferred_occupation4" placeholder="4- Occupation" value="<?php echo isset($row['preferred_occupation4']) ? htmlspecialchars($row['preferred_occupation4']) : ''; ?>" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        Passport Number
+                                        <input type="text" class="form-control" id="passport" name="passport_no" placeholder="" value="<?php echo isset($row['passport_no']) ? htmlspecialchars($row['passport_no']) : ''; ?>">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>Expiry Date</h5>
+                                        <input type="date" class="form-control" id="expiry" name="passport_expiry" placeholder="" value="<?php echo isset($row['passport_expiry']) ? htmlspecialchars($row['passport_expiry']) : ''; ?>">
+                                    </div>
+                                </div> 
+
+                            <button type="submit" class="btn btn-primary w-100">Save</button>
+                        </form>
+                    </div>
+
+                    <div id="tvo" class="tab-content" style="display:none;">
+                        <div class="card mb-4">
+                            <div class="card-header">Documents</div>
+                            <div class="card-body">
+                                <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
+                                            <!-- Training Container -->
+                                            <div id="training-container">
+                                                <div class="row mb-4">
+                                                    <div class="col-md-12">
+                                                        <h4>Technical/Vocational and Other Training</h4>
+                                                    </div>
+                                                </div>
+                                            <?php if ($result_training->num_rows > 0): ?>
+                                                <?php while ($row_training = $result_training->fetch_assoc()): ?>
+                                                    <div class="row mb-4 mt-4">
+                                                    <!-- Training Name -->
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control m-5" name="training[]" value="" placeholder="Vocational/Training" required>
+                                                        </div>
+                                                    <!-- Start and End Date -->
+                                                        <div class="col-md-3">
+                                                            <input type="date" class="form-control m-5" name="start_date[]" value="" required>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <span class="align-self-center">to</span>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="date" class="form-control" name="end_date[]" value="" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row-mb-4">
+                                                    <!-- Institution -->
+                                                        <div class="col-md-4">
+                                                            <input type="text" class="form-control" name="institution[]" value="" placeholder="Institution" required>
+                                                        </div>
+                                                    <!-- Certificate Upload -->
+                                                        <div class="col-md-6 mt-4">
+                                                            <?php if (!empty($row_training['certificate_path'])): ?>
+                                                                <a href="" class="form-control" target="_blank">View Certificate</a>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                        <div class="col-md-6 mt-4">
+                                                            <input type="file" class="form-control" name="certificate[]">
+                                                        </div>
+                                                    </div>
+                                                <?php endwhile; ?>
+                                            <?php else: ?>
+                                            <!-- No training records found, show an empty row for new input -->
                                             <?php endif; ?>
                                         </div>
-                                        <div class="col-md-1 text-center">
-                                            <button type="button" class="btn btn-danger" onclick="removeInputGroup(this)">Remove</button>
+                                                
+                                        <!-- Button to Add Another Training Set -->
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="button" class="btn btn-primary" onclick="addTrainingGroup()">Add Another Training Set</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <?php } ?>
-                                </div>
-                                <button type="button" class="btn btn-primary" onclick="addInputGroup()">Add Another Set</button>
-                                <button type="submit" class="btn btn-success">Save Eligibility</button>
-                            </form>
+                                </form>
+                            </div>
                         </div>
+                    </div>
+
+                    <div id="ep" class="tab-content" style="display:none;">
+                        <div class="card mb-4">
+                            <div class="card-header">Eligibility and Professional License</div>
+                            <div class="card-body">
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                        <!-- Eligibility/Professional License Card -->
+                                        <div id="eligibility-container">
+                                            <div class="row mb-4">
+                                                <div class="col-md-12">
+                                                    <h4>Eligibility/Professional License</h4>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-2 text-center">
+                                                    <label>Eligibility (Civil Service)</label>
+                                                </div>
+                                                <div class="col-md-2 text-center">
+                                                    <label>Rating</label>
+                                                </div>
+                                                <div class="col-md-2 text-center">
+                                                    <label>Date of Examination</label>
+                                                </div>
+                                                <div class="col-md-4 text-center">
+                                                    <label>Professional License (PRC) (upload file)</label>
+                                                </div>
+                                                <div class="col-md-1 text-center">
+                                                    <label>Action</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Loop through the result set and display existing data as read-only -->
+                                            <?php if ($result_license->num_rows > 0): ?>
+                                                <?php while ($row_license = $result_license->fetch_assoc()): ?>
+                                                    <div class="row mb-2">
+                                                        <div class="col-md-2">
+                                                            <!-- Display existing eligibility -->
+                                                            <p><?php echo htmlspecialchars($row_license['eligibility']); ?></p>
+                                                            <input type="hidden" name="existing_eligibility[]" value="<?php echo htmlspecialchars($row_license['eligibility']); ?>">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <!-- Display existing rating -->
+                                                            <p><?php echo htmlspecialchars($row_license['rating']); ?></p>
+                                                            <input type="hidden" name="existing_rating[]" value="<?php echo htmlspecialchars($row_license['rating']); ?>">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <!-- Display existing date of examination -->
+                                                            <p><?php echo htmlspecialchars($row_license['doe']); ?></p>
+                                                            <input type="hidden" name="existing_doe[]" value="<?php echo htmlspecialchars($row_license['doe']); ?>">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <!-- Display existing PRC path (with link to the file) -->
+                                                            <?php if (!empty($row_license['prc_path'])): ?>
+                                                            <a href="../../php/applicant/<?php echo htmlspecialchars($row_license['prc_path']); ?>" class="form-control" target="_blank">View License</a>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
+
+                                            <!-- Empty row for new inputs -->
+                                                <!-- Button to Add Another Training Set -->
+                                                <div class="row">
+                                                    <div class="col-md-12 text-right">
+                                                        <button type="button" class="btn btn-primary" onclick="addInputGroup()">Add Another</button>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    <button type="submit" class="btn btn-primary w-100 mt-4">Save Documents</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="ss" class="tab-content" style="display:none;">
+                        <div class="card mb-4">
+                            <div class="card-header">Skills</div>
+                            <div class="card-body">
+                                <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
+                                    <!-- New Option Section -->
+                                    <div id="newOptionContainer" class="mt-3">
+                                        <input type="text" id="newOption" placeholder="Enter Skills acquired:" class="form-control mb-2">
+                                        <button id="addButton" type="button" class="btn btn-primary">Submit</button>
+                                    </div>
+                                    <input type="hidden" name="selectedOptions" id="selectedOptionsHidden">
+                                    <!-- Display Selected Skills -->
+                                    <div id="selectedOptionsContainer" class="mt-3">
+                                        <h5>Selected Skills:</h5>
+                                        <ul id="selectedOptionsList">
+                                            <!-- Dynamically generated list items for selected skills -->
+                                        </ul>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100 mt-4">Save Documents</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -375,70 +549,257 @@ if (!$row) {
 
     <script>
         function switchTab(event, tabName) {
+            // Hide all tab content
             document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+
+            // Show the selected tab's content
             document.getElementById(tabName).style.display = 'block';
-            document.querySelectorAll('.btn-outline-primary').forEach(btn => btn.classList.remove('active'));
+
+            // Remove 'active' class from all buttons
+            document.querySelectorAll('.list-group-item').forEach(btn => btn.classList.remove('active'));
+
+            // Add 'active' class to the clicked button
             event.target.classList.add('active');
         }
 
-        function addInputGroup() {
-            const container = $("#eligibility-container");
-            const newRow = $(`
-                <div class="row mb-3">
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="documents_name[]" placeholder="Document Name" required>
+        //selection option
+                // Show/Hide the text input based on the selected disability
+            document.getElementById('disability').addEventListener('change', function() {
+                var disabilitySelect = this.value;
+                var disabilitySpecifyContainer = document.getElementById('disability_specify_container');
+                
+                if (disabilitySelect === 'others') {
+                    disabilitySpecifyContainer.style.display = 'block'; // Show input if 'Others' is selected
+                } else {
+                    disabilitySpecifyContainer.style.display = 'none'; // Hide input if another option is selected
+                }
+            });
+
+            // Check initial selected value and show the text input if needed
+            if (document.getElementById('disability').value === 'others') {
+                document.getElementById('disability_specify_container').style.display = 'block';
+            }
+
+            // Show/Hide the Household ID input field based on the selection
+            document.getElementById('four_ps').addEventListener('change', function() {
+                var fourPsSelect = this.value;
+                var householdIdContainer = document.getElementById('household_id_container');
+                
+                if (fourPsSelect === 'yes') {
+                    householdIdContainer.style.display = 'block'; // Show input if 'Yes' is selected
+                } else {
+                    householdIdContainer.style.display = 'none'; // Hide input if 'No' is selected
+                }
+            });
+
+            // Check initial selected value and show the Household ID input if needed
+            if (document.getElementById('four_ps').value === 'yes') {
+                document.getElementById('household_id_container').style.display = 'block';
+            }
+            
+            // Show the appropriate input fields based on the selected location
+            document.getElementById('preferred-location').addEventListener('change', function() {
+                var locationType = this.value;
+                var localFields = document.getElementById('local-location-fields');
+                var overseasFields = document.getElementById('overseas-location-fields');
+
+                // Show Local fields and hide Overseas fields
+                if (locationType === 'local') {
+                    localFields.style.display = 'block'; // Show local input fields
+                    overseasFields.style.display = 'none'; // Hide overseas input fields
+                }
+                // Show Overseas fields and hide Local fields
+                else if (locationType === 'overseas') {
+                    localFields.style.display = 'none'; // Hide local input fields
+                    overseasFields.style.display = 'block'; // Show overseas input fields
+                } else {
+                    localFields.style.display = 'none'; // Hide both if no option selected
+                    overseasFields.style.display = 'none'; // Hide both if no option selected
+                }
+            });
+            
+            //training information
+            function addTrainingGroup() {
+                // Get the training container where rows are added
+                const container = document.getElementById('training-container');
+
+                // Create a new div element for the row
+                const newRow = document.createElement('div');
+                newRow.classList.add('row', 'mb-4');
+
+                // Set the inner HTML of the new row
+                newRow.innerHTML = `
+                    <!-- Training Name -->
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" name="training[]" placeholder="Vocational/Training" required>
                     </div>
-                    <div class="col-md-3">
-                        <input type="date" class="form-control" name="date_upload[]" required>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="file" class="form-control" name="file[]" required>
+                    <!-- Start and End Date -->
+                    <div class="col-md-3 text-center">
+                        <input type="date" class="form-control" name="start_date[]" required>
                     </div>
                     <div class="col-md-1 text-center">
-                        <button type="button" class="btn btn-danger" onclick="removeInputGroup(this)">Remove</button>
+                        <span>to</span>
                     </div>
-                </div>
-            `);
-            container.append(newRow);
-        }
+                    <div class="col-md-3 text-center">
+                        <input type="date" class="form-control" name="end_date[]" required>
+                    </div>
+                    <!-- Institution -->
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="institution[]" placeholder="Institution" required>
+                    </div>
+                    <!-- Certificate Upload -->
+                    <div class="col-md-6">
+                        <input type="file" class="form-control" name="certificate[]">
+                    </div>
+                    <!-- Remove Button -->
+                    <div class="col-md-1 text-center">
+                        <button type="button" class="btn btn-danger" onclick="removeTrainingGroup(this)">Remove</button>
+                    </div>
+                `;
 
-        function removeInputGroup(button) {
-            $(button).closest('.row').remove();
-        }
+                // Append the newly created row to the container
+                container.appendChild(newRow);
+            }
 
-         // Show/Hide the text input based on the selected disability
-    document.getElementById('disability').addEventListener('change', function() {
-        var disabilitySelect = this.value;
-        var disabilitySpecifyContainer = document.getElementById('disability_specify_container');
-        
-        if (disabilitySelect === 'others') {
-            disabilitySpecifyContainer.style.display = 'block'; // Show input if 'Others' is selected
-        } else {
-            disabilitySpecifyContainer.style.display = 'none'; // Hide input if another option is selected
-        }
-    });
+            // Function to remove a training row when the remove button is clicked
+            function removeTrainingGroup(button) {
+                // Find the parent row of the clicked remove button and remove it
+                button.closest('.row').remove();
+            }
 
-    // Check initial selected value and show the text input if needed
-    if (document.getElementById('disability').value === 'others') {
-        document.getElementById('disability_specify_container').style.display = 'block';
-    }
+            //eligibility and professional license
+            function addInputGroup() {
+                const container = $("#eligibility-container");
+                const newRow = $(`
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="documents_name[]" placeholder="Document Name" required>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control " name="rating[]" placeholder="Rating" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" name="date_upload[]" required>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="file" class="form-control" name="file[]" required>
+                        </div>
+                        <div class="col-md-1 text-center">
+                            <button type="button" class="btn btn-danger" onclick="removeInputGroup(this)">Remove</button>
+                        </div>
+                    </div>
+                `);
+                container.append(newRow);
+            }
 
-    // Show/Hide the Household ID input field based on the selection
-    document.getElementById('four_ps').addEventListener('change', function() {
-        var fourPsSelect = this.value;
-        var householdIdContainer = document.getElementById('household_id_container');
-        
-        if (fourPsSelect === 'yes') {
-            householdIdContainer.style.display = 'block'; // Show input if 'Yes' is selected
-        } else {
-            householdIdContainer.style.display = 'none'; // Hide input if 'No' is selected
-        }
-    });
+            function removeInputGroup(button) {
+                $(button).closest('.row').remove();
+            }
 
-    // Check initial selected value and show the Household ID input if needed
-    if (document.getElementById('four_ps').value === 'yes') {
-        document.getElementById('household_id_container').style.display = 'block';
-    }
+            //skills
+            // Get elements from the DOM
+            const selectBox = document.getElementById('dynamicSelect');
+            const newOptionInput = document.getElementById('newOption');
+            const addButton = document.getElementById('addButton');
+            const selectedOptionsList = document.getElementById('selectedOptionsList');
+            const selectedOptionsHidden = document.getElementById('selectedOptionsHidden');
+
+            // Array to store selected options
+            let selectedOptions = [];
+
+            // Function to update the hidden input field
+            function updateHiddenField() {
+                selectedOptionsHidden.value = selectedOptions.join(', ');
+            }
+
+            addButton.addEventListener('click', function() {
+                const newSkill = newOptionInput.value.trim();
+                
+                if (newSkill && !selectedOptions.includes(newSkill)) {
+                    selectedOptions.push(newSkill);
+
+                    // Add to the selected options list
+                    const li = document.createElement('li');
+                    li.textContent = newSkill;
+                    
+                    // Create the remove button
+                    const removeBtn = document.createElement('button');
+                    removeBtn.textContent = 'Remove';
+                    removeBtn.classList.add('btn', 'btn-danger', 'btn-sm', 'ms-2');
+                    removeBtn.onclick = () => removeSkill(newSkill, li);
+                    li.appendChild(removeBtn);
+
+                    selectedOptionsList.appendChild(li);
+
+                    // Clear the input field
+                    newOptionInput.value = '';
+                    updateHiddenField();
+                }
+            });
+
+            // Handle select box change
+            selectBox.addEventListener('change', function() {
+                // Get the selected options
+                const selected = Array.from(selectBox.selectedOptions)
+                    .filter(option => option.value !== 'add')
+                    .map(option => option.value);
+
+                // Add the selected options to the list dynamically
+                selected.forEach(skill => {
+                    if (!selectedOptions.includes(skill)) {
+                        selectedOptions.push(skill);
+
+                        const li = document.createElement('li');
+                        li.textContent = skill;
+
+                        // Create the remove button
+                        const removeBtn = document.createElement('button');
+                        removeBtn.textContent = 'Remove';
+                        removeBtn.classList.add('btn', 'btn-danger', 'btn-sm', 'ms-2');
+                        removeBtn.onclick = () => removeSkill(skill, li);
+                        li.appendChild(removeBtn);
+
+                        selectedOptionsList.appendChild(li);
+                    }
+                });
+
+                // Update the hidden field with selected skills
+                updateHiddenField();
+            });
+
+            // Remove skill from the list and hidden field
+            function switchTab(event, tabName) {
+                    // Hide all tab content
+                    document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+
+                    // Show the selected tab's content
+                    document.getElementById(tabName).style.display = 'block';
+
+                    // Remove 'active' class from all buttons
+                    document.querySelectorAll('.list-group-item').forEach(btn => btn.classList.remove('active'));
+
+                    // Add 'active' class to the clicked button
+                    event.target.classList.add('active');
+                }
+
+            // Update the selected options list on page load (if any options are pre-selected)
+            document.addEventListener('DOMContentLoaded', function() {
+                if (selectedOptions.length > 0) {
+                    selectedOptions.forEach(skill => {
+                        const li = document.createElement('li');
+                        li.textContent = skill;
+
+                        // Create the remove button
+                        const removeBtn = document.createElement('button');
+                        removeBtn.textContent = 'Remove';
+                        removeBtn.classList.add('btn', 'btn-danger', 'btn-sm', 'ms-2');
+                        removeBtn.onclick = () => removeSkill(skill, li);
+                        li.appendChild(removeBtn);
+
+                        selectedOptionsList.appendChild(li);
+                    });
+                }
+            });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

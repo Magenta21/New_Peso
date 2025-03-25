@@ -7,7 +7,7 @@ body {
     height: 50px;
     width: 100%;
     text-align: center;
-}
+}   
 .container {
     width: 800px;
     padding: 20px;
@@ -87,3 +87,5 @@ a.navlink {
     transform-origin: left;
     transform: scaleX(1);
   }
+
+  
