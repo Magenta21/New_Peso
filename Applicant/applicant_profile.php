@@ -102,16 +102,6 @@ $result_work_exp = $stmt_work_exp->get_result();
             </div>
         </div>
     </div>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <span class="navbar-text text-white w-100 text-center">
-                <a class="navlink" href="employer_home.php">Home</a>
-                <a class="navlink" href="post_job.php">Job Post</a>
-                <a class="navlink" href="job_list.php">Job list</a>
-                <a class="navlink" href="employees.php">Employers</a>
-            </span>
-        </div>
-    </nav>
 
     <div class="container-xxl mt-2">
         <div class="card p-4 shadow">
@@ -141,8 +131,8 @@ $result_work_exp = $stmt_work_exp->get_result();
                 <div class="col-md-9">
                     <!-- Content for Tabs -->
                     <div id="profile" class="tab-content" style="display:block;">
-                        <form action="process/save_profile.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
-                        <div class="text-center">
+                        <form action="process/save_profile1.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                            <div class="text-center">
                                     <!-- <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)"> -->
                                     <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)">
                                 </div>
@@ -276,7 +266,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                     </div>
 
                     <div id="educational_background" class="tab-content" style="display:none;">
-                        <form action="process/save_educational_background.php" method="post" class="needs-validation" novalidate>
+                        <form action="process/save_profile2.php" method="post" class="needs-validation" novalidate>
                            <!-- Educational Background Form -->
                            <h3>Tertiary</h3>   
                             <div class="row">
