@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2025 at 07:47 AM
+-- Generation Time: Mar 27, 2025 at 06:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -80,7 +80,7 @@ CREATE TABLE `applicant_profile` (
   `college_school` varchar(255) NOT NULL,
   `college_graduated` date NOT NULL,
   `college_award` varchar(255) NOT NULL,
-  `course` varchar(255) NOT NULL,
+  `tertiary_course` varchar(255) NOT NULL,
   `work_location` varchar(255) NOT NULL,
   `preferred_occupation` varchar(255) NOT NULL,
   `disability` varchar(255) NOT NULL,
@@ -91,18 +91,20 @@ CREATE TABLE `applicant_profile` (
   `employment_status` varchar(255) NOT NULL,
   `resume` varchar(255) NOT NULL,
   `applicant_type` enum('Training','Employment') NOT NULL,
-  `expected_salary` int(255) NOT NULL
+  `expected_salary` int(255) NOT NULL,
+  `grad_crouse` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `applicant_profile`
 --
 
-INSERT INTO `applicant_profile` (`id`, `username`, `password`, `is_verified`, `otp`, `otp_expiry`, `reset_token`, `reset_token_expiry`, `email`, `fname`, `lname`, `mname`, `dob`, `pob`, `age`, `height`, `sex`, `civil_status`, `contact_no`, `landline`, `photo`, `present_address`, `tin`, `sss_no`, `pagibig_no`, `philhealth_no`, `passport_no`, `passport_expiry`, `tertiary_school`, `tertiary_graduated`, `tertiary_award`, `college_school`, `college_graduated`, `college_award`, `course`, `work_location`, `preferred_occupation`, `disability`, `selected_option`, `four_ps`, `prefix`, `religion`, `employment_status`, `resume`, `applicant_type`, `expected_salary`) VALUES
-(2, 'Mark', '$2y$10$cIcE2Z62HDpszBc4szxu1.RPGeLkZ8YYik94p6ny5V0QiUrot.RRq', '1', '475046', '2025-02-18 13:36:56.000000', '', '', 'pesolosbanos4@gmail.com', 'Sedrick', 'Hyatt-Mosciski', 'Ottis Mitchell', '2025-10-10', '', 0, 0, 'male', '', 2147483647, '', '../uploads/Mark/11.jpg', '138 Audra Trafficway', 0, 0, 0, 0, 0, NULL, 'Noemi Streich', '2024-03-07', 'Sed eius suscipit sequi dolores sint accusamus occaecati quae nulla.', 'Nasir Wilderman', '2025-12-16', 'Deleniti sapiente similique ipsum dolor ratione.', '', '', '', '', '', '', '', '', '', '', 'Training', 0),
-(3, 'Mark', '$2y$10$7HG46MrrdnkCrzoPZkYlT.aqSFBGBaBeSXOphDjmY2b0uO0ebPN82', '1', '972741', '2025-02-20 13:06:58.000000', '', '', 'marklawrencemercado8@gmail.com', 'Vilma', 'Gleichner', 'Libby Yost-Reinger', '2024-10-13', '', 0, 0, 'male', '', 2147483647, '', '../uploads/Mark/11.jpg', '29509 Unique Ville', 0, 0, 0, 0, 0, NULL, 'Scottie Leannon', '2024-05-22', 'Praesentium quam occaecati ratione qui dignissimos corporis deleniti corrupti cumque.', 'Rhett Cole', '2024-10-07', 'Fugiat assumenda earum nemo fuga iusto.', '', '', '', '', '', '', '', '', '', '', 'Employment', 0),
-(4, 'Developer123', '$2y$10$6TrIZbWtGlnwaj/qB3DyveKX9dlMkMX3nIPnZ1OUhdnQ4AOxsmSly', '1', '424477', '2025-03-17 10:24:49.000000', '', '', 'jervinguevarra123@gmail.com', 'Colorado', 'Hoover', 'Ryan Campos', '2000-02-10', '', 0, 0, 'male', '', 2147483647, '', 'uploads/Developer123/rizal.PNG', 'campvicente lim ', 0, 0, 0, 0, 0, NULL, 'qweqwe', '2000-02-22', 'qweqeq', 'qweqeq', '2000-02-22', 'asd', '', '', '', '', '', '', '', '', '', '', 'Employment', 0),
-(5, 'Lawrence123', '$2y$10$wmG6vvUGbNzVs93xEUVo6.8gp.H3gQ0ckYeQSdCgcl44fJJ4FFwlC', '1', '791946', '2025-03-17 14:44:36.000000', '', '', 'jervin1231@gmail.com', 'Mark Lawrence ', 'qwee', 'Ryan Campos', '2000-02-22', '', 0, 0, 'male', '', 2147483647, '', 'uploads/Lawrence123/rizal.PNG', 'wqeqweqwe123', 0, 0, 0, 0, 0, NULL, 'qew', '0000-00-00', 'qwe', 'qwe', '2000-02-22', 'qwe', '', '', '', '', '', '', '', '', '', '', 'Employment', 0);
+INSERT INTO `applicant_profile` (`id`, `username`, `password`, `is_verified`, `otp`, `otp_expiry`, `reset_token`, `reset_token_expiry`, `email`, `fname`, `lname`, `mname`, `dob`, `pob`, `age`, `height`, `sex`, `civil_status`, `contact_no`, `landline`, `photo`, `present_address`, `tin`, `sss_no`, `pagibig_no`, `philhealth_no`, `passport_no`, `passport_expiry`, `tertiary_school`, `tertiary_graduated`, `tertiary_award`, `college_school`, `college_graduated`, `college_award`, `tertiary_course`, `work_location`, `preferred_occupation`, `disability`, `selected_option`, `four_ps`, `prefix`, `religion`, `employment_status`, `resume`, `applicant_type`, `expected_salary`, `grad_crouse`) VALUES
+(2, 'Mark', '$2y$10$cIcE2Z62HDpszBc4szxu1.RPGeLkZ8YYik94p6ny5V0QiUrot.RRq', '1', '475046', '2025-02-18 13:36:56.000000', '', '', 'pesolosbanos4@gmail.com', 'Sedrick', 'Hyatt-Mosciski', 'Ottis Mitchell', '2025-10-10', '', 0, 0, 'male', '', 2147483647, '', '../uploads/Mark/11.jpg', '138 Audra Trafficway', 0, 0, 0, 0, 0, NULL, 'Noemi Streich', '2024-03-07', 'Sed eius suscipit sequi dolores sint accusamus occaecati quae nulla.', 'Nasir Wilderman', '2025-12-16', 'Deleniti sapiente similique ipsum dolor ratione.', '', '', '', '', '', '', '', '', '', '', 'Training', 0, ''),
+(3, 'Mark', '$2y$10$7HG46MrrdnkCrzoPZkYlT.aqSFBGBaBeSXOphDjmY2b0uO0ebPN82', '1', '972741', '2025-02-20 13:06:58.000000', '', '', 'marklawrencemercado8@gmail.com', 'Vilma', 'Gleichner', 'Libby Yost-Reinger', '2024-10-13', '', 0, 0, 'male', '', 2147483647, '', '../uploads/Mark/11.jpg', '29509 Unique Ville', 0, 0, 0, 0, 0, NULL, 'Scottie Leannon', '2024-05-22', 'Praesentium quam occaecati ratione qui dignissimos corporis deleniti corrupti cumque.', 'Rhett Cole', '2024-10-07', 'Fugiat assumenda earum nemo fuga iusto.', '', '', '', '', '', '', '', '', '', '', 'Employment', 0, ''),
+(4, 'Developer123', '$2y$10$6TrIZbWtGlnwaj/qB3DyveKX9dlMkMX3nIPnZ1OUhdnQ4AOxsmSly', '1', '424477', '2025-03-17 10:24:49.000000', '', '', 'jervinguevarra123@gmail.com', 'Colorado', 'Hoover', 'Ryan Campos', '2000-02-10', '', 0, 0, 'male', '', 2147483647, '', 'uploads/Developer123/rizal.PNG', 'campvicente lim ', 0, 0, 0, 0, 0, NULL, 'qweqwe', '2000-02-22', 'qweqeq', 'qweqeq', '2000-02-22', 'asd', '', '', '', '', '', '', '', '', '', '', 'Employment', 0, ''),
+(5, 'Lawrence123', '$2y$10$wmG6vvUGbNzVs93xEUVo6.8gp.H3gQ0ckYeQSdCgcl44fJJ4FFwlC', '1', '791946', '2025-03-17 14:44:36.000000', '', '', 'jervin1231@gmail.com', 'Mark Lawrence ', 'qwee', 'Ryan Campos', '2000-02-22', 'ccsDcS', 0, 0, 'male', 'single', 2147483647, '131243', 'uploads/Lawrence123/rizal.PNG', 'wqeqweqwe123', 123124325, 324234, 75676, 34242, 5453453, '2025-03-12 14:59:57.000000', 'qew', '0000-00-00', 'qwe', 'qwe', '2000-02-22', 'qwe', 'fgdhhtrhty', 'srgtrdgdrr', 'tdhdtyhdth', 'drgtgdrgdr', 'sergsegesrgser', 'dhrtyrtgdrgdr', 'restsegserser', 'tet4et', 'terteryrt', '', 'Employment', 0, ''),
+(6, 'Patrick123', '$2y$10$GDhfOAg2HscIqvuzWs2djeay/xGP1vSzGaplyYg8y96/xf1ZvItrm', '1', '506994', '2025-03-27 10:23:37.000000', '', '', 'vetara3297@boyaga.com', 'Tite ', 'Patrick', 'ni', '2000-02-02', '', 0, 0, 'male', '', 2147483647, '', 'uploads/Patrick123/brave_screenshot_localhost.png', 'asdad', 0, 0, 0, 0, 0, NULL, 'asd', '2000-02-22', 'asd', 'asd', '2000-02-20', 'asd', '', '', '', '', '', '', '', '', '', '', 'Employment', 0, '');
 
 -- --------------------------------------------------------
 
@@ -878,7 +880,7 @@ ALTER TABLE `admin_profile`
 -- AUTO_INCREMENT for table `applicant_profile`
 --
 ALTER TABLE `applicant_profile`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `application`
