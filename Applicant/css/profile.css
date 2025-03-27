@@ -88,4 +88,29 @@ a.navlink {
     transform: scaleX(1);
   }
 
-  
+  #newOptionContainer {
+    display: none; /* Initially hide the input field */
+    margin-top: 10px;
+}
+#selectedOptionsContainer {
+    margin-top: 20px;
+}
+#selectedOptionsList li {
+    cursor: pointer;
+}
+.row {
+    margin-bottom: 10px;
+}
+#newOptionContainer {
+    display: none; /* Initially hide the input field */
+    margin-top: 10px;
+}
+#selectedOptionsContainer {
+    margin-top: 20px;
+}
+#selectedOptionsList li {
+    cursor: pointer;
+}
+.row {
+    margin-bottom: 10px;
+}

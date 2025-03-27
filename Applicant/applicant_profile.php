@@ -38,7 +38,29 @@ $stmt_license = $conn->prepare($sql_license);
 $stmt_license->bind_param("i", $applicant_profile);
 $stmt_license->execute();
 $result_license = $stmt_license->get_result();
+
+//language
+$sql_language = "SELECT * FROM language_proficiency WHERE user_id = ?";
+$stmt_language = $conn->prepare($sql_language);
+$stmt_language->bind_param("i", $userId);
+$stmt_language->execute();
+$result_language = $stmt_language->get_result();
+
+// Create an array to hold language proficiency data
+$languageData = [];
+while ($row_language = $result_language->fetch_assoc()) {
+    $languageData[$row_language['language_p']] = $row_language;
+}
+
+// Fetch data from work_exp table
+$sql_work_exp = "SELECT * FROM work_exp WHERE user_id = ?";
+$stmt_work_exp = $conn->prepare($sql_work_exp);
+$stmt_work_exp->bind_param("i", $userId);
+$stmt_work_exp->execute();
+$result_work_exp = $stmt_work_exp->get_result();
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -445,6 +467,58 @@ $result_license = $stmt_license->get_result();
                         </div>
                     </div>
 
+                    <div id="ld" class="tab-content" style="display:none;">
+                        <div class="card mb-4">
+                            <div class="card-header">Language/Dialect Proficiency</div>
+                            <div class="card-body">
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                    <div class="row fw-bold text-center mb-2">
+                                        <div class="col-2">Language</div>
+                                        <div class="col-2">Read</div>
+                                        <div class="col-2">Write</div>
+                                        <div class="col-2">Speak</div>
+                                        <div class="col-2">Understand</div>
+                                        <div class="col-2">Action</div>
+                                    </div>
+
+                                    <div id="language-container">
+                                        <?php foreach ($languageData as $language => $data): ?>
+                                            <div class="row text-center align-items-center mb-2">
+                                                <div class="col-2">
+                                                    <input type="text" class="form-control" name="language[]" value="<?php echo htmlspecialchars($language); ?>" <?php echo ($language === 'English' || $language === 'Filipino') ? 'readonly' : ''; ?>>
+                                                </div>
+                                                <div class="col-2">
+                                                    <input type="checkbox" name="read[]" value="1" <?php echo $data['read_l'] == 1 ? 'checked' : ''; ?>>
+                                                </div>
+                                                <div class="col-2">
+                                                    <input type="checkbox" name="write[]" value="1" <?php echo $data['write_l'] == 1 ? 'checked' : ''; ?>>
+                                                </div>
+                                                <div class="col-2">
+                                                    <input type="checkbox" name="speak[]" value="1" <?php echo $data['speak_l'] == 1 ? 'checked' : ''; ?>>
+                                                </div>
+                                                <div class="col-2">
+                                                    <input type="checkbox" name="understand[]" value="1" <?php echo $data['understand_l'] == 1 ? 'checked' : ''; ?>>
+                                                </div>
+                                                <div class="col-2">
+                                                    <?php if ($language !== 'English' && $language !== 'Filipino'): ?>
+                                                        <button type="button" class="btn btn-danger btn-sm" onclick="removeLanguageGroup(this)">Remove</button>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+
+                                    <div class="text-end mt-3">
+                                        <button type="button" class="btn btn-primary" onclick="addLanguageGroup()">Add Another Language Set</button>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary w-100 mt-4">Save Documents</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div id="ep" class="tab-content" style="display:none;">
                         <div class="card mb-4">
                             <div class="card-header">Eligibility and Professional License</div>
@@ -518,23 +592,115 @@ $result_license = $stmt_license->get_result();
                         </div>
                     </div>
 
-                    <div id="ss" class="tab-content" style="display:none;">
+                    <div id="we" class="tab-content" style="display:none;">
                         <div class="card mb-4">
-                            <div class="card-header">Skills</div>
+                            <div class="card-header"><h4>Work Experience (Limit to 10-year period)</h4></div>
                             <div class="card-body">
                                 <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
-                                    <!-- New Option Section -->
-                                    <div id="newOptionContainer" class="mt-3">
-                                        <input type="text" id="newOption" placeholder="Enter Skills acquired:" class="form-control mb-2">
-                                        <button id="addButton" type="button" class="btn btn-primary">Submit</button>
+                                    <div class="row mb-2 text-center fw-bold">
+                                        <div class="col-md-2">Company Name</div>
+                                        <div class="col-md-3">Address</div>
+                                        <div class="col-md-2">Position</div>
+                                        <div class="col-md-3">Inclusive Dates</div>
+                                        <div class="col-md-2">Status</div>
                                     </div>
-                                    <input type="hidden" name="selectedOptions" id="selectedOptionsHidden">
-                                    <!-- Display Selected Skills -->
-                                    <div id="selectedOptionsContainer" class="mt-3">
-                                        <h5>Selected Skills:</h5>
+
+                                    <?php if ($result_work_exp->num_rows > 0): ?>
+                                        <?php while ($row_work_exp = $result_work_exp->fetch_assoc()): ?>
+                                            <div class="row mb-2">
+                                                <div class="col-md-2">
+                                                    <p><?php echo htmlspecialchars($row_work_exp['company_name']); ?></p>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p><?php echo htmlspecialchars($row_work_exp['address']); ?></p>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <p><?php echo htmlspecialchars($row_work_exp['position']); ?></p>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p><?php echo htmlspecialchars($row_work_exp['started_date']); ?> to <?php echo htmlspecialchars($row_work_exp['termination_date']); ?></p>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <p><?php echo htmlspecialchars($row_work_exp['status']); ?></p>
+                                                </div>
+                                            </div>
+                                        <?php endwhile; ?>
+                                    <?php endif; ?>
+
+                                    <!-- New Input Group -->
+                                    <div id="work-experience-container">
+                                        <div class="row mb-3">
+                                            <div class="col-md-2"><input type="text" class="form-control" name="company[]" placeholder="Company Name"></div>
+                                            <div class="col-md-3"><input type="text" class="form-control" name="address[]" placeholder="Address"></div>
+                                            <div class="col-md-2"><input type="text" class="form-control" name="position[]" placeholder="Position"></div>
+                                            <div class="col-md-3">
+                                                <div class="d-flex">
+                                                    <input type="date" class="form-control" name="start_date[]">
+                                                    <span class="mx-2 align-self-center">to</span>
+                                                    <input type="date" class="form-control" name="end_date[]">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2"><input type="text" class="form-control" name="status[]" placeholder="Status"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-end">
+                                        <button type="button" class="btn btn-primary" onclick="addWorkExperienceGroup()">Add Another Work Experience Set</button>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary w-100 mt-4">Save Documents</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="ss" class="tab-content" style="display:none;">
+                        <div class="card mb-4 mt-4">
+                            <div class="card-header">Skills Acquired</div>
+                            <div class="card-body">
+                                <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
+                                    <div class="card-body">
+                                        <label for="dynamicSelect">Choose one or more options:</label>
+                                        <select id="dynamicSelect" name="other_skills[]" multiple class="form-select">
+                                        <option value="add">Add a new option...</option>
+                                        <option value="Auto Mechanic">Auto Mechanic</option>
+                                        <option value="Beautician">Beautician</option>
+                                        <option value="Carpentry Work">Carpentry Work</option>
+                                        <option value="Computer Literate">Computer Literate</option>
+                                        <option value="Domestic Chores">Domestic Chores</option>
+                                        <option value="Driver">Driver</option>
+                                        <option value="Electrician">Electrician</option>
+                                        <option value="Embroidery">Embroidery</option>
+                                        <option value="Gardening">Gardening</option>
+                                        <option value="Masonry">Masonry</option>
+                                        <option value="Painter/Artist">Painter/Artist</option>
+                                        <option value="Painting Jobs">Painting Jobs</option>
+                                        <option value="Photography">Photography</option>
+                                        <option value="Plumbing">Plumbing</option>
+                                        <option value="Sewing">Sewing Dresses</option>
+                                        <option value="Stenography">Stenography</option>
+                                        <option value="Tailoring">Tailoring</option>
+                                        </select>
+
+                                        <div id="newOptionContainer" class="mt-3">
+                                        <input type="text" id="newOption" placeholder="Enter new option" class="form-control mb-2">
+                                        <button id="addButton" type="button" class="btn btn-primary">Add Option</button>
+                                        </div>
+
+                                        <input type="hidden" name="selectedOptions" id="selectedOptionsHidden">
+                                        <div id="selectedOptionsContainer" class="mt-3">
+                                        <h5>Selected Options:</h5>
                                         <ul id="selectedOptionsList">
-                                            <!-- Dynamically generated list items for selected skills -->
+                                            <?php if (!empty($otherSkills)): ?>
+                                            <?php foreach ($otherSkills as $skill): ?>
+                                                <li><?php echo htmlspecialchars(trim($skill)); ?></li>
+                                            <?php endforeach; ?>
+                                            <?php else: ?>
+                                            <li>No skills found.</li>
+                                            <?php endif; ?>
                                         </ul>
+                                        </div>
+                                    </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100 mt-4">Save Documents</button>
                                 </form>
@@ -545,7 +711,7 @@ $result_license = $stmt_license->get_result();
                 </div>
             </div>
         </div>
-    </div>
+    </div>                              
 
     <script>
         function switchTab(event, tabName) {
@@ -697,109 +863,190 @@ $result_license = $stmt_license->get_result();
             }
 
             //skills
-            // Get elements from the DOM
-            const selectBox = document.getElementById('dynamicSelect');
-            const newOptionInput = document.getElementById('newOption');
-            const addButton = document.getElementById('addButton');
-            const selectedOptionsList = document.getElementById('selectedOptionsList');
-            const selectedOptionsHidden = document.getElementById('selectedOptionsHidden');
+            document.addEventListener('DOMContentLoaded', function() {
+                const selectElement = document.getElementById('dynamicSelect');
+                const newOptionInput = document.getElementById('newOption');
+                const addButton = document.getElementById('addButton');
+                const newOptionContainer = document.getElementById('newOptionContainer');
+                const selectedOptionsList = document.getElementById('selectedOptionsList');
+                const form = document.getElementById('optionsForm');
+                const selectedOptionsHidden = document.getElementById('selectedOptionsHidden'); // The hidden input field
 
-            // Array to store selected options
-            let selectedOptions = [];
+                let selectedOptions = new Set(); // Use a Set to store unique selected options
 
-            // Function to update the hidden input field
-            function updateHiddenField() {
-                selectedOptionsHidden.value = selectedOptions.join(', ');
+                // Function to update the displayed selected options
+                function updateSelectedOptions() {
+                    selectedOptionsList.innerHTML = ''; // Clear the current list
+                    
+                    // Loop through selected options and display them
+                    selectedOptions.forEach(optionValue => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = optionValue;
+                        listItem.addEventListener('click', function() {
+                            removeOption(optionValue); // Allow removing option on click
+                        });
+                        selectedOptionsList.appendChild(listItem);
+                    });
+
+                    // Update the hidden field with selected options
+                    updateHiddenField();
             }
 
+            // Remove option from the selected options
+            function removeOption(optionValue) {
+                selectedOptions.delete(optionValue); // Remove from set
+                updateSelectedOptions(); // Update display
+            }
+
+            // Toggle option in the selected options
+            function toggleOption(optionValue) {
+                if (selectedOptions.has(optionValue)) {
+                    removeOption(optionValue); // If already selected, remove it
+                } else {
+                    selectedOptions.add(optionValue); // If not selected, add it
+                }
+                updateSelectedOptions(); // Update display
+            }
+
+            // Show the input field when "Add a new option..." is selected
+            selectElement.addEventListener('change', function() {
+                const selectedValue = selectElement.value;
+
+                if (selectedValue === 'add') {
+                    newOptionContainer.style.display = 'block';
+                    newOptionInput.focus(); // Focus on the input field
+                } else {
+                    newOptionContainer.style.display = 'none';
+                    toggleOption(selectedValue); // Toggle the selection state of the option
+                    selectElement.value = ''; // Reset the select value
+                }
+            });
+
+            // Add new option to the select when the button is clicked
             addButton.addEventListener('click', function() {
-                const newSkill = newOptionInput.value.trim();
-                
-                if (newSkill && !selectedOptions.includes(newSkill)) {
-                    selectedOptions.push(newSkill);
-
-                    // Add to the selected options list
-                    const li = document.createElement('li');
-                    li.textContent = newSkill;
+                const newOptionValue = newOptionInput.value.trim();
+                if (newOptionValue) {
+                    // Create a new option element
+                    const newOption = document.createElement('option');
+                    newOption.value = newOptionValue;
+                    newOption.textContent = newOptionValue;
                     
-                    // Create the remove button
-                    const removeBtn = document.createElement('button');
-                    removeBtn.textContent = 'Remove';
-                    removeBtn.classList.add('btn', 'btn-danger', 'btn-sm', 'ms-2');
-                    removeBtn.onclick = () => removeSkill(newSkill, li);
-                    li.appendChild(removeBtn);
+                    // Add the new option to the select element
+                    selectElement.appendChild(newOption);
 
-                    selectedOptionsList.appendChild(li);
+                    // Automatically add and select the newly added option
+                    toggleOption(newOptionValue);
+                    selectElement.value = ''; // Reset the select value
 
-                    // Clear the input field
+                    // Clear the input field and hide it again
                     newOptionInput.value = '';
-                    updateHiddenField();
+                    newOptionContainer.style.display = 'none';
+
+                    updateSelectedOptions(); // Update the displayed options
+                } else {
+                    alert('Please enter a valid option.');
                 }
             });
 
-            // Handle select box change
-            selectBox.addEventListener('change', function() {
-                // Get the selected options
-                const selected = Array.from(selectBox.selectedOptions)
-                    .filter(option => option.value !== 'add')
-                    .map(option => option.value);
+            // Function to update the hidden input field with selected options
+            function updateHiddenField() {
+                selectedOptionsHidden.value = Array.from(selectedOptions).join(','); // Convert Set to comma-separated string
+            }
 
-                // Add the selected options to the list dynamically
-                selected.forEach(skill => {
-                    if (!selectedOptions.includes(skill)) {
-                        selectedOptions.push(skill);
-
-                        const li = document.createElement('li');
-                        li.textContent = skill;
-
-                        // Create the remove button
-                        const removeBtn = document.createElement('button');
-                        removeBtn.textContent = 'Remove';
-                        removeBtn.classList.add('btn', 'btn-danger', 'btn-sm', 'ms-2');
-                        removeBtn.onclick = () => removeSkill(skill, li);
-                        li.appendChild(removeBtn);
-
-                        selectedOptionsList.appendChild(li);
-                    }
-                });
-
-                // Update the hidden field with selected skills
-                updateHiddenField();
+            // Update the hidden input field before form submission
+            form.addEventListener('submit', function(event) {
+                updateHiddenField(); // Make sure the hidden field is updated before submission
+                console.log("Selected options: " + selectedOptionsHidden.value); // Debugging output
             });
+        });
 
-            // Remove skill from the list and hidden field
-            function switchTab(event, tabName) {
-                    // Hide all tab content
-                    document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+            // Function to add a new language row dynamically
+            function addLanguageGroup() {
+                const container = document.getElementById('language-container');
 
-                    // Show the selected tab's content
-                    document.getElementById(tabName).style.display = 'block';
+                // Create a new row for language input
+                const newRow = document.createElement('div');
+                newRow.classList.add('row', 'mb-3');
 
-                    // Remove 'active' class from all buttons
-                    document.querySelectorAll('.list-group-item').forEach(btn => btn.classList.remove('active'));
+                newRow.innerHTML = `
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" name="language[]" placeholder="Language" required>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <input type="checkbox" name="read[]" value="1">
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <input type="checkbox" name="write[]" value="1">
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <input type="checkbox" name="speak[]" value="1">
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <input type="checkbox" name="understand[]" value="1">
+                    </div>
+                    <div class="col-md-1 text-center">
+                        <button type="button" class="btn btn-danger" onclick="removeLanguageGroup(this)">Remove</button>
+                    </div>
+                `;
 
-                    // Add 'active' class to the clicked button
-                    event.target.classList.add('active');
-                }
+                // Append the new row to the container
+                container.appendChild(newRow);
+            }
 
-            // Update the selected options list on page load (if any options are pre-selected)
-            document.addEventListener('DOMContentLoaded', function() {
-                if (selectedOptions.length > 0) {
-                    selectedOptions.forEach(skill => {
-                        const li = document.createElement('li');
-                        li.textContent = skill;
+            // Function to remove a language row when the remove button is clicked
+            function removeLanguageGroup(button) {
+                // Find the parent row of the clicked remove button and remove it
+                button.closest('.row').remove();
+            }
 
-                        // Create the remove button
-                        const removeBtn = document.createElement('button');
-                        removeBtn.textContent = 'Remove';
-                        removeBtn.classList.add('btn', 'btn-danger', 'btn-sm', 'ms-2');
-                        removeBtn.onclick = () => removeSkill(skill, li);
-                        li.appendChild(removeBtn);
+            // Function to add a new work experience row dynamically
+            function addWorkExperienceGroup() {
+                // Get the input container for Work Experience
+                const container = document.getElementById('work-experience-container');
 
-                        selectedOptionsList.appendChild(li);
-                    });
-                }
-            });
+                // Create a new row for work experience input group
+                const newRow = document.createElement('div');
+                newRow.classList.add('row', 'mb-3');
+
+                // Add the new input fields for work experience
+                newRow.innerHTML = `
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" name="company[]" placeholder="Company Name">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="address[]" placeholder="Address">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" name="position[]" placeholder="Position">
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="d-flex justify-content-center">
+                            <input type="date" class="form-control" name="start_date[]">
+                            <span class="mx-2 align-self-center">to</span>
+                            <input type="date" class="form-control" name="end_date[]">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" name="status[]" placeholder="Status">
+                    </div>
+                    <div class="col-md-1 text-center">
+                        <button type="button" class="btn btn-danger" onclick="removeWorkExperienceGroup(this)">Remove</button>
+                    </div>
+                `;
+
+                // Append the new row to the container
+                container.appendChild(newRow);
+            }
+
+            function removeInputGroup(button) {
+                // Remove the row that contains the clicked button
+                button.parentElement.parentElement.remove();
+            }
+
+            function removeWorkExperienceGroup(button) {
+                // Remove the row that contains the clicked button
+                button.parentElement.parentElement.remove();
+            }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
