@@ -114,3 +114,13 @@ a.navlink {
 .row {
     margin-bottom: 10px;
 }
+.navbar .btn-light {
+    background-color: transparent;
+    border: none;
+    color: #000; /* Adjust the text color as needed */
+}
+
+.navbar .btn-light:hover {
+    color: #007bff; /* Change the text color on hover */
+    text-decoration: underline; /* Optional: Adds underline on hover */
+}
