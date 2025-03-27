@@ -267,7 +267,7 @@ $result_work_exp = $stmt_work_exp->get_result();
 
                                 <div class="col-md-6" id="household_id_container" style="display:none;">
                                         <label class="form-label">If yes, Household ID No.:</label>
-                                        <input type="tel" name="household_id" class="form-control" value="<?php echo isset($row['household_id']) ? htmlspecialchars($row['household_id']) : ''; ?>" required>
+                                        <input type="text" name="household_id" class="form-control" value="<?php echo isset($row['household_id']) ? htmlspecialchars($row['household_id']) : ''; ?>" required>
                                 </div>
                             </div>
 
@@ -653,16 +653,16 @@ $result_work_exp = $stmt_work_exp->get_result();
                             </div>
                         </div>
                     </div>
-
+,
                     <div id="ss" class="tab-content" style="display:none;">
                         <div class="card mb-4 mt-4">
                             <div class="card-header">Skills Acquired</div>
                             <div class="card-body">
                                 <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
                                     <div class="card-body">
-                                        <label for="dynamicSelect">Choose one or more options:</label>
+                                        <label for="dynamicSelect">Choose acquired Skills:</label>
                                         <select id="dynamicSelect" name="other_skills[]" multiple class="form-select">
-                                        <option value="add">Add a new option...</option>
+                                        <option value="add">Add a new skills</option>
                                         <option value="Auto Mechanic">Auto Mechanic</option>
                                         <option value="Beautician">Beautician</option>
                                         <option value="Carpentry Work">Carpentry Work</option>
@@ -689,7 +689,7 @@ $result_work_exp = $stmt_work_exp->get_result();
 
                                         <input type="hidden" name="selectedOptions" id="selectedOptionsHidden">
                                         <div id="selectedOptionsContainer" class="mt-3">
-                                        <h5>Selected Options:</h5>
+                                        <h5>Selected Skills:</h5>
                                         <ul id="selectedOptionsList">
                                             <?php if (!empty($otherSkills)): ?>
                                             <?php foreach ($otherSkills as $skill): ?>
