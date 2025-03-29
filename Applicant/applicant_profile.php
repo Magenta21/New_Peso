@@ -21,6 +21,10 @@ if (!$result) {
 }
 
 $row = $result->fetch_assoc();
+$preferred = isset($row['preferred_occupation']) ? explode(',', $row['preferred_occupation']): '';
+$work = isset($row['work_location']) ? explode(',', $row['work_location']): '';
+$passportExpiry = isset($row['passport_expiry']) ? new DateTime($row['passport_expiry']) : null;
+$passportExpiryFormatted = $passportExpiry ? $passportExpiry->format('Y-m-d') : '';
 if (!$row) {
     die("User not found.");
 }
@@ -39,23 +43,17 @@ $stmt_license->bind_param("i", $applicant_profile);
 $stmt_license->execute();
 $result_license = $stmt_license->get_result();
 
-//language
+// Fetch existing language data for the user
 $sql_language = "SELECT * FROM language_proficiency WHERE user_id = ?";
 $stmt_language = $conn->prepare($sql_language);
-$stmt_language->bind_param("i", $userId);
+$stmt_language->bind_param("i", $applicant_profile);
 $stmt_language->execute();
 $result_language = $stmt_language->get_result();
-
-// Create an array to hold language proficiency data
-$languageData = [];
-while ($row_language = $result_language->fetch_assoc()) {
-    $languageData[$row_language['language_p']] = $row_language;
-}
 
 // Fetch data from work_exp table
 $sql_work_exp = "SELECT * FROM work_exp WHERE user_id = ?";
 $stmt_work_exp = $conn->prepare($sql_work_exp);
-$stmt_work_exp->bind_param("i", $userId);
+$stmt_work_exp->bind_param("i", $applicant_profile);
 $stmt_work_exp->execute();
 $result_work_exp = $stmt_work_exp->get_result();
 ?>
@@ -84,20 +82,6 @@ $result_work_exp = $stmt_work_exp->get_result();
                     <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
                 </div>
                 <div class="col-md-2 mt-1 position-relative">
-                    <div class="dropdown">
-                        <a href="#" class="text-decoration-none mt-5" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?php if (!empty($row['photo'])): ?>
-                                <img id="preview" src="<?php echo $row['photo']; ?>" alt="Profile Image" class="profile-pic img-fluid rounded-circle" style="width: 40px; height: 40px;">
-                            <?php else: ?>
-                                <img src="../img/user-placeholder.png" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
-                            <?php endif; ?>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="employer_profile.php">Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
@@ -272,7 +256,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="form-label">School Name</label>
-                                    <input type="text" name="school_name" class="form-control" value="<?php echo isset($row['tertiary_school']) ? htmlspecialchars($row['tertiary_school']) : ''; ?>" required>
+                                    <input type="text" name="t_school_name" class="form-control" value="<?php echo isset($row['tertiary_school']) ? htmlspecialchars($row['tertiary_school']) : ''; ?>" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Year Graduated</label>
@@ -285,14 +269,14 @@ $result_work_exp = $stmt_work_exp->get_result();
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Course</label>
-                                    <input type="text" name="course" class="form-control" value="<?php echo isset($row['course']) ? htmlspecialchars($row['course']) : ''; ?>" required>
+                                    <input type="text" name="t_course" class="form-control" value="<?php echo isset($row['tertiary_course']) ? htmlspecialchars($row['tertiary_course']) : ''; ?>" required>
                                 </div>
                             </div>
                             <h3>Graduate Studies</h3>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="form-label">School Name</label>
-                                    <input type="text" name="school_name" class="form-control" value="<?php echo isset($row['college_school']) ? htmlspecialchars($row['college_graduated']) : ''; ?>" required>
+                                    <input type="text" name="g_school_name" class="form-control" value="<?php echo isset($row['college_school']) ? htmlspecialchars($row['college_graduated']) : ''; ?>" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Year Graduated</label>
@@ -305,7 +289,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Course</label>
-                                    <input type="text" name="course" class="form-control" value="<?php echo isset($row['course']) ? htmlspecialchars($row['course']) : ''; ?>" required>
+                                    <input type="text" name="g_course" class="form-control" value="<?php echo isset($row['grad_course']) ? htmlspecialchars($row['grad_course']) : ''; ?>" required>
                                 </div>
                             </div>
                                 <button type="submit" class="btn btn-primary w-100">Save</button>
@@ -313,7 +297,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                     </div>
 
                     <div id="employment_status" class="tab-content" style="display:none;">
-                        <form action="process/save_employment_status.php" method="post" class="needs-validation" novalidate>
+                        <form action="process/save_profile3.php" method="post" class="needs-validation" novalidate>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="preferred-location" class="form-label">Preferred Work Location:</label>
@@ -327,78 +311,81 @@ $result_work_exp = $stmt_work_exp->get_result();
                                     <input type="text" name="expected_salary" class="form-control" value="<?php echo isset($row['expected_salary']) ? htmlspecialchars($row['expected_salary']) : ''; ?>" required>
                                 </div>
                             </div>
+
                             <!-- Local Locations Input Fields (Displayed in a row) -->
-                            <div id="local-location-fields" class="row" style="display:none;">
+                            <div id="local-location-fields" class="row" style="display: <?php echo (isset($row['preferred_work_location']) && $row['preferred_work_location'] == 'local') ? 'block' : 'none'; ?>;">
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <label for="local-location-1" class="info">1 - City/Municipality:</label>
-                                        <input type="text" class="form-control" id="local-location-1" name="local_location_1" placeholder="City/Municipality" value="<?php echo isset($row['local_location_1']) ? htmlspecialchars($row['local_location_1']) : ''; ?>" required>
+                                        <input type="text" class="form-control" id="local-location-1" name="local_location_1" placeholder="City/Municipality" value="<?php echo isset($work[0]) ? htmlspecialchars($work[0]) : ''; ?>" required>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label for="local-location-2" class="info">2 - City/Municipality:</label>
-                                        <input type="text" class="form-control" id="local-location-2" name="local_location_2" placeholder="City/Municipality" value="<?php echo isset($row['local_location_2']) ? htmlspecialchars($row['local_location_2']) : ''; ?>" required>
+                                        <input type="text" class="form-control" id="local-location-2" name="local_location_2" placeholder="City/Municipality" value="<?php echo isset($work[0]) ? htmlspecialchars($work[1]) : ''; ?>" required>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label for="local-location-3" class="info">3 - City/Municipality:</label>
-                                        <input type="text" class="form-control" id="local-location-3" name="local_location_3" placeholder="City/Municipality" value="<?php echo isset($row['local_location_3']) ? htmlspecialchars($row['local_location_3']) : ''; ?>" required>
+                                        <input type="text" class="form-control" id="local-location-3" name="local_location_3" placeholder="City/Municipality" value="<?php echo isset($work[0]) ? htmlspecialchars($work[2]) : ''; ?>" required>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Overseas Locations Input Fields (Displayed in a row) -->
-                            <div id="overseas-location-fields" class="row" style="display:none;">
+                            <div id="overseas-location-fields" class="row" style="display: <?php echo (isset($row['preferred_work_location']) && $row['preferred_work_location'] == 'overseas') ? 'block' : 'none'; ?>;">
                                 <div class="row">
-                                        <div class="col-md-4 mb-3">
-                                            <label for="overseas-location-1" class="info">1 - Country:</label>
-                                            <input type="text" class="form-control" id="overseas-location-1" name="overseas_location_1" placeholder="Country" value="<?php echo isset($row['overseas_location_1']) ? htmlspecialchars($row['overseas_location_1']) : ''; ?>" required>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="overseas-location-2" class="info">2 - Country:</label>
-                                            <input type="text" class="form-control" id="overseas-location-2" name="overseas_location_2" placeholder="Country" value="<?php echo isset($row['overseas_location_2']) ? htmlspecialchars($row['overseas_location_2']) : ''; ?>" required>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="overseas-location-3" class="info">3 - Country:</label>
-                                            <input type="text" class="form-control" id="overseas-location-3" name="overseas_location_3" placeholder="Country" value="<?php echo isset($row['overseas_location_3']) ? htmlspecialchars($row['overseas_location_3']) : ''; ?>" required>
-                                        </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="overseas-location-1" class="info">1 - Country:</label>
+                                        <input type="text" class="form-control" id="overseas-location-1" name="overseas_location_1" placeholder="Country" value="<?php echo isset($work[0]) ? htmlspecialchars($work[0]) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="overseas-location-2" class="info">2 - Country:</label>
+                                        <input type="text" class="form-control" id="overseas-location-2" name="overseas_location_2" placeholder="Country" value="<?php echo isset($work[1]) ? htmlspecialchars($work[1]) : ''; ?>" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="overseas-location-3" class="info">3 - Country:</label>
+                                        <input type="text" class="form-control" id="overseas-location-3" name="overseas_location_3" placeholder="Country" value="<?php echo isset($work[2]) ? htmlspecialchars($work[2]) : ''; ?>" required>
+                                    </div>
                                 </div>
                             </div>
-                            <!-- Preferred Occupation Input Fields in a Row -->
-                                Preferred Occupation
-                                <div class="row">
-                                    <div class="col-md-3 mb-3">
-                                        <input type="text" class="form-control" id="occupation-1" name="preferred_occupation1" placeholder="1- Occupation" value="<?php echo isset($row['preferred_occupation1']) ? htmlspecialchars($row['preferred_occupation1']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-3 mb-3">
-                                        <input type="text" class="form-control" id="occupation-2" name="preferred_occupation2" placeholder="2- Occupation" value="<?php echo isset($row['preferred_occupation2']) ? htmlspecialchars($row['preferred_occupation2']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-3 mb-3">
-                                        <input type="text" class="form-control" id="occupation-3" name="preferred_occupation3" placeholder="3- Occupation" value="<?php echo isset($row['preferred_occupation3']) ? htmlspecialchars($row['preferred_occupation3']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-3 mb-3">
-                                        <input type="text" class="form-control" id="occupation-4" name="preferred_occupation4" placeholder="4- Occupation" value="<?php echo isset($row['preferred_occupation4']) ? htmlspecialchars($row['preferred_occupation4']) : ''; ?>" required>
-                                    </div>
-                                </div>
 
-                                <div class="row mb-4">
-                                    <div class="col-md-6">
-                                        Passport Number
-                                        <input type="text" class="form-control" id="passport" name="passport_no" placeholder="" value="<?php echo isset($row['passport_no']) ? htmlspecialchars($row['passport_no']) : ''; ?>">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h5>Expiry Date</h5>
-                                        <input type="date" class="form-control" id="expiry" name="passport_expiry" placeholder="" value="<?php echo isset($row['passport_expiry']) ? htmlspecialchars($row['passport_expiry']) : ''; ?>">
-                                    </div>
-                                </div> 
+                            <!-- Preferred Occupation Input Fields in a Row -->
+                            <label>Preferred Occupation</label>
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <input type="text" class="form-control" id="occupation-1" name="preferred_occupation1" placeholder="1- Occupation" value="<?php echo isset($preferred[0]) ? htmlspecialchars($preferred[0]) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <input type="text" class="form-control" id="occupation-2" name="preferred_occupation2" placeholder="2- Occupation" value="<?php echo isset($preferred[1]) ? htmlspecialchars($preferred[1]) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <input type="text" class="form-control" id="occupation-3" name="preferred_occupation3" placeholder="3- Occupation" value="<?php echo isset($preferred[2]) ? htmlspecialchars($preferred[2]) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <input type="text" class="form-control" id="occupation-4" name="preferred_occupation4" placeholder="4- Occupation" value="<?php echo isset($preferred[3]) ? htmlspecialchars($preferred[3]) : ''; ?>" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="passport" class="form-label">Passport Number:</label>
+                                    <input type="text" class="form-control" id="passport" name="passport_no" placeholder="" value="<?php echo isset($row['passport_no']) ? htmlspecialchars($row['passport_no']) : ''; ?>">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="expiry" class="form-label">Expiry Date:</label>
+                                    <input type="date" class="form-control" id="expiry" name="passport_expiry" value="<?php echo $passportExpiryFormatted; ?>">
+                                </div>
+                            </div>
 
                             <button type="submit" class="btn btn-primary w-100">Save</button>
                         </form>
+
                     </div>
 
                     <div id="tvo" class="tab-content" style="display:none;">
                         <div class="card mb-4">
                             <div class="card-header">Documents</div>
                             <div class="card-body">
-                                <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
+                                <form action="process/save_profile4.php" method="POST" enctype="multipart/form-data">
                                             <!-- Training Container -->
                                             <div id="training-container">
                                                 <div class="row mb-4">
@@ -410,34 +397,30 @@ $result_work_exp = $stmt_work_exp->get_result();
                                                 <?php while ($row_training = $result_training->fetch_assoc()): ?>
                                                     <div class="row mb-4 mt-4">
                                                     <!-- Training Name -->
-                                                        <div class="col-md-5">
-                                                            <input type="text" class="form-control m-5" name="training[]" value="" placeholder="Vocational/Training" required>
+                                                        <div class="col-md-2">
+                                                            <input type="text" class="form-control" name="training[]" value="<?php echo isset($row_training['training']) ? htmlspecialchars($row_training['training']) : ''; ?>" placeholder="Vocational/Training" required>
                                                         </div>
                                                     <!-- Start and End Date -->
-                                                        <div class="col-md-3">
-                                                            <input type="date" class="form-control m-5" name="start_date[]" value="" required>
+                                                        <div class="col-md-2">
+                                                            <input type="date" class="form-control" name="start_date[]" value="<?php echo isset($row_training['start_date']) ? htmlspecialchars($row_training['start_date']) : ''; ?>" required>
                                                         </div>
                                                         <div class="col-md-1">
                                                             <span class="align-self-center">to</span>
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <input type="date" class="form-control" name="end_date[]" value="" required>
+                                                        <div class="col-md-2">
+                                                            <input type="date" class="form-control" name="end_date[]" value="<?php echo isset($row_training['end_date']) ? htmlspecialchars($row_training['end_date']) : ''; ?>" required>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="row-mb-4">
                                                     <!-- Institution -->
-                                                        <div class="col-md-4">
-                                                            <input type="text" class="form-control" name="institution[]" value="" placeholder="Institution" required>
+                                                        <div class="col-md-2">
+                                                            <input type="text" class="form-control" name="institution[]" value="<?php echo isset($row_training['institution']) ? htmlspecialchars($row_training['institution']) : ''; ?>" placeholder="Institution" required>
                                                         </div>
                                                     <!-- Certificate Upload -->
-                                                        <div class="col-md-6 mt-4">
+                                                        <div class="col-md-2 mt-4">
                                                             <?php if (!empty($row_training['certificate_path'])): ?>
-                                                                <a href="" class="form-control" target="_blank">View Certificate</a>
+                                                                <a href="<?php echo htmlspecialchars($row_training['certificate_path']); ?>" target="_blank">View Certificate</a>
+                                                            <?php else: ?>
+                                                                No certificate uploaded.
                                                             <?php endif; ?>
-                                                        </div>
-                                                        <div class="col-md-6 mt-4">
-                                                            <input type="file" class="form-control" name="certificate[]">
                                                         </div>
                                                     </div>
                                                 <?php endwhile; ?>
@@ -452,6 +435,8 @@ $result_work_exp = $stmt_work_exp->get_result();
                                                 <button type="button" class="btn btn-primary" onclick="addTrainingGroup()">Add Another Training Set</button>
                                             </div>
                                         </div>
+
+                                    <button type="submit" class="btn btn-primary w-100 mt-4">Save Documents</button>
                                 </form>
                             </div>
                         </div>
@@ -461,7 +446,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                         <div class="card mb-4">
                             <div class="card-header">Language/Dialect Proficiency</div>
                             <div class="card-body">
-                                <form action="" method="POST" enctype="multipart/form-data">
+                                <form action="process/save_profile5.php" method="POST" enctype="multipart/form-data">
                                     <div class="row fw-bold text-center mb-2">
                                         <div class="col-2">Language</div>
                                         <div class="col-2">Read</div>
@@ -472,36 +457,33 @@ $result_work_exp = $stmt_work_exp->get_result();
                                     </div>
 
                                     <div id="language-container">
-                                        <?php foreach ($languageData as $language => $data): ?>
-                                            <div class="row text-center align-items-center mb-2">
-                                                <div class="col-2">
-                                                    <input type="text" class="form-control" name="language[]" value="<?php echo htmlspecialchars($language); ?>" <?php echo ($language === 'English' || $language === 'Filipino') ? 'readonly' : ''; ?>>
+                                        <?php if ($result_language->num_rows > 0): ?>
+                                            <?php while ($row_language = $result_language->fetch_assoc()): ?>
+                                                <div class="row text-center align-items-center mb-2">
+                                                    <div class="col-2">
+                                                        <input type="text" class="form-control" name="language[]" value="<?php echo htmlspecialchars($row_language['language_p']); ?>" readonly>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <input type="checkbox" name="read[]" value="<?php echo $row_language['language_p']; ?>" <?php echo $row_language['read_i'] == 1 ? 'checked' : ''; ?>>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <input type="checkbox" name="write[]" value="<?php echo $row_language['language_p']; ?>" <?php echo $row_language['write_i'] == 1 ? 'checked' : ''; ?>>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <input type="checkbox" name="speak[]" value="<?php echo $row_language['language_p']; ?>" <?php echo $row_language['speak_i'] == 1 ? 'checked' : ''; ?>>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <input type="checkbox" name="understand[]" value="<?php echo $row_language['language_p']; ?>" <?php echo $row_language['understand_i'] == 1 ? 'checked' : ''; ?>>
+                                                    </div>
                                                 </div>
-                                                <div class="col-2">
-                                                    <input type="checkbox" name="read[]" value="1" <?php echo $data['read_l'] == 1 ? 'checked' : ''; ?>>
-                                                </div>
-                                                <div class="col-2">
-                                                    <input type="checkbox" name="write[]" value="1" <?php echo $data['write_l'] == 1 ? 'checked' : ''; ?>>
-                                                </div>
-                                                <div class="col-2">
-                                                    <input type="checkbox" name="speak[]" value="1" <?php echo $data['speak_l'] == 1 ? 'checked' : ''; ?>>
-                                                </div>
-                                                <div class="col-2">
-                                                    <input type="checkbox" name="understand[]" value="1" <?php echo $data['understand_l'] == 1 ? 'checked' : ''; ?>>
-                                                </div>
-                                                <div class="col-2">
-                                                    <?php if ($language !== 'English' && $language !== 'Filipino'): ?>
-                                                        <button type="button" class="btn btn-danger btn-sm" onclick="removeLanguageGroup(this)">Remove</button>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
+                                            <?php endwhile; ?>
+                                        <?php else: ?>
+                                        <?php endif; ?>
                                     </div>
 
-                                    <div class="text-end mt-3">
-                                        <button type="button" class="btn btn-primary" onclick="addLanguageGroup()">Add Another Language Set</button>
+                                    <div class="text-start mt-3">
+                                        <button type="button" class="btn btn-primary" onclick="addLanguageGroup()">Add Language</button>
                                     </div>
-
                                     <button type="submit" class="btn btn-primary w-100 mt-4">Save Documents</button>
                                 </form>
                             </div>
@@ -634,8 +616,8 @@ $result_work_exp = $stmt_work_exp->get_result();
                                         </div>
                                     </div>
 
-                                    <div class="text-end">
-                                        <button type="button" class="btn btn-primary" onclick="addWorkExperienceGroup()">Add Another Work Experience Set</button>
+                                    <div class="text-start">
+                                        <button type="button" class="btn btn-primary" onclick="addWorkExperienceGroup()">Add Experience</button>
                                     </div>
 
                                     <button type="submit" class="btn btn-primary w-100 mt-4">Save Documents</button>

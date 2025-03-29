@@ -1,7 +1,7 @@
 <?php
 session_start(); // Start the session to access user_id
 
-// Enable error reporting
+// Enable error reporting for debugging
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 $host = 'localhost';
 $db = 'pesoo';
 $user = 'root';
-$pass = '';                                                                                                                                                                                                                                                                                                                                                                
+$pass = '';
 $charset = 'utf8mb4';
 
 // Set up the PDO connection
@@ -23,7 +23,8 @@ $options = [
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (\PDOException $e) {
-    throw new \PDOException($e->getMessage(), (int)$e->getCode());
+    echo "Connection failed: " . $e->getMessage();
+    exit();
 }
 
 $updateSuccess = false;
@@ -32,15 +33,15 @@ $errorMessage = '';
 // Process the form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
-    $tertiarySchool = htmlspecialchars($_POST['school_name']);
+    $tertiarySchool = htmlspecialchars($_POST['t_school_name']);
     $tertiaryGraduated = htmlspecialchars($_POST['tertiary_graduated']);
     $tertiaryAward = htmlspecialchars($_POST['award_recieved']);
-    $tertiaryCourse = htmlspecialchars($_POST['course']);
+    $tertiaryCourse = htmlspecialchars($_POST['t_course']);
     
-    $gradSchool = htmlspecialchars($_POST['school_name']);
+    $gradSchool = htmlspecialchars($_POST['g_school_name']);
     $gradGraduated = htmlspecialchars($_POST['college_graduated']);
     $gradAward = htmlspecialchars($_POST['college_award']);
-    $gradCourse = htmlspecialchars($_POST['course']);
+    $gradCourse = htmlspecialchars($_POST['g_course']);
 
     // Prepare the SQL query to insert or update the educational background
     try {
@@ -58,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Prepare the statement
         $stmt = $pdo->prepare($sql);
 
-        // Bind the values using an associative array
+        // Bind the values using an indexed array for ? placeholders
         $params = [
             $tertiarySchool, 
             $tertiaryGraduated, 
@@ -78,7 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errorMessage = "Failed to update educational background.";
         }
     } catch (PDOException $e) {
+        // Log or display the error message
         $errorMessage = "Error: " . $e->getMessage();
+        echo "<pre>" . print_r($e, true) . "</pre>";  // Output the exception details for debugging
     }
 
     // Redirect based on success or failure
