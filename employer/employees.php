@@ -44,7 +44,9 @@ if (!$row_emp) {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-2">
+                     <a href="../index.php" style="display: block; text-decoration: none;">
                     <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+                     </a>
                 </div>
                 <div class="col-md-8">
                     <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
@@ -83,7 +85,10 @@ if (!$row_emp) {
         <div class="container mt-4 mb-3">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="toggleButton" href="#" role="tab">Employees List</a>
+                    <a class="nav-link active" id="toggleButton" href="#" role="tab">Male employees</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="toggleButton2" href="#" role="tab">Female employees</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="toggleButton4" href="#" role="tab">Add employees</a>
@@ -96,11 +101,19 @@ if (!$row_emp) {
 
 
         <div class="row align-items-start"  style="margin-top:-1.6rem;">
-            <div id="employerlist" class="employers">
+            <div id="maleemployerlist" class="employers">
                 <?php 
                     error_reporting(E_ALL);
                     ini_set('display_errors', 1);
-                    include 'employees/employees_list.php'; 
+                    include 'employees/maleemployees_list.php'; 
+                ?>
+            </div>
+
+            <div id="femaleemployerlist" class="employers">
+                <?php 
+                    error_reporting(E_ALL);
+                    ini_set('display_errors', 1);
+                    include 'employees/femaleemployees_list.php'; 
                 ?>
             </div>
 
@@ -122,12 +135,17 @@ if (!$row_emp) {
         });
 
         // Show the job list by default
-        document.getElementById('employerlist').style.display = 'block';
+        document.getElementById('maleemployerlist').style.display = 'block';
 
         // Button event listeners for showing the respective job list
         document.getElementById('toggleButton').addEventListener('click', function (event) {
             event.preventDefault(); // Prevent default anchor click behavior
-            toggleJobList('employerlist', this);
+            toggleJobList('maleemployerlist', this);
+        });
+
+        document.getElementById('toggleButton2').addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default anchor click behavior
+            toggleJobList('femaleemployerlist', this);
         });
 
         document.getElementById('toggleButton4').addEventListener('click', function (event) {

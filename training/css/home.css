@@ -1,0 +1,57 @@
+/* Custom styling */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start; /* Aligns the cards to the left */
+}
+
+.custom-card {
+    width: 200px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px 8px 0 0;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.btn-link {
+    font-size: 14px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+    color: white;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+}
+
+.container {
+    padding: 20px;
+    border-radius: 10px;
+    text-align: start; /* Align the content to the left */
+    margin-top: 20px; /* Space at the top of the container */
+}

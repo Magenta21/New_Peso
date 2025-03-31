@@ -87,6 +87,7 @@ $result_work_exp = $stmt_work_exp->get_result();
             }
             i, span {
                 font-weight: 900;
+                font-size: 1em;
             }
 
             .navbar .btn-light:hover i, 

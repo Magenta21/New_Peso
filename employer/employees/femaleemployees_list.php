@@ -9,14 +9,14 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 }
 
 // Define the number of results per page
-$limit = 5;
+$felimit = 1;
 
 // Get the current page number from URL, default is page 1
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$start = ($page - 1) * $limit;
+$fepage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$festart = ($fepage - 1) * $felimit;
 
 // Fetch total number of jobs
-$totalQuery = "SELECT COUNT(id) AS total FROM current_employee WHERE employer_id = $employerid";
+$totalQuery = "SELECT COUNT(id) AS total FROM current_employee WHERE employer_id = $employerid AND gender = 'Female'";
 $totalResult = $conn->query($totalQuery);
 $totalRow = $totalResult->fetch_assoc();
 $totalemployee = $totalRow['total'];
@@ -25,7 +25,7 @@ $totalemployee = $totalRow['total'];
 $totalPages = ceil($totalemployee / $limit);
 
 // Fetch jobs with limit and offset
-$query = "SELECT * FROM current_employee WHERE employer_id = $employerid ORDER BY lname ASC LIMIT $start, $limit";
+$query = "SELECT * FROM current_employee WHERE employer_id = $employerid AND gender = 'female' ORDER BY lname ASC LIMIT $start, $limit";
 $result = $conn->query($query);
 ?>
 
@@ -63,14 +63,6 @@ $result = $conn->query($query);
                 </div>
                 
                 <div class="col-md-2 pt-5 text-start">
-                <!-- <form action="process/hide.php" method="post">
-                    <input type="hidden" name="job_id" value="<?= $row['id'] ?>">
-                    <button type="submit" class="btn btn-sm <?= $row['is_active'] == 1 ? 'btn-success' : 'btn-danger' ?> toggle-status"
-                        data-id="<?= $row['id'] ?>" 
-                        data-status="<?= $row['is_active'] ?>">
-                        <?= $row['is_active'] == 1 ? 'Active' : 'Inactive' ?>
-                    </button>
-                </form> -->
                 </div>
             </div>
         </a>
@@ -80,13 +72,13 @@ $result = $conn->query($query);
 <!-- Pagination Links -->
 <div class="pagination justify-content-center">
     <?php if ($page > 1): ?>
-        <a href="?page=<?= $page - 1 ?>" class="prev">Previous</a>
+        <a href="?page2=<?= $page - 1 ?>" class="prev">Previous</a>
     <?php endif; ?>
 
     <span>Page <?= $page ?> of <?= $totalPages ?></span>
 
     <?php if ($page < $totalPages): ?>
-        <a href="?page=<?= $page + 1 ?>" class="next">Next</a>
+        <a href="?page2=<?= $page + 1 ?>" class="next">Next</a>
     <?php endif; ?>
 </div>
 
