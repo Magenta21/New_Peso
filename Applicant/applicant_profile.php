@@ -486,19 +486,19 @@ $result_work_exp = $stmt_work_exp->get_result();
                                             <?php while ($row_language = $result_language->fetch_assoc()): ?>
                                                 <div class="row text-center align-items-center mb-2">
                                                     <div class="col-2">
-                                                        <input type="text" class="form-control" name="language[]" value="<?php echo htmlspecialchars($row_language['language_p']); ?>" readonly>
+                                                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($row_language['language_p']); ?>" readonly>
                                                     </div>
                                                     <div class="col-2">
-                                                        <input type="checkbox" name="read[]" value="<?php echo $row_language['language_p']; ?>" <?php echo $row_language['read_i'] == 1 ? 'checked' : ''; ?>>
+                                                        <input type="checkbox" <?php echo $row_language['read_i'] == 1 ? 'checked' : ''; ?> readonly>
                                                     </div>
                                                     <div class="col-2">
-                                                        <input type="checkbox" name="write[]" value="<?php echo $row_language['language_p']; ?>" <?php echo $row_language['write_i'] == 1 ? 'checked' : ''; ?>>
+                                                        <input type="checkbox" <?php echo $row_language['write_i'] == 1 ? 'checked' : ''; ?> readonly>
                                                     </div>
                                                     <div class="col-2">
-                                                        <input type="checkbox" name="speak[]" value="<?php echo $row_language['language_p']; ?>" <?php echo $row_language['speak_i'] == 1 ? 'checked' : ''; ?>>
+                                                        <input type="checkbox" <?php echo $row_language['speak_i'] == 1 ? 'checked' : ''; ?> readonly>
                                                     </div>
                                                     <div class="col-2">
-                                                        <input type="checkbox" name="understand[]" value="<?php echo $row_language['language_p']; ?>" <?php echo $row_language['understand_i'] == 1 ? 'checked' : ''; ?>>
+                                                    <input type="checkbox" <?php echo $row_language['understand_i'] == 1 ? 'checked' : ''; ?> readonly>
                                                     </div>
                                                 </div>
                                             <?php endwhile; ?>
@@ -520,7 +520,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                         <div class="card mb-4">
                             <div class="card-header">Eligibility and Professional License</div>
                             <div class="card-body">
-                                <form action="" method="POST" enctype="multipart/form-data">
+                                <form action="process/save_profile6.php" method="POST" enctype="multipart/form-data">
                                         <!-- Eligibility/Professional License Card -->
                                         <div id="eligibility-container">
                                             <div class="row mb-4">
@@ -568,7 +568,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                                                         <div class="col-md-2">
                                                             <!-- Display existing PRC path (with link to the file) -->
                                                             <?php if (!empty($row_license['prc_path'])): ?>
-                                                            <a href="../../php/applicant/<?php echo htmlspecialchars($row_license['prc_path']); ?>" class="form-control" target="_blank">View License</a>
+                                                                <a href="<?php echo htmlspecialchars($row_license['prc_path']); ?>" class="form-control" target="_blank">View License</a>
                                                             <?php endif; ?>
                                                         </div>
                                                     </div>
@@ -593,7 +593,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                         <div class="card mb-4">
                             <div class="card-header"><h4>Work Experience (Limit to 10-year period)</h4></div>
                             <div class="card-body">
-                                <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
+                                <form action="process/save_profile7.php" method="POST" enctype="multipart/form-data">
                                     <div class="row mb-2 text-center fw-bold">
                                         <div class="col-md-2">Company Name</div>
                                         <div class="col-md-3">Address</div>
@@ -626,7 +626,7 @@ $result_work_exp = $stmt_work_exp->get_result();
 
                                     <!-- New Input Group -->
                                     <div id="work-experience-container">
-                                        <div class="row mb-3">
+                                        <!-- <div class="row mb-3">
                                             <div class="col-md-2"><input type="text" class="form-control" name="company[]" placeholder="Company Name"></div>
                                             <div class="col-md-3"><input type="text" class="form-control" name="address[]" placeholder="Address"></div>
                                             <div class="col-md-2"><input type="text" class="form-control" name="position[]" placeholder="Position"></div>
@@ -638,7 +638,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                                                 </div>
                                             </div>
                                             <div class="col-md-2"><input type="text" class="form-control" name="status[]" placeholder="Status"></div>
-                                        </div>
+                                        </div> -->
                                     </div>
 
                                     <div class="text-start">
@@ -655,7 +655,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                         <div class="card mb-4 mt-4">
                             <div class="card-header">Skills Acquired</div>
                             <div class="card-body">
-                                <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
+                                <form action="process/save_profile8.php" method="POST" enctype="multipart/form-data">
                                     <div class="card-body">
                                         <label for="dynamicSelect">Choose acquired Skills:</label>
                                         <select id="dynamicSelect" name="other_skills[]" multiple class="form-select">
@@ -957,44 +957,47 @@ $result_work_exp = $stmt_work_exp->get_result();
             });
         });
 
-            // Function to add a new language row dynamically
-            function addLanguageGroup() {
-                const container = document.getElementById('language-container');
+        let languageCount = 0; // Unique index for each language entry
 
-                // Create a new row for language input
-                const newRow = document.createElement('div');
-                newRow.classList.add('row', 'mb-3');
+        function addLanguageGroup() {
+            const container = document.getElementById('language-container');
 
-                newRow.innerHTML = `
-                    <div class="col-md-2">
-                        <input type="text" class="form-control" name="language[]" placeholder="Language" required>
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <input type="checkbox" name="read[]" value="1">
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <input type="checkbox" name="write[]" value="1">
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <input type="checkbox" name="speak[]" value="1">
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <input type="checkbox" name="understand[]" value="1">
-                    </div>
-                    <div class="col-md-1 text-center">
-                        <button type="button" class="btn btn-danger" onclick="removeLanguageGroup(this)">Remove</button>
-                    </div>
-                `;
+            // Increment index for unique names
+            languageCount++;
 
-                // Append the new row to the container
-                container.appendChild(newRow);
-            }
+            // Create a new row for language input
+            const newRow = document.createElement('div');
+            newRow.classList.add('row', 'text-center', 'align-items-center', 'mb-2');
 
-            // Function to remove a language row when the remove button is clicked
-            function removeLanguageGroup(button) {
-                // Find the parent row of the clicked remove button and remove it
-                button.closest('.row').remove();
-            }
+            newRow.innerHTML = `
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="language[${languageCount}]" placeholder="Language" required>
+                </div>
+                <div class="col-md-2">
+                    <input type="checkbox" name="read[${languageCount}]" value="1">
+                </div>
+                <div class="col-md-2">
+                    <input type="checkbox" name="write[${languageCount}]" value="1">
+                </div>
+                <div class="col-md-2">
+                    <input type="checkbox" name="speak[${languageCount}]" value="1">
+                </div>
+                <div class="col-md-2">
+                    <input type="checkbox" name="understand[${languageCount}]" value="1">
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger" onclick="removeLanguageGroup(this)">Remove</button>
+                </div>
+            `;
+
+            // Append the new row to the container
+            container.appendChild(newRow);
+        }
+
+        function removeLanguageGroup(button) {
+            // Remove the parent row
+            button.closest('.row').remove();
+        }
 
             // Function to add a new work experience row dynamically
             function addWorkExperienceGroup() {
@@ -1010,20 +1013,20 @@ $result_work_exp = $stmt_work_exp->get_result();
                     <div class="col-md-2">
                         <input type="text" class="form-control" name="company[]" placeholder="Company Name">
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <input type="text" class="form-control" name="address[]" placeholder="Address">
                     </div>
                     <div class="col-md-2">
                         <input type="text" class="form-control" name="position[]" placeholder="Position">
                     </div>
-                    <div class="col-md-3 text-center">
-                        <div class="d-flex justify-content-center">
+                    <div class="col-md-2 text-center">
+                        <div class="justify-content-center">
                             <input type="date" class="form-control" name="start_date[]">
                             <span class="mx-2 align-self-center">to</span>
                             <input type="date" class="form-control" name="end_date[]">
                         </div>
                     </div>
-                    <div class="col-md-2    ">
+                    <div class="col-md-2">
                         <input type="text" class="form-control" name="status[]" placeholder="Status">
                     </div>
                     <div class="col-md-1 text-center">

@@ -1,57 +1,54 @@
 <?php
 include '../db.php';
-$applicantid = $_SESSION['applicant_id'];
+
 // Check if the applicant is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: applicant_login.php");
+    header("Location: ../applicant_login.php");
     exit();
 }
 
-// Define the number of results per page
+$applicantid = $_SESSION['applicant_id'];
 $limit = 5;
-
-// Get the current page number from URL, default is page 1
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $start = ($page - 1) * $limit;
 
 // Fetch total number of jobs
-$totalQuery = "SELECT COUNT(id) AS total FROM job_post";
+$totalQuery = "SELECT COUNT(id) AS total FROM job_post WHERE is_active = 1";
 $totalResult = $conn->query($totalQuery);
 $totalRow = $totalResult->fetch_assoc();
-$totalemployee = $totalRow['total'];
+$totalJobs = $totalRow['total'];
+$totalPages = ceil($totalJobs / $limit);
 
-// Calculate total pages
-$totalPages = ceil($totalemployee / $limit);
+// Fetch jobs
+$query = "SELECT * FROM job_post WHERE is_active = 1 ORDER BY date_posted DESC LIMIT ?, ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param('ii', $start, $limit);
+$stmt->execute();
+$jobs = $stmt->get_result();
 
-// Fetch jobs with limit and offset
-$query = "SELECT * FROM job_post WHERE is_active = 1 ORDER BY date_posted DESC LIMIT $start, $limit";
-$result = $conn->query($query);
-
-// Fetch applicant's profile (including preferred job and skills)
+// Fetch applicant's profile
 $applicantQuery = "SELECT preferred_occupation, selected_option FROM applicant_profile WHERE id = ?";
 $stmt = $conn->prepare($applicantQuery);
 $stmt->bind_param('i', $applicantid);
 $stmt->execute();
 $applicant = $stmt->get_result()->fetch_assoc();
 
-$preferredOccupation = strtolower($applicant['preferred_occupation']);
-$applicantSkills = array_map('trim', explode(',', strtolower($applicant['selected_option']))); // Skills as an array
+$preferredOccupation = array_map('trim', explode(',', strtolower($applicant['preferred_occupation'] ?? '')));
+$applicantSkills = array_map('trim', explode(',', strtolower($applicant['selected_option'] ?? '')));
 
-// Function to compare occupation and skills
-function isMatch($preferredOccupation, $applicantSkills, $jobTitle, $requiredSkills) {
-    // Compare occupation using fuzzy matching (using similar_text and levenshtein)
-    similar_text($preferredOccupation, $jobTitle, $percent);
-    $levenshteinDistance = levenshtein($preferredOccupation, $jobTitle);
-    $length = max(strlen($preferredOccupation), strlen($jobTitle));
-    $levenshteinPercent = (1 - ($levenshteinDistance / $length)) * 100;
-    $occupationMatch = max($percent, $levenshteinPercent) >= 40; // 40% similarity threshold for occupation match
+// Function to check job match
+function isMatch($preferredOccupations, $applicantSkills, $jobTitle, $jobSkills) {
+    $jobSkillsArray = array_map('trim', explode(',', strtolower($jobSkills)));
 
-    // Compare skills
-    $jobSkills = array_map('trim', explode(',', strtolower($requiredSkills)));
-    $commonSkills = array_intersect($applicantSkills, $jobSkills);
-    $skillsMatch = count($commonSkills) > 0; // At least one skill match is required
+    foreach ($preferredOccupations as $occupation) {
+        similar_text($occupation, $jobTitle, $percent);
+        $levenshteinDistance = levenshtein($occupation, $jobTitle);
+        $length = max(strlen($occupation), strlen($jobTitle));
+        $levenshteinPercent = ($length > 0) ? (1 - ($levenshteinDistance / $length)) * 100 : 0;
+        if (max($percent, $levenshteinPercent) >= 40) return true;
+    }
 
-    return $occupationMatch || $skillsMatch; // Match if occupation or skills match
+    return !empty(array_intersect($applicantSkills, $jobSkillsArray));
 }
 ?>
 
@@ -61,59 +58,37 @@ function isMatch($preferredOccupation, $applicantSkills, $jobTitle, $requiredSki
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Listings</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 <body>
-
-<div class="table container mt-1">
-<?php while ($row = $result->fetch_assoc()) {
-    // Check if the job title and/or skills match the applicant's preferences
-    if (isMatch($preferredOccupation, $applicantSkills, strtolower($row['job_title']), $row['selected_option'])) { ?>
-        <a href="jobdetails.php?id=<?= urlencode(base64_encode($row['id'])) ?>" class="text-decoration-none text-dark">
-            <div class="row job-row border rounded mb-3 shadow-sm" style="cursor: pointer;">
-                <div class="col-md-6 row justify-content-start">
-                    <div class="col-md-12 pt-3 text-start">
-                        <div class="col"><p class="text-start"><i class="bi bi-suitcase-lg"></i> <?= htmlspecialchars($row['job_title']) ?></p></div>
-                        <div class="col"><p class="text-start"><i class="bi bi-buildings"></i> <?= htmlspecialchars($row['company_name']) ?></p></div>
-                        <div class="col"><p class="text-start"><i class="bi bi-pin-map"></i> <?= htmlspecialchars($row['work_location']) ?></p></div>
-                        <div class="col"><p class="text-start"><i class="bi bi-cash"></i> <?= htmlspecialchars($row['salary']) ?></p></div>
+<div class="container mt-3">
+    <?php while ($row = $jobs->fetch_assoc()) {
+        if (isMatch($preferredOccupation, $applicantSkills, strtolower($row['job_title']), $row['selected_option'])) { ?>
+            <a href="jobdetails.php?id=<?= urlencode(base64_encode($row['id'])) ?>" class="text-decoration-none text-dark">
+                <div class="row job-row border rounded mb-3 shadow-sm p-3" style="cursor: pointer;">
+                    <div class="col-md-8">
+                        <p><i class="bi bi-suitcase-lg"></i> <?= htmlspecialchars($row['job_title']) ?></p>
+                        <p><i class="bi bi-buildings"></i> <?= htmlspecialchars($row['company_name']) ?></p>
+                        <p><i class="bi bi-pin-map"></i> <?= htmlspecialchars($row['work_location']) ?></p>
+                        <p><i class="bi bi-cash"></i> <?= htmlspecialchars($row['salary']) ?></p>
+                    </div>
+                    <div class="col-md-4 text-end align-self-center">
+                        <span class="fs-5"> <?= htmlspecialchars($row['vacant']) ?> openings </span>
                     </div>
                 </div>
-
-                <div class="col-md-4 pt-5 text-start">
-                    <span class="ms-5 fs-5">
-                        <?= htmlspecialchars($row['vacant']) ?> openings
-                    </span>
-                </div>
-                
-                <div class="col-md-2 pt-5 text-start">
-                    <form action="process/hide.php" method="post">
-                        <input type="hidden" name="job_id" value="<?= $row['id'] ?>">
-                        <button type="submit" class="btn btn-sm <?= $row['is_active'] == 1 ? 'btn-success' : 'btn-danger' ?> toggle-status"
-                            data-id="<?= $row['id'] ?>" 
-                            data-status="<?= $row['is_active'] ?>">
-                            <?= $row['is_active'] == 1 ? 'Active' : 'Inactive' ?>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </a>
+            </a>
     <?php } } ?>
 </div>
 
-<!-- Pagination Links -->
-<div class="pagination justify-content-center">
+<!-- Pagination -->
+<div class="pagination justify-content-center mt-3">
     <?php if ($page > 1): ?>
-        <a href="?page=<?= $page - 1 ?>" class="prev">Previous</a>
+        <a href="?page=<?= $page - 1 ?>" class="btn btn-outline-primary">Previous</a>
     <?php endif; ?>
-
-    <span>Page <?= $page ?> of <?= $totalPages ?></span>
-
+    <span class="mx-2">Page <?= $page ?> of <?= $totalPages ?></span>
     <?php if ($page < $totalPages): ?>
-        <a href="?page=<?= $page + 1 ?>" class="next">Next</a>
+        <a href="?page=<?= $page + 1 ?>" class="btn btn-outline-primary">Next</a>
     <?php endif; ?>
 </div>
 

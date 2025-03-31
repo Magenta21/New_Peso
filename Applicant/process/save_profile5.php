@@ -1,47 +1,42 @@
 <?php
 session_start();
 
-// Database connection (adjust these parameters as necessary)
-$host = 'localhost'; // Database host
-$dbname = 'pesoo'; // Database name
-$username = 'root'; // Database username
-$password = ''; // Database password
+// Database connection
+$host = 'localhost';
+$dbname = 'pesoo';
+$username = 'root';
+$password = '';
 
 try {
-    // Establish PDO connection
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
 
-// Get the user ID from session
-$user_id = $_SESSION['applicant_id']; // Assuming the user's ID is stored in the session
+// Get user ID from session
+$user_id = $_SESSION['applicant_id'];
 
-// Check if form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Get the language data from the form
     $languages = $_POST['language'] ?? [];
     $read = $_POST['read'] ?? [];
     $write = $_POST['write'] ?? [];
     $speak = $_POST['speak'] ?? [];
     $understand = $_POST['understand'] ?? [];
 
-    // Prepare the SQL query for insertion
+    // Prepare SQL for insertion
     $sql = "INSERT INTO language_proficiency (user_id, language_p, read_i, write_i, speak_i, understand_i) 
             VALUES (:user_id, :language, :read_l, :write_l, :speak_l, :understand_l)";
-
+    
     $stmt = $pdo->prepare($sql);
 
-    // Loop through each language and insert the data into the database
-    foreach ($languages as $language) {
-        // Check if the language is selected in each proficiency array
-        $read_l = in_array($language, $read) ? 1 : 0; // If the language is in the 'read' array, mark as 1, else 0
-        $write_l = in_array($language, $write) ? 1 : 0;
-        $speak_l = in_array($language, $speak) ? 1 : 0;
-        $understand_l = in_array($language, $understand) ? 1 : 0;
+    foreach ($languages as $index => $language) {
+        // Ensure checkboxes are handled correctly
+        $read_l = isset($read[$index]) ? 1 : 0;
+        $write_l = isset($write[$index]) ? 1 : 0;
+        $speak_l = isset($speak[$index]) ? 1 : 0;
+        $understand_l = isset($understand[$index]) ? 1 : 0;
 
-        // Bind values and execute the statement
         $stmt->bindParam(':user_id', $user_id);
         $stmt->bindParam(':language', $language);
         $stmt->bindParam(':read_l', $read_l);
@@ -51,9 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
     }
 
-    // Redirect to a success page or the same page after saving data
-    header('Location: ../applicant_profile.php'); // Reload the page to show updated data
+    header('Location: ../applicant_profile.php');
     exit();
 }
-
+else {
+    // Redirect to the form if accessed directly
+    header('Location: ../applicant_profile.php');
+    exit();
+}
 ?>

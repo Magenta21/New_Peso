@@ -92,10 +92,13 @@ if (!$row_emp) {
                     <a class="nav-link" id="toggleButton4" href="#" role="tab">Recommeded Job</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" id="toggleButton" href="#" role="tab">Saved Job</a>
+                    <a class="nav-link" id="toggleButton3" href="#" role="tab">Saved Job</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" id="toggleButton" href="#" role="tab">Applied Job</a>
+                    <a class="nav-link" id="toggleButton2" href="#" role="tab">Applied Job</a>
+                </li>
+                <li class="nav-item">
+                    <a class="" href="jobpages/job_recommeded.php">Applied Job</a>
                 </li>
             </ul>
         </div>
@@ -105,7 +108,7 @@ if (!$row_emp) {
 
 
         <div class="row align-items-start"  style="margin-top:-1.6rem;">
-            <div id="employerlist" class="employers">
+            <div id="joblist" class="jobs">
                 <?php 
                     error_reporting(E_ALL);
                     ini_set('display_errors', 1);
@@ -113,11 +116,27 @@ if (!$row_emp) {
                 ?>
             </div>
 
-            <div id="addemployerlist" class="employers">
+            <div id="recommeded" class="jobs">
                 <?php 
                     error_reporting(E_ALL);
                     ini_set('display_errors', 1);
                     include 'jobpages/job_recommeded.php'; 
+                ?>
+            </div>
+
+            <div id="savejob" class="jobs">
+                <?php 
+                    error_reporting(E_ALL);
+                    ini_set('display_errors', 1);
+                    include '.php'; 
+                ?>
+            </div>
+
+            <div id="appliedjob" class="jobs">
+                <?php 
+                    error_reporting(E_ALL);
+                    ini_set('display_errors', 1);
+                    include '.php'; 
                 ?>
             </div>
         </div>
@@ -126,27 +145,37 @@ if (!$row_emp) {
 
     <script>
         // Hide all job lists initially
-        document.querySelectorAll('.employers').forEach(function (list) {
+        document.querySelectorAll('.jobs').forEach(function (list) {
             list.style.display = 'none';
         });
 
         // Show the job list by default
-        document.getElementById('employerlist').style.display = 'block';
+        document.getElementById('joblist').style.display = 'block';
 
         // Button event listeners for showing the respective job list
         document.getElementById('toggleButton').addEventListener('click', function (event) {
             event.preventDefault(); // Prevent default anchor click behavior
-            toggleJobList('employerlist', this);
+            toggleJobList('joblist', this);
         });
 
         document.getElementById('toggleButton4').addEventListener('click', function (event) {
             event.preventDefault(); // Prevent default anchor click behavior
-            toggleJobList('addemployerlist', this);
+            toggleJobList('recommeded', this);
+        });
+
+        document.getElementById('toggleButton3').addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default anchor click behavior
+            toggleJobList('savejob', this);
+        });
+
+        document.getElementById('toggleButton2').addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default anchor click behavior
+            toggleJobList('appliedjob', this);
         });
 
         // Function to toggle job lists
         function toggleJobList(containerId, button) {
-            document.querySelectorAll('.employers').forEach(function(list) {
+            document.querySelectorAll('.jobs').forEach(function(list) {
                 list.style.display = 'none';
             });
             document.getElementById(containerId).style.display = 'block';
