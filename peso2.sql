@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2025 at 06:03 AM
+-- Generation Time: Apr 02, 2025 at 03:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pesoo`
+-- Database: `peso2`
 --
 
 -- --------------------------------------------------------
@@ -67,44 +67,32 @@ CREATE TABLE `applicant_profile` (
   `contact_no` int(255) NOT NULL,
   `landline` varchar(255) NOT NULL,
   `photo` varchar(255) NOT NULL,
-  `present_address` varchar(255) NOT NULL,
+  `house_address` varchar(255) NOT NULL,
   `tin` int(255) NOT NULL,
   `sss_no` int(255) NOT NULL,
   `pagibig_no` int(255) NOT NULL,
   `philhealth_no` int(255) NOT NULL,
   `passport_no` int(255) NOT NULL,
-  `passport_expiry` datetime(6) DEFAULT NULL,
-  `tertiary_school` varchar(255) NOT NULL,
-  `tertiary_graduated` date NOT NULL,
-  `tertiary_award` varchar(255) NOT NULL,
-  `college_school` varchar(255) NOT NULL,
-  `college_graduated` date NOT NULL,
-  `college_award` varchar(255) NOT NULL,
-  `tertiary_course` varchar(255) NOT NULL,
+  `school_graduate` varchar(255) NOT NULL,
+  `year_graduate` date NOT NULL,
+  `course` varchar(255) NOT NULL,
   `work_location` varchar(255) NOT NULL,
-  `preferred_occupation` varchar(255) NOT NULL,
   `disability` varchar(255) NOT NULL,
   `selected_option` varchar(255) NOT NULL,
   `four_ps` varchar(255) NOT NULL,
   `prefix` varchar(255) NOT NULL,
-  `religion` varchar(255) NOT NULL,
+  `relegion` varchar(255) NOT NULL,
   `employment_status` varchar(255) NOT NULL,
   `resume` varchar(255) NOT NULL,
-  `applicant_type` enum('Training','Employment') NOT NULL,
-  `expected_salary` int(255) NOT NULL,
-  `grad_crouse` varchar(255) NOT NULL
+  `applicant_type` enum('Training','Employment','','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `applicant_profile`
 --
 
-INSERT INTO `applicant_profile` (`id`, `username`, `password`, `is_verified`, `otp`, `otp_expiry`, `reset_token`, `reset_token_expiry`, `email`, `fname`, `lname`, `mname`, `dob`, `pob`, `age`, `height`, `sex`, `civil_status`, `contact_no`, `landline`, `photo`, `present_address`, `tin`, `sss_no`, `pagibig_no`, `philhealth_no`, `passport_no`, `passport_expiry`, `tertiary_school`, `tertiary_graduated`, `tertiary_award`, `college_school`, `college_graduated`, `college_award`, `tertiary_course`, `work_location`, `preferred_occupation`, `disability`, `selected_option`, `four_ps`, `prefix`, `religion`, `employment_status`, `resume`, `applicant_type`, `expected_salary`, `grad_crouse`) VALUES
-(2, 'Mark', '$2y$10$cIcE2Z62HDpszBc4szxu1.RPGeLkZ8YYik94p6ny5V0QiUrot.RRq', '1', '475046', '2025-02-18 13:36:56.000000', '', '', 'pesolosbanos4@gmail.com', 'Sedrick', 'Hyatt-Mosciski', 'Ottis Mitchell', '2025-10-10', '', 0, 0, 'male', '', 2147483647, '', '../uploads/Mark/11.jpg', '138 Audra Trafficway', 0, 0, 0, 0, 0, NULL, 'Noemi Streich', '2024-03-07', 'Sed eius suscipit sequi dolores sint accusamus occaecati quae nulla.', 'Nasir Wilderman', '2025-12-16', 'Deleniti sapiente similique ipsum dolor ratione.', '', '', '', '', '', '', '', '', '', '', 'Training', 0, ''),
-(3, 'Mark', '$2y$10$7HG46MrrdnkCrzoPZkYlT.aqSFBGBaBeSXOphDjmY2b0uO0ebPN82', '1', '972741', '2025-02-20 13:06:58.000000', '', '', 'marklawrencemercado8@gmail.com', 'Vilma', 'Gleichner', 'Libby Yost-Reinger', '2024-10-13', '', 0, 0, 'male', '', 2147483647, '', '../uploads/Mark/11.jpg', '29509 Unique Ville', 0, 0, 0, 0, 0, NULL, 'Scottie Leannon', '2024-05-22', 'Praesentium quam occaecati ratione qui dignissimos corporis deleniti corrupti cumque.', 'Rhett Cole', '2024-10-07', 'Fugiat assumenda earum nemo fuga iusto.', '', '', '', '', '', '', '', '', '', '', 'Employment', 0, ''),
-(4, 'Developer123', '$2y$10$6TrIZbWtGlnwaj/qB3DyveKX9dlMkMX3nIPnZ1OUhdnQ4AOxsmSly', '1', '424477', '2025-03-17 10:24:49.000000', '', '', 'jervinguevarra123@gmail.com', 'Colorado', 'Hoover', 'Ryan Campos', '2000-02-10', '', 0, 0, 'male', '', 2147483647, '', 'uploads/Developer123/rizal.PNG', 'campvicente lim ', 0, 0, 0, 0, 0, NULL, 'qweqwe', '2000-02-22', 'qweqeq', 'qweqeq', '2000-02-22', 'asd', '', '', '', '', '', '', '', '', '', '', 'Employment', 0, ''),
-(5, 'Lawrence123', '$2y$10$wmG6vvUGbNzVs93xEUVo6.8gp.H3gQ0ckYeQSdCgcl44fJJ4FFwlC', '1', '791946', '2025-03-17 14:44:36.000000', '', '', 'jervin1231@gmail.com', 'Mark Lawrence ', 'qwee', 'Ryan Campos', '2000-02-22', 'ccsDcS', 0, 0, 'male', 'single', 2147483647, '131243', 'uploads/Lawrence123/rizal.PNG', 'wqeqweqwe123', 123124325, 324234, 75676, 34242, 5453453, '2025-03-12 14:59:57.000000', 'qew', '0000-00-00', 'qwe', 'qwe', '2000-02-22', 'qwe', 'fgdhhtrhty', 'srgtrdgdrr', 'tdhdtyhdth', 'drgtgdrgdr', 'sergsegesrgser', 'dhrtyrtgdrgdr', 'restsegserser', 'tet4et', 'terteryrt', '', 'Employment', 0, ''),
-(6, 'Patrick123', '$2y$10$GDhfOAg2HscIqvuzWs2djeay/xGP1vSzGaplyYg8y96/xf1ZvItrm', '1', '506994', '2025-03-27 10:23:37.000000', '', '', 'vetara3297@boyaga.com', 'Tite ', 'Patrick', 'ni', '2000-02-02', '', 0, 0, 'male', '', 2147483647, '', 'uploads/Patrick123/brave_screenshot_localhost.png', 'asdad', 0, 0, 0, 0, 0, NULL, 'asd', '2000-02-22', 'asd', 'asd', '2000-02-20', 'asd', '', '', '', '', '', '', '', '', '', '', 'Employment', 0, '');
+INSERT INTO `applicant_profile` (`id`, `username`, `password`, `is_verified`, `otp`, `otp_expiry`, `reset_token`, `reset_token_expiry`, `email`, `fname`, `lname`, `mname`, `dob`, `pob`, `age`, `height`, `sex`, `civil_status`, `contact_no`, `landline`, `photo`, `house_address`, `tin`, `sss_no`, `pagibig_no`, `philhealth_no`, `passport_no`, `school_graduate`, `year_graduate`, `course`, `work_location`, `disability`, `selected_option`, `four_ps`, `prefix`, `relegion`, `employment_status`, `resume`, `applicant_type`) VALUES
+(1, '', '$2y$10$GnlvJC8gnDDX8hYfcZkFpevSo8U8WobaLhgzzVHrToC9P2YlBqMs2', '', '', '0000-00-00 00:00:00.000000', '', '', 'PirateKinGG0001a@gmail.com', 'jervvin', 'gg', '', '0000-00-00', '', 0, 0, '', '', 0, '', '', '', 0, 0, 0, 0, 0, '', '0000-00-00', '', '', '', '', '', '', '', '', '', 'Training');
 
 -- --------------------------------------------------------
 
@@ -120,6 +108,21 @@ CREATE TABLE `application` (
   `status` varchar(255) NOT NULL,
   `job` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `applied_job`
+--
+
+CREATE TABLE `applied_job` (
+  `id` int(255) DEFAULT NULL,
+  `applicant_id` int(255) NOT NULL,
+  `job_posting_id` int(255) NOT NULL,
+  `application_date` date NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `job` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -181,20 +184,9 @@ CREATE TABLE `current_employee` (
   `gender` varchar(255) NOT NULL,
   `contact` int(255) NOT NULL,
   `bday` date NOT NULL,
-  `houseaddress` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
   `position` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `current_employee`
---
-
-INSERT INTO `current_employee` (`id`, `employer_id`, `fname`, `mname`, `lname`, `age`, `gender`, `contact`, `bday`, `houseaddress`, `position`) VALUES
-(1, 3, 'mark', 'lawrence', 'mercado', '32', 'Male', 91234567, '2017-03-10', '432gdgdvdrvdr', 'back'),
-(2, 3, 'jervin', 'baccarat', 'Guevarra', '62', 'Male', 912565475, '2015-03-25', 'gafwefe3431sdfs', 'safwaerew'),
-(3, 3, 'mark', 'lawrence', 'mercado', '32', 'Male', 91234567, '2017-03-10', '432gdgdvdrvdr', 'back'),
-(4, 3, 'jervin', 'baccarat', 'Guevarra', '62', 'Male', 912565475, '2015-03-25', 'gafwefe3431sdfs', 'safwaerew'),
-(5, 3, 'Colorado', 'Ryan Campos', 'Hoover', '4', 'Other', 0, '2020-11-28', 'Libero eos vitae ma', 'Aliqua Obcaecati er');
 
 -- --------------------------------------------------------
 
@@ -204,21 +196,24 @@ INSERT INTO `current_employee` (`id`, `employer_id`, `fname`, `mname`, `lname`, 
 
 CREATE TABLE `documents` (
   `id` int(255) NOT NULL,
-  `employer_id` int(11) NOT NULL,
-  `document_type` varchar(255) NOT NULL,
-  `document_file` varchar(255) NOT NULL,
-  `created_at` datetime(6) NOT NULL,
-  `is_verified` tinyint(1) NOT NULL,
-  `comment` varchar(255) NOT NULL
+  `document_type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `documents`
+-- Table structure for table `documents_files`
 --
 
-INSERT INTO `documents` (`id`, `employer_id`, `document_type`, `document_file`, `created_at`, `is_verified`, `comment`) VALUES
-(1, 3, 'hoddies', 'documents/Final-presentation-aprroval.pdf', '2025-03-20 00:00:00.000000', 0, ''),
-(2, 3, 'hoddies1', 'documents/solicit1.pdf', '2025-03-31 00:00:00.000000', 0, '');
+CREATE TABLE `documents_files` (
+  `id` int(255) NOT NULL,
+  `employer_id` int(255) NOT NULL,
+  `document_id` int(255) NOT NULL,
+  `document_file` varchar(255) NOT NULL,
+  `created_at` varchar(255) NOT NULL,
+  `is_verified` varchar(255) NOT NULL,
+  `comment` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -236,8 +231,10 @@ CREATE TABLE `employer` (
   `otp_expiry` datetime(6) NOT NULL,
   `reset_token` varchar(6) NOT NULL,
   `reset_token_expiry` datetime(6) NOT NULL,
+  `photo` varchar(255) NOT NULL,
   `types_of_employer` enum('local_agencies','direct_hire','Overseas','local_lb') NOT NULL,
   `fname` varchar(255) NOT NULL,
+  `mname` varchar(255) NOT NULL,
   `lname` varchar(255) NOT NULL,
   `company_name` varchar(255) NOT NULL,
   `company_address` varchar(255) NOT NULL,
@@ -249,14 +246,6 @@ CREATE TABLE `employer` (
   `hr_email` varchar(255) NOT NULL,
   `company_photo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `employer`
---
-
-INSERT INTO `employer` (`id`, `username`, `password`, `email`, `is_verified`, `otp`, `otp_expiry`, `reset_token`, `reset_token_expiry`, `types_of_employer`, `fname`, `lname`, `company_name`, `company_address`, `company_contact`, `hr`, `president`, `tel_num`, `company_email`, `hr_email`, `company_photo`) VALUES
-(2, 'Melany.Volkman', '$2y$10$qjOybIq0egPOlWebtb9E9.N/Rfg9YUT53mIrsvhjNEVTU58MK6dGG', 'marklawrencemercado8@gmail.com', 1, '528560', '2025-02-18 14:53:53.000000', '', '0000-00-00 00:00:00.000000', 'local_lb', 'Elsie', 'Crooks', 'David Bosco', 'McLaughlin, Hansen and Beatty', 'Watsica - Yundt', 'Mollitia voluptatibus autem.', 'Explicabo accusantium placeat quibusdam autem.', '09123488990', 'Miller, Labadie and Yundt', '', 'uploads/David_Bosco/444.jpg'),
-(3, 'Azure', '$2y$10$vwSz.nuPSNc6Yfx048oCMOu90wIaqoUoeHf3hP9yos81Xft75w4BW', 'ict1mercado.cdlb@gmail.com', 1, '843947', '2025-03-03 09:21:48.000000', '', '0000-00-00 00:00:00.000000', '', 'Mark Lawrence ', 'Mercado1', 'Seth Aguirre', 'Newton Wilder Co', '09915209066', 'Natus maxime velit qsss', 'Nulla cillum enim pa', '09162602288', 'dapiv@mailinator.com', '', 'uploads/Azure/ma.jpg');
 
 -- --------------------------------------------------------
 
@@ -325,25 +314,12 @@ CREATE TABLE `job_post` (
 --
 
 INSERT INTO `job_post` (`id`, `employer_id`, `job_title`, `company_name`, `job_type`, `salary`, `job_description`, `selected_option`, `vacant`, `requirement`, `work_location`, `education`, `remarks`, `date_posted`, `is_active`) VALUES
-(1, 0, 'saleslady', 'Ayala Mall', 'Saleslady', '10000', 'asd\nASDASD\nASDASD\nASDA\nSDAS\nDAS\nDAD', '', 3, 'PSA\r\n', 'CAlamba', 'n/A', '', '0000-00-00', 1),
+(1, 0, 'saleslady', 'Ayala Mall', 'Saleslady', '10000', 'asd', '', 3, 'PSA\r\n', 'CAlamba', 'n/A', '', '0000-00-00', 1),
 (2, 0, 'saleslady', 'Ayala Mall', 'Mason', '10000', 'asd', '', 3, 'PSA\r\n', 'CAlamba', 'n/A', '', '0000-00-00', 1),
 (3, 0, 'welding', 'welding incorporation', 'Welder ', '10000', 'Malakas pangangatawanan', '', 22, 'Malaki muscle ', 'Bay,Laguna', '', 'N/A', '0000-00-00', 1),
 (4, 0, 'Mason', 'Mason incorporation', 'masonary', '10000', 'Malakas pangangatawanan', '', 22, 'Malaki muscle ', 'Bay,Laguna', '', 'N/A', '0000-00-00', 1),
 (5, 0, 'sisigan ni patrick', 'Patrick\'s sisig', 'hot & sweet \r\n15 yrs old ', '600/day', 'bambang residence\r\n', '', 3, 'Pogi,Malinis,Masarap', 'Bambang', '', '', '0000-00-00', 1),
-(6, 0, 'sisigan ni Law', 'Law\'s sisig', 'hot & sweet \r\n15 yrs old ', '600/day', 'bambang residence\r\n', '', 3, 'Pogi,Malinis,Masarap', 'Bambang', '', '', '0000-00-00', 1),
-(7, 0, 'Cashier', 'SM Supermarket', 'Full-time', '12000', 'Handles transactions and customer payments', '', 5, 'Honest, Friendly, Basic Math Skills', 'Calamba', 'High School Graduate', '', '2025-02-13', 1),
-(8, 0, 'Delivery Rider', 'Lalamove', 'Contract', 'Per delivery', 'Deliver packages efficiently', '', 10, 'Owns motorcycle, Valid License', 'Laguna', 'High School Graduate', '', '2025-02-13', 1),
-(9, 0, 'Office Staff', 'ABC Corp.', 'Full-time', '15000', 'General office duties and admin tasks', '', 3, 'Computer literate, Organized', 'Binan', 'College Level', '', '2025-02-13', 1),
-(10, 0, 'Bartender', 'The Chill Bar', 'Part-time', '700/day', 'Mixes and serves drinks', '', 2, 'Friendly, Customer Service, Mixology', 'Los Baños', 'N/A', '', '2025-02-13', 1),
-(11, 0, 'Call Center Agent', 'Concentrix', 'Full-time', '18000', 'Handles customer inquiries via phone', '', 15, 'Good communication, Typing skills', 'Santa Rosa', 'College Level', '', '2025-02-13', 1),
-(12, 0, 'Security Guard', 'Safe Guard Co.', 'Full-time', '14000', 'Ensures safety and security', '', 4, 'Physically fit, Licensed', 'Batangas', 'High School Graduate', '', '2025-02-13', 1),
-(13, 0, 'Kitchen Crew', 'Jollibee', 'Full-time', '11000', 'Prepares and cooks food', '', 8, 'Hardworking, Willing to learn', 'San Pablo', 'High School Graduate', '', '2025-02-13', 1),
-(14, 0, 'Data Encoder', 'XYZ Solutions', 'Full-time', '16000', 'Encodes and organizes data', '', 6, 'Fast typing, Attention to detail', 'Cabuyao', 'College Level', '', '2025-02-13', 1),
-(15, 0, 'Pharmacy Assistant', 'Watsons', 'Full-time', '13000', 'Assists in dispensing medicines', '', 3, 'Customer service, Knowledge in meds', 'San Pedro', 'College Level', '', '2025-02-13', 1),
-(16, 0, 'Graphic Designer', 'Creative Minds', 'Freelance', 'Project-based', 'Creates visual designs and marketing materials', '', 2, 'Adobe Photoshop, Creativity', 'Remote', 'College Graduate', '', '2025-02-13', 1),
-(17, 2, 'Investor Division Administrator', 'David Bosco', 'contract', '121', 'Human Markets Executive', '', 505, 'Cupiditate pariatur quaerat ad consequuntur soluta tenetur aliquam.', 'consequatur praesentium nam', 'Velit aspernatur ipsa impedit neque repellat adipisci suscipit possimus.', 'Quod expedita sit laudantium nemo veritatis laboriosam quidem.', '2025-02-26', 1),
-(18, 2, 'Internal Program Consultant', 'David Bosco', 'contract', '20000', 'National Usability Coordinator', '', 239, 'Aperiam nisi minima placeat.', 'officiis consequuntur eveniet', 'Numquam necessitatibus fugit quo corporis.', 'Reprehenderit facere incidunt dolore blanditiis id.', '2025-02-26', 1),
-(19, 3, 'Autem nihil veniam ', 'Seth Aguirre', 'internship', '50', 'Non vero sunt quasi', 'Similique dolor aut ', 931, 'Nihil tempor quia as', 'In laborum quasi sun', 'Id aut ut est iusto ', 'Rerum et non est mol', '2025-03-03', 1);
+(6, 0, 'sisigan ni Law', 'Law\'s sisig', 'hot & sweet \r\n15 yrs old ', '600/day', 'bambang residence\r\n', '', 3, 'Pogi,Malinis,Masarap', 'Bambang', '', '', '0000-00-00', 1);
 
 -- --------------------------------------------------------
 
@@ -432,17 +408,6 @@ CREATE TABLE `news` (
   `create_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `news`
---
-
-INSERT INTO `news` (`id`, `title`, `image`, `description`, `schedule_date`, `create_at`) VALUES
-(1, 'New Tech Innovation Announced', 'news/i1.webp', 'A breakthrough in AI technology has been announced, revolutionizing automation.', '2025-03-01', '2025-02-16 18:45:38'),
-(2, 'Local Sports Team Wins Championship', 'news/i2.webp', 'The city celebrates as the home team claims victory in the national championship.', '2025-03-05', '2025-02-16 18:46:05'),
-(3, 'Weather Alert: Heavy Rain Expected', 'news/i3.webp', 'Meteorologists warn of incoming heavy rainfall and possible flooding.', '2025-02-25', '2025-02-16 18:46:12'),
-(4, 'New Legislation Passed for Green Energy', 'news/i4.webp', 'The government has approved a new bill promoting renewable energy solutions.', '2025-03-10', '2025-02-16 18:46:19'),
-(5, 'Upcoming Music Festival Lineup Revealed', 'news/i5.webp', 'Top artists are set to perform at the annual summer music festival.', '2025-03-15', '2025-02-16 18:46:29');
-
 -- --------------------------------------------------------
 
 --
@@ -509,14 +474,6 @@ CREATE TABLE `ofw_profile` (
   `arrival_date` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `ofw_profile`
---
-
-INSERT INTO `ofw_profile` (`id`, `otp`, `otp_expiry`, `reset_token`, `reset_token_expiry`, `is_verified`, `username`, `password`, `profile_image`, `last_name`, `first_name`, `middle_name`, `prefix`, `dob`, `sex`, `age`, `civil_status`, `house_address`, `contact_no`, `email`, `sss_no`, `pagibig_no`, `philheath_no`, `passport_no`, `immigration_status`, `educational_background`, `spouse_name`, `spouse_contact`, `fathers_name`, `fathers_address`, `mothers_name`, `mothers_address`, `emergency_contact_name`, `emergency_contact_number`, `occupation`, `income`, `employment_type`, `country`, `employment_form`, `employer_abroad`, `abroad_contact`, `employer_address`, `local_agencies`, `local_agency_no`, `name_local_agency`, `contact_person_local`, `address_local`, `email_personal_local`, `email_company_local`, `agency_abroad`, `contact_abroad`, `agency_person_abroad`, `address_abroad`, `email_abroad_personal`, `email_abroad_company`, `departure_date`, `arrival_date`) VALUES
-(6, '518565', '2025-02-19 14:49:49.000000', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', 1, 'Ruth18', '$2y$10$j4z3TSpS/j9gSCtcuw6xc.yzlxbazX8mwnoxU4lmt8LZ/A8IiPUKK', '../uploads/Ruth18/11.jpg', 'Bode', 'Rowland', 'Jailyn Hirthe', '', '2025-03-18', 'male', 0, '', '6985 Breitenberg Shoals', 912345678, 'marklawrencemercado8@gmail.com', 0, 0, 0, 0, '', '', '', 0, '', '', '', '', 0, 0, '', 0, '', '', '', '', 0, '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000'),
-(7, '480058', '2025-02-21 14:34:23.000000', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', 1, 'Melany.Volkman', '$2y$10$cJ1RW.agwZBImdHCp.yWuOgr2e9N6QDgSCmMO/ILyFPDAEooukl16', 'uploads/Melany_Volkman/444.jpg', 'qwe', 'qwe', 'qwe', '', '2000-07-11', 'male', 0, '', 'rh45hgfghrdsh', 2147483647, 'pesolosbanos4@gmail.com', 0, 0, 0, 0, '', '', '', 0, '', '', '', '', 0, 0, '', 0, '', '', '', '', 0, '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000');
-
 -- --------------------------------------------------------
 
 --
@@ -565,6 +522,18 @@ CREATE TABLE `quiz name` (
   `tag` varchar(255) NOT NULL,
   `date` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `save_job`
+--
+
+CREATE TABLE `save_job` (
+  `id` int(255) DEFAULT NULL,
+  `job_id` int(255) NOT NULL,
+  `applicant_id` int(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -735,6 +704,12 @@ ALTER TABLE `documents`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `documents_files`
+--
+ALTER TABLE `documents_files`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `employer`
 --
 ALTER TABLE `employer`
@@ -880,7 +855,7 @@ ALTER TABLE `admin_profile`
 -- AUTO_INCREMENT for table `applicant_profile`
 --
 ALTER TABLE `applicant_profile`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `application`
@@ -910,19 +885,25 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `current_employee`
 --
 ALTER TABLE `current_employee`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `documents_files`
+--
+ALTER TABLE `documents_files`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `employer`
 --
 ALTER TABLE `employer`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `graduates`
@@ -940,7 +921,7 @@ ALTER TABLE `interview`
 -- AUTO_INCREMENT for table `job_post`
 --
 ALTER TABLE `job_post`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `language_proficiency`
@@ -976,13 +957,13 @@ ALTER TABLE `module_taken`
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ofw_profile`
 --
 ALTER TABLE `ofw_profile`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `public/private`
