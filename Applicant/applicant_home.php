@@ -38,10 +38,6 @@ if (!$row_emp) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/jobpage.css">
-
-    
-
-
 </head>
 <body>
 
@@ -81,110 +77,123 @@ if (!$row_emp) {
     </div>
 </div>
 
-    </div>
-    <div class="container mt-4">
-        <div class="container mt-4 mb-3">
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="toggleButton" href="#" role="tab">Available Job</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="toggleButton4" href="#" role="tab">Recommeded Job</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="toggleButton3" href="#" role="tab">Saved Job</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="toggleButton2" href="#" role="tab">Applied Job</a>
-                </li>
-                <li class="nav-item">
-                    <a class="" href="jobpages/job_recommeded.php">Applied Job</a>
-                </li>       
-            </ul>
-        </div>
-
-
-
-
-
-        <div class="row align-items-start"  style="margin-top:-1.6rem;">
-            <div id="joblist" class="jobs">
-                <?php 
-                    error_reporting(E_ALL);
-                    ini_set('display_errors', 1);
-                    include 'jobpages/job_list.php'; 
-                ?>
-            </div>
-
-            <div id="recommeded" class="jobs">
-                <?php 
-                    error_reporting(E_ALL);
-                    ini_set('display_errors', 1);
-                    include 'jobpages/job_recommeded.php'; 
-                ?>
-            </div>
-
-            <div id="savejob" class="jobs">
-                <?php 
-                    error_reporting(E_ALL);
-                    ini_set('display_errors', 1);
-                    include '.php'; 
-                ?>
-            </div>
-
-            <div id="appliedjob" class="jobs">
-                <?php 
-                    error_reporting(E_ALL);
-                    ini_set('display_errors', 1);
-                    include '.php'; 
-                ?>
-            </div>
-        </div>
+<div class="container mt-4">
+    <div class="container mt-4 mb-3">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" id="toggleButton" href="#" data-tab="joblist" role="tab">Available Job</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="toggleButton4" href="#" data-tab="recommeded" role="tab">Recommeded Job</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="toggleButton3" href="#" data-tab="savejob" role="tab">Saved Job</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="toggleButton2" href="#" data-tab="appliedjob" role="tab">Applied Job</a>
+            </li>      
+        </ul>
     </div>
 
+    <div class="row align-items-start" style="margin-top:-1.6rem;">
+        <div id="joblist" class="jobs">
+            <?php 
+                error_reporting(E_ALL);
+                ini_set('display_errors', 1);
+                include 'jobpages/job_list.php'; 
+            ?>
+        </div>
 
-    <script>
-        // Hide all job lists initially
-        document.querySelectorAll('.jobs').forEach(function (list) {
-            list.style.display = 'none';
-        });
+        <div id="recommeded" class="jobs">
+            <?php 
+                error_reporting(E_ALL);
+                ini_set('display_errors', 1);
+                include 'jobpages/job_recommeded.php'; 
+            ?>
+        </div>
 
-        // Show the job list by default
-        document.getElementById('joblist').style.display = 'block';
+        <div id="savejob" class="jobs">
+            <?php 
+                error_reporting(E_ALL);
+                ini_set('display_errors', 1);
+                include 'jobpages/saved_jobs.php'; 
+            ?>
+        </div>
 
-        // Button event listeners for showing the respective job list
-        document.getElementById('toggleButton').addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default anchor click behavior
-            toggleJobList('joblist', this);
-        });
+        <div id="appliedjob" class="jobs">
+            <?php 
+                error_reporting(E_ALL);
+                ini_set('display_errors', 1);
+                include 'jobpages/applied_jobs.php'; 
+            ?>
+        </div>
+    </div>
+</div>
 
-        document.getElementById('toggleButton4').addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default anchor click behavior
-            toggleJobList('recommeded', this);
-        });
+<script>
+// Map between included filenames and tab container IDs
+const tabMap = {
+    'job_list': 'joblist',
+    'job_recommeded': 'recommeded',
+    'saved_jobs': 'savejob',
+    'applied_jobs': 'appliedjob'
+};
 
-        document.getElementById('toggleButton3').addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default anchor click behavior
-            toggleJobList('savejob', this);
-        });
-
-        document.getElementById('toggleButton2').addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default anchor click behavior
-            toggleJobList('appliedjob', this);
-        });
-
-        // Function to toggle job lists
-        function toggleJobList(containerId, button) {
-            document.querySelectorAll('.jobs').forEach(function(list) {
-                list.style.display = 'none';
-            });
-            document.getElementById(containerId).style.display = 'block';
-            document.querySelectorAll('.nav-link').forEach(function(navLink) {
-                navLink.classList.remove('active');
-            });
-            button.classList.add('active');
+// Function to show a specific tab and hide others
+function showTab(tabId) {
+    // Hide all job lists
+    document.querySelectorAll('.jobs').forEach(function(list) {
+        list.style.display = 'none';
+    });
+    
+    // Show the selected tab
+    document.getElementById(tabId).style.display = 'block';
+    
+    // Update active state of nav links
+    document.querySelectorAll('.nav-link').forEach(function(navLink) {
+        navLink.classList.remove('active');
+        if (navLink.getAttribute('data-tab') === tabId) {
+            navLink.classList.add('active');
         }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    });
+    
+    // Store the active tab in localStorage
+    localStorage.setItem('activeTab', tabId);
+    
+    // Update URL without reloading
+    const url = new URL(window.location);
+    url.searchParams.set('tab', tabId);
+    window.history.pushState({}, '', url);
+}
+
+// On page load, determine which tab to show
+document.addEventListener('DOMContentLoaded', function() {
+    // Get active tab from URL parameter or localStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeTabParam = urlParams.get('tab');
+    const activeTab = activeTabParam || localStorage.getItem('activeTab') || 'joblist';
+    
+    // Show the appropriate tab
+    showTab(activeTab);
+    
+    // Set up click handlers for tab buttons
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const tabId = this.getAttribute('data-tab');
+            showTab(tabId);
+        });
+    });
+});
+
+// Handle back/forward navigation
+window.addEventListener('popstate', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeTab = urlParams.get('tab') || 'joblist';
+    showTab(activeTab);
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
