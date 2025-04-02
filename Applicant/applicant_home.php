@@ -99,7 +99,7 @@ if (!$row_emp) {
                 </li>
                 <li class="nav-item">
                     <a class="" href="jobpages/job_recommeded.php">Applied Job</a>
-                </li>
+                </li>       
             </ul>
         </div>
 
