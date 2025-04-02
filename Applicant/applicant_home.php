@@ -96,10 +96,7 @@ if (!$row_emp) {
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="toggleButton2" href="#" role="tab">Applied Job</a>
-                </li>
-                <li class="nav-item">
-                    <a class="" href="jobpages/job_recommeded.php">Applied Job</a>
-                </li>       
+                </li>      
             </ul>
         </div>
 
