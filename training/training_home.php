@@ -21,7 +21,9 @@ if (isset($_SESSION['user'])) {
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
-                <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+                <a href="../index.php" style="display: block; text-decoration: none;">
+                        <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+                 </a>
             </div>
             <div class="col-md-8">
                 <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
@@ -36,7 +38,7 @@ if (isset($_SESSION['user'])) {
                         <?php endif; ?>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
-                        <li><a class="dropdown-item" href="employer_profile.php">Profile</a></li>
+                        <li><a class="dropdown-item" href="training_profile.php">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
                     </ul>

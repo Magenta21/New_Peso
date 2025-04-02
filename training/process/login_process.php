@@ -20,13 +20,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user && password_verify($password, $user['password'])) {
             // Set session variables
-            $_SESSION['employer_id'] = $user['id'];
+            $_SESSION['applicant_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            $_SESSION['company_name'] = $user['company_name'];
+            $_SESSION['applicant_name'] = $user['fname'];
             $_SESSION['logged_in'] = true;
 
             // Redirect to employer dashboard
-            header("Location: ../applicant_home.php");
+            header("Location: ../training_home.php");
             exit();
         } else {
             echo "Invalid credentials or account not verified.";
