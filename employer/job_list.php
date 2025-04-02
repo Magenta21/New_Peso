@@ -102,37 +102,42 @@ if (!$row_emp) {
         </div>
     </nav>
 
-<div class="container container-fluid">
+    <div class="container container-fluid">
     <?php while ($row = $result->fetch_assoc()) { ?>
-        <a href="jobdetails.php?id=<?= urlencode(base64_encode($row['id'])) ?>" class="text-decoration-none text-dark">
-            <div class="row job-row border rounded mb-3 shadow-sm" style="cursor: pointer;">
-                <div class="col-md-6 row justify-content-start">
-                    <div class="col-md-12 pt-3 text-start">
-                        <div class="col"><p class="text-start"><i class="bi bi-suitcase-lg"></i> <?= htmlspecialchars($row['job_title']) ?></p></div>
-                        <div class="col"><p class="text-start"><i class="bi bi-buildings"></i> <?= htmlspecialchars($row['company_name']) ?></p></div>
-                        <div class="col"><p class="text-start"><i class="bi bi-pin-map"></i> <?= htmlspecialchars($row['work_location']) ?></p></div>
-                        <div class="col"><p class="text-start"><i class="bi bi-cash"></i> <?= htmlspecialchars($row['salary']) ?></p></div>
+        <div class="row job-row border rounded mb-3 shadow-sm">
+            <a href="jobdetails.php?id=<?= urlencode(base64_encode($row['id'])) ?>" class="text-decoration-none text-dark col-md-10" style="cursor: pointer;">
+                <div class="row">
+                    <div class="col-md-6 row justify-content-start">
+                        <div class="col-md-12 pt-3 text-start">
+                            <div class="col"><p class="text-start"><i class="bi bi-suitcase-lg"></i> <?= htmlspecialchars($row['job_title']) ?></p></div>
+                            <div class="col"><p class="text-start"><i class="bi bi-buildings"></i> <?= htmlspecialchars($row['company_name']) ?></p></div>
+                            <div class="col"><p class="text-start"><i class="bi bi-pin-map"></i> <?= htmlspecialchars($row['work_location']) ?></p></div>
+                            <div class="col"><p class="text-start"><i class="bi bi-cash"></i> <?= htmlspecialchars($row['salary']) ?></p></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 pt-3 text-start">
+                        <span class="ms-5 fs-5">
+                            <?= htmlspecialchars($row['vacant']) ?> openings
+                        </span>
                     </div>
                 </div>
-
-                <div class="col-md-4 pt-5 text-start">
-                    <span class="ms-5 fs-5">
-                        <?= htmlspecialchars($row['vacant']) ?> openings
-                    </span>
-                </div>
-                
-                <div class="col-md-2 pt-5 text-start">
-                <form action="process/hide.php" method="post">
+            </a>
+            
+            <div class="col-md-2 text-start d-flex flex-column">
+                <form action="process/hide.php" method="post" class="mb-2">
                     <input type="hidden" name="job_id" value="<?= $row['id'] ?>">
-                    <button type="submit" class="btn btn-sm <?= $row['is_active'] == 1 ? 'btn-success' : 'btn-danger' ?> toggle-status"
+                    <button type="submit" class="btn btn-sm <?= $row['is_active'] == 1 ? 'btn-success' : 'btn-danger' ?> toggle-status w-100"
                         data-id="<?= $row['id'] ?>" 
                         data-status="<?= $row['is_active'] ?>">
                         <?= $row['is_active'] == 1 ? 'Active' : 'Inactive' ?>
                     </button>
                 </form>
-                </div>
+                <a href="applicant_list.php?job_id=<?= urlencode(base64_encode($row['id'])) ?>" class="btn btn-primary btn-sm w-100"> 
+                    <i class="bi bi-people-fill"></i> View Applicants
+                </a>
             </div>
-        </a>
+        </div>
     <?php } ?>
 </div>
 
