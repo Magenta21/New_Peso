@@ -1,8 +1,6 @@
 <?php
-include '../db.php';
-
 $applicantid = $_SESSION['applicant_id'];
-// Check if the employer is logged in
+// Check if the applicant is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: applicant_login.php");
     exit();
@@ -15,18 +13,43 @@ $limit = 5;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $start = ($page - 1) * $limit;
 
-// Fetch total number of jobs
-$totalQuery = "SELECT COUNT(id) AS total FROM job_post";
-$totalResult = $conn->query($totalQuery);
+// Fetch total number of available jobs (not saved or applied by this applicant)
+$totalQuery = "SELECT COUNT(jp.id) AS total 
+               FROM job_post jp
+               WHERE jp.is_active = 1
+               AND jp.id NOT IN (
+                   SELECT job_id FROM save_job WHERE applicant_id = ?
+               )
+               AND jp.id NOT IN (
+                   SELECT job_posting_id FROM applied_job WHERE applicant_id = ?
+               )";
+$totalStmt = $conn->prepare($totalQuery);
+$totalStmt->bind_param("ii", $applicantid, $applicantid);
+$totalStmt->execute();
+$totalResult = $totalStmt->get_result();
 $totalRow = $totalResult->fetch_assoc();
-$totalemployee = $totalRow['total'];
+$totalJobs = $totalRow['total'];
+$totalStmt->close();
 
 // Calculate total pages
-$totalPages = ceil($totalemployee / $limit);
+$totalPages = ceil($totalJobs / $limit);
 
-// Fetch jobs with limit and offset
-$query = "SELECT * FROM job_post WHERE is_active = 1 ORDER BY date_posted DESC LIMIT $start, $limit";
-$result = $conn->query($query);
+// Fetch jobs with limit and offset (excluding saved and applied jobs)
+$query = "SELECT jp.* 
+          FROM job_post jp
+          WHERE jp.is_active = 1
+          AND jp.id NOT IN (
+              SELECT job_id FROM save_job WHERE applicant_id = ?
+          )
+          AND jp.id NOT IN (
+              SELECT job_posting_id FROM applied_job WHERE applicant_id = ?
+          )
+          ORDER BY jp.date_posted DESC 
+          LIMIT ?, ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("iiii", $applicantid, $applicantid, $start, $limit);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -79,13 +102,13 @@ $result = $conn->query($query);
 <!-- Pagination Links -->
 <div class="pagination justify-content-center">
     <?php if ($page > 1): ?>
-        <a href="?page=<?= $page - 1 ?>" class="prev">Previous</a>
+        <a href="?page=<?= $page - 1 ?>&tab=joblist" class="prev">Previous</a>
     <?php endif; ?>
 
     <span>Page <?= $page ?> of <?= $totalPages ?></span>
 
     <?php if ($page < $totalPages): ?>
-        <a href="?page=<?= $page + 1 ?>" class="next">Next</a>
+        <a href="?page=<?= $page + 1 ?>&joblist" class="next">Next</a>
     <?php endif; ?>
 </div>
 
