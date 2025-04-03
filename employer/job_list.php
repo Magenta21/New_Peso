@@ -133,7 +133,7 @@ if (!$row_emp) {
                         <?= $row['is_active'] == 1 ? 'Active' : 'Inactive' ?>
                     </button>
                 </form>
-                <a href="applicant_list.php?job_id=<?= urlencode(base64_encode($row['id'])) ?>" class="btn btn-primary btn-sm w-100"> 
+                <a href="applicant/applicant_list.php?job_id=<?= urlencode(base64_encode($row['id'])) ?>" class="btn btn-primary btn-sm w-100"> 
                     <i class="bi bi-people-fill"></i> View Applicants
                 </a>
             </div>
