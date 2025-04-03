@@ -16,6 +16,16 @@ $totalResult = $totalStmt->get_result();
 $totalRow = $totalResult->fetch_assoc();
 $totalApplicants = $totalRow['total'];
 $totalPages = ceil($totalApplicants / $limit);
+
+// Display success/error messages
+if (isset($_SESSION['success'])) {
+    echo '<div class="alert alert-success">'.$_SESSION['success'].'</div>';
+    unset($_SESSION['success']);
+}
+if (isset($_SESSION['error'])) {
+    echo '<div class="alert alert-danger">'.$_SESSION['error'].'</div>';
+    unset($_SESSION['error']);
+}
 ?>
 
 <div class="container mt-3">
@@ -80,12 +90,48 @@ $totalPages = ceil($totalApplicants / $limit);
 
 <script>
 function scheduleInterview(applicantId, jobId) {
-    const dateTime = document.getElementById('interview_date_' + applicantId).value;
+    const dateTimeInput = document.getElementById('interview_date_' + applicantId);
+    const dateTime = dateTimeInput.value;
+    
     if (!dateTime) {
         alert('Please select interview date and time');
+        dateTimeInput.focus();
         return;
     }
     
-    window.location.href = `schedule_interview.php?applicant=${applicantId}&job=${jobId}&datetime=${encodeURIComponent(dateTime)}`;
+    // Validate future date
+    const selectedDate = new Date(dateTime);
+    const now = new Date();
+    
+    if (selectedDate <= now) {
+        alert('Please select a future date and time');
+        dateTimeInput.focus();
+        return;
+    }
+    
+    // Show loading state
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Scheduling...';
+    btn.disabled = true;
+    
+    // Make the request
+    fetch(`../process/schedule_interview.php?applicant=${applicantId}&job=${jobId}&datetime=${encodeURIComponent(dateTime)}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(() => {
+            // Reload the page to see updates
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            alert('Error scheduling interview. Please try again.');
+        });
 }
 </script>
