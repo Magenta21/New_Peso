@@ -46,7 +46,7 @@ if (!$row_emp) {
         <div class="row align-items-center">
             <!-- Logo Section -->
             <div class="col-md-2 col-xxl-3 text-start">
-                <a href="../index.php" style="display: block; text-decoration: none;">
+                <a href="#" style="display: block; text-decoration: none;">
                     <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
                 </a>
             </div>

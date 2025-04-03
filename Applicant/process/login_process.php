@@ -29,12 +29,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../applicant_home.php");
             exit();
         } else {
-            echo "Invalid credentials or account not verified.";
+            echo "<script> alert('Invalid username or password'); window.location.href='../applicant_login.php' </script>";
         }
     } catch (PDOException $e) {
         die("Database error: " . $e->getMessage());
     }
 } else {
-    echo "Unauthorized access!";
+    echo "<script> alert('Unauthorized access!'); window.location.href='../applicant_login.php' </script>";
 }
 ?>
