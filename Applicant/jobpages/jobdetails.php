@@ -184,7 +184,7 @@ $job = $result->fetch_assoc();
         document.querySelector('.btn-save').addEventListener('click', function() {
             const jobId = <?= $jobId ?>;
             
-            fetch('../../process/save_job.php', {
+            fetch('../process/save_job.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -219,7 +219,7 @@ $job = $result->fetch_assoc();
             if (confirm('Are you sure you want to apply for this position?')) {
                 const jobId = <?= $jobId ?>;
                 
-                fetch('../../process/apply_job.php', {
+                fetch('../process/apply_job.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -247,7 +247,7 @@ $job = $result->fetch_assoc();
 
         // Check if job is already saved on page load
         const jobId = <?= $jobId ?>;
-        fetch('../../process/check_saved_job.php?job_id=' + jobId)
+        fetch('../process/check_saved_job.php?job_id=' + jobId)
             .then(response => response.json())
             .then(data => {
                 if (data.is_saved) {
@@ -258,7 +258,7 @@ $job = $result->fetch_assoc();
             });
 
         // Check if job is already applied on page load
-        fetch('../../process/check_applied_job.php?job_id=' + jobId)
+        fetch('../process/check_applied_job.php?job_id=' + jobId)
             .then(response => response.json())
             .then(data => {
                 if (data.is_applied) {
