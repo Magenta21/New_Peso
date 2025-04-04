@@ -16,6 +16,16 @@ $totalResult = $totalStmt->get_result();
 $totalRow = $totalResult->fetch_assoc();
 $totalApplicants = $totalRow['total'];
 $totalPages = ceil($totalApplicants / $limit);
+
+// Display success/error messages
+if (isset($_SESSION['success'])) {
+    echo '<div class="alert alert-success">'.$_SESSION['success'].'</div>';
+    unset($_SESSION['success']);
+}
+if (isset($_SESSION['error'])) {
+    echo '<div class="alert alert-danger">'.$_SESSION['error'].'</div>';
+    unset($_SESSION['error']);
+}
 ?>
 
 <div class="container mt-3">
@@ -79,13 +89,55 @@ $totalPages = ceil($totalApplicants / $limit);
 </div>
 
 <script>
-function scheduleInterview(applicantId, jobId) {
-    const dateTime = document.getElementById('interview_date_' + applicantId).value;
-    if (!dateTime) {
-        alert('Please select interview date and time');
-        return;
+    function scheduleInterview(applicantId, jobId) {
+        // 1. Get the datetime input element for this specific applicant
+        const dateTimeInput = document.getElementById('interview_date_' + applicantId);
+        
+        // 2. Get the selected datetime value
+        const dateTime = dateTimeInput.value;
+        
+        // 3. Validate that a datetime was selected
+        if (!dateTime) {
+            alert('Please select interview date and time');
+            dateTimeInput.focus(); // Focus on the input field
+            return; // Exit function
+        }
+        
+        // 4. Validate the selected date is in the future
+        const selectedDate = new Date(dateTime);
+        const now = new Date();
+        
+        if (selectedDate <= now) {
+            alert('Please select a future date and time');
+            dateTimeInput.focus();
+            return;
+        }
+        
+        // 5. Show loading state on the button
+        const btn = event.target;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Scheduling...';
+        btn.disabled = true;
+        
+        // 6. Make the API request to schedule the interview
+        fetch(`../process/schedule_interview.php?applicant=${applicantId}&job=${jobId}&datetime=${encodeURIComponent(dateTime)}`)
+            .then(response => {
+                // 7. Check if the response was successful
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(() => {
+                // 8. On success, reload the page to show updates
+                window.location.reload();
+            })
+            .catch(error => {
+                // 9. Handle any errors
+                console.error('Error:', error);
+                btn.innerHTML = originalText; // Restore button text
+                btn.disabled = false; // Re-enable button
+                alert('Error scheduling interview. Please try again.');
+            });
     }
-    
-    window.location.href = `schedule_interview.php?applicant=${applicantId}&job=${jobId}&datetime=${encodeURIComponent(dateTime)}`;
-}
 </script>

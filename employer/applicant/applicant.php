@@ -24,7 +24,7 @@ $totalPages = ceil($totalApplicants / $limit);
     $query = "SELECT a.*, aj.status, aj.application_date 
               FROM applied_job aj
               JOIN applicant_profile a ON aj.applicant_id = a.id
-              WHERE aj.job_posting_id = ?
+              WHERE aj.job_posting_id = ? AND aj.status = 'Pending'
               ORDER BY aj.application_date DESC
               LIMIT ?, ?";
     $stmt = $conn->prepare($query);
