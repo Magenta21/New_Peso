@@ -77,7 +77,7 @@ if (!$row_emp) {
                         <?php endif; ?>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
-                        <li><a class="dropdown-item" href="employer_profile.php">Profile</a></li>
+                        <li><a class="dropdown-item" href="../employer_profile.php">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item text-danger" href="../logout.php">Logout</a></li>
                     </ul>
@@ -86,6 +86,11 @@ if (!$row_emp) {
         </div>
     </div>
 </div>
+
+<a href="../job_list.php" class="btn btn-primary back-btn m-3 ">
+        <i class="bi bi-arrow-left"></i> HOME
+    </a>
+
 
 <div class="container mt-4">
     <div class="container mt-4 mb-3">
@@ -98,6 +103,9 @@ if (!$row_emp) {
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="toggleButton3" href="#" data-tab="interview" role="tab">Inteview</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="toggleButton5" href="#" data-tab="scheduled" role="tab"> Scheduled</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="toggleButton2" href="#" data-tab="rejected" role="tab"> Rejected</a>
@@ -130,6 +138,14 @@ if (!$row_emp) {
             ?>
         </div>
 
+        <div id="scheduled" class="list">
+            <?php 
+                error_reporting(E_ALL);
+                ini_set('display_errors', 1);
+                include 'schedule_interview.php'; 
+            ?>
+        </div>
+
         <div id="rejected" class="list">
             <?php 
                 error_reporting(E_ALL);
@@ -143,7 +159,7 @@ if (!$row_emp) {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize tabs - hide all except the active one
-    const tabs = ['applicant', 'accepted', 'interview', 'rejected'];
+    const tabs = ['applicant', 'accepted', 'interview','scheduled', 'rejected'];
     const defaultTab = 'applicant'; // Set your default tab here
 
     // Function to show a specific tab and hide others
