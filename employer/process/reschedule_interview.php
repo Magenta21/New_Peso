@@ -1,11 +1,7 @@
 <?php
-// Enable error reporting
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 include '../../db.php';
 
+// Load PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -14,7 +10,7 @@ require '../../vendor/autoload.php';
 session_start();
 
 // Verify session
-if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] || !isset($_SESSION['employer_id'])) {
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || !isset($_SESSION['employer_id'])) {
     header("Location: ../employer_login.php");
     exit();
 }
@@ -38,7 +34,7 @@ try {
     }
 } catch (Exception $e) {
     $_SESSION['error'] = "Invalid date: " . $e->getMessage();
-    header("Location: ../applicant/applicant_list.php?job_id=".base64_encode($jobId)."&tab=interview");
+    header("Location: ../applicant/applicant_list.php?job_id=".base64_encode($jobId)."&tab=scheduled");
     exit();
 }
 
@@ -60,9 +56,9 @@ $stmt->bind_param("ii", $applicantId, $jobId);
 $stmt->execute();
 $status = $stmt->get_result()->fetch_assoc()['status'];
 
-if ($status !== 'Interview') {
-    $_SESSION['error'] = "Applicant not in interview status";
-    header("Location: ../applicant/applicant_list.php?job_id=".base64_encode($jobId)."&tab=interview");
+if ($status !== 'Interview Scheduled') {
+    $_SESSION['error'] = "Applicant doesn't have a scheduled interview";
+    header("Location: ../applicant/applicant_list.php?job_id=".base64_encode($jobId)."&tab=scheduled");
     exit();
 }
 
@@ -72,41 +68,42 @@ $stmt->bind_param("i", $applicantId);
 $stmt->execute();
 $applicant = $stmt->get_result()->fetch_assoc();
 
-// Get employer details for email signature
+// Get employer details
 $stmt = $conn->prepare("SELECT company_name, company_address, company_contact FROM employer WHERE id=?");
 $stmt->bind_param("i", $_SESSION['employer_id']);
 $stmt->execute();
 $employer = $stmt->get_result()->fetch_assoc();
 
 // Update database
-$stmt = $conn->prepare("UPDATE applied_job SET interview_date=?, status='Interview Scheduled' WHERE applicant_id=? AND job_posting_id=?");
+$stmt = $conn->prepare("UPDATE applied_job SET interview_date=? WHERE applicant_id=? AND job_posting_id=?");
 $stmt->bind_param("sii", $interviewDateTime, $applicantId, $jobId);
 
 if ($stmt->execute()) {
-    // Send email
-    $emailSent = sendInterviewEmail(
+    // Send reschedule email
+    $emailSent = sendRescheduleEmail(
         $applicant['email'], 
         $applicant['fname'] . ' ' . $applicant['lname'],
-        $job['title'],
+        $job['job_title'],
         $interviewDateTime,
         $employer['company_name'],
         $employer['company_address'],
-        $employer['contact_no']
+        $employer['company_contact']
     );
     
     if ($emailSent) {
-        $_SESSION['success'] = "Interview scheduled successfully and confirmation email sent!";
+        $_SESSION['success'] = "Interview rescheduled successfully and confirmation email sent!";
     } else {
-        $_SESSION['warning'] = "Interview scheduled but email failed to send. Please contact the applicant directly.";
+        $_SESSION['warning'] = "Interview rescheduled but email failed to send. Please contact the applicant directly.";
     }
 } else {
-    $_SESSION['error'] = "Database error occurred: " . $conn->error;
+    error_log("DB Error: " . $conn->error);
+    $_SESSION['error'] = "Database error occurred";
 }
 
-header("Location: ../applicant/applicant_list.php?job_id=".base64_encode($jobId)."&tab=interview");
+header("Location: ../applicant/applicant_list.php?job_id=".base64_encode($jobId)."&tab=scheduled");
 exit();
 
-function sendInterviewEmail($toEmail, $name, $jobTitle, $datetime, $companyName, $companyAddress, $companyContact) {
+function sendRescheduleEmail($toEmail, $name, $jobTitle, $datetime, $companyName, $companyAddress, $companyContact) {
     $mail = new PHPMailer(true);
     
     try {
@@ -121,37 +118,32 @@ function sendInterviewEmail($toEmail, $name, $jobTitle, $datetime, $companyName,
         $mail->Port = 587;
         $mail->CharSet = 'UTF-8';
 
+        // Recipients
         $mail->setFrom('jervinguevarra123@gmail.com', 'PESO Los Baños');
         $mail->addAddress($toEmail, $name);
         $mail->addReplyTo('jervinguevarra123@gmail.com', 'PESO Los Baños');
 
+        // Content
         $formattedDate = date('F j, Y \a\t g:i a', strtotime($datetime));
         $mail->isHTML(true);
-        $mail->Subject = "Interview Confirmation: $jobTitle";
+        $mail->Subject = "Interview Rescheduled: $jobTitle";
         
         $mail->Body = "
             <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
-                <h2 style='color: #2c3e50;'>Interview Confirmation</h2>
+                <h2 style='color: #2c3e50;'>Interview Rescheduled</h2>
                 <p>Dear $name,</p>
-                <p>Your interview for <strong>$jobTitle</strong> has been scheduled.</p>
+                <p>Your interview for <strong>$jobTitle</strong> has been rescheduled.</p>
                 
                 <div style='background-color: #f8f9fa; padding: 15px; border-left: 4px solid #3498db; margin: 20px 0;'>
-                    <p><strong>Date & Time:</strong> $formattedDate</p>
+                    <p><strong>New Date & Time:</strong> $formattedDate</p>
                     <p><strong>Company:</strong> $companyName</p>
                     <p><strong>Address:</strong> $companyAddress</p>
                     <p><strong>Contact:</strong> $companyContact</p>
                 </div>
                 
-                <p>Please bring the following documents:</p>
-                <ul>
-                    <li>Updated resume</li>
-                    <li>Valid ID</li>
-                    <li>Other supporting documents</li>
-                </ul>
+                <p>Please note the new time and update your calendar accordingly.</p>
                 
-                <p>Please arrive 10-15 minutes before your scheduled time.</p>
-                
-                <p>If you need to reschedule or have any questions, please reply to this email.</p>
+                <p>If you have any questions or need to request another change, please reply to this email.</p>
                 
                 <p>Best regards,<br>
                 $companyName<br>
@@ -159,12 +151,12 @@ function sendInterviewEmail($toEmail, $name, $jobTitle, $datetime, $companyName,
             </div>
         ";
         
-        // Plain text version for non-HTML email clients
         $mail->AltBody = "Dear $name,\n\n" .
-            "Your interview for $jobTitle has been scheduled for $formattedDate at $companyName.\n\n" .
+            "Your interview for $jobTitle has been rescheduled to $formattedDate.\n\n" .
+            "Company: $companyName\n" .
             "Address: $companyAddress\n" .
             "Contact: $companyContact\n\n" .
-            "Please bring your documents and arrive 10-15 minutes early.\n\n" .
+            "Please update your calendar accordingly.\n\n" .
             "Best regards,\n" .
             "$companyName\n" .
             "PESO Los Baños";
@@ -176,3 +168,4 @@ function sendInterviewEmail($toEmail, $name, $jobTitle, $datetime, $companyName,
         return false;
     }
 }
+?>

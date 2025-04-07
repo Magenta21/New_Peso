@@ -44,7 +44,7 @@ $totalPages = ceil($totalApplicants / $limit);
                 </div>
                 <div class="col-md-4 text-end align-self-center">
                     <div class="d-flex flex-wrap justify-content-end gap-2">
-                        <a href="view_applicant.php?id=<?= $applicant['id'] ?>" class="btn btn-sm btn-primary">
+                        <a href="view_applicant.php?id=<?= $applicant['id'] ?>&job=<?= $jobId ?>" class="btn btn-sm btn-primary">
                             <i class="bi bi-eye"></i> View
                         </a>
                         <a href="update_status.php?applicant=<?= $applicant['id'] ?>&job=<?= $jobId ?>&status=Pending" class="btn btn-sm btn-success">

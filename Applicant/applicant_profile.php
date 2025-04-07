@@ -113,7 +113,7 @@ $result_work_exp = $stmt_work_exp->get_result();
     </div>
 
     <a href="applicant_home.php" class="btn btn-primary back-btn m-3 ">
-        <i class="bi bi-arrow-left"></i> Back to Job Listings
+        <i class="bi bi-arrow-left"></i> HOME
     </a>
 
     <div class="container-xxl mt-2">

@@ -59,7 +59,7 @@ if (isset($_SESSION['error'])) {
                 </div>
                 <div class="col-md-4 text-end align-self-center">
                     <div class="d-flex flex-wrap justify-content-end gap-2">
-                        <a href="view_applicant.php?id=<?= $applicant['id'] ?>" class="btn btn-sm btn-primary">
+                        <a href="view_applicant.php?id=<?= $applicant['id'] ?>&job=<?= $jobId ?>" class="btn btn-sm btn-primary">
                             <i class="bi bi-eye"></i> View
                         </a>
                         <button class="btn btn-sm btn-success" onclick="scheduleInterview(<?= $applicant['id'] ?>, <?= $jobId ?>)">
@@ -88,7 +88,9 @@ if (isset($_SESSION['error'])) {
     <?php endif; ?>
 </div>
 
+<!-- Replace the existing script with this form submission approach -->
 <script>
+<<<<<<< HEAD
 function scheduleInterview(applicantId, jobId) {
     const dateTimeInput = document.getElementById('interview_date_' + applicantId);
     const dateTime = dateTimeInput.value;
@@ -97,6 +99,59 @@ function scheduleInterview(applicantId, jobId) {
         alert('Please select interview date and time');
         dateTimeInput.focus();
         return;
+=======
+    function scheduleInterview(applicantId, jobId) {
+        // 1. Get the datetime input element for this specific applicant
+        const dateTimeInput = document.getElementById('interview_date_' + applicantId);
+        
+        // 2. Get the selected datetime value
+        const dateTime = dateTimeInput.value;
+        
+        // 3. Validate that a datetime was selected
+        if (!dateTime) {
+            alert('Please select interview date and time');
+            dateTimeInput.focus();
+            return;
+        }
+        
+        // 4. Validate the selected date is in the future
+        const selectedDate = new Date(dateTime);
+        const now = new Date();
+        
+        if (selectedDate <= now) {
+            alert('Please select a future date and time');
+            dateTimeInput.focus();
+            return;
+        }
+        
+        // Create a form and submit it (non-AJAX approach)
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '../process/schedule_interview.php';
+        
+        // Add hidden inputs
+        const applicantInput = document.createElement('input');
+        applicantInput.type = 'hidden';
+        applicantInput.name = 'applicant';
+        applicantInput.value = applicantId;
+        form.appendChild(applicantInput);
+        
+        const jobInput = document.createElement('input');
+        jobInput.type = 'hidden';
+        jobInput.name = 'job';
+        jobInput.value = jobId;
+        form.appendChild(jobInput);
+        
+        const datetimeInput = document.createElement('input');
+        datetimeInput.type = 'hidden';
+        datetimeInput.name = 'datetime';
+        datetimeInput.value = dateTime;
+        form.appendChild(datetimeInput);
+        
+        // Add form to body and submit
+        document.body.appendChild(form);
+        form.submit();
+>>>>>>> 7389cc8aba6c110538166f22d5709444fa463175
     }
     
     // Validate future date
