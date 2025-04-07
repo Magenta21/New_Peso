@@ -1,8 +1,12 @@
 <?php
+// Enable error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include '../../db.php';
 session_start();
 
-// Load PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -72,15 +76,28 @@ $stmt = $conn->prepare("UPDATE applied_job SET interview_date=?, status='Intervi
 $stmt->bind_param("sii", $interviewDateTime, $applicantId, $jobId);
 
 if ($stmt->execute()) {
-    // Send email
-    if (sendInterviewEmail($applicant['email'], $applicant['fname'], $job['title'], $interviewDateTime)) {
-        $_SESSION['success'] = "Interview scheduled successfully!";
+    // Send email notification
+    $mailSent = sendInterviewEmail(
+        $applicant['email'],
+        $applicant['fname'],
+        $job['title'],
+        $interviewDateTime
+    );
+    
+    if ($mailSent === true) {
+        // Store success alert data
+        $_SESSION['interview_alert'] = [
+            'success' => true,
+            'name' => $applicant['fname'] . ' ' . $applicant['lname'],
+            'email' => $applicant['email'],
+            'date' => date('F j, Y \a\t g:i a', strtotime($interviewDateTime)),
+            'job_title' => $job['title']
+        ];
     } else {
         $_SESSION['warning'] = "Interview scheduled but email failed to send";
     }
 } else {
-    error_log("DB Error: " . $conn->error);
-    $_SESSION['error'] = "Database error occurred";
+    $_SESSION['error'] = "Database error occurred: " . $conn->error;
 }
 
 header("Location: ../jobpages/applicant_list.php?job_id=".base64_encode($jobId)."&tab=interview");
@@ -90,8 +107,6 @@ function sendInterviewEmail($toEmail, $name, $jobTitle, $datetime) {
     $mail = new PHPMailer(true);
     
     try {
-        // Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_OFF; // Change to DEBUG_SERVER for troubleshooting
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
@@ -100,11 +115,9 @@ function sendInterviewEmail($toEmail, $name, $jobTitle, $datetime) {
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        // Recipients
         $mail->setFrom('jervinguevarra123@gmail.com', 'PESO Los Baños');
         $mail->addAddress($toEmail, $name);
 
-        // Content
         $formattedDate = date('F j, Y \a\t g:i a', strtotime($datetime));
         $mail->isHTML(true);
         $mail->Subject = "Interview Confirmation: $jobTitle";
@@ -113,7 +126,7 @@ function sendInterviewEmail($toEmail, $name, $jobTitle, $datetime) {
                       <p>Your interview for <strong>$jobTitle</strong> has been scheduled.</p>
                       <p><strong>Date:</strong> $formattedDate</p>
                       <p>Please bring your documents and arrive 10 minutes early.</p>";
-        
+
         $mail->send();
         return true;
     } catch (Exception $e) {
@@ -121,4 +134,3 @@ function sendInterviewEmail($toEmail, $name, $jobTitle, $datetime) {
         return false;
     }
 }
-?>
