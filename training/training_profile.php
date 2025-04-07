@@ -1,4 +1,4 @@
-<?php
+ <?php
 include "../db.php";
 
 session_start();
@@ -6,7 +6,7 @@ session_start();
 $applicant_profile = $_SESSION['applicant_id'];
 // Check if the employer is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: applicant_login.php");
+    header("Location: training_login.php");
     exit();
 }
 
@@ -102,7 +102,7 @@ $result_work_exp = $stmt_work_exp->get_result();
             <div class="row">
                 <div class="col-md-2">
                     <a href="../index.php" style="display: block; text-decoration: none;">
-                        <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+                    <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
                     </a>
                 </div>
                 <div class="col-md-8">
@@ -114,8 +114,8 @@ $result_work_exp = $stmt_work_exp->get_result();
         </div>
     </div>
 
-    <a href="applicant_home.php" class="btn btn-primary back-btn m-3 ">
-        <i class="bi bi-arrow-left"></i> HOME
+    <a href="training_list.php" class="btn btn-primary back-btn m-3 ">
+        <i class="bi bi-arrow-left"></i> Back
     </a>
 
     <div class="container-xxl mt-2">

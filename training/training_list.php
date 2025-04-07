@@ -1,8 +1,28 @@
 <?php
+include '../db.php';
+
 session_start();
-if (isset($_SESSION['user'])) {
-    header("Location: dashboard.php");
+
+$applicantid = $_SESSION['applicant_id'];
+// Check if the employer is logged in
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: applicant_login.php");
     exit();
+}
+
+$sql = "SELECT * FROM applicant_profile WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $applicantid);
+$stmt->execute();
+$result_emp = $stmt->get_result();
+
+if (!$result_emp) {
+    die("Invalid query: " . $conn->error); 
+}
+
+$row_emp = $result_emp->fetch_assoc();
+if (!$row_emp) {
+    die("User not found.");
 }
 ?>
 
@@ -11,9 +31,9 @@ if (isset($_SESSION['user'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course List</title>
+    <title>Course Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/training_list.css">
     
 </head>
 <body>
@@ -21,22 +41,24 @@ if (isset($_SESSION['user'])) {
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
-                <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+                <a href="../index.php" style="display: block; text-decoration: none;">
+                        <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+                 </a>
             </div>
             <div class="col-md-8">
                 <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
             </div>
-            <div class="col-md-2 mt-1 position-relative">
+            <div class="col-md-2 col-xxl-3 p-1">
                 <div class="dropdown">
-                    <a href="#" class="text-decoration-none mt-5" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <?php if (!empty($row['photo'])): ?>
-                            <img id="preview" src="<?php echo $row['photo']; ?>" alt="Profile Image" class="profile-pic img-fluid rounded-circle" style="width: 40px; height: 40px;">
+                    <a href="#" class="text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?php if (!empty($row_emp['photo'])): ?>
+                            <img id="preview" src="<?php echo $row_emp['photo']; ?>" alt="Profile Image" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
                         <?php else: ?>
                             <img src="../img/user-placeholder.png" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
                         <?php endif; ?>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
-                        <li><a class="dropdown-item" href="employer_profile.php">Profile</a></li>
+                        <li><a class="dropdown-item" href="training_profile.php">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
                     </ul>

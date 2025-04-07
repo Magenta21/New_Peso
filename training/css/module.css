@@ -55,3 +55,6 @@ body {
     text-align: start; /* Align the content to the left */
     margin-top: 20px; /* Space at the top of the container */
 }
+.dropdown-menu {
+    z-index: 1000;
+}

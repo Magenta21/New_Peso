@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}   
+
+.header {
+    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+    color: white;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 15px;
+    font-weight: 900;
+    font-size: 46px;
+    color: rgb(74, 74, 145);
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* HIGHLIGHT EMAIL */
+.highlight-email {
+    font-weight: 900;
+    color: #000000;  /* Red color */
+    background-color: #ffffff;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.otp-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.verify-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+}
