@@ -44,7 +44,7 @@ if (isset($_SESSION['user'])) {
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Login</button>
                         <p class="mt-3"><a data-toggle="modal" data-target="#forgotPasswordModal1" href="#">Forgot Password?</a></p>
-                        <p>Don't have an account? <a href="#">Sign Up</a></p>
+                        <p>Don't have an account? <a href="institution_register.php">Sign Up</a></p>
                     </form>
                 </div>
             </div>

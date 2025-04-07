@@ -114,7 +114,7 @@ $result_work_exp = $stmt_work_exp->get_result();
         </div>
     </div>
 
-    <a href="training_home.php" class="btn btn-primary back-btn m-3 ">
+    <a href="training_list.php" class="btn btn-primary back-btn m-3 ">
         <i class="bi bi-arrow-left"></i> Back
     </a>
 

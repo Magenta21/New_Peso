@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['logged_in'] = true;
 
             // Redirect to employer dashboard
-            header("Location: ../training_home.php");
+            header("Location: ../training_list.php");
             exit();
         } else {
             echo "Invalid credentials or account not verified.";

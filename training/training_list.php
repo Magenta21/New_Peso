@@ -31,9 +31,9 @@ if (!$row_emp) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course List</title>
+    <title>Course Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/training_list.css">
     
 </head>
 <body>
@@ -58,7 +58,7 @@ if (!$row_emp) {
                         <?php endif; ?>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
-                        <li><a class="dropdown-item" href="applicant_profile.php">Profile</a></li>
+                        <li><a class="dropdown-item" href="training_profile.php">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
                     </ul>
