@@ -59,7 +59,7 @@ if (isset($_SESSION['error'])) {
                 </div>
                 <div class="col-md-4 text-end align-self-center">
                     <div class="d-flex flex-wrap justify-content-end gap-2">
-                        <a href="view_applicant.php?id=<?= $applicant['id'] ?>" class="btn btn-sm btn-primary">
+                        <a href="view_applicant.php?id=<?= $applicant['id'] ?>&job=<?= $jobId ?>" class="btn btn-sm btn-primary">
                             <i class="bi bi-eye"></i> View
                         </a>
                         <button class="btn btn-sm btn-success" onclick="scheduleInterview(<?= $applicant['id'] ?>, <?= $jobId ?>)">
@@ -88,6 +88,7 @@ if (isset($_SESSION['error'])) {
     <?php endif; ?>
 </div>
 
+<!-- Replace the existing script with this form submission approach -->
 <script>
     function scheduleInterview(applicantId, jobId) {
         // 1. Get the datetime input element for this specific applicant
@@ -99,8 +100,8 @@ if (isset($_SESSION['error'])) {
         // 3. Validate that a datetime was selected
         if (!dateTime) {
             alert('Please select interview date and time');
-            dateTimeInput.focus(); // Focus on the input field
-            return; // Exit function
+            dateTimeInput.focus();
+            return;
         }
         
         // 4. Validate the selected date is in the future
@@ -113,31 +114,32 @@ if (isset($_SESSION['error'])) {
             return;
         }
         
-        // 5. Show loading state on the button
-        const btn = event.target;
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Scheduling...';
-        btn.disabled = true;
+        // Create a form and submit it (non-AJAX approach)
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '../process/schedule_interview.php';
         
-        // 6. Make the API request to schedule the interview
-        fetch(`../process/schedule_interview.php?applicant=${applicantId}&job=${jobId}&datetime=${encodeURIComponent(dateTime)}`)
-            .then(response => {
-                // 7. Check if the response was successful
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-            .then(() => {
-                // 8. On success, reload the page to show updates
-                window.location.reload();
-            })
-            .catch(error => {
-                // 9. Handle any errors
-                console.error('Error:', error);
-                btn.innerHTML = originalText; // Restore button text
-                btn.disabled = false; // Re-enable button
-                alert('Error scheduling interview. Please try again.');
-            });
+        // Add hidden inputs
+        const applicantInput = document.createElement('input');
+        applicantInput.type = 'hidden';
+        applicantInput.name = 'applicant';
+        applicantInput.value = applicantId;
+        form.appendChild(applicantInput);
+        
+        const jobInput = document.createElement('input');
+        jobInput.type = 'hidden';
+        jobInput.name = 'job';
+        jobInput.value = jobId;
+        form.appendChild(jobInput);
+        
+        const datetimeInput = document.createElement('input');
+        datetimeInput.type = 'hidden';
+        datetimeInput.name = 'datetime';
+        datetimeInput.value = dateTime;
+        form.appendChild(datetimeInput);
+        
+        // Add form to body and submit
+        document.body.appendChild(form);
+        form.submit();
     }
 </script>
