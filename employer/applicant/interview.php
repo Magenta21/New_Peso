@@ -90,16 +90,6 @@ if (isset($_SESSION['error'])) {
 
 <!-- Replace the existing script with this form submission approach -->
 <script>
-<<<<<<< HEAD
-function scheduleInterview(applicantId, jobId) {
-    const dateTimeInput = document.getElementById('interview_date_' + applicantId);
-    const dateTime = dateTimeInput.value;
-    
-    if (!dateTime) {
-        alert('Please select interview date and time');
-        dateTimeInput.focus();
-        return;
-=======
     function scheduleInterview(applicantId, jobId) {
         // 1. Get the datetime input element for this specific applicant
         const dateTimeInput = document.getElementById('interview_date_' + applicantId);
@@ -151,42 +141,5 @@ function scheduleInterview(applicantId, jobId) {
         // Add form to body and submit
         document.body.appendChild(form);
         form.submit();
->>>>>>> 7389cc8aba6c110538166f22d5709444fa463175
     }
-    
-    // Validate future date
-    const selectedDate = new Date(dateTime);
-    const now = new Date();
-    
-    if (selectedDate <= now) {
-        alert('Please select a future date and time');
-        dateTimeInput.focus();
-        return;
-    }
-    
-    // Show loading state
-    const btn = event.target;
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Scheduling...';
-    btn.disabled = true;
-    
-    // Make the request
-    fetch(`../process/schedule_interview.php?applicant=${applicantId}&job=${jobId}&datetime=${encodeURIComponent(dateTime)}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(() => {
-            // Reload the page to see updates
-            window.location.reload();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-            alert('Error scheduling interview. Please try again.');
-        });
-}
 </script>
