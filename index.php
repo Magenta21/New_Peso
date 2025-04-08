@@ -3,37 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Layout Design</title>
+    <title>Home Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
-    <div class="header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="img/logolb.png" alt="lblogo" style="height: 50px;">
-                </div>
-                <div class="col-md-8">
-                    <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
-                </div>
+    
+<nav class="navbar bg-primary text-white py-2">
+    <div class="container-fluid align-items-center">
+        <!-- Navigation Links -->
+        <div class="d-flex flex-wrap align-items-center">
+            <span class="navbar-brand me-4 fw-bold fs-4 mb-0">GOVPH</span>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            <a href="#" class="nav-link px-3">HOME</a>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            
+            <!-- Applicant Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    APPLICANT
+                </a>
+                <ul class="dropdown-menu bg-primary">
+                    <li><a class="dropdown-item text-white" href="Applicant/applicant_login.php">Login</a></li>
+                    <li><a class="dropdown-item text-white" href="Applicant/applicant_register.php">Register</a></li>
+                    <li><a class="dropdown-item text-white" href="#aboutus">About Us</a></li>
+                    <li><a class="dropdown-item text-white" href="#contact">Contact Us</a></li>
+                </ul>
             </div>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            
+            <!-- Trainings Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    TRAININGS
+                </a>
+                <ul class="dropdown-menu bg-primary">
+                    <li><a class="dropdown-item text-white" href="training/training_login.php">Welding</a></li>
+                    <li><a class="dropdown-item text-white" href="training/training_schedule.php">Wellness-Hilot</a></li>
+                    <li><a class="dropdown-item text-white" href="training/training_apply.php">Dressmaking</a></li>
+                    <li><a class="dropdown-item text-white" href="training/training_apply.php">Computer Literature</a></li>
+                </ul>
+            </div>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            
+            <!-- OFW Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    OFW
+                </a>
+                <ul class="dropdown-menu bg-primary">
+                    <li><a class="dropdown-item text-white" href="ofw/ofw_login.php">OFW-Family</a></li>
+                    <li><a class="dropdown-item text-white" href="ofw/ofw_benefits.php">OFW him/her self</a></li>
+                    
+                </ul>
+            </div>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            
+            <!-- Employer Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    EMPLOYER
+                </a>
+                <ul class="dropdown-menu bg-primary">
+                    <li><a class="dropdown-item text-white" href="employer/employer_login.php">Local</a></li>
+                    <li><a class="dropdown-item text-white" href="employer/employer_register.php">Overseas</a></li>
+                    <li><a class="dropdown-item text-white" href="employer/post_job.php">Direct Hire</a></li>
+                    <li><a class="dropdown-item text-white" href="employer/post_job.php">Agency</a></li>
+                </ul>
+            </div>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            
+            <a href="joblist.php" class="nav-link px-3">JOBS</a>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            <a href="news.php" class="nav-link px-3">NEWS</a>
         </div>
     </div>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <span class="navbar-text text-white w-100 text-center">
-                <a href="#">HOME</a>
-                <a href="Applicant/applicant_login.php">APPLICANT</a>
-                <a href="training/training_login.php">TRAININGS</a>
-                <a href="ofw/ofw_login.php">OFW</a>
-                <a href="employer/employer_login.php">EMPLOYER</a>
-                <a href="institutions/institution_login.php">EDUCATIONAL INSTITUTIONS</a>
-                <a href="joblist.php">JOBS</a>
-                <a href="news.php">News</a>
-            </span>
-        </div>
-    </nav>
+</nav>
+
+
     <div class="banner">
     </div>
 
@@ -77,7 +125,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="block mb-4">
+                <div class="block mb-4" id="aboutus">
                     <h3> ABOUT PESO </h3> 
                     The Public Employment Service Office (PESO) is a multi-service facility designed to offer employment information and assistance to clients 
                     of the Department of Labor and Employment (DOLE) and the constituents of Local Government Units (LGUs). PESO consolidates various employment 
@@ -130,7 +178,7 @@
                     <p>All content is in the publick domain unless otherwise stated</p>
                 </div>
                 <div class="col-md-4 mt-2">
-                <h6>CONTACT US</h6>
+                <h6 id="contact">CONTACT US</h6>
                 </div>
                 <div class="col-md-4 mt-2">
                 <h6>GOVERNMENT LINKS</h6>
@@ -139,5 +187,7 @@
         </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>
