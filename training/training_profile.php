@@ -152,14 +152,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                                     <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)">
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
-                                            <label class="form-label">Username:</label>
-                                            <input type="text" name="name" class="form-control" value="<?php echo isset($row['username']) ? htmlspecialchars($row['username']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Password:</label>
-                                            <input type="password" name="pass" class="form-control" value="<?php echo isset($row['password']) ? htmlspecialchars($row['password']) : ''; ?>" required>
-                                    </div>
+                                    
                                     <div class="col-md-12">
                                             <label class="form-label">Email:</label>
                                             <input type="email" name="email" class="form-control" value="<?php echo isset($row['email']) ? htmlspecialchars($row['email']) : ''; ?>" required>
@@ -190,10 +183,6 @@ $result_work_exp = $stmt_work_exp->get_result();
                                             <input type="text" name="pob" class="form-control" value="<?php echo isset($row['pob']) ? htmlspecialchars($row['pob']) : ''; ?>" required>
                                     </div>
                                     <div class="col-md-6">
-                                            <label class="form-label">Religion:</label>
-                                            <input type="text" name="religion" class="form-control" value="<?php echo isset($row['religion']) ? htmlspecialchars($row['religion']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
                                             <label class="form-label">Present Address:</label>
                                             <input type="text" name="address" class="form-control" value="<?php echo isset($row['present_address']) ? htmlspecialchars($row['present_address']) : ''; ?>" required>
                                     </div>
@@ -214,32 +203,9 @@ $result_work_exp = $stmt_work_exp->get_result();
                                                 <option value="male" <?php echo isset($row['sex']) && $row['sex'] == 'male' ? 'selected' : ''; ?>>Male</option>
                                                 <option value="female" <?php echo isset($row['sex']) && $row['sex'] == 'female' ? 'selected' : ''; ?>>Female</option>
                                             </select>
+                                            
                                     </div>
 
-                                    <div class="col-md-6">
-                                            <label class="form-label">Height:</label>
-                                            <input type="text" name="height" class="form-control" value="<?php echo isset($row['height']) ? htmlspecialchars($row['height']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Tin:</label>
-                                            <input type="tel" name="tin" class="form-control" value="<?php echo isset($row['tin']) ? htmlspecialchars($row['tin']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">GSIS/SSS Number.:</label>
-                                            <input type="text" name="sss_no" class="form-control" value="<?php echo isset($row['sss_no']) ? htmlspecialchars($row['sss_no']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Pag Ibig Number:</label>
-                                            <input type="text" name="pag_ibig_number" class="form-control" value="<?php echo isset($row['pagibig_no']) ? htmlspecialchars($row['pagibig_no']) : ''; ?>" required>
-                                    </div>
-                                            <div class="col-md-6">
-                                            <label class="form-label">Philhealth number:</label>
-                                            <input type="text" name="philhealth_no" class="form-control" value="<?php echo isset($row['philhealth_no']) ? htmlspecialchars($row['philhealth_no']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Landline:</label>
-                                            <input type="text" name="landline" class="form-control" value="<?php echo isset($row['landline']) ? htmlspecialchars($row['landline']) : ''; ?>" required>
-                                    </div>
                             </div>
 
                             <div class="row">
@@ -253,28 +219,42 @@ $result_work_exp = $stmt_work_exp->get_result();
                                             <option value="physical" <?php echo isset($row['disability']) && $row['disability'] == 'physical' ? 'selected' : ''; ?>>Physical</option>
                                             <option value="others" <?php echo isset($row['disability']) && $row['disability'] == 'others' ? 'selected' : ''; ?>>Specify</option>
                                         </select>
+                                        
                                 </div>
 
                                 <div class="col-md-6 mt-4" id="disability_specify_container" style="display:none;">
                                     <!-- Text input for specifying 'others' -->
                                     <input type="text" name="disability_specify" id="disability_specify" class="form-control mt-2" placeholder="Please specify" value="<?php echo isset($row['disability_specify']) ? htmlspecialchars($row['disability_specify']) : ''; ?>" />
                                 </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="form-label">Nationality</label>
+                                    <input type="text" name="nationality" class="form-control" value="<?php echo isset($row['nationality']) ? htmlspecialchars($row['nationality']) : ''; ?>" required>
+                                </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-6">
-                                        <label class="form-label">Are you a 4Ps beneficiary?:</label>
-                                        <select name="four_ps" class="form-control" id="four_ps" required>
-                                            <option value="yes" <?php echo isset($row['four_ps']) && $row['four_ps'] == 'yes' ? 'selected' : ''; ?>>Yes</option>
-                                            <option value="no" <?php echo isset($row['four_ps']) && $row['four_ps'] == 'no' ? 'selected' : ''; ?>>No</option>
+                                        <label class="form-label">Classification:</label>
+                                        <select name="classification" class="form-control" id="classification" required>
+                                            <option value="none" <?php echo isset($row['classification']) && $row['classification'] == 'none' ? 'selected' : ''; ?>>None</option>
+                                            <option value="visual" <?php echo isset($row['classification']) && $row['classification'] == 'Industry_Workers' ? 'selected' : ''; ?>>Industry Workers</option>
+                                            <option value="hearing" <?php echo isset($row['classification']) && $row['classification'] == 'TESDA_Alumni' ? 'selected' : ''; ?>>TESDA Aluumni</option>
+                                            <option value="speech" <?php echo isset($row['classification']) && $row['classification'] == 'Displaced_Workers' ? 'selected' : ''; ?>>Displaced Workers</option>
+                                            <option value="physical" <?php echo isset($row['classification']) && $row['classification'] == 'Farmers_Fishermen' ? 'selected' : ''; ?>>Farmers and Fishermen</option>
+                                            <option value="physical" <?php echo isset($row['classification']) && $row['classification'] == '4Ps_beneficiary' ? 'selected' : ''; ?>>4Ps beneficiary</option>
+                                            <option value="physical" <?php echo isset($row['classification']) && $row['classification'] == 'Inmates_Detainees' ? 'selected' : ''; ?>>Inmates & Detainees</option>
+                                            <option value="specify" <?php echo isset($row['classification']) && $row['classification'] == 'Specify' ? 'selected' : ''; ?>>Specify</option>
                                         </select>
                                 </div>
 
-                                <div class="col-md-6" id="household_id_container" style="display:none;">
-                                        <label class="form-label">If yes, Household ID No.:</label>
-                                        <input type="text" name="household_id" class="form-control" value="<?php echo isset($row['household_id']) ? htmlspecialchars($row['household_id']) : ''; ?>" required>
+                                <div class="col-md-6 mt-4" id="classification_specify_container" style="display:none;">
+                                    <!-- Text input for specifying 'others' -->
+                                    <input type="text" name="classification_specify" id="classification_specify" class="form-control mt-2" placeholder="Please specify" value="<?php echo isset($row['disability_specify']) ? htmlspecialchars($row['disability_specify']) : ''; ?>" />
                                 </div>
                             </div>
+
+                                
+                            
 
                             <button type="submit" class="btn btn-primary w-100 mt-4">Save</button>
                         </form>
@@ -749,6 +729,24 @@ $result_work_exp = $stmt_work_exp->get_result();
                 document.getElementById('disability_specify_container').style.display = 'block';
             }
 
+            //classification option
+                // Show/Hide the text input based on the selected disability
+                document.getElementById('classification').addEventListener('change', function() {
+                var classificationSelect = this.value;
+                var classificationSpecifyContainer = document.getElementById('classification_specify_container');
+                
+                if (classificationSelect === 'specify') {
+                    classificationSpecifyContainer.style.display = 'block'; // Show input if 'Others' is selected
+                } else {
+                    classificationSpecifyContainer.style.display = 'none'; // Hide input if another option is selected
+                }
+            });
+
+            // Check initial selected value and show the text input if needed
+            if (document.getElementById('classification').value === 'specify') {
+                document.getElementById('classification_specify_container').style.display = 'block';
+            }
+
             // Show/Hide the Household ID input field based on the selection
             document.getElementById('four_ps').addEventListener('change', function() {
                 var fourPsSelect = this.value;
@@ -1053,6 +1051,8 @@ $result_work_exp = $stmt_work_exp->get_result();
                 // Remove the row that contains the clicked button
                 button.parentElement.parentElement.remove();
             }
+         
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
