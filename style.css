@@ -155,8 +155,9 @@ h3,h2 {
 
 
   .footer {
-    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
-    color: white;
+    background: rgb(46,140,231);
+    background: linear-gradient(0deg, rgba(46,140,231,1) 0%, rgba(255,255,255,0) 5%, rgba(46,140,231,1) 99%);
+    color: rgb(0, 0, 0);
     height: 150px;
     width: 100%;
     text-align: center;
