@@ -30,7 +30,6 @@
     <div class="step active">Step 1</div>
     <div class="step">Step 2</div>
     <div class="step">Step 3</div>
-    <div class="step">Step 4</div>
 </div>
 
 <div class="container-fluid mt-md-3">
@@ -101,11 +100,24 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="Cnum">Contact Number</label>
-                            <input type="number" id="Cnum" name="Cnum" require>
+                            <input type="text" id="Cnum" name="Cnum" require>
                             <span class="error-message"></span>
                         </div>
+
+                        <div class="col-md-4">
+                            <label for="Cnum">Address</label>
+                            <input type="text" id="add" name="add" require>
+                            <span class="error-message"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="Cnum">Age</label>
+                            <input type="text" id="age" name="age" require>
+                            <span class="error-message"></span>
+                        </div>
+
                     </div>  
                     <div class="row">
                         <div class="col-md6">

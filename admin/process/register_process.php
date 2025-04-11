@@ -6,27 +6,37 @@ use PHPMailer\PHPMailer\Exception;
 // Load Composer's autoloader
 require '../../vendor/autoload.php';
 
-// Function to send OTP Email
-function sendOtpEmail($email, $otp) {
+
+// Function to send registration email
+function sendRegistrationEmail($email, $userData, $otp) {
     $mail = new PHPMailer(true);
     try {
-        // SMTP Server settings
+        // SMTP configuration
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'jervinguevarra123@gmail.com'; // Use your Gmail
-        $mail->Password = 'wdul asom bddj yhfd'; // Use an App Password
+        $mail->Username = 'jervinguevarra123@gmail.com';
+        $mail->Password = 'wdul asom bddj yhfd'; // Use app-specific password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        // Sender & Recipient
-        $mail->setFrom('jervinguevarra123@gmail.com', 'PESO-lb.ph');
-        $mail->addAddress($email);
+        // Recipients
+        $mail->setFrom('jervinguevarra123@gmail.com', 'PESO Los Baños');
+        $mail->addAddress('jervinguevarra123@gmail.com'); 
 
-        // Email Content
+        // Content
         $mail->isHTML(true);
-        $mail->Subject = 'OTP Verification';
-        $mail->Body = 'Your OTP for email verification is: <b>' . $otp . '</b>. It will expire in 10 minutes.';
+        $mail->Subject = 'New Admin Registration';
+        
+        $body = '<h2>New Admin Registration Details</h2>';
+        $body .= '<p><strong>Username:</strong> ' . htmlspecialchars($userData['username']) . '</p>';
+        $body .= '<p><strong>Name:</strong> ' . htmlspecialchars($userData['fname']) . ' ' . htmlspecialchars($userData['mname']) . ' ' . htmlspecialchars($userData['lname']) . '</p>';
+        $body .= '<p><strong>Email:</strong> ' . htmlspecialchars($userData['email']) . '</p>';
+        $body .= '<p><strong>Contact Number:</strong> ' . htmlspecialchars($userData['contact']) . '</p>';
+        $body .= '<p><strong>Registration Date:</strong> ' . date('Y-m-d H:i:s') . '</p>';
+        $body .= '<p><strong>OTP for email verification is: <b>' . $otp. '</strong> </p>';
+        
+        $mail->Body = $body;
 
         $mail->send();
         return true;
@@ -45,10 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mname = $_POST['mname'];
     $lname = $_POST['lname'];
     $contact = $_POST['Cnum'];
-    $compic = $_FILES['pic'];
+    $age = $_POST['age'];
+    $address = $_POST['add'];
+    $pic = $_FILES['pic'];
 
     // Validation
-    if (empty($username) || empty($email) || empty($password) || empty($fname) || empty($mname) || empty($lname) || empty($contact)) {
+    if (empty($username) || empty($email) || empty($password) || empty($fname) || empty($mname) || empty($lname) || empty($contact) || empty($address) || empty($pic)) {
         echo "All fields are required!";
         exit;
     }
@@ -67,25 +79,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Create a folder for the company
-    $uploadDir = "../uploads/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $cname) . "/";
-    $dbPath = "uploads/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $cname) . "/"; // This will be stored in the database    
+    $uploadDir = "../uploads/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $username) . "/";
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
 
     // Handle Image Upload
     $picPath = "";
-    if ($compic['error'] == 0) {
-        $fileName = basename($compic["name"]);
+    if ($pic['error'] == 0) {
+        $fileName = basename($pic["name"]);
         $targetFilePath = $uploadDir . $fileName;
-        $dbFilePath = $dbPath . $fileName; // This is what gets stored in the database
         $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
-    
+
         // Allowed file formats
         $allowedFormats = array("jpg", "jpeg", "png", "gif");
         if (in_array($fileType, $allowedFormats)) {
-            if (move_uploaded_file($compic["tmp_name"], $targetFilePath)) {
-                $picPath = $dbFilePath; // Store relative path in database
+            if (move_uploaded_file($pic["tmp_name"], $targetFilePath)) {
+                $picPath = $targetFilePath;
             } else {
                 echo "Error uploading file!";
                 exit;
@@ -95,7 +105,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
     }
-    
 
     // Database connection using PDO
     $host = "localhost";
@@ -112,27 +121,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Generate OTP
         $otp = rand(100000, 999999);
-        $otp_expiry = date('Y-m-d H:i:s', strtotime('+10 minutes')); // Expiry in Manila Time
 
         // Prepare SQL statement
         // Store OTP and expiry in the database
-        $stmt = $pdo->prepare("INSERT INTO employer (username, email, password, fname, mname, lname, photo, otp, otp_expiry, is_verified) 
-        VALUES (:username, :email, :password, :fname, :lname, :contact, :pic, :otp, :otp_expiry, 0)");
+        $stmt = $pdo->prepare("INSERT INTO admin_profile (Username, Email, Passwords, Fname, Mname, Lname, Age, Cnumber, Haddress, photo, otp, is_verified) 
+        VALUES (:username, :email, :passwords, :fname, :mname, :lname, :age, :contact, :haddress, :pic, :otp, 0)");
+
 
         // Bind parameters
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $hashed_password);
+        $stmt->bindParam(':passwords', $hashed_password);
         $stmt->bindParam(':fname', $fname);
-        $stmt->bindParam(':mname', $mname);
+        $stmt->bindParam(':mname', $mname); // Fixed
         $stmt->bindParam(':lname', $lname);
+        $stmt->bindParam(':age', $age);
         $stmt->bindParam(':contact', $contact);
+        $stmt->bindParam(':haddress', $address);
         $stmt->bindParam(':pic', $picPath);
         $stmt->bindParam(':otp', $otp);
-        $stmt->bindParam(':otp_expiry', $otp_expiry);
+        
+
         // Execute query
         if ($stmt->execute()) {
-            if (sendOtpEmail($email, $otp)) {
+            $userData = [
+                'username' => $username,
+                'fname' => $fname,
+                'mname' => $mname,
+                'lname' => $lname,
+                'email' => $email,
+                'contact' => $contact
+            ];
+
+            if (sendRegistrationEmail($email, $userData, $otp)) {
                 // Redirect to OTP verification page
                 header("Location: ../otp_verification.php?email=" . urlencode($email));
                 exit();
@@ -142,8 +163,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "Error in registration!";
         }
+
     } catch (PDOException $e) {
         die("Database error: " . $e->getMessage());
     }
 }
+
 ?>
