@@ -16,21 +16,15 @@ if (isset($_SESSION['user'])) {
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-        <div class="header">
-            <div class="container-fluid">
-                <div class="row align-items-center">
-                    <div class="col-md-2 col-xxl-3 text-start">
-                        <a href="../index.php" style="display: block; text-decoration: none;">
-                        <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
-                        </a>
-                    </div>
-                    <div class="col-md-8 col-xxl-6 text-center">
-                        <h3 style="margin-top: 5px; font-weight: 700; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
-                    </div>
-                </div>
-            </div>
+        
+    <div class="header">
+        <div class="container-fluid d-flex align-items-center">
+            <button onclick="window.history.back()" class="back-button me-auto">
+                ← Back
+            </button>
         </div>
-
+    </div>
+    
     <div class="container-fluid d-flex justify-content-center align-items-center mt-5">
         <div class="row front-box">
             <div class="col-md-6">

@@ -37,20 +37,7 @@ $result = $conn->query($query);
 </head>
 <body>
 
-<div class="header">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2">
-                <a href="index.php" style="display: block; text-decoration: none;">
-                    <img src="img/logolb.png" alt="lblogo" style="height: 50px;">
-                </a>
-            </div>
-            <div class="col-md-8">
-                <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">Job Listings</h3>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- Add the navigation bar here -->
 <nav class="h2nd">
@@ -61,7 +48,6 @@ $result = $conn->query($query);
             <a class="navlink" href="training/training_login.php">TRAININGS</a>
             <a class="navlink" href="ofw/ofw_login.php">OFW</a>
             <a class="navlink" href="employer/employer_login.php">EMPLOYER</a>
-            <a class="navlink" href="institutions/institution_login.php">EDUCATIONAL INSTITUTIONS</a>
             <a class="navlink" href="#">JOBS</a>
             <a class="navlink" href="news.php">News</a>
         </span>

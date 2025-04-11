@@ -1,18 +1,16 @@
 body {
-	background: linear-gradient(to right, #D9D9D9, #1E1E1E);
+	background: #E1D9D1;
 	background-size: cover;
 }
 .header {
-    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
     color: white;
     height: 50px;
     width: 100%;
     text-align: center;
 }
 
-.navbar {
-	background-color: #8b0000;
-}
+
+
 .front-box {
 	width: 850px;
 	background: white;
@@ -44,6 +42,24 @@ body {
 		border-radius: 20px;
 	}
 }
+.back-button {
+	background-color: #0B5ED7; /* Base blue */
+	color: #ffffff; /* White text */
+	margin-top: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 700; /* Bold text */
+	padding: 8px 16px;
+	border-radius: 10px; /* Rounded corners */
+	transition: all 0.3s ease;
+	margin-left: 10px;
+	border: none; /* Explicitly remove border */
+	outline: none; /* Remove focus outline (add custom focus styles if needed) */
+}
 
-  
-  
+.back-button:hover {
+	background-color: #0A4FB5; /* Slightly darker blue on hover */
+	transform: translateX(-4px); /* Subtle left movement */
+}
+
+
