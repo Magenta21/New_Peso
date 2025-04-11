@@ -1,7 +1,11 @@
 <?php
+// Enable error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include '../../db.php';
 
-// Load PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -96,8 +100,7 @@ if ($stmt->execute()) {
         $_SESSION['warning'] = "Interview scheduled but email failed to send. Please contact the applicant directly.";
     }
 } else {
-    error_log("DB Error: " . $conn->error);
-    $_SESSION['error'] = "Database error occurred";
+    $_SESSION['error'] = "Database error occurred: " . $conn->error;
 }
 
 header("Location: ../applicant/applicant_list.php?job_id=".base64_encode($jobId)."&tab=interview");
@@ -118,12 +121,10 @@ function sendInterviewEmail($toEmail, $name, $jobTitle, $datetime, $companyName,
         $mail->Port = 587;
         $mail->CharSet = 'UTF-8';
 
-        // Recipients
         $mail->setFrom('jervinguevarra123@gmail.com', 'PESO Los Baños');
         $mail->addAddress($toEmail, $name);
         $mail->addReplyTo('jervinguevarra123@gmail.com', 'PESO Los Baños');
 
-        // Content
         $formattedDate = date('F j, Y \a\t g:i a', strtotime($datetime));
         $mail->isHTML(true);
         $mail->Subject = "Interview Confirmation: $jobTitle";
@@ -175,4 +176,3 @@ function sendInterviewEmail($toEmail, $name, $jobTitle, $datetime, $companyName,
         return false;
     }
 }
-?>

@@ -11,10 +11,11 @@
 <body>
     
 <nav class="navbar bg-primary text-white py-2">
-    <div class="container-fluid align-items-center">
+    <div class="container-fluid">
         <!-- Navigation Links -->
+        <div class="ms-auto"></div>
         <div class="d-flex flex-wrap align-items-center">
-            <span class="navbar-brand me-4 fw-bold fs-4 mb-0">GOVPH</span>
+            <span class="d-flex flex-wrap align-items-center justify-content-center mx-auto">GOVPH</span>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
             <a href="#" class="nav-link px-3">HOME</a>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
@@ -78,6 +79,7 @@
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
             <a href="news.php" class="nav-link px-3">NEWS</a>
         </div>
+        <div class="ms-auto"></div>
     </div>
 </nav>
 
@@ -87,7 +89,7 @@
 
     <div class="container mt-4">
         <div class="row mb-4 text-center">
-            <div class="col-8 text-center  text-black py-3 border border-5 border-danger p-5 rounded-5">
+            <div class="col-8 text-center  text-black py-3 border border-5 border-primary p-5 rounded-5">
                 It is with great pride and commitment that we introduce the newly developed Public Employment Service Office (PESO) website, a vital step toward enhancing employment opportunities for our community. This platform is designed to connect job seekers with employers, provide access to training programs, and offer essential career guidance to empower our local workforce. As we strive for progress and inclusive growth, this digital initiative ensures that every resident of Los Baños has an accessible, transparent, and efficient employment service. Together, we build a future where opportunities are within reach for all.
             </div>
             <div class="col-md-4">
