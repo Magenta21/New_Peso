@@ -41,12 +41,12 @@ if (!$row_emp) {
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
-                <a href="../index.php" style="display: block; text-decoration: none;">
-                        <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
-                 </a>
+               
+                 <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+                
             </div>
             <div class="col-md-8">
-                <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
+                
             </div>
             <div class="col-md-2 col-xxl-3 p-1">
                 <div class="dropdown">

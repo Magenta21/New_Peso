@@ -24,10 +24,9 @@ body {
 }
 
 .nav-link {
-    color: white !important;
+    display: inline-block; /* Makes the element respect text width */
     padding: 10px 15px;
     position: relative;
-    text-decoration: none;
 }
 .navbar-brand {
     color: white !important;
@@ -35,20 +34,19 @@ body {
 .nav-link::before {
     content: '';
     position: absolute;
-    width: 100%;
-    height: 4px;
-    border-radius: 4px;
+    width: calc(100% - 30px); /* Accounts for padding */
+    height: 2px; /* Thinner underline */
     background-color: #ffffff;
-    bottom: 0;
-    left: 0;
-    transform-origin: right;
+    bottom: 5px; /* Adjust position */
+    left: 15px; /* Match padding */
     transform: scaleX(0);
-    transition: transform 0.3s ease-in-out;
+    transform-origin: right;
+    transition: transform 0.3s ease;
 }
 
 .nav-link:hover::before {
-    transform-origin: left;
     transform: scaleX(1);
+    transform-origin: left;
 }
 a {
     color: #fcfcfc;
@@ -164,29 +162,33 @@ h3,h2 {
 }
 
 /* Improved Dropdown Styling */
+/* Dropdown Menu Color Update */
 .dropdown-menu {
+    background-color: #347BA4 !important; /* Change dropdown background */
     border: none;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    min-width: 200px; /* Fixed width to prevent overextension */
-    padding: 0.25rem 0; /* Tighter padding */
-    margin-top: 0; /* Remove gap */
+    min-width: 200px;
+    padding: 0.25rem 0;
+    margin-top: 0;
 }
 
 .dropdown-item {
-    padding: 0.5rem 1.5rem; /* Slightly wider padding */
+    background-color: transparent !important; /* Keep items transparent */
+    padding: 0.5rem 1.5rem;
     transition: all 0.2s ease;
     color: white !important;
-    white-space: nowrap; /* Prevent text wrapping */
-    position: relative;
+    white-space: nowrap;
 }
 
 .dropdown-item:hover {
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    color: rgba(255, 255, 255, 0.8) !important; /* 80% opacity */
-    text-decoration: none;
-    margin: 0; /* Prevent margin expansion */
+    background-color: rgba(255, 255, 255, 0.15) !important; /* Slightly stronger hover */
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
+/* Keep original navbar color (don't change this) */
+.navbar.bg-primary {
+    /* Original navbar color stays here */
+}
 .dropdown-toggle::after {
     margin-left: 0.5em;
     vertical-align: middle;

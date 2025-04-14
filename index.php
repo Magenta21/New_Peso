@@ -15,7 +15,7 @@
         <!-- Navigation Links -->
         <div class="ms-auto"></div>
         <div class="d-flex flex-wrap align-items-center">
-            <span class="d-flex flex-wrap align-items-center justify-content-center mx-auto">GOVPH</span>
+        <a href="https://www.gov.ph/" target="_blank" class="nav-link px-3 text-white">GOVPH</a>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
             <a href="#" class="nav-link px-3">HOME</a>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
@@ -45,7 +45,7 @@
                     
                     <!-- Wellness-Hilot with nested dropdown -->
                     <li class="dropdown-submenu position-relative">
-                    <a class="dropdown-item text-white" href="training/training_login.php" id="wellnessHilotTrigger">Wellness-Hilot </a>
+                    <a class="dropdown-item text-white" href="training/training_login.php" id="wellnessHilotTrigger">Wellness-Hilot  </a>
                     </li>                    
                     <li><a class="dropdown-item text-white" href="training/training_login.php">Dressmaking</a></li>
                     <li><a class="dropdown-item text-white" href="training/training_login.php">Computer Literature</a></li>

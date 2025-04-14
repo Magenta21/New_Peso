@@ -39,7 +39,7 @@ $end_page = min($pages, $start_page + $max_pages_display - 1);
         <!-- Navigation Links -->
         <div class="ms-auto"></div>
         <div class="d-flex flex-wrap align-items-center">
-            <span class="d-flex flex-wrap align-items-center justify-content-center mx-auto">GOVPH</span>
+           <a href="https://www.gov.ph/" target="_blank" class="nav-link px-3 text-white">GOVPH</a>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
             <a href="index.php" class="nav-link px-3">HOME</a>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
@@ -52,8 +52,8 @@ $end_page = min($pages, $start_page + $max_pages_display - 1);
                 <ul class="dropdown-menu bg-primary">
                     <li><a class="dropdown-item text-white" href="Applicant/applicant_login.php">Login</a></li>
                     <li><a class="dropdown-item text-white" href="Applicant/applicant_register.php">Register</a></li>
-                    <li><a class="dropdown-item text-white" href="#aboutus">About Us</a></li>
-                    <li><a class="dropdown-item text-white" href="#contact">Contact Us</a></li>
+                    <li><a class="dropdown-item text-white" href="index.php#aboutus">About Us</a></li>
+                    <li><a class="dropdown-item text-white" href="index.php#contact">Contact Us</a></li>
                 </ul>
             </div>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
@@ -68,8 +68,8 @@ $end_page = min($pages, $start_page + $max_pages_display - 1);
                     <li><a class="dropdown-item text-white" href="training/training_login.php">Welding</a></li>
                     
                     <!-- Wellness-Hilot with nested dropdown -->
-                    <li class="dropdown-submenu position-relative">
-                    <a class="dropdown-item text-white" href="training/training_login.php" id="wellnessHilotTrigger">Wellness-Hilot</a>
+                    <li>
+                    <a class="dropdown-item text-white" href="training/training_login.php" >Wellness-Hilot</a>
                     </li>                       
                     <li><a class="dropdown-item text-white" href="training/training_login.php">Dressmaking</a></li>
                     <li><a class="dropdown-item text-white" href="training/training_login.php">Computer Literature</a></li>
