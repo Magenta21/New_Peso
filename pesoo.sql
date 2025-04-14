@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2025 at 04:33 AM
+-- Generation Time: Apr 14, 2025 at 04:39 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -107,7 +107,7 @@ INSERT INTO `applicant_profile` (`id`, `username`, `password`, `is_verified`, `o
 (5, 'Lawrence123', '$2y$10$YxE9QiizxlRg5SlSodk/yexNYMDiCfcTnNmh4gBVbbOOJpo1ZM70G', '1', '791946', '2025-03-17 14:44:36.000000', '', '', 'jervin1231@gmail.com', 'Mark Lawrence ', 'qwee', 'Ryan Campos', '2000-02-22', 'ccsDcS', 25, 0, 'male', 'single', 2147483647, '131243', 'uploads/Lawrence123/485202897_632567676296558_479942496838954320_n.jpg', 'wqeqweqwe123', 123124325, 324234, 75676, 34242, 5453453, '2025-03-12 00:00:00.000000', 'qew', '0000-00-00', 'qwe', 'qwe', '', '2000-02-22', 'qwe', 'fgdhhtrhty', 'srgtrdgdrr, &lt;br /&gt;&lt;b&gt;Warning&lt;/b&gt;:  Undefined array key 1 in &lt;b&gt;C:\\xampp\\htdocs\\peso2\\Applicant\\applicant_profile.php&lt;/b&gt; on line &lt;b&gt;349&lt;/b&gt;&lt;br /&gt;, &lt;br /&gt;&lt;b&gt;Warning&lt;/b&gt;:  Undefined array key', 'local', 'tdhdtyhdth, kitchen crew', 'drgtgdrgdr', 'Carpentry Work,Beautician,Auto Mechanic,Stenography,Tailoring', 'yes', 'restsegserser', 'tet4et', 'terteryrt', '', 'Employment', 0),
 (6, 'Patrick123', '$2y$10$GDhfOAg2HscIqvuzWs2djeay/xGP1vSzGaplyYg8y96/xf1ZvItrm', '1', '506994', '2025-03-27 10:23:37.000000', '', '', 'vetara3297@boyaga.com', 'Tite ', 'Patrick', 'ni', '2000-02-02', '', 0, 0, 'male', '', 2147483647, '', 'uploads/Patrick123/brave_screenshot_localhost.png', 'asdad', 0, 0, 0, 0, 0, NULL, 'asd', '2000-02-22', 'asd', 'asd', '', '2000-02-20', 'asd', '', '', '', '', '', '', '', '', '', '', '', 'Employment', 0),
 (7, 'Law123', '$2y$10$8nVIsn4msxewHMB3EnTqIOMzvQ.p0HXg.5ocWsAio/AGH/73D7csW', '1', '218464', '2025-04-02 10:36:37.000000', '', '', 'metaxab393@infornma.com', 'Mark Lawrence ', 'Hoover', 'Maxine Murray', '2000-02-22', '', 25, 0, 'male', 'single', 2147483647, '', 'uploads/Law123/brave_screenshot_localhost.png', 'campvicente lim ', 0, 0, 0, 0, 0, NULL, 'Eleanora Nader', '3000-02-22', 'qweqeq', 'qwe', '', '1999-04-23', 'qwe', '', '', '', '', '', '', 'yes', '', '', '', '', 'Training', 0),
-(8, 'Jervin123', '$2y$10$QQBUuB/xfB2bWHepP/kSfuv1Fm9ul7vAxV4Kqw5UCRcgL.WfilbSO', '1', '140737', '2025-04-02 14:42:18.000000', '', '', 'royalguards081415@gmail.com', 'Colorado', 'Hoover', 'Maxine Murray', '1999-02-22', '', 0, 0, 'male', '', 2147483647, '', '../uploads/Jervin123/brave_screenshot_localhost.png', 'ads', 0, 0, 0, 0, 0, NULL, 'qwe', '0000-00-00', 'weqa', 'asd', '', '2000-02-22', 'asd', '', '', '', '', '', '', '', '', '', '', '', 'Training', 0),
+(8, 'Jervin123', '$2y$10$6zK2C/A7RUq1L/.oeU9oo.mKCMCQQKenK7FJvN.DO6TvkA7v1Ge5O', '1', '140737', '2025-04-02 14:42:18.000000', '', '', 'royalguards081415@gmail.com', 'Colorado', 'Hoover', 'Maxine Murray', '1999-02-22', '', 26, 0, 'male', 'single', 2147483647, '', 'uploads/Jervin123/peso25.PNG', 'ads', 0, 0, 0, 0, 0, NULL, 'qwe', '0000-00-00', 'weqa', 'asd', '', '2000-02-22', 'asd', '', '', '', '', '', '', 'yes', '', '', '', '', 'Training', 0),
 (9, 'admin22', '$2y$10$/.auGUt0767wOCiDdVXSAea8Ig2uKoPDK0brWORhC0zrSdUpcOQGC', '1', '458848', '2025-04-03 14:46:58.000000', '', '', 'huhywypi@logsmarter.net', 'Mark Lawrence ', 'Mercado', 'Ryan Campos', '2000-02-02', '', 25, 0, 'male', 'single', 926515155, '', 'uploads/admin22/brave_screenshot_localhost.png', 'asdijfasjdf', 0, 0, 0, 0, 0, NULL, 'qweqe', '2000-02-22', 'asdad', 'asdasdsadsad', '', '2000-02-20', 'asdfsadfasdf', '', '', '', '', '', '', 'yes', '', '', '', '', 'Employment', 0),
 (10, 'Jervin321', '$2y$10$BKBgnxg/ksAUjAfaoQsKvemOBfgc0mJWcVL9Pw4/m2vrIPjKXTeFO', '1', '553063', '2025-04-04 13:47:45.000000', '', '', 'liporadavince1@gmail.com', 'Noah', 'Powell', 'Nigel Stephens', '2009-04-21', '', 0, 0, 'male', '', 837, '', 'uploads/Jervin321/brave_screenshot_localhost.png', 'Dolore aliquam sit ', 0, 0, 0, 0, 0, NULL, 'Wyatt Osborn', '2016-01-17', 'Consequat Quia illu', 'Jacob Glenn', '', '2004-03-03', 'Quis ducimus ut vel', '', '', '', '', '', '', '', '', '', '', '', 'Training', 0),
 (11, 'Jervin1234', '$2y$10$Vy4uJgSjtlPXpI3IkImQzOcVLihyWAMQjnerTehZ1hdsShmZ6DJtG', '1', '306472', '2025-04-04 14:15:14.000000', '', '', 'krizzabellebolinavidal@gmail.com', 'qweqe', 'we', 'we', '2000-02-22', '', 0, 0, 'male', '', 2147483647, '', '../uploads/Jervin1234/brave_screenshot_localhost.png', 'asdfsdf', 0, 0, 0, 0, 0, NULL, 'qweqeqe', '2000-02-02', 'asdasdasd', 'asdasdsad', '', '2000-02-22', 'asdfasdfasdf', '', '', '', '', '', '', '', '', '', '', '', 'Employment', 0),
@@ -528,6 +528,22 @@ CREATE TABLE `trainees_profile` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `training`
+--
+
+CREATE TABLE `training` (
+  `id` int(255) NOT NULL,
+  `user_id` int(255) NOT NULL,
+  `training` int(255) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `institution` varchar(255) NOT NULL,
+  `certificate_path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `welding`
 --
 
@@ -662,6 +678,12 @@ ALTER TABLE `trainees_profile`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `training`
+--
+ALTER TABLE `training`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `welding`
 --
 ALTER TABLE `welding`
@@ -772,6 +794,12 @@ ALTER TABLE `survey_response`
 --
 ALTER TABLE `trainees_profile`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `training`
+--
+ALTER TABLE `training`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `welding`
