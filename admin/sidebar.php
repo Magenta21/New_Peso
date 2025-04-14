@@ -18,7 +18,7 @@
         <li>
             <a href="?page=users" class="<?= $page === 'users' ? 'active' : '' ?>">
                 <i class="fas fa-users"></i> Employer Management
-            </a>
+            </a>Z
         </li>
         <li>
             <a href="?page=content" class="<?= $page === 'content' ? 'active' : '' ?>">
