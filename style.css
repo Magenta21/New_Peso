@@ -24,9 +24,10 @@ body {
 }
 
 .nav-link {
-    display: inline-block; /* Makes the element respect text width */
+    color: rgb(0, 0, 0) !important;
     padding: 10px 15px;
     position: relative;
+    text-decoration: none;
 }
 .navbar-brand {
     color: white !important;
@@ -34,19 +35,20 @@ body {
 .nav-link::before {
     content: '';
     position: absolute;
-    width: calc(100% - 30px); /* Accounts for padding */
-    height: 2px; /* Thinner underline */
+    width: 100%;
+    height: 4px;
+    border-radius: 4px;
     background-color: #ffffff;
-    bottom: 5px; /* Adjust position */
-    left: 15px; /* Match padding */
-    transform: scaleX(0);
+    bottom: 0;
+    left: 0;
     transform-origin: right;
-    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
 }
 
 .nav-link:hover::before {
-    transform: scaleX(1);
     transform-origin: left;
+    transform: scaleX(1);
 }
 a {
     color: #fcfcfc;
@@ -162,6 +164,51 @@ h3,h2 {
 }
 
 /* Improved Dropdown Styling */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    min-width: 200px; /* Fixed width to prevent overextension */
+    padding: 0.25rem 0; /* Tighter padding */
+    margin-top: 0; /* Remove gap */
+}
+
+.dropdown-item {
+    padding: 0.5rem 1.5rem; /* Slightly wider padding */
+    transition: all 0.2s ease;
+    color: white !important;
+    white-space: nowrap; /* Prevent text wrapping */
+    position: relative;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.8) !important; /* 80% opacity */
+    text-decoration: none;
+    margin: 0; /* Prevent margin expansion */
+}
+
+.dropdown-toggle::after {
+    margin-left: 0.5em;
+    vertical-align: middle;
+    transition: transform 0.2s ease;
+}
+
+/* Hover effects */
+@media (min-width: 992px) {
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+    
+    .dropdown:hover .dropdown-toggle::after {
+        transform: rotate(180deg);
+    }
+}
+
+/* Fix dropdown positioning */
+.dropdown {
+    position: relative;
+}
+
 /* Dropdown Menu Color Update */
 .dropdown-menu {
     background-color: #347BA4 !important; /* Change dropdown background */
@@ -188,31 +235,4 @@ h3,h2 {
 /* Keep original navbar color (don't change this) */
 .navbar.bg-primary {
     /* Original navbar color stays here */
-}
-.dropdown-toggle::after {
-    margin-left: 0.5em;
-    vertical-align: middle;
-    transition: transform 0.2s ease;
-}
-
-/* Hover effects */
-@media (min-width: 992px) {
-    .dropdown:hover .dropdown-menu {
-        display: block;
-    }
-    
-    .dropdown:hover .dropdown-toggle::after {
-        transform: rotate(180deg);
-    }
-}
-
-/* Fix dropdown positioning */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-menu {
-    position: absolute;
-    left: 0;
-    top: 100%;
 }
