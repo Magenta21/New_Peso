@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2025 at 04:11 AM
+-- Generation Time: Apr 14, 2025 at 04:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -456,6 +456,18 @@ INSERT INTO `ofw_profile` (`id`, `otp`, `otp_expiry`, `reset_token`, `reset_toke
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `save_job`
+--
+
+CREATE TABLE `save_job` (
+  `id` int(255) NOT NULL,
+  `job_id` int(255) NOT NULL,
+  `applicant_id` int(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `survey_form`
 --
 
@@ -626,6 +638,12 @@ ALTER TABLE `ofw_profile`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `save_job`
+--
+ALTER TABLE `save_job`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `survey_form`
 --
 ALTER TABLE `survey_form`
@@ -730,6 +748,12 @@ ALTER TABLE `news`
 --
 ALTER TABLE `ofw_profile`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `save_job`
+--
+ALTER TABLE `save_job`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `survey_form`
