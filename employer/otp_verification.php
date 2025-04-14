@@ -17,19 +17,8 @@ $email = $_GET['email']; // Get the email from URL
     <link rel="stylesheet" href="css/otp.css">
 </head>
 <body>
-    <div class="header">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-md-2">
-                    <img src="../img/logolb.png" alt="lblogo" class="logo">
-                </div>
-                <div class="col-md-8">
-                    <h3 class="header-text">MUNICIPALITY OF LOS BANOS</h3>
-                </div>
-            </div>
-        </div>
-    </div>
 
+        
     <div class="container">
         <div class="otp-container">
             <h2>Verify Your Email</h2>

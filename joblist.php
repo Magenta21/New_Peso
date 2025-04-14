@@ -37,36 +37,85 @@ $result = $conn->query($query);
 </head>
 <body>
 
-<div class="header">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2">
-                <a href="index.php" style="display: block; text-decoration: none;">
-                    <img src="img/logolb.png" alt="lblogo" style="height: 50px;">
-                </a>
-            </div>
-            <div class="col-md-8">
-                <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">Job Listings</h3>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- Add the navigation bar here -->
-<nav class="h2nd">
-    <div>
-        <span class="navbar-text text-white w-100 text-center">
-            <a class="navlink" href="index.php">HOME</a>
-            <a class="navlink" href="Applicant/applicant_login.php">APPLICANT</a>
-            <a class="navlink" href="training/training_login.php">TRAININGS</a>
-            <a class="navlink" href="ofw/ofw_login.php">OFW</a>
-            <a class="navlink" href="employer/employer_login.php">EMPLOYER</a>
-            <a class="navlink" href="institutions/institution_login.php">EDUCATIONAL INSTITUTIONS</a>
-            <a class="navlink" href="#">JOBS</a>
-            <a class="navlink" href="news.php">News</a>
-        </span>
+<nav class="navbar bg-primary text-white py-2">
+    <div class="container-fluid">
+        <!-- Navigation Links -->
+        <div class="ms-auto"></div>
+        <div class="d-flex flex-wrap align-items-center">
+           <a href="https://www.gov.ph/" target="_blank" class="nav-link px-3 text-white">GOVPH</a>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            <a href="index.php" class="nav-link px-3">HOME</a>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            
+            <!-- Applicant Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    APPLICANT
+                </a>
+                <ul class="dropdown-menu bg-primary">
+                    <li><a class="dropdown-item text-white" href="Applicant/applicant_login.php">Login</a></li>
+                    <li><a class="dropdown-item text-white" href="Applicant/applicant_register.php">Register</a></li>
+                    <li><a class="dropdown-item text-white" href="index.php#aboutus">About Us</a></li>
+                    <li><a class="dropdown-item text-white" href="index.php#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            
+          
+            <!-- Trainings Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    TRAININGS
+                </a>
+                <ul class="dropdown-menu bg-primary">
+                    <li><a class="dropdown-item text-white" href="training/training_login.php">Welding</a></li>
+                    
+                    <!-- Wellness-Hilot with nested dropdown -->
+                    <li>
+                    <a class="dropdown-item text-white" href="training/training_login.php" >Wellness-Hilot</a>
+                    </li>                       
+                    <li><a class="dropdown-item text-white" href="training/training_login.php">Dressmaking</a></li>
+                    <li><a class="dropdown-item text-white" href="training/training_login.php">Computer Literature</a></li>
+                </ul>
+            </div>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            <!-- OFW Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    OFW
+                </a>
+                <ul class="dropdown-menu bg-primary">
+                    <li><a class="dropdown-item text-white" href="ofw/ofw_login.php">OFW-Family</a></li>
+                    <li><a class="dropdown-item text-white" href="ofw/ofw_benefits.php">OFW him/her self</a></li>
+                    
+                </ul>
+            </div>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            
+            <!-- Employer Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    EMPLOYER
+                </a>
+                <ul class="dropdown-menu bg-primary">
+                    <li><a class="dropdown-item text-white" href="employer/employer_login.php">Local</a></li>
+                    <li><a class="dropdown-item text-white" href="employer/employer_login.php">Overseas</a></li>
+                    <li><a class="dropdown-item text-white" href="employer/employer_login.php">Direct Hire</a></li>
+                    <li><a class="dropdown-item text-white" href="employer/employer_login.php">Agency</a></li>
+                </ul>
+            </div>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            
+            <a href="joblist.php" class="nav-link px-3">JOBS</a>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            <a href="news.php" class="nav-link px-3">NEWS</a>
+        </div>
+        <div class="ms-auto"></div>
     </div>
-</nav>
+</nav>  
 
 <div class="container container-fluid">
     <?php while ($row = $result->fetch_assoc()) { ?>
@@ -105,6 +154,6 @@ $result = $conn->query($query);
         <a href="?page=<?= $page + 1 ?>" class="next">Next</a>
     <?php endif; ?>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,17 +1,18 @@
 body {
+    background: #E1D9D1;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-color: #333;
+    
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .header {
-    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
-    color: white;
+    
+  
     height: 50px;
     width: 100%;
     text-align: center;
@@ -27,6 +28,7 @@ body {
 
 .form-step {
     display: none;
+   
 }
 
 .form-step.active {
@@ -58,10 +60,15 @@ button:hover {
     font-size: 12px;
 }
 /* Step Progress Bar */
+/* Step Progress Bar */
 .step-container {
     display: flex;
     justify-content: center;
     margin: 20px 0;
+    
+    padding: 15px 0; /* Added padding */
+    border-radius: 8px; /* Rounded corners */
+   
 }
 
 .step {
@@ -69,15 +76,35 @@ button:hover {
     height: 40px;
     line-height: 40px;
     text-align: center;
-    color: rgb(255, 255, 255);
-    border-radius: 10%;
-    margin: 0 10px;
+    background-color: #e9ecef; /* Inactive step color */
+    color: #495057; /* Darker text for inactive */
+    border-radius: 20px; /* More rounded */
+    margin: 0 5px; /* Reduced margin */
     font-weight: bold;
+    transition: all 0.3s ease; /* Smooth transitions */
+    position: relative;
 }
 
 .step.active {
     background-color: #007BFF;
     color: white;
+    transform: scale(1.05); /* Slight emphasis */
+}
+
+/* Optional: Add connector lines between steps */
+.step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    width: 10px;
+    height: 2px;
+    background: #adb5bd;
+    transform: translateY(-50%);
+}
+
+.step.active:not(:last-child)::after {
+    background: #007BFF;
 }
 /* Form Control Styling */
 input[type="text"], input[type="number"], select {

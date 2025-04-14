@@ -15,7 +15,7 @@
         <!-- Navigation Links -->
         <div class="ms-auto"></div>
         <div class="d-flex flex-wrap align-items-center">
-            <span class="d-flex flex-wrap align-items-center justify-content-center mx-auto">GOVPH</span>
+        <a href="https://www.gov.ph/" target="_blank" class="nav-link px-3 text-white">GOVPH</a>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
             <a href="#" class="nav-link px-3">HOME</a>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
@@ -34,6 +34,7 @@
             </div>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
             
+          
             <!-- Trainings Dropdown -->
             <div class="dropdown">
                 <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -41,13 +42,16 @@
                 </a>
                 <ul class="dropdown-menu bg-primary">
                     <li><a class="dropdown-item text-white" href="training/training_login.php">Welding</a></li>
-                    <li><a class="dropdown-item text-white" href="training/training_schedule.php">Wellness-Hilot</a></li>
-                    <li><a class="dropdown-item text-white" href="training/training_apply.php">Dressmaking</a></li>
-                    <li><a class="dropdown-item text-white" href="training/training_apply.php">Computer Literature</a></li>
+                    
+                    <!-- Wellness-Hilot with nested dropdown -->
+                    <li class="dropdown-submenu position-relative">
+                    <a class="dropdown-item text-white" href="training/training_login.php" id="wellnessHilotTrigger">Wellness-Hilot  </a>
+                    </li>                    
+                    <li><a class="dropdown-item text-white" href="training/training_login.php">Dressmaking</a></li>
+                    <li><a class="dropdown-item text-white" href="training/training_login.php">Computer Literature</a></li>
                 </ul>
             </div>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
-            
             <!-- OFW Dropdown -->
             <div class="dropdown">
                 <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -68,9 +72,9 @@
                 </a>
                 <ul class="dropdown-menu bg-primary">
                     <li><a class="dropdown-item text-white" href="employer/employer_login.php">Local</a></li>
-                    <li><a class="dropdown-item text-white" href="employer/employer_register.php">Overseas</a></li>
-                    <li><a class="dropdown-item text-white" href="employer/post_job.php">Direct Hire</a></li>
-                    <li><a class="dropdown-item text-white" href="employer/post_job.php">Agency</a></li>
+                    <li><a class="dropdown-item text-white" href="employer/employer_login.php">Overseas</a></li>
+                    <li><a class="dropdown-item text-white" href="employer/employer_login.php">Direct Hire</a></li>
+                    <li><a class="dropdown-item text-white" href="employer/employer_login.php">Agency</a></li>
                 </ul>
             </div>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
@@ -190,6 +194,15 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+         // Initialize Bootstrap dropdowns
+        document.addEventListener('DOMContentLoaded', function() {
+            var dropdownElements = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+            dropdownElements.map(function (dropdownToggleEl) {
+                return new bootstrap.Dropdown(dropdownToggleEl)
+            });
+        });
+    </script>
     
 </body>
 </html>

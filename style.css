@@ -24,7 +24,7 @@ body {
 }
 
 .nav-link {
-    color: white !important;
+    color: rgb(0, 0, 0) !important;
     padding: 10px 15px;
     position: relative;
     text-decoration: none;
@@ -163,29 +163,76 @@ h3,h2 {
     text-align: center;
 }
 
-/* Dropdown Styling */
+/* Improved Dropdown Styling */
 .dropdown-menu {
     border: none;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    min-width: 200px; /* Fixed width to prevent overextension */
+    padding: 0.25rem 0; /* Tighter padding */
+    margin-top: 0; /* Remove gap */
 }
 
 .dropdown-item {
-    padding: 0.5rem 1rem;
-    transition: background-color 0.3s;
+    padding: 0.5rem 1.5rem; /* Slightly wider padding */
+    transition: all 0.2s ease;
+    color: white !important;
+    white-space: nowrap; /* Prevent text wrapping */
+    position: relative;
 }
 
 .dropdown-item:hover {
     background-color: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.8) !important; /* 80% opacity */
+    text-decoration: none;
+    margin: 0; /* Prevent margin expansion */
 }
 
 .dropdown-toggle::after {
     margin-left: 0.5em;
     vertical-align: middle;
+    transition: transform 0.2s ease;
 }
 
-/* Ensure dropdowns work on hover */
+/* Hover effects */
 @media (min-width: 992px) {
     .dropdown:hover .dropdown-menu {
         display: block;
     }
+    
+    .dropdown:hover .dropdown-toggle::after {
+        transform: rotate(180deg);
+    }
+}
+
+/* Fix dropdown positioning */
+.dropdown {
+    position: relative;
+}
+
+/* Dropdown Menu Color Update */
+.dropdown-menu {
+    background-color: #347BA4 !important; /* Change dropdown background */
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+    padding: 0.25rem 0;
+    margin-top: 0;
+}
+
+.dropdown-item {
+    background-color: transparent !important; /* Keep items transparent */
+    padding: 0.5rem 1.5rem;
+    transition: all 0.2s ease;
+    color: white !important;
+    white-space: nowrap;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important; /* Slightly stronger hover */
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Keep original navbar color (don't change this) */
+.navbar.bg-primary {
+    /* Original navbar color stays here */
 }

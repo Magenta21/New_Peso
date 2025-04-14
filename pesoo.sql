@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2025 at 03:57 AM
+-- Generation Time: Apr 14, 2025 at 04:39 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -107,13 +107,14 @@ INSERT INTO `applicant_profile` (`id`, `username`, `password`, `is_verified`, `o
 (5, 'Lawrence123', '$2y$10$YxE9QiizxlRg5SlSodk/yexNYMDiCfcTnNmh4gBVbbOOJpo1ZM70G', '1', '791946', '2025-03-17 14:44:36.000000', '', '', 'jervin1231@gmail.com', 'Mark Lawrence ', 'qwee', 'Ryan Campos', '2000-02-22', 'ccsDcS', 25, 0, 'male', 'single', 2147483647, '131243', 'uploads/Lawrence123/485202897_632567676296558_479942496838954320_n.jpg', 'wqeqweqwe123', 123124325, 324234, 75676, 34242, 5453453, '2025-03-12 00:00:00.000000', 'qew', '0000-00-00', 'qwe', 'qwe', '', '2000-02-22', 'qwe', 'fgdhhtrhty', 'srgtrdgdrr, &lt;br /&gt;&lt;b&gt;Warning&lt;/b&gt;:  Undefined array key 1 in &lt;b&gt;C:\\xampp\\htdocs\\peso2\\Applicant\\applicant_profile.php&lt;/b&gt; on line &lt;b&gt;349&lt;/b&gt;&lt;br /&gt;, &lt;br /&gt;&lt;b&gt;Warning&lt;/b&gt;:  Undefined array key', 'local', 'tdhdtyhdth, kitchen crew', 'drgtgdrgdr', 'Carpentry Work,Beautician,Auto Mechanic,Stenography,Tailoring', 'yes', 'restsegserser', 'tet4et', 'terteryrt', '', 'Employment', 0),
 (6, 'Patrick123', '$2y$10$GDhfOAg2HscIqvuzWs2djeay/xGP1vSzGaplyYg8y96/xf1ZvItrm', '1', '506994', '2025-03-27 10:23:37.000000', '', '', 'vetara3297@boyaga.com', 'Tite ', 'Patrick', 'ni', '2000-02-02', '', 0, 0, 'male', '', 2147483647, '', 'uploads/Patrick123/brave_screenshot_localhost.png', 'asdad', 0, 0, 0, 0, 0, NULL, 'asd', '2000-02-22', 'asd', 'asd', '', '2000-02-20', 'asd', '', '', '', '', '', '', '', '', '', '', '', 'Employment', 0),
 (7, 'Law123', '$2y$10$8nVIsn4msxewHMB3EnTqIOMzvQ.p0HXg.5ocWsAio/AGH/73D7csW', '1', '218464', '2025-04-02 10:36:37.000000', '', '', 'metaxab393@infornma.com', 'Mark Lawrence ', 'Hoover', 'Maxine Murray', '2000-02-22', '', 25, 0, 'male', 'single', 2147483647, '', 'uploads/Law123/brave_screenshot_localhost.png', 'campvicente lim ', 0, 0, 0, 0, 0, NULL, 'Eleanora Nader', '3000-02-22', 'qweqeq', 'qwe', '', '1999-04-23', 'qwe', '', '', '', '', '', '', 'yes', '', '', '', '', 'Training', 0),
-(8, 'Jervin123', '$2y$10$QQBUuB/xfB2bWHepP/kSfuv1Fm9ul7vAxV4Kqw5UCRcgL.WfilbSO', '1', '140737', '2025-04-02 14:42:18.000000', '', '', 'royalguards081415@gmail.com', 'Colorado', 'Hoover', 'Maxine Murray', '1999-02-22', '', 0, 0, 'male', '', 2147483647, '', '../uploads/Jervin123/brave_screenshot_localhost.png', 'ads', 0, 0, 0, 0, 0, NULL, 'qwe', '0000-00-00', 'weqa', 'asd', '', '2000-02-22', 'asd', '', '', '', '', '', '', '', '', '', '', '', 'Training', 0),
+(8, 'Jervin123', '$2y$10$6zK2C/A7RUq1L/.oeU9oo.mKCMCQQKenK7FJvN.DO6TvkA7v1Ge5O', '1', '140737', '2025-04-02 14:42:18.000000', '', '', 'royalguards081415@gmail.com', 'Colorado', 'Hoover', 'Maxine Murray', '1999-02-22', '', 26, 0, 'male', 'single', 2147483647, '', 'uploads/Jervin123/peso25.PNG', 'ads', 0, 0, 0, 0, 0, NULL, 'qwe', '0000-00-00', 'weqa', 'asd', '', '2000-02-22', 'asd', '', '', '', '', '', '', 'yes', '', '', '', '', 'Training', 0),
 (9, 'admin22', '$2y$10$/.auGUt0767wOCiDdVXSAea8Ig2uKoPDK0brWORhC0zrSdUpcOQGC', '1', '458848', '2025-04-03 14:46:58.000000', '', '', 'huhywypi@logsmarter.net', 'Mark Lawrence ', 'Mercado', 'Ryan Campos', '2000-02-02', '', 25, 0, 'male', 'single', 926515155, '', 'uploads/admin22/brave_screenshot_localhost.png', 'asdijfasjdf', 0, 0, 0, 0, 0, NULL, 'qweqe', '2000-02-22', 'asdad', 'asdasdsadsad', '', '2000-02-20', 'asdfsadfasdf', '', '', '', '', '', '', 'yes', '', '', '', '', 'Employment', 0),
 (10, 'Jervin321', '$2y$10$BKBgnxg/ksAUjAfaoQsKvemOBfgc0mJWcVL9Pw4/m2vrIPjKXTeFO', '1', '553063', '2025-04-04 13:47:45.000000', '', '', 'liporadavince1@gmail.com', 'Noah', 'Powell', 'Nigel Stephens', '2009-04-21', '', 0, 0, 'male', '', 837, '', 'uploads/Jervin321/brave_screenshot_localhost.png', 'Dolore aliquam sit ', 0, 0, 0, 0, 0, NULL, 'Wyatt Osborn', '2016-01-17', 'Consequat Quia illu', 'Jacob Glenn', '', '2004-03-03', 'Quis ducimus ut vel', '', '', '', '', '', '', '', '', '', '', '', 'Training', 0),
 (11, 'Jervin1234', '$2y$10$Vy4uJgSjtlPXpI3IkImQzOcVLihyWAMQjnerTehZ1hdsShmZ6DJtG', '1', '306472', '2025-04-04 14:15:14.000000', '', '', 'krizzabellebolinavidal@gmail.com', 'qweqe', 'we', 'we', '2000-02-22', '', 0, 0, 'male', '', 2147483647, '', '../uploads/Jervin1234/brave_screenshot_localhost.png', 'asdfsdf', 0, 0, 0, 0, 0, NULL, 'qweqeqe', '2000-02-02', 'asdasdasd', 'asdasdsad', '', '2000-02-22', 'asdfasdfasdf', '', '', '', '', '', '', '', '', '', '', '', 'Employment', 0),
 (12, 'lolomo123', '$2y$10$ZOR9YGH2sIh81aJxm4KQs.YfFWo2kuk4ppcA3kd58xZHnZ9BTRThm', '1', '847306', '2025-04-04 14:49:02.000000', '', '', 'banozibu@polkaroad.net', 'Igor', 'Gilliam', 'Ruby Hancock', '1991-10-27', '', 0, 0, 'male', '', 590, '', '../uploads/lolomo123/brave_screenshot_localhost.png', 'Qui ullam voluptatem', 0, 0, 0, 0, 0, NULL, 'Chastity Huff', '1980-05-22', 'Minim sint nostrud ', 'Tanner Marquez', '', '1993-02-18', 'Sed qui sed minus no', '', '', '', '', '', '', '', '', '', '', '', 'Employment', 0),
 (13, 'lawrence33', '$2y$10$uk4Q/F5GmQtoVddAXo0EUuQ7ql2djsBILr1Enqztyr2O6UkY0VVeS', '0', '582658', '2025-04-04 14:54:29.000000', '', '', 'waxapomi@dreamclarify.org', 'Ivana', 'Hatfield', 'Keegan Burke', '2005-01-13', '', 0, 0, 'male', '', 796, '', '../uploads/lawrence33/brave_screenshot_localhost.png', 'Ad a consequatur re', 0, 0, 0, 0, 0, NULL, 'Dai Hobbs', '1987-06-12', 'Cillum dolores quod ', 'Brooke Alford', '', '2001-07-12', 'Sed totam irure vero', '', '', '', '', '', '', '', '', '', '', '', 'Training', 0),
-(14, 'vonajeti', '$2y$10$I3QM60aOxQ.mmgc8BLtjJOLYZ0xuD2Odcms2PkcrFP.D8ykkLdNRO', '0', '429364', '2025-04-04 14:59:05.000000', '', '', 'cyzohyvizy@mailinator.com', 'Ivana', 'Hatfield', 'Keegan Burke', '2005-01-13', '', 0, 0, 'male', '', 796, '', '../uploads/vonajeti/brave_screenshot_localhost.png', 'Ad a consequatur re', 0, 0, 0, 0, 0, NULL, 'Dai Hobbs', '1987-06-12', 'Cillum dolores quod ', 'Brooke Alford', '', '2001-07-12', 'Sed totam irure vero', '', '', '', '', '', '', '', '', '', '', '', 'Training', 0);
+(14, 'vonajeti', '$2y$10$I3QM60aOxQ.mmgc8BLtjJOLYZ0xuD2Odcms2PkcrFP.D8ykkLdNRO', '0', '429364', '2025-04-04 14:59:05.000000', '', '', 'cyzohyvizy@mailinator.com', 'Ivana', 'Hatfield', 'Keegan Burke', '2005-01-13', '', 0, 0, 'male', '', 796, '', '../uploads/vonajeti/brave_screenshot_localhost.png', 'Ad a consequatur re', 0, 0, 0, 0, 0, NULL, 'Dai Hobbs', '1987-06-12', 'Cillum dolores quod ', 'Brooke Alford', '', '2001-07-12', 'Sed totam irure vero', '', '', '', '', '', '', '', '', '', '', '', 'Training', 0),
+(15, 'digeda', '$2y$10$RdW3IHaErWK7oTwTBUdFre7VeMrtrBL98aN9gOc3oJLjPQlVeFqvW', '0', '792667', '2025-04-11 15:25:27.000000', '', '', 'gezin@mailinator.com', 'Jackson', 'Blevins', 'Jada Whitehead', '2025-03-07', '', 0, 0, 'male', '', 742, '', '../uploads/digeda/peso25.PNG', 'Vel aut velit occae', 0, 0, 0, 0, 0, NULL, 'Cain Charles', '1983-12-13', 'Nemo numquam consequ', 'Willow Cleveland', '', '2022-12-16', 'At molestiae quisqua', '', '', '', '', '', '', '', '', '', '', '', 'Training', 0);
 
 -- --------------------------------------------------------
 
@@ -154,34 +155,6 @@ CREATE TABLE `cases` (
   `file` varchar(255) NOT NULL,
   `status` enum('filed','in progress','result','') NOT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contact_us`
---
-
-CREATE TABLE `contact_us` (
-  `id` int(11) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `subject` varchar(255) DEFAULT NULL,
-  `messages` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `courses`
---
-
-CREATE TABLE `courses` (
-  `id` int(255) NOT NULL,
-  `course_name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `module_count` int(255) NOT NULL,
-  `course_icon` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -279,28 +252,8 @@ CREATE TABLE `employer` (
 INSERT INTO `employer` (`id`, `username`, `password`, `email`, `is_verified`, `otp`, `otp_expiry`, `reset_token`, `reset_token_expiry`, `types_of_employer`, `fname`, `lname`, `company_name`, `company_address`, `company_contact`, `hr`, `president`, `tel_num`, `company_email`, `hr_email`, `company_photo`) VALUES
 (2, 'Melany.Volkman', '$2y$10$qjOybIq0egPOlWebtb9E9.N/Rfg9YUT53mIrsvhjNEVTU58MK6dGG', 'marklawrencemercado8@gmail.com', 1, '528560', '2025-02-18 14:53:53.000000', '', '0000-00-00 00:00:00.000000', 'local_lb', 'Elsie', 'Crooks', 'David Bosco', 'McLaughlin, Hansen and Beatty', 'Watsica - Yundt', 'Mollitia voluptatibus autem.', 'Explicabo accusantium placeat quibusdam autem.', '09123488990', 'Miller, Labadie and Yundt', '', 'uploads/David_Bosco/444.jpg'),
 (3, 'Azure', '$2y$10$vwSz.nuPSNc6Yfx048oCMOu90wIaqoUoeHf3hP9yos81Xft75w4BW', 'ict1mercado.cdlb@gmail.com', 1, '843947', '2025-03-03 09:21:48.000000', '', '0000-00-00 00:00:00.000000', '', 'Mark Lawrence ', 'Mercado1', 'Seth Aguirre', 'Newton Wilder Co', '09915209066', 'Natus maxime velit qsss', 'Nulla cillum enim pa', '09162602288', 'dapiv@mailinator.com', '', 'uploads/Azure/ma.jpg'),
-(4, 'rirohu', '$2y$10$4QfAz7dgrDG.gdJ9FmSBhus3mjZbCZwr7oUPfA1sbLnTXbLXIckgG', 'zipexabuh@mailinator.com', 0, '841060', '2025-04-04 15:00:36.000000', '', '0000-00-00 00:00:00.000000', 'local_lb', 'Tatum', 'Alvarez', 'Ezekiel Richardson', 'Wilkins Howell LLC', '87', 'Ea non delectus nos', 'Lorem aspernatur ven', '905', 'cicevitox@mailinator.com', '', 'uploads/Ezekiel_Richardson/Capture.PNG');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `graduates`
---
-
-CREATE TABLE `graduates` (
-  `id` int(255) NOT NULL,
-  `school_id` int(255) NOT NULL,
-  `fname` varchar(255) NOT NULL,
-  `lname` varchar(255) NOT NULL,
-  `mname` varchar(255) NOT NULL,
-  `age` int(255) NOT NULL,
-  `gender` varchar(255) NOT NULL,
-  `bday` date NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `year_level` varchar(255) NOT NULL,
-  `cnumber` int(255) NOT NULL,
-  `awards` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(4, 'rirohu', '$2y$10$4QfAz7dgrDG.gdJ9FmSBhus3mjZbCZwr7oUPfA1sbLnTXbLXIckgG', 'zipexabuh@mailinator.com', 0, '841060', '2025-04-04 15:00:36.000000', '', '0000-00-00 00:00:00.000000', 'local_lb', 'Tatum', 'Alvarez', 'Ezekiel Richardson', 'Wilkins Howell LLC', '87', 'Ea non delectus nos', 'Lorem aspernatur ven', '905', 'cicevitox@mailinator.com', '', 'uploads/Ezekiel_Richardson/Capture.PNG'),
+(5, 'xiteba', '$2y$10$NV.NKYp0QBiAIVm0btz7kO0rAfMaGtuKz.Fg93JrHx0EVaBAbKIwG', 'fepuloriw@mailinator.com', 0, '107404', '2025-04-11 15:20:02.000000', '', '0000-00-00 00:00:00.000000', 'Overseas', 'Lamar', 'Fry', 'Emerald Hawkins', 'Shaffer and Richardson Trading', '84', 'Quia id ullamco aut', 'Qui dolores cupidita', '475', 'boziror@mailinator.com', '', 'uploads/Emerald_Hawkins/peso24.PNG');
 
 -- --------------------------------------------------------
 
@@ -394,37 +347,9 @@ INSERT INTO `license` (`id`, `user_id`, `eligibility`, `rating`, `doe`, `prc_pat
 
 CREATE TABLE `modules` (
   `id` int(255) NOT NULL,
-  `course_id` int(255) NOT NULL,
   `module_name` varchar(255) NOT NULL,
-  `module_description` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `module_content`
---
-
-CREATE TABLE `module_content` (
-  `id` int(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `video` varchar(255) NOT NULL,
-  `file_path` varchar(255) NOT NULL,
-  `modules_id` int(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `module_taken`
---
-
-CREATE TABLE `module_taken` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `module_id` int(11) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `date_taken` int(11) NOT NULL
+  `files` varchar(255) NOT NULL,
+  `date_created` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -531,76 +456,13 @@ INSERT INTO `ofw_profile` (`id`, `otp`, `otp_expiry`, `reset_token`, `reset_toke
 -- --------------------------------------------------------
 
 --
--- Table structure for table `public/private`
---
-
-CREATE TABLE `public/private` (
-  `id` int(255) NOT NULL,
-  `school_id` int(255) NOT NULL,
-  `school_name` varchar(255) NOT NULL,
-  `school_address` varchar(255) NOT NULL,
-  `deped_accreditation` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `questions`
---
-
-CREATE TABLE `questions` (
-  `id` int(255) NOT NULL,
-  `quiz_id` int(255) NOT NULL,
-  `questions` varchar(255) NOT NULL,
-  `option_a` varchar(255) NOT NULL,
-  `option_b` varchar(255) NOT NULL,
-  `option_c` varchar(255) NOT NULL,
-  `option_d` varchar(255) NOT NULL,
-  `correct_answer` varchar(255) NOT NULL,
-  `marks` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `quiz name`
---
-
-CREATE TABLE `quiz name` (
-  `id` int(11) NOT NULL,
-  `module_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `correct_ans` varchar(255) NOT NULL,
-  `wrong_ans` varchar(255) NOT NULL,
-  `total` int(255) NOT NULL,
-  `tag` varchar(255) NOT NULL,
-  `date` datetime(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `save_job`
 --
 
 CREATE TABLE `save_job` (
-  `id` int(255) DEFAULT NULL,
-  `applicant_id` int(255) NOT NULL,
-  `job_id` int(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `school`
---
-
-CREATE TABLE `school` (
   `id` int(255) NOT NULL,
-  `Username` varchar(255) NOT NULL,
-  `Password` varchar(255) NOT NULL,
-  `Email` varchar(255) NOT NULL,
-  `category` enum('public/private','techvoc') NOT NULL
+  `job_id` int(255) NOT NULL,
+  `applicant_id` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -626,20 +488,6 @@ CREATE TABLE `survey_response` (
   `user_id` int(11) DEFAULT NULL,
   `survey_id` int(11) DEFAULT NULL,
   `response` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `techvoc_documents`
---
-
-CREATE TABLE `techvoc_documents` (
-  `id` int(255) NOT NULL,
-  `school_id` int(255) NOT NULL,
-  `school_name` varchar(255) NOT NULL,
-  `school_address` varchar(255) NOT NULL,
-  `tesda_certificate` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -686,48 +534,23 @@ CREATE TABLE `trainees_profile` (
 CREATE TABLE `training` (
   `id` int(255) NOT NULL,
   `user_id` int(255) NOT NULL,
-  `training` varchar(255) NOT NULL,
+  `training` int(255) NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `institution` varchar(255) NOT NULL,
   `certificate_path` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `training`
---
-
-INSERT INTO `training` (`id`, `user_id`, `training`, `start_date`, `end_date`, `institution`, `certificate_path`) VALUES
-(1, 5, 'Numquam illo tenetur soluta quos nam.', '2025-04-04', '2025-03-11', 'asdsada', 'uploads/Lawrence123/Grades Report.pdf');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_answer`
+-- Table structure for table `welding`
 --
 
-CREATE TABLE `user_answer` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `question_id` int(11) NOT NULL,
-  `quiz_id` int(11) NOT NULL,
-  `answer` char(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_score`
---
-
-CREATE TABLE `user_score` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `question_id` int(11) NOT NULL,
-  `score` int(11) NOT NULL,
-  `correct_answer` int(11) NOT NULL,
-  `wrong_answer` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+CREATE TABLE `welding` (
+  `id` int(255) NOT NULL,
+  `modules_id` varchar(255) NOT NULL,
+  `trainees_id` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -777,18 +600,6 @@ ALTER TABLE `cases`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `contact_us`
---
-ALTER TABLE `contact_us`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `courses`
---
-ALTER TABLE `courses`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `current_employee`
 --
 ALTER TABLE `current_employee`
@@ -804,12 +615,6 @@ ALTER TABLE `documents`
 -- Indexes for table `employer`
 --
 ALTER TABLE `employer`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `graduates`
---
-ALTER TABLE `graduates`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -837,18 +642,6 @@ ALTER TABLE `modules`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `module_content`
---
-ALTER TABLE `module_content`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `module_taken`
---
-ALTER TABLE `module_taken`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `news`
 --
 ALTER TABLE `news`
@@ -861,27 +654,9 @@ ALTER TABLE `ofw_profile`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `public/private`
+-- Indexes for table `save_job`
 --
-ALTER TABLE `public/private`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `questions`
---
-ALTER TABLE `questions`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `quiz name`
---
-ALTER TABLE `quiz name`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `school`
---
-ALTER TABLE `school`
+ALTER TABLE `save_job`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -897,12 +672,6 @@ ALTER TABLE `survey_response`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `techvoc_documents`
---
-ALTER TABLE `techvoc_documents`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `trainees_profile`
 --
 ALTER TABLE `trainees_profile`
@@ -915,15 +684,9 @@ ALTER TABLE `training`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_answer`
+-- Indexes for table `welding`
 --
-ALTER TABLE `user_answer`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_score`
---
-ALTER TABLE `user_score`
+ALTER TABLE `welding`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -946,24 +709,12 @@ ALTER TABLE `admin_profile`
 -- AUTO_INCREMENT for table `applicant_profile`
 --
 ALTER TABLE `applicant_profile`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `cases`
 --
 ALTER TABLE `cases`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `contact_us`
---
-ALTER TABLE `contact_us`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `courses`
---
-ALTER TABLE `courses`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
@@ -982,13 +733,7 @@ ALTER TABLE `documents`
 -- AUTO_INCREMENT for table `employer`
 --
 ALTER TABLE `employer`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `graduates`
---
-ALTER TABLE `graduates`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `job_post`
@@ -1015,18 +760,6 @@ ALTER TABLE `modules`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `module_content`
---
-ALTER TABLE `module_content`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `module_taken`
---
-ALTER TABLE `module_taken`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
@@ -1039,27 +772,9 @@ ALTER TABLE `ofw_profile`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `public/private`
+-- AUTO_INCREMENT for table `save_job`
 --
-ALTER TABLE `public/private`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `questions`
---
-ALTER TABLE `questions`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `quiz name`
---
-ALTER TABLE `quiz name`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `school`
---
-ALTER TABLE `school`
+ALTER TABLE `save_job`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
@@ -1075,12 +790,6 @@ ALTER TABLE `survey_response`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `techvoc_documents`
---
-ALTER TABLE `techvoc_documents`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `trainees_profile`
 --
 ALTER TABLE `trainees_profile`
@@ -1090,19 +799,13 @@ ALTER TABLE `trainees_profile`
 -- AUTO_INCREMENT for table `training`
 --
 ALTER TABLE `training`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `user_answer`
+-- AUTO_INCREMENT for table `welding`
 --
-ALTER TABLE `user_answer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `user_score`
---
-ALTER TABLE `user_score`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `welding`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `work_exp`
