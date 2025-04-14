@@ -9,13 +9,14 @@
     <link rel="stylesheet" href="css/register.css">
 </head>
 <body>
-<div class="header">
-    <div class="container-fluid d-flex align-items-center">
-        <button onclick="window.history.back()" class="back-button me-auto">
-            ← Back
-        </button>
+
+    <div class="header">
+        <div class="container-fluid d-flex align-items-center">
+            <button onclick="window.history.back()" class="back-button me-auto">
+                ← Back
+            </button>
+        </div>
     </div>
-</div>
 
 
 <!-- Step Progress Bar -->
