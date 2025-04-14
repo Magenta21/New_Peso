@@ -41,7 +41,7 @@ if (!$row_emp) {
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
-               
+                
                  <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
                 
             </div>

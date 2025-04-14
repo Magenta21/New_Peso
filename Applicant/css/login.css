@@ -9,8 +9,6 @@ body {
     text-align: center;
 }
 
-
-
 .front-box {
 	width: 850px;
 	background: white;
@@ -61,5 +59,10 @@ body {
 	background-color: #0A4FB5; /* Slightly darker blue on hover */
 	transform: translateX(-4px); /* Subtle left movement */
 }
-
+a{
+	color: #fcfcfc;
+	position: relative;
+	text-decoration: none;
+	margin-left: 20px;
+}
 
