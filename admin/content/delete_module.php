@@ -1,17 +1,16 @@
 <?php
-header('Content-Type: application/json');
-
+// Database connection
 $db = new mysqli('localhost', 'root', '', 'pesoo');
 
 if ($db->connect_error) {
-    die(json_encode(['success' => false, 'message' => 'Database connection failed']));
+    die("Connection failed: " . $db->connect_error);
 }
 
-$module_id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+$module_id = $_GET['id'] ?? 0;
+$training = $_GET['training'] ?? '';
 
 if ($module_id <= 0) {
-    echo json_encode(['success' => false, 'message' => 'Invalid module ID']);
-    exit;
+    die("Invalid module ID");
 }
 
 // First get file path to delete the file
@@ -23,8 +22,7 @@ $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 
 if (!$row) {
-    echo json_encode(['success' => false, 'message' => 'Module not found']);
-    exit;
+    die("Module not found");
 }
 
 // Delete the record
@@ -37,9 +35,9 @@ if ($stmt->execute()) {
     if (file_exists($row['files'])) {
         unlink($row['files']);
     }
-    echo json_encode(['success' => true]);
+    header("Location: ?page=training&action=view_modules&training=$training&success=Module deleted successfully");
 } else {
-    echo json_encode(['success' => false, 'message' => $db->error]);
+    header("Location: ?page=training&action=view_modules&training=$training&error=" . urlencode("Database error: " . $db->error));
 }
 
 $db->close();

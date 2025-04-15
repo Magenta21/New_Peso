@@ -1,47 +1,52 @@
 <?php
+// Database connection
 $db = new mysqli('localhost', 'root', '', 'pesoo');
 
 if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
-$training = isset($_GET['training']) ? $_GET['training'] : '';
-$valid_trainings = ['computer_lit', 'dressmaking', 'hilot_wellness', 'welding'];
+$training_id = (int)$_GET['training_id'] ?? 0;
 
-if (!in_array($training, $valid_trainings)) {
+// Get training details
+$stmt = $db->prepare("SELECT * FROM skills_training WHERE id = ?");
+$stmt->bind_param('i', $training_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$training = $result->fetch_assoc();
+
+if (!$training) {
     die("Invalid training specified");
 }
 
-// Get training name for display
-$training_names = [
-    'computer_lit' => 'Computer Literacy',
-    'dressmaking' => 'Dressmaking',
-    'hilot_wellness' => 'Hilot Wellness',
-    'welding' => 'Welding'
-];
-
-$training_name = $training_names[$training];
+// Handle success message
+$success = $_GET['success'] ?? '';
 ?>
 
 <div class="content-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <h2><?= htmlspecialchars($training_name) ?> Modules</h2>
-    <button class="btn-secondary" onclick="document.getElementById('dynamic-content').style.display='none'" style="padding: 8px 12px;">
+    <h2><?= htmlspecialchars($training['name']) ?> Modules</h2>
+    <a href="?page=training" class="btn-secondary" style="padding: 8px 12px; text-decoration: none;">
         <i class="fas fa-arrow-left"></i> Back
-    </button>
+    </a>
 </div>
 
+<?php if ($success): ?>
+    <div class="alert alert-success" style="padding: 15px; background-color: #d4edda; color: #155724; border-radius: 4px; margin-bottom: 20px;">
+        <?= htmlspecialchars($success) ?>
+    </div>
+<?php endif; ?>
+
 <div class="action-bar" style="margin-bottom: 20px;">
-    <button class="btn-primary" onclick="document.getElementById('trainingType').value='<?= $training ?>'; document.getElementById('moduleForm').reset(); document.getElementById('moduleId').value=''; document.getElementById('createModuleModal').style.display='block'" style="padding: 8px 12px;">
+    <a href="?page=training&action=add_module&training_id=<?= $training_id ?>" class="btn-primary" style="padding: 8px 12px; text-decoration: none;">
         <i class="fas fa-plus"></i> Add New Module
-    </button>
+    </a>
 </div>
 
 <div class="modules-list">
     <?php
-    $query = "SELECT * FROM modules WHERE module_name LIKE ? ORDER BY date_created DESC";
+    $query = "SELECT * FROM modules WHERE training_id = ? ORDER BY date_created DESC";
     $stmt = $db->prepare($query);
-    $search_term = "%$training_name%";
-    $stmt->bind_param('s', $search_term);
+    $stmt->bind_param('i', $training_id);
     $stmt->execute();
     $result = $stmt->get_result();
     
@@ -50,6 +55,7 @@ $training_name = $training_names[$training];
                 <thead>
                     <tr style="background-color: #f2f2f2;">
                         <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Module Name</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Description</th>
                         <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Date Created</th>
                         <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Actions</th>
                     </tr>
@@ -59,17 +65,18 @@ $training_name = $training_names[$training];
         while ($row = $result->fetch_assoc()) {
             echo '<tr style="border-bottom: 1px solid #ddd;">
                     <td style="padding: 12px; vertical-align: middle;">'.htmlspecialchars($row['module_name']).'</td>
+                    <td style="padding: 12px; vertical-align: middle;">'.htmlspecialchars($row['module_description']).'</td>
                     <td style="padding: 12px; vertical-align: middle;">'.htmlspecialchars($row['date_created']).'</td>
                     <td style="padding: 12px; vertical-align: middle;">
                         <a href="'.htmlspecialchars($row['files']).'" target="_blank" class="btn-primary" style="padding: 5px 10px; text-decoration: none; display: inline-block;">
                             <i class="fas fa-eye"></i> View
                         </a>
-                        <button onclick="editModule('.$row['id'].', \''.$training.'\')" class="btn-warning" style="padding: 5px 10px;">
+                        <a href="?page=training&action=edit_module&training_id='.$training_id.'&id='.$row['id'].'" class="btn-warning" style="padding: 5px 10px; text-decoration: none; display: inline-block;">
                             <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <button onclick="deleteModule('.$row['id'].')" class="btn-danger" style="padding: 5px 10px;">
+                        </a>
+                        <a href="content/delete_module.php?id='.$row['id'].'&training_id='.$training_id.'" class="btn-danger" style="padding: 5px 10px; text-decoration: none; display: inline-block;" onclick="return confirm(\'Are you sure you want to delete this module?\')">
                             <i class="fas fa-trash"></i> Delete
-                        </button>
+                        </a>
                     </td>
                   </tr>';
         }
