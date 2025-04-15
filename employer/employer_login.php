@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-        <div class="header">
-            <div class="container-fluid d-flex align-items-center">
-                    <button onclick="window.history.back()" class="back-button me-auto">
-                        ← Back
-                    </button>
-            </div>
+<div class="header">
+        <div class="container-fluid d-flex align-items-center">
+            <a href="../index.php" class="back-button me-auto">
+            ← Back
+            </a>
         </div>
+    </div>
        
     <div class="container-fluid d-flex justify-content-center align-items-center mt-5">
         <div class="row front-box">

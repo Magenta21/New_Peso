@@ -156,3 +156,110 @@ a.navlink:hover::before {
     text-align: center;
     padding: 10px;
 }
+/* Navbar Base Styles */
+.navbar.bg-primary {
+    background-color: #0D6EFD !important;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Nav Link Hover Effects */
+.navbar .nav-link {
+    color: white !important;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    position: relative;
+    transition: all 0.3s ease;
+    margin: 0 0.25rem;
+    border-radius: 4px;
+}
+
+/* Underline Animation */
+.navbar .nav-link::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: white;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.navbar .nav-link:hover::before {
+    width: 70%;
+}
+
+/* Background Highlight on Hover */
+.navbar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Active Link Styling */
+.navbar .nav-link.active {
+    font-weight: 600;
+}
+
+.navbar .nav-link.active::before {
+    width: 70%;
+}
+
+/* Profile Picture Hover */
+.navbar .dropdown-toggle img {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.navbar .dropdown-toggle:hover img {
+    transform: scale(1.1);
+    border-color: rgba(255,255,255,0.5);
+    box-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+/* Dropdown Menu Styling */
+.navbar .dropdown-menu {
+    background-color: #0D6EFD;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.navbar .dropdown-item {
+    color: white !important;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.navbar .dropdown-item:hover {
+    background-color: rgba(255,255,255,0.1);
+    padding-left: 1.75rem;
+}
+
+/* Vertical Divider Styling */
+.navbar .vr {
+    height: 30px;
+    opacity: 0.3;
+    align-self: center;
+    transition: opacity 0.3s ease;
+}
+
+.navbar .vr:hover {
+    opacity: 0.8 !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .navbar .nav-link {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .navbar .vr {
+        display: none !important;
+    }
+    
+    .navbar .dropdown-menu {
+        background-color: rgba(13, 110, 253, 0.95);
+    }
+}

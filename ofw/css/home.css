@@ -9,7 +9,7 @@ body {
 }
 
 .header {
-    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+    background:#0D6EFD ;
     color: white;
     height: 50px;
     width: 100%;
@@ -112,3 +112,65 @@ a.navlink {
     transform-origin: left;
     transform: scaleX(1);
   }
+  /* Navbar Hover Effects */
+.navbar.bg-primary .nav-link {
+    position: relative;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+/* Underline animation */
+.navbar.bg-primary .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: white;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.navbar.bg-primary .nav-link:hover::after {
+    width: 70%; /* Adjust this to control underline length */
+}
+
+/* Background highlight on hover */
+.navbar.bg-primary .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+/* Dropdown hover effects */
+.navbar.bg-primary .dropdown:hover .dropdown-toggle {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 4px 4px 0 0;
+}
+
+/* Dropdown menu items */
+.navbar.bg-primary .dropdown-item {
+    transition: all 0.2s ease;
+}
+
+.navbar.bg-primary .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white !important;
+    padding-left: 1.5rem;
+}
+
+/* Vertical divider hover */
+.navbar.bg-primary .vr:hover {
+    opacity: 0.8 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar.bg-primary .nav-link::after {
+        display: none;
+    }
+    
+    .navbar.bg-primary .nav-link:hover {
+        background-color: transparent;
+    }
+}

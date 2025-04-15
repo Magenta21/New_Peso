@@ -24,7 +24,7 @@ $email = $_GET['email']; // Get the email from URL
                     <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
                 </div>
                 <div class="col-md-8">
-                    <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
+               
                 </div>
             </div>
         </div>

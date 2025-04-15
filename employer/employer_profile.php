@@ -54,47 +54,13 @@ $stmt_new->close();
     <link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
-    <div class="header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
-                </div>
-                <div class="col-md-8">
-                    <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
-                </div>
-                <div class="col-md-2 mt-1 position-relative">
-                    <div class="dropdown">
-                        <a href="#" class="text-decoration-none mt-5" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?php if (!empty($row['company_photo'])): ?>
-                                <img id="preview" src="<?php echo $row['company_photo']; ?>" alt="Profile Image" class="profile-pic img-fluid rounded-circle" style="width: 40px; height: 40px;">
-                            <?php else: ?>
-                                <img src="../img/user-placeholder.png" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
-                            <?php endif; ?>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="employer_profile.php">Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+<div class="#">
+        <div class="container-fluid d-flex ">
+            <a href="employer_home.php" class="back-button me-auto">
+            ← Back
+            </a>
         </div>
-
     </div>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <span class="navbar-text text-white w-100 text-center">
-                <a class="navlink" href="employer_home.php">Home</a>
-                <a class="navlink" href="post_job.php">Job Post</a>
-                <a class="navlink" href="job_list.php">Job list</a>
-                <a class="navlink" href="employees.php">Employers</a>
-                
-            </span>
-        </div>
-    </nav>
-
     <div class="container mt-2">
         <div class="card p-4 shadow">
         <div class="tabs d-flex justify-content-center mb-3">

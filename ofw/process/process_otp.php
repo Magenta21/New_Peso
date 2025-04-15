@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':email', $email);
             $stmt->execute();
     
-            echo "OTP Verified! Your account is now activated. <a href='../applicant_login.php'>Login</a>";
+            header("Location: ../ofw_home.php");
         } else {
             echo "Invalid or expired OTP. <a href='../otp_verification.php?email=" . urlencode($email) . "'>Try Again</a>";
         }

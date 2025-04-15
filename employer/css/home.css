@@ -9,7 +9,7 @@ body {
 }
 
 .header {
-    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+    background:#0D6EFD;
     color: white;
     height: 50px;
     width: 100%;
@@ -112,3 +112,82 @@ a.navlink {
     transform-origin: left;
     transform: scaleX(1);
   }
+  /* Navbar Hover Effects */
+.navbar.bg-primary .nav-link {
+    position: relative;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+}
+
+/* Underline animation */
+.navbar.bg-primary .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background: white;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+    border-radius: 2px;
+}
+
+.navbar.bg-primary .nav-link:hover::after {
+    width: 70%;
+}
+
+/* Background highlight on hover */
+.navbar.bg-primary .nav-link:hover {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Dropdown hover effects */
+.navbar.bg-primary .dropdown:hover .nav-link {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+/* Profile dropdown hover */
+.navbar.bg-primary #profileDropdown:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+/* Vertical divider hover */
+.navbar.bg-primary .vr:hover {
+    opacity: 0.8 !important;
+}
+
+/* Dropdown menu styles */
+.dropdown-menu {
+    background-color: #0D6EFD;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-item {
+    color: white !important;
+    padding: 8px 20px;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    padding-left: 25px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar.bg-primary .nav-link {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+    
+    .navbar.bg-primary .nav-link::after {
+        display: none;
+    }
+}
