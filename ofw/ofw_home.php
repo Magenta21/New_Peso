@@ -35,45 +35,67 @@ if (!$row) {
     <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
-    <div class="header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
-                </div>
-                <div class="col-md-8">
-                    <h3 style="margin-top: 5px; font-weight: 900; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
-                </div>
-                <div class="col-md-2 mt-1 position-relative">
-                    <div class="dropdown">
-                        <a href="#" class="text-decoration-none mt-5" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?php if (!empty($row['profile_image'])): ?>
-                                <img id="preview" src="<?php echo $row['profile_image']; ?>" alt="Profile Image" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
-                            <?php else: ?>
-                                <img src="../img/user-placeholder.png" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
-                            <?php endif; ?>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
+<nav class="navbar bg-primary text-white py-2">
+    <div class="container-fluid">
+        <!-- Navigation Links -->
+        <img src="../img/logolb.png" alt="lblogo" style="height: 50px;">
+        <div class="ms-auto">        
+                   
+        </div>
+        
+        <div class="d-flex flex-wrap align-items-center">
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"> </div>
+                <a href="#" class="nav-link px-3">Post Report</a>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            
+            <!-- Applicant Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link px-3 " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Take a Survey
+                </a>
+               
+            </div>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            
+          
+            <!-- Trainings Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link px-3 " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    View Report Status
+                </a>
+                
+            </div>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            <!-- OFW Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link px-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    About Us
+                </a>
+                
+            </div>
+            <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
+            
+        </div>
+        <div class="ms-auto">
+            <div class="dropdown">
+                <a href="#" class="text-decoration-none mt-5" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <?php if (!empty($row['profile_image'])): ?>
+                        <img id="preview" src="<?php echo $row['profile_image']; ?>" alt="Profile Image" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
+                    <?php else: ?>
+                        <img src="../img/user-placeholder.png" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
+                    <?php endif; ?>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="ofw_profile.php">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
+                </ul>
             </div>
         </div>
-
     </div>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <span class="navbar-text text-white w-100 text-center">
-                <a class="navlink" href="#">Post report</a>
-                <a class="navlink" href="#">take a survey</a>
-                <a class="navlink" href="#">View report status</a>
-                <a class="navlink" href="#about">About Us</a>
-            </span>
-        </div>
-    </nav>
+</nav>
+
+    
     <div class="banner">
     </div>
 

@@ -83,7 +83,9 @@
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
             <a href="news.php" class="nav-link px-3">NEWS</a>
         </div>
-        <div class="ms-auto"></div>
+        <div class="ms-auto">
+            
+        </div>
     </div>
 </nav>
 
