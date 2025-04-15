@@ -63,7 +63,7 @@ if (!$row_emp) {
             
             <!-- Municipality Name Section -->
             <div class="col-md-8 col-xxl-6 text-center">
-                <h3 style="margin-top: 5px; font-weight: 700; color: #ffffff;">MUNICIPALITY OF LOS BANOS</h3>
+               
             </div>
 
             <!-- Profile Picture Section -->

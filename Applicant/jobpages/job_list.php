@@ -85,14 +85,7 @@ $result = $stmt->get_result();
                 </div>
                 
                 <div class="col-md-2 pt-5 text-start">
-                <form action="process/hide.php" method="post">
-                    <input type="hidden" name="job_id" value="<?= $row['id'] ?>">
-                    <button type="submit" class="btn btn-sm <?= $row['is_active'] == 1 ? 'btn-success' : 'btn-danger' ?> toggle-status"
-                        data-id="<?= $row['id'] ?>" 
-                        data-status="<?= $row['is_active'] ?>">
-                        <?= $row['is_active'] == 1 ? 'Active' : 'Inactive' ?>
-                    </button>
-                </form>
+                
                 </div>
             </div>
         </a>
