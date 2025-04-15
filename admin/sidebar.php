@@ -21,8 +21,8 @@
             </a>
         </li>
         <li>
-            <a href="?page=content" class="<?= $page === 'content' ? 'active' : '' ?>">
-                <i class="fas fa-file-alt"></i> Content Management
+            <a href="?page=training" class="<?= $page === 'training' ? 'active' : '' ?>">
+                <i class="fas fa-file-alt"></i> Training Management
             </a>
         </li>
         <li>
