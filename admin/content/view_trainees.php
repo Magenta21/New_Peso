@@ -1,11 +1,12 @@
 <?php
+// Database connection
 $db = new mysqli('localhost', 'root', '', 'pesoo');
 
 if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
-$training = isset($_GET['training']) ? $_GET['training'] : '';
+$training = $_GET['training'] ?? '';
 $valid_trainings = ['computer_lit', 'dressmaking', 'hilot_wellness', 'welding'];
 
 if (!in_array($training, $valid_trainings)) {
@@ -25,9 +26,9 @@ $training_name = $training_names[$training];
 
 <div class="content-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
     <h2><?= htmlspecialchars($training_name) ?> Trainees</h2>
-    <button class="btn-secondary" onclick="document.getElementById('dynamic-content').style.display='none'" style="padding: 8px 12px;">
+    <a href="?page=training" class="btn-secondary" style="padding: 8px 12px; text-decoration: none;">
         <i class="fas fa-arrow-left"></i> Back
-    </button>
+    </a>
 </div>
 
 <div class="trainees-list">

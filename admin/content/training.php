@@ -1,10 +1,101 @@
 <?php
-// Database connection
-$db = new mysqli('localhost', 'root', '', 'pesoo');
+// Enable full error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-if ($db->connect_error) {
-    die("Connection failed: " . $db->connect_error);
+// Database connection with detailed error handling
+try {
+    $db = new mysqli('localhost', 'root', '', 'pesoo');
+    if ($db->connect_error) {
+        throw new Exception("Database connection failed: " . $db->connect_error);
+    }
+} catch (Exception $e) {
+    die("<div class='alert alert-danger'><strong>Database Error:</strong> " . htmlspecialchars($e->getMessage()) . "</div>");
 }
+
+// Helper functions with validation
+function getTrainingIcon($name) {
+    if (empty($name)) {
+        error_log("Empty training name passed to getTrainingIcon");
+        return 'fas fa-book';
+    }
+    
+    $icons = [
+        'Computer Literacy' => 'fas fa-laptop-code',
+        'Dressmaking' => 'fas fa-tshirt',
+        'Hilot Wellness' => 'fas fa-spa',
+        'Welding' => 'fas fa-tools'
+    ];
+    
+    return $icons[$name] ?? 'fas fa-book';
+}
+
+function getTrainingColor($name) {
+    if (empty($name)) {
+        error_log("Empty training name passed to getTrainingColor");
+        return '#2c3e50';
+    }
+    
+    $colors = [
+        'Computer Literacy' => '#3498db',
+        'Dressmaking' => '#e74c3c',
+        'Hilot Wellness' => '#2ecc71',
+        'Welding' => '#f39c12'
+    ];
+    
+    return $colors[$name] ?? '#2c3e50';
+}
+
+function getTrainingTableName($name) {
+    if (empty($name)) {
+        error_log("Empty training name passed to getTrainingTableName");
+        return '';
+    }
+    
+    $tables = [
+        'Computer Literacy' => 'computer_lit',
+        'Dressmaking' => 'dressmaking',
+        'Hilot Wellness' => 'hilot_wellness',
+        'Welding' => 'welding'
+    ];
+    
+    return $tables[$name] ?? '';
+}
+
+// Get all trainings from database with error handling
+try {
+    $trainings = [];
+    $result = $db->query("SELECT * FROM skills_training");
+    
+    if (!$result) {
+        throw new Exception("Query failed: " . $db->error);
+    }
+    
+    if ($result->num_rows === 0) {
+        error_log("No training programs found in skills_training table");
+    }
+    
+    while ($row = $result->fetch_assoc()) {
+        if (empty($row['id'])) {
+            error_log("Training record with empty ID found");
+            continue;
+        }
+        
+        $trainings[] = [
+            'id' => (int)$row['id'],
+            'name' => htmlspecialchars($row['name']),
+            'icon' => getTrainingIcon($row['name']),
+            'color' => getTrainingColor($row['name']),
+            'table' => getTrainingTableName($row['name'])
+        ];
+    }
+} catch (Exception $e) {
+    error_log($e->getMessage());
+    $trainings = []; // Empty array to prevent errors in the view
+}
+
+// Debug output (comment or remove in production)
+echo "<!-- Debug: " . count($trainings) . " trainings loaded -->";
 ?>
 
 <div class="page-header">
@@ -13,260 +104,92 @@ if ($db->connect_error) {
 </div>
 
 <div class="training-management-content">
+    <?php if (isset($error)): ?>
+        <div class="alert alert-danger" style="padding: 15px; background-color: #f8d7da; color: #721c24; border-radius: 4px; margin-bottom: 20px;">
+            <?= htmlspecialchars($error) ?>
+        </div>
+    <?php endif; ?>
+    
+    <?php if (isset($success)): ?>
+        <div class="alert alert-success" style="padding: 15px; background-color: #d4edda; color: #155724; border-radius: 4px; margin-bottom: 20px;">
+            <?= htmlspecialchars($success) ?>
+        </div>
+    <?php endif; ?>
+    
+    <?php if (empty($trainings)): ?>
+        <div class="alert alert-warning">
+            <strong>Warning:</strong> No training programs found in the system. Please check your database.
+        </div>
+    <?php endif; ?>
+    
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h2>Training Programs</h2>
-        <button id="createModuleBtn" class="btn-primary" style="padding: 10px 15px;">
-            <i class="fas fa-plus"></i> Create New Module
-        </button>
+        <small class="text-muted">Showing <?= count($trainings) ?> programs</small>
     </div>
     
     <div class="training-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
-        <?php
-        // Training programs data
-        $trainings = [
-            [
-                'name' => 'Computer Literacy',
-                'icon' => 'fas fa-laptop-code',
-                'color' => '#3498db',
-                'table' => 'computer_lit'
-            ],
-            [
-                'name' => 'Dressmaking',
-                'icon' => 'fas fa-tshirt',
-                'color' => '#e74c3c',
-                'table' => 'dressmaking'
-            ],
-            [
-                'name' => 'Hilot Wellness',
-                'icon' => 'fas fa-spa',
-                'color' => '#2ecc71',
-                'table' => 'hilot_wellness'
-            ],
-            [
-                'name' => 'Welding',
-                'icon' => 'fas fa-tools',
-                'color' => '#f39c12',
-                'table' => 'welding'
-            ]
-        ];
-        
-        foreach ($trainings as $training) {
-            // Count trainees for this training
-            $trainee_count = $db->query("SELECT COUNT(DISTINCT trainees_id) FROM {$training['table']}")->fetch_row()[0];
-            
-            echo '<div class="training-card" style="background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden;">
-                    <div class="training-header" style="background: '.$training['color'].'; padding: 15px; color: white; display: flex; align-items: center;">
-                        <i class="'.$training['icon'].'" style="font-size: 24px; margin-right: 10px;"></i>
-                        <h3 style="margin: 0;">'.$training['name'].'</h3>
-                    </div>
-                    <div class="training-body" style="padding: 20px;">
-                        <p style="margin-bottom: 15px;"><strong>Enrolled Trainees:</strong> '.$trainee_count.'</p>
-                        <div style="display: flex; gap: 10px;">
-                            <a href="#" class="view-trainees-btn" data-training="'.$training['table'].'" 
-                               style="background-color: '.$training['color'].'; color: white; text-decoration: none; padding: 8px 12px; border-radius: 4px; text-align: center; flex: 1;">
-                                View Trainees
-                            </a>
-                            <a href="#" class="view-modules-btn" data-training="'.$training['table'].'" 
-                               style="background-color: #2c3e50; color: white; text-decoration: none; padding: 8px 12px; border-radius: 4px; text-align: center; flex: 1;">
-                                View Modules
-                            </a>
-                        </div>
-                    </div>
-                  </div>';
-        }
-        ?>
-    </div>
-    
-    <!-- Dynamic content will load here -->
-    <div id="dynamic-content" style="margin-top: 30px;"></div>
-</div>
-
-<!-- Create Module Modal -->
-<div id="createModuleModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
-    <div class="modal-content" style="background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: 5px;">
-        <span class="close-modal" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
-        <h2 style="margin-bottom: 20px;">Create New Training Module</h2>
-        
-        <form id="moduleForm" method="POST" enctype="multipart/form-data" style="display: grid; gap: 15px;">
-            <input type="hidden" id="trainingType" name="training_type">
-            <input type="hidden" id="moduleId" name="module_id">
-            
-            <div>
-                <label for="moduleName" style="display: block; margin-bottom: 5px; font-weight: bold;">Module Name</label>
-                <input type="text" id="moduleName" name="module_name" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
-            </div>
-            
-            <div>
-                <label for="moduleFile" style="display: block; margin-bottom: 5px; font-weight: bold;">Module File</label>
-                <input type="file" id="moduleFile" name="module_file" accept=".pdf,.doc,.docx,.ppt,.pptx" style="width: 100%;">
-                <p style="font-size: 12px; color: #666;">Accepted formats: PDF, DOC, DOCX, PPT, PPTX</p>
-            </div>
-            
-            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-                <button type="button" class="btn-secondary cancel-btn" style="padding: 10px 15px;">
-                    Cancel
-                </button>
-                <button type="submit" class="btn-primary" style="padding: 10px 15px;">
-                    Save Module
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Modal elements
-    const modal = document.getElementById('createModuleModal');
-    const createBtn = document.getElementById('createModuleBtn');
-    const closeBtn = document.querySelector('.close-modal');
-    const cancelBtn = document.querySelector('.cancel-btn');
-    
-    // Open modal when create button is clicked
-    createBtn.addEventListener('click', function() {
-        document.getElementById('moduleForm').reset();
-        document.getElementById('moduleId').value = '';
-        document.getElementById('modalTitle').textContent = 'Create New Module';
-        modal.style.display = 'block';
-    });
-    
-    // Close modal
-    function closeModal() {
-        modal.style.display = 'none';
-    }
-    
-    closeBtn.addEventListener('click', closeModal);
-    cancelBtn.addEventListener('click', closeModal);
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        if (event.target == modal) {
-            closeModal();
-        }
-    });
-    
-    // View Trainees
-    document.querySelectorAll('.view-trainees-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const training = this.getAttribute('data-training');
-            
-            fetch('content/get_trainees.php?training=' + training)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('dynamic-content').innerHTML = data;
-                    document.getElementById('dynamic-content').style.display = 'block';
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('dynamic-content').innerHTML = 
-                        '<div class="alert" style="padding: 15px; background-color: #f8d7da; color: #721c24; border-radius: 4px;">Error loading trainees</div>';
-                    document.getElementById('dynamic-content').style.display = 'block';
-                });
-        });
-    });
-    
-    // View Modules
-    document.querySelectorAll('.view-modules-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const training = this.getAttribute('data-training');
-            document.getElementById('trainingType').value = training;
-            
-            fetch('content/get_modules.php?training=' + training)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('dynamic-content').innerHTML = data;
-                    document.getElementById('dynamic-content').style.display = 'block';
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('dynamic-content').innerHTML = 
-                        '<div class="alert" style="padding: 15px; background-color: #f8d7da; color: #721c24; border-radius: 4px;">Error loading modules</div>';
-                    document.getElementById('dynamic-content').style.display = 'block';
-                });
-        });
-    });
-    
-    // Form submission
-    document.getElementById('moduleForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this);
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-        submitBtn.disabled = true;
-        
-        fetch('content/save_module.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Module saved successfully!');
-                closeModal();
-                // Refresh the modules list
-                const trainingType = document.getElementById('trainingType').value;
-                document.querySelector(`.view-modules-btn[data-training="${trainingType}"]`).click();
-            } else {
-                alert('Error: ' + data.message);
+        <?php foreach ($trainings as $training): ?>
+            <?php
+            // Count trainees with error handling
+            $trainee_count = 0;
+            try {
+                $count_result = $db->query("SELECT COUNT(DISTINCT trainees_id) FROM {$training['table']}");
+                if ($count_result) {
+                    $trainee_count = $count_result->fetch_row()[0];
+                } else {
+                    error_log("Failed to count trainees for table {$training['table']}: " . $db->error);
+                }
+            } catch (Exception $e) {
+                error_log("Error counting trainees: " . $e->getMessage());
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-        })
-        .finally(() => {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        });
-    });
+            ?>
+            
+            <div class="training-card" style="background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden;">
+                <div class="training-header" style="background: <?= $training['color'] ?>; padding: 15px; color: white; display: flex; align-items: center;">
+                    <i class="<?= $training['icon'] ?>" style="font-size: 24px; margin-right: 10px;"></i>
+                    <h3 style="margin: 0;"><?= $training['name'] ?></h3>
+                </div>
+                <div class="training-body" style="padding: 20px;">
+                    <p style="margin-bottom: 15px;"><strong>Enrolled Trainees:</strong> <?= $trainee_count ?></p>
+                    <div style="display: flex; gap: 10px;">
+                        <a href="?page=training&action=view_trainees&training_id=<?= $training['id'] ?>&table=<?= $training['table'] ?>" 
+                           class="btn-primary" 
+                           style="background-color: <?= $training['color'] ?>; color: white; text-decoration: none; padding: 8px 12px; border-radius: 4px; text-align: center; flex: 1;">
+                            View Trainees
+                        </a>
+                        <a href="?page=training&action=view_modules&training_id=<?= $training['id'] ?>" 
+                           class="btn-secondary" 
+                           style="background-color: #2c3e50; color: white; text-decoration: none; padding: 8px 12px; border-radius: 4px; text-align: center; flex: 1;">
+                            View Modules
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
     
-    // Function to edit module
-    window.editModule = function(moduleId, trainingType) {
-        document.getElementById('trainingType').value = trainingType;
-        document.getElementById('moduleId').value = moduleId;
-        document.getElementById('modalTitle').textContent = 'Edit Module';
+    <?php
+    // Handle different actions with error handling
+    if (isset($_GET['action'])) {
+        $action = $_GET['action'];
+        $training_id = isset($_GET['training_id']) ? (int)$_GET['training_id'] : 0;
         
-        fetch('content/get_module.php?id=' + moduleId)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('moduleName').value = data.module.module_name;
-                    modal.style.display = 'block';
-                } else {
-                    alert('Error: ' + data.message);
-                }
-            });
-    };
-    
-    // Function to delete module
-    window.deleteModule = function(moduleId) {
-        if (confirm('Are you sure you want to delete this module?')) {
-            fetch('content/delete_module.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'id=' + moduleId
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Module deleted successfully');
-                    // Refresh the current view
-                    const activeBtn = document.querySelector('.view-modules-btn.active');
-                    if (activeBtn) {
-                        activeBtn.click();
-                    }
-                } else {
-                    alert('Error: ' + data.message);
-                }
-            });
+        try {
+            $valid_actions = ['view_trainees', 'view_modules', 'add_module', 'edit_module'];
+            if (!in_array($action, $valid_actions)) {
+                throw new Exception("Invalid action specified");
+            }
+            
+            $action_file = 'content/' . $action . '.php';
+            if (!file_exists($action_file)) {
+                throw new Exception("Action file not found: " . $action_file);
+            }
+            
+            include $action_file;
+        } catch (Exception $e) {
+            echo "<div class='alert alert-danger'>Error: " . htmlspecialchars($e->getMessage()) . "</div>";
+            error_log($e->getMessage());
         }
-    };
-});
-</script>
+    }
+    ?>
+</div>
