@@ -106,3 +106,8 @@ a.navlink {
 	background-color: #0A4FB5; /* Slightly darker blue on hover */
 	transform: translateX(-4px); /* Subtle left movement */
 }
+a{
+    text-decoration: none;
+    color: #0D6EFD;
+    font-weight: bold;
+}

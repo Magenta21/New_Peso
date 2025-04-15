@@ -8,16 +8,14 @@ body {
     font-family: Arial, sans-serif;
     background-color: #d9d9d9;
 }
-colorbg{
-    background-color: #8B0000;
-}
+
 
 h2 {
     text-align: center;
 }
 
 .header {
-    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+    background:#0A4FB5;
     color: white;
     height: 50px;
     width: 100%;
