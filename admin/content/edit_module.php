@@ -6,23 +6,19 @@ if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
-$training = $_GET['training'] ?? '';
-$module_id = $_GET['id'] ?? 0;
-$valid_trainings = ['computer_lit', 'dressmaking', 'hilot_wellness', 'welding'];
+$training_id = (int)$_GET['training_id'] ?? 0;
+$module_id = (int)$_GET['id'] ?? 0;
 
-if (!in_array($training, $valid_trainings) || $module_id <= 0) {
-    die("Invalid request");
+// Get training details
+$stmt = $db->prepare("SELECT * FROM skills_training WHERE id = ?");
+$stmt->bind_param('i', $training_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$training = $result->fetch_assoc();
+
+if (!$training) {
+    die("Invalid training specified");
 }
-
-// Get training name for display
-$training_names = [
-    'computer_lit' => 'Computer Literacy',
-    'dressmaking' => 'Dressmaking',
-    'hilot_wellness' => 'Hilot Wellness',
-    'welding' => 'Welding'
-];
-
-$training_name = $training_names[$training];
 
 // Get module data
 $query = "SELECT * FROM modules WHERE id = ?";
@@ -39,6 +35,7 @@ if (!$module) {
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $module_name = trim($_POST['module_name']);
+    $module_description = trim($_POST['module_description'] ?? '');
     $current_file = $module['files'];
     
     // Validate inputs
@@ -49,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         // Handle file upload if a new file was provided
         if (!empty($_FILES['module_file']['name'])) {
-            // Handle file upload
             $upload_dir = 'uploads/modules/';
             if (!file_exists($upload_dir)) {
                 mkdir($upload_dir, 0777, true);
@@ -73,19 +69,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if (!isset($error)) {
             // Update database
-            $query = "UPDATE modules SET module_name = ?, files = ? WHERE id = ?";
+            $query = "UPDATE modules SET module_name = ?, module_description = ?, files = ? WHERE id = ?";
             $stmt = $db->prepare($query);
-            $stmt->bind_param('ssi', $module_name, $target_path, $module_id);
+            $stmt->bind_param('sssi', $module_name, $module_description, $target_path, $module_id);
             
             if ($stmt->execute()) {
                 // Delete old file if a new one was uploaded
                 if (!empty($_FILES['module_file']['name']) && $current_file != $target_path && file_exists($current_file)) {
                     unlink($current_file);
                 }
-                header("Location: ?page=training&action=view_modules&training=$training&success=Module updated successfully");
+                header("Location: ?page=training&action=view_modules&training_id=$training_id&success=Module updated successfully");
                 exit;
             } else {
-                // Delete the uploaded file if there was a database error
                 if (!empty($_FILES['module_file']['name']) && $current_file != $target_path && file_exists($target_path)) {
                     unlink($target_path);
                 }
@@ -97,8 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <div class="content-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <h2>Edit Module for <?= htmlspecialchars($training_name) ?></h2>
-    <a href="?page=training&action=view_modules&training=<?= $training ?>" class="btn-secondary" style="padding: 8px 12px; text-decoration: none;">
+    <h2>Edit Module for <?= htmlspecialchars($training['name']) ?></h2>
+    <a href="?page=training&action=view_modules&training_id=<?= $training_id ?>" class="btn-secondary" style="padding: 8px 12px; text-decoration: none;">
         <i class="fas fa-arrow-left"></i> Back
     </a>
 </div>
@@ -116,6 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     
     <div style="margin-bottom: 15px;">
+        <label for="moduleDescription" style="display: block; margin-bottom: 5px; font-weight: bold;">Description</label>
+        <textarea id="moduleDescription" name="module_description" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; min-height: 100px;"><?= htmlspecialchars($module['module_description']) ?></textarea>
+    </div>
+    
+    <div style="margin-bottom: 15px;">
         <label for="moduleFile" style="display: block; margin-bottom: 5px; font-weight: bold;">Module File</label>
         <input type="file" id="moduleFile" name="module_file" accept=".pdf,.doc,.docx,.ppt,.pptx" style="width: 100%;">
         <p style="font-size: 12px; color: #666;">Current file: <a href="<?= htmlspecialchars($module['files']) ?>" target="_blank"><?= basename($module['files']) ?></a></p>
@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     
     <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-        <a href="?page=training&action=view_modules&training=<?= $training ?>" class="btn-secondary" style="padding: 10px 15px; text-decoration: none;">
+        <a href="?page=training&action=view_modules&training_id=<?= $training_id ?>" class="btn-secondary" style="padding: 10px 15px; text-decoration: none;">
             Cancel
         </a>
         <button type="submit" class="btn-primary" style="padding: 10px 15px;">

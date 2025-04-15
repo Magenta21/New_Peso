@@ -6,26 +6,23 @@ if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
-$training = $_GET['training'] ?? '';
-$valid_trainings = ['computer_lit', 'dressmaking', 'hilot_wellness', 'welding'];
+$training_id = (int)$_GET['training_id'] ?? 0;
+$training_table = $_GET['table'] ?? '';
 
-if (!in_array($training, $valid_trainings)) {
+// Get training details
+$stmt = $db->prepare("SELECT * FROM skills_training WHERE id = ?");
+$stmt->bind_param('i', $training_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$training = $result->fetch_assoc();
+
+if (!$training || empty($training_table)) {
     die("Invalid training specified");
 }
-
-// Get training name for display
-$training_names = [
-    'computer_lit' => 'Computer Literacy',
-    'dressmaking' => 'Dressmaking',
-    'hilot_wellness' => 'Hilot Wellness',
-    'welding' => 'Welding'
-];
-
-$training_name = $training_names[$training];
 ?>
 
 <div class="content-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <h2><?= htmlspecialchars($training_name) ?> Trainees</h2>
+    <h2><?= htmlspecialchars($training['name']) ?> Trainees</h2>
     <a href="?page=training" class="btn-secondary" style="padding: 8px 12px; text-decoration: none;">
         <i class="fas fa-arrow-left"></i> Back
     </a>
@@ -35,7 +32,7 @@ $training_name = $training_names[$training];
     <?php
     $query = "SELECT t.*, tr.created_date 
              FROM trainees_profile t
-             JOIN $training tr ON t.id = tr.trainees_id
+             JOIN $training_table tr ON t.id = tr.trainees_id
              ORDER BY tr.created_date DESC";
     $result = $db->query($query);
     
