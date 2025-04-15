@@ -154,7 +154,7 @@ h3,h2 {
 }
 
 
-  .footer {
+.footer {
     background: rgb(46,140,231);
     background: linear-gradient(0deg, rgba(46,140,231,1) 0%, rgba(255,255,255,0) 5%, rgba(46,140,231,1) 99%);
     color: rgb(0, 0, 0);
@@ -230,6 +230,44 @@ h3,h2 {
 .dropdown-item:hover {
     background-color: rgba(255, 255, 255, 0.15) !important; /* Slightly stronger hover */
     color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Dropdown submenu styles */
+.dropdown-submenu {
+    position: relative;
+}
+
+/* Dropdown submenu styles - Specific to training items only */
+.dropdown-menu .dropdown-submenu {
+    position: relative;
+}
+
+/* Only show submenu when hovering the specific training item */
+.dropdown-menu .dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+    left: 100%;
+    top: 0;
+    margin-top: -1px;
+}
+
+/* Style for training submenu items */
+.dropdown-menu .dropdown-submenu > .dropdown-menu {
+    display: none;
+    position: absolute;
+}
+
+/* Arrow indicator for items with submenus */
+.dropdown-menu .dropdown-submenu > a:after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid transparent;
+    border-right: 0;
+    border-bottom: 0.3em solid transparent;
+    border-left: 0.3em solid;
+    float: right;
+    margin-top: 7px;
 }
 
 /* Keep original navbar color (don't change this) */

@@ -36,21 +36,45 @@
             
           
             <!-- Trainings Dropdown -->
+            <!-- Trainings Dropdown -->
             <div class="dropdown">
-                <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                     TRAININGS
                 </a>
                 <ul class="dropdown-menu bg-primary">
-                    <li><a class="dropdown-item text-white" href="training/training_login.php">Welding</a></li>
-                    
-                    <!-- Wellness-Hilot with nested dropdown -->
-                    <li class="dropdown-submenu position-relative">
-                    <a class="dropdown-item text-white" href="training/training_login.php" id="wellnessHilotTrigger">Wellness-Hilot  </a>
-                    </li>                    
-                    <li><a class="dropdown-item text-white" href="training/training_login.php">Dressmaking</a></li>
-                    <li><a class="dropdown-item text-white" href="training/training_login.php">Computer Literature</a></li>
+                    <!-- Welding with submenu -->
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item text-white" href="#">Welding</a>
+                        <ul class="dropdown-menu bg-primary">
+                            <li><a class="dropdown-item text-white" href="training/training_login.php">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="training/Trainees_register.php">Register</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item text-white" href="#">Hilot-Wellness</a>
+                        <ul class="dropdown-menu bg-primary">
+                            <li><a class="dropdown-item text-white" href="training/training_login.php">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="training/Trainees_register.php">Register</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item text-white" href="#">Dressmaking</a>
+                        <ul class="dropdown-menu bg-primary">
+                            <li><a class="dropdown-item text-white" href="training/training_login.php">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="training/Trainees_register.php">Register</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item text-white" href="#">Computer Literate</a>
+                        <ul class="dropdown-menu bg-primary">
+                            <li><a class="dropdown-item text-white" href="training/training_login.php">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="training/Trainees_register.php">Register</a></li>
+                        </ul>
+                    </li>
+                    <!-- Other training items with same structure -->
                 </ul>
             </div>
+            
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
             <!-- OFW Dropdown -->
             <div class="dropdown">
@@ -67,16 +91,43 @@
             
             <!-- Employer Dropdown -->
             <div class="dropdown">
-                <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    EMPLOYER
+                <a class="nav-link px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                   Employer
                 </a>
                 <ul class="dropdown-menu bg-primary">
-                    <li><a class="dropdown-item text-white" href="employer/employer_login.php">Local</a></li>
-                    <li><a class="dropdown-item text-white" href="employer/employer_login.php">Overseas</a></li>
-                    <li><a class="dropdown-item text-white" href="employer/employer_login.php">Direct Hire</a></li>
-                    <li><a class="dropdown-item text-white" href="employer/employer_login.php">Agency</a></li>
+                    <!-- Welding with submenu -->
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item text-white" href="#">Local</a>
+                        <ul class="dropdown-menu bg-primary">
+                            <li><a class="dropdown-item text-white" href="employer/emplo_login.php">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="employer/employer_register.php">Register</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item text-white" href="#">Overseas</a>
+                        <ul class="dropdown-menu bg-primary">
+                            <li><a class="dropdown-item text-white" href="employer/employer_login.php">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="employer/employer_register.php">Register</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item text-white" href="#">Direct-Hiring</a>
+                        <ul class="dropdown-menu bg-primary">
+                            <li><a class="dropdown-item text-white" href="employer/employer_login.php">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="employer/employer_register.php">Register</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item text-white" href="#">Agency</a>
+                        <ul class="dropdown-menu bg-primary">
+                            <li><a class="dropdown-item text-white" href="employer/employeryer_login.php">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="employer/employer_register.php">Register</a></li>
+                        </ul>
+                    </li>
+                    <!-- Other training items with same structure -->
                 </ul>
             </div>
+            
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
             
             <a href="joblist.php" class="nav-link px-3">JOBS</a>
@@ -167,7 +218,7 @@
 
                 </div>
                 <div class="block block-bg mb-4">
-                    <h3>Organizatinal Outcome</h3>
+                    <h3>Organizational Outcome</h3>
                         <ul class="b">
                             <li>Full employment opportunities for all</li>
                             <li>Capable and empowered citizenry through skills training</li>
