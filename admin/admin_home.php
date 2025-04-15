@@ -10,7 +10,7 @@ if (!isset($_SESSION['logged_in'])) {
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 
 // List of valid admin pages
-$valid_pages = ['dashboard', 'users', 'content', 'settings', 'reports', 'messages'];
+$valid_pages = ['dashboard', 'users', 'training', 'settings', 'reports', 'messages'];
 
 // Validate the requested page
 if (!in_array($page, $valid_pages)) {
