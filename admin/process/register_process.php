@@ -22,7 +22,7 @@ function sendRegistrationEmail($email, $userData, $otp) {
 
         // Recipients
         $mail->setFrom('jervinguevarra123@gmail.com', 'PESO Los Baños');
-        $mail->addAddress('jervinguevarra123@gmail.com'); 
+        $mail->addAddress($email); 
 
         // Content
         $mail->isHTML(true);

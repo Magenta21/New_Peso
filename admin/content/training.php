@@ -46,22 +46,6 @@ function getTrainingColor($name) {
     return $colors[$name] ?? '#2c3e50';
 }
 
-function getTrainingTableName($name) {
-    if (empty($name)) {
-        error_log("Empty training name passed to getTrainingTableName");
-        return '';
-    }
-    
-    $tables = [
-        'Computer Literacy' => 'computer_lit',
-        'Dressmaking' => 'dressmaking',
-        'Hilot Wellness' => 'hilot_wellness',
-        'Welding' => 'welding'
-    ];
-    
-    return $tables[$name] ?? '';
-}
-
 // Get all trainings from database with error handling
 try {
     $trainings = [];
@@ -85,17 +69,13 @@ try {
             'id' => (int)$row['id'],
             'name' => htmlspecialchars($row['name']),
             'icon' => getTrainingIcon($row['name']),
-            'color' => getTrainingColor($row['name']),
-            'table' => getTrainingTableName($row['name'])
+            'color' => getTrainingColor($row['name'])
         ];
     }
 } catch (Exception $e) {
     error_log($e->getMessage());
-    $trainings = []; // Empty array to prevent errors in the view
+    $trainings = [];
 }
-
-// Debug output (comment or remove in production)
-echo "<!-- Debug: " . count($trainings) . " trainings loaded -->";
 ?>
 
 <div class="page-header">
@@ -130,14 +110,19 @@ echo "<!-- Debug: " . count($trainings) . " trainings loaded -->";
     <div class="training-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
         <?php foreach ($trainings as $training): ?>
             <?php
-            // Count trainees with error handling
+            // Count trainees using trainee_trainings table
             $trainee_count = 0;
             try {
-                $count_result = $db->query("SELECT COUNT(DISTINCT trainees_id) FROM {$training['table']}");
+                $count_query = "SELECT COUNT(*) FROM trainee_trainings WHERE training_id = ? AND status = 'accepted'";
+                $count_stmt = $db->prepare($count_query);
+                $count_stmt->bind_param('i', $training['id']);
+                $count_stmt->execute();
+                $count_result = $count_stmt->get_result();
+                
                 if ($count_result) {
                     $trainee_count = $count_result->fetch_row()[0];
                 } else {
-                    error_log("Failed to count trainees for table {$training['table']}: " . $db->error);
+                    error_log("Failed to count trainees for training ID {$training['id']}: " . $db->error);
                 }
             } catch (Exception $e) {
                 error_log("Error counting trainees: " . $e->getMessage());
@@ -152,7 +137,7 @@ echo "<!-- Debug: " . count($trainings) . " trainings loaded -->";
                 <div class="training-body" style="padding: 20px;">
                     <p style="margin-bottom: 15px;"><strong>Enrolled Trainees:</strong> <?= $trainee_count ?></p>
                     <div style="display: flex; gap: 10px;">
-                        <a href="?page=training&action=view_trainees&training_id=<?= $training['id'] ?>&table=<?= $training['table'] ?>" 
+                        <a href="?page=training&action=view_trainees&training_id=<?= $training['id'] ?>" 
                            class="btn-primary" 
                            style="background-color: <?= $training['color'] ?>; color: white; text-decoration: none; padding: 8px 12px; border-radius: 4px; text-align: center; flex: 1;">
                             View Trainees
@@ -169,7 +154,6 @@ echo "<!-- Debug: " . count($trainings) . " trainings loaded -->";
     </div>
     
     <?php
-    // Handle different actions with error handling
     if (isset($_GET['action'])) {
         $action = $_GET['action'];
         $training_id = isset($_GET['training_id']) ? (int)$_GET['training_id'] : 0;

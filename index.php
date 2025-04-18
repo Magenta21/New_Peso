@@ -46,32 +46,31 @@
                     <li class="dropdown-submenu">
                         <a class="dropdown-item text-white" href="#">Welding</a>
                         <ul class="dropdown-menu bg-primary">
-                            <li><a class="dropdown-item text-white" href="training/training_login.php">Login</a></li>
-                            <li><a class="dropdown-item text-white" href="training/Trainees_register.php">Register</a></li>
+                            <li><a class="dropdown-item text-white" href="training/training_login.php?training=1">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="training/Trainees_register.php?training=1">Register</a></li>
                         </ul>
                     </li>
                     <li class="dropdown-submenu">
                         <a class="dropdown-item text-white" href="#">Hilot-Wellness</a>
                         <ul class="dropdown-menu bg-primary">
-                            <li><a class="dropdown-item text-white" href="training/training_login.php">Login</a></li>
-                            <li><a class="dropdown-item text-white" href="training/Trainees_register.php">Register</a></li>
+                            <li><a class="dropdown-item text-white" href="training/training_login.php?training=2">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="training/Trainees_register.php?training=2">Register</a></li>
                         </ul>
                     </li>
                     <li class="dropdown-submenu">
                         <a class="dropdown-item text-white" href="#">Dressmaking</a>
                         <ul class="dropdown-menu bg-primary">
-                            <li><a class="dropdown-item text-white" href="training/training_login.php">Login</a></li>
-                            <li><a class="dropdown-item text-white" href="training/Trainees_register.php">Register</a></li>
+                            <li><a class="dropdown-item text-white" href="training/training_login.php?training=3">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="training/Trainees_register.php?training=3">Register</a></li>
                         </ul>
                     </li>
                     <li class="dropdown-submenu">
                         <a class="dropdown-item text-white" href="#">Computer Literate</a>
                         <ul class="dropdown-menu bg-primary">
-                            <li><a class="dropdown-item text-white" href="training/training_login.php">Login</a></li>
-                            <li><a class="dropdown-item text-white" href="training/Trainees_register.php">Register</a></li>
+                            <li><a class="dropdown-item text-white" href="training/training_login.php?training=4">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="training/Trainees_register.php?training=4">Register</a></li>
                         </ul>
                     </li>
-                    <!-- Other training items with same structure -->
                 </ul>
             </div>
             

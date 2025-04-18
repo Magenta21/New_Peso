@@ -20,9 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user && password_verify($password, $user['Passwords'])) {
             // Set session variables
-            $_SESSION['applicant_id'] = $user['id'];
+            $_SESSION['admin_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            $_SESSION['applicant_name'] = $user['fname'];
+            $_SESSION['admin_name'] = $user['fname'];
             $_SESSION['logged_in'] = true;
 
             // Redirect to employer dashboard

@@ -1,7 +1,4 @@
 <?php
-// Start output buffering at the VERY TOP
-ob_start();
-
 // Database connection
 $db = new mysqli('localhost', 'root', '', 'pesoo');
 
@@ -22,6 +19,9 @@ if (!$training) {
     die("Invalid training specified");
 }
 
+$success = false;
+$error = '';
+
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $module_name = trim($_POST['module_name']);
@@ -32,45 +32,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Module name and file are required";
     } else {
         // Handle file upload
-        $upload_dir = 'uploads/modules/';
-        if (!file_exists($upload_dir)) {
-            mkdir($upload_dir, 0777, true);
+        $upload_dir = 'uploads/modules/'; // Relative path from your script
+        
+        // Create directory if it doesn't exist (using absolute path for creation only)
+        $absolute_upload_dir = __DIR__ . '/' . $upload_dir;
+        if (!file_exists($absolute_upload_dir)) {
+            if (!mkdir($absolute_upload_dir, 0755, true)) {
+                $error = "Failed to create upload directory";
+            }
         }
-
-        $file_name = basename($_FILES['module_file']['name']);
-        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-        $allowed_ext = ['pdf', 'doc', 'docx', 'ppt', 'pptx'];
-
-        if (!in_array($file_ext, $allowed_ext)) {
-            $error = "Invalid file type. Only PDF, DOC, DOCX, PPT, PPTX are allowed";
+        
+        // Check if directory is writable
+        if (!is_writable($absolute_upload_dir)) {
+            $error = "Upload directory is not writable";
         } else {
-            $new_file_name = uniqid() . '_' . preg_replace('/[^a-zA-Z0-9\.]/', '_', $file_name);
-            $target_path = $upload_dir . $new_file_name;
+            $file_name = basename($_FILES['module_file']['name']);
+            $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+            $allowed_ext = ['pdf', 'doc', 'docx', 'ppt', 'pptx'];
 
-            if (move_uploaded_file($_FILES['module_file']['tmp_name'], $target_path)) {
-                // Insert into database with training_id
-                $query = "INSERT INTO modules (training_id, module_name, module_description, files, date_created) VALUES (?, ?, ?, ?, NOW())";
-                $stmt = $db->prepare($query);
-                $stmt->bind_param('isss', $training_id, $module_name, $module_description, $target_path);
-                
-                if ($stmt->execute()) {
-                    // Clear buffer before header redirect
-                    ob_end_clean();
-                    header("Location: ?page=training&action=view_modules&training_id=$training_id&success=Module created successfully");
-                    exit;
-                } else {
-                    unlink($target_path);
-                    $error = "Database error: " . $db->error;
-                }
+            if (!in_array($file_ext, $allowed_ext)) {
+                $error = "Invalid file type. Only PDF, DOC, DOCX, PPT, PPTX are allowed";
             } else {
-                $error = "File upload failed. Check directory permissions";
+                // Check for upload errors
+                if ($_FILES['module_file']['error'] !== UPLOAD_ERR_OK) {
+                    $error = "File upload error: " . $_FILES['module_file']['error'];
+                } else {
+                    $new_file_name = uniqid() . '_' . preg_replace('/[^a-zA-Z0-9\.]/', '_', $file_name);
+                    $relative_path = $upload_dir . $new_file_name; // Relative path for DB
+                    $absolute_path = $absolute_upload_dir . $new_file_name; // Absolute path for move_uploaded_file
+
+                    if (move_uploaded_file($_FILES['module_file']['tmp_name'], $absolute_path)) {
+                        // Insert into database with training_id - using relative path
+                        $query = "INSERT INTO modules (training_id, module_name, module_description, files, date_created) VALUES (?, ?, ?, ?, NOW())";
+                        $stmt = $db->prepare($query);
+                        $stmt->bind_param('isss', $training_id, $module_name, $module_description, $relative_path);
+                        
+                        if ($stmt->execute()) {
+                            $success = true;
+                        } else {
+                            unlink($absolute_path);
+                            $error = "Database error: " . $db->error;
+                        }
+                    } else {
+                        $error = "File move operation failed. Check directory permissions";
+                    }
+                }
             }
         }
     }
 }
-// End output buffering and send content
-ob_end_flush();
 ?>
+
+<?php if ($success): ?>
+<script>
+alert('Module created successfully');
+window.location.href = '?page=training&action=view_modules&training_id=<?= $training_id ?>';
+</script>
+<?php endif; ?>
 
 <div class="content-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
     <h2>Add New Module for <?= htmlspecialchars($training['name']) ?></h2>
@@ -79,7 +97,7 @@ ob_end_flush();
     </a>
 </div>
 
-<?php if (isset($error)): ?>
+<?php if (!empty($error)): ?>
     <div class="alert alert-danger" style="padding: 15px; background-color: #f8d7da; color: #721c24; border-radius: 4px; margin-bottom: 20px;">
         <?= htmlspecialchars($error) ?>
     </div>

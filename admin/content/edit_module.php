@@ -32,6 +32,9 @@ if (!$module) {
     die("Module not found");
 }
 
+$success = false;
+$error = '';
+
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $module_name = trim($_POST['module_name']);
@@ -67,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
         
-        if (!isset($error)) {
+        if (empty($error)) {
             // Update database
             $query = "UPDATE modules SET module_name = ?, module_description = ?, files = ? WHERE id = ?";
             $stmt = $db->prepare($query);
@@ -78,8 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (!empty($_FILES['module_file']['name']) && $current_file != $target_path && file_exists($current_file)) {
                     unlink($current_file);
                 }
-                header("Location: ?page=training&action=view_modules&training_id=$training_id&success=Module updated successfully");
-                exit;
+                $success = true;
             } else {
                 if (!empty($_FILES['module_file']['name']) && $current_file != $target_path && file_exists($target_path)) {
                     unlink($target_path);
@@ -91,6 +93,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+<?php if ($success): ?>
+<script>
+alert('Module updated successfully');
+window.location.href = '?page=training&action=view_modules&training_id=<?= $training_id ?>';
+</script>
+<?php endif; ?>
+
 <div class="content-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
     <h2>Edit Module for <?= htmlspecialchars($training['name']) ?></h2>
     <a href="?page=training&action=view_modules&training_id=<?= $training_id ?>" class="btn-secondary" style="padding: 8px 12px; text-decoration: none;">
@@ -98,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </a>
 </div>
 
-<?php if (isset($error)): ?>
+<?php if (!empty($error)): ?>
     <div class="alert alert-danger" style="padding: 15px; background-color: #f8d7da; color: #721c24; border-radius: 4px; margin-bottom: 20px;">
         <?= htmlspecialchars($error) ?>
     </div>

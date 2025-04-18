@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2025 at 08:15 AM
+-- Generation Time: Apr 18, 2025 at 03:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,12 +49,7 @@ CREATE TABLE `admin_profile` (
 --
 
 INSERT INTO `admin_profile` (`ID`, `Username`, `Passwords`, `Email`, `Fname`, `Lname`, `Mname`, `Age`, `Cnumber`, `Haddress`, `otp`, `reset_token`, `is_verified`, `photo`) VALUES
-(1, 'admin1', '$2y$10$hDYlPDn02cZ4Oe92Tl5qxuTRd.7jfWADOenHFi.V6kIbVa4Jb3kwa', 'ict1mercado.cdlb@gmail.com', 'Mark Lawrence ', 'Alsope', 'Campos', 23, 91234564, 'asvewa4223', '999438', NULL, 0, '../uploads/admin1/Planet9_3840x2160.jpg'),
-(2, 'admin1', '$2y$10$AlyPPzWklmydYHZtrB642eaKxuSqdr.M87KnwKWQDTzNR2OvsNCgi', 'ict1mercado.cdlb@gmail.com', 'Mark Lawrence ', 'Alsope', 'Campos', 23, 91234564, 'asvewa4223', '980424', NULL, 0, '../uploads/admin1/Planet9_3840x2160.jpg'),
-(3, 'admin1', '$2y$10$XWuY8hg.qkRsJSEwDejQve7Lc3.C0Nh423Anzj80b/EIOGYld3OIC', 'ict1mercado.cdlb@gmail.com', 'Mark Lawrence ', 'Alsope', 'Campos', 23, 91234564, 'asvewa4223', '317342', NULL, 0, '../uploads/admin1/Planet9_3840x2160.jpg'),
-(4, 'admin1', '$2y$10$tKiAUKozbnjgEM3yM8DJEu6wgtJmWAed0qAZXvPP0/Hz929AxErsC', 'ict1mercado.cdlb@gmail.com', 'Mark Lawrence ', 'Alsope', 'Campos', 23, 91234564, 'asvewa4223', '728294', NULL, 0, '../uploads/admin1/Planet9_3840x2160.jpg'),
-(5, 'Lawrence123', '$2y$10$L23Km37Yofy.T3khYH/BAOIFvxdEsB/QN.EsatUpN.AtGFTTx6tjy', 'batbattmercado@gmail.com', 'Mark Lawrence ', 'Alsope', 'Campos', 23, 23468867, 'sfasdcxzvzd', '995812', NULL, 1, '../uploads/Lawrence123/Planet9_3840x2160.jpg'),
-(6, 'Admin123', '$2y$10$vY0od5RzkAMTJkeQfzZ2guYNVfqeQDKgqTXOkJ9bJaxU2KqRwNBCi', 'mercadomarklawrence55@gmail.com', 'Mark Lawrence ', 'qwee', 'Ryan Campos', 23, 23468867, 'ewrsdfsfdgsf', '615332', NULL, 1, '../uploads/Admin123/Screenshot 2025-04-10 145532.png');
+(1, 'Azure', '$2y$10$98Ebm5xfFXDPAlM3f0NzWePjyrbGC8SWB3xCp7Wu6/MYGpey21XOS', 'heredape@asciibinder.net', 'Frances', 'Townsend', 'Jermaine Anderson', 23, 99999, 'Qui amet in nostrud', '552307', NULL, 1, '../uploads/Azure/peso-ai-brush-removebg-ahka6q4e.png');
 
 -- --------------------------------------------------------
 
@@ -431,6 +426,24 @@ CREATE TABLE `modules` (
   `date_created` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `modules`
+--
+
+INSERT INTO `modules` (`id`, `training_id`, `module_name`, `module_description`, `files`, `date_created`) VALUES
+(1, 1, 'Spotting', 'learning the basics', 'uploads/modules/680056f2ac76f_PESO.pdf', '2025-04-17 09:18:42.000000'),
+(2, 1, 'joints', 'making joints by welding', 'uploads/modules/68005905dabbe_Application_Form.pdf', '2025-04-17 09:27:33.000000'),
+(3, 2, 'Basic vitals checking', 'Checking of pulse, breathing and blood pressure', 'uploads/modules/68005b787a44e_ITEP_413___IMPLEMENTING_INFORMATION_SECURITY.pdf', '2025-04-17 09:38:00.000000'),
+(4, 2, 'Basic pattern for massage', 'Guide for basic massage', 'uploads/modules/68005da43f4db_pesodigitalmarketin.pdf', '2025-04-17 09:47:16.000000'),
+(5, 3, 'Patterns', 'Making dress patterns', 'uploads/modules/68019c874c10b_100_in_1_Medical_Plan_Policy_Contract.pdf', '2025-04-18 08:27:51.000000'),
+(6, 3, 'basic cutting', 'proper cutting technies and patterns', 'uploads/modules/68019fb62922e_e_Phil_ID.pdf', '2025-04-18 08:41:26.000000'),
+(7, 3, 'Florine Pouros', 'Sequi molestiae aspernatur nesciunt itaque.', 'uploads/modules/68019fc4878ed_LSPU_LB_CCS___Participant_Certificates.pdf', '2025-04-18 08:41:40.000000'),
+(8, 3, 'Trinity Wuckert', 'Magni qui exercitationem.', 'uploads/modules/68019fd582210_Performance_Task_2_Part_1_ITEP_413.pdf', '2025-04-18 08:41:57.000000'),
+(9, 3, 'Amya Champlin', 'Molestiae voluptas quis quo ullam unde ducimus impedit qui saepe.', 'uploads/modules/68019fe318c3c_Application_Form.pdf', '2025-04-18 08:42:11.000000'),
+(10, 3, 'Elwin Goldner', 'Incidunt deserunt accusamus adipisci excepturi dolorem itaque eligendi distinctio voluptas.', 'D:\\xampp\\htdocs\\peso\\admin\\content/uploads/modules/6801a2ff357f5_pesodigitalmarketin.pdf', '2025-04-18 08:55:27.000000'),
+(11, 3, 'Kane Weimann', 'Quis dolore accusamus veritatis saepe vitae quisquam odio.', 'uploads/modules/6801a37d7ca0f_ITEP_413___IMPLEMENTING_INFORMATION_SECURITY.pdf', '2025-04-18 08:57:33.000000'),
+(12, 3, 'Maude Nikolaus', 'Repudiandae accusamus sed repellat molestiae quam ut maxime est.', 'uploads/modules/6801a43b16c49_e_Phil_ID.pdf', '2025-04-18 09:00:43.000000');
+
 -- --------------------------------------------------------
 
 --
@@ -553,7 +566,7 @@ INSERT INTO `save_job` (`id`, `job_id`, `applicant_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `skills_traingin`
+-- Table structure for table `skills_training`
 --
 
 CREATE TABLE `skills_training` (
@@ -562,10 +575,10 @@ CREATE TABLE `skills_training` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `skills_traingin`
+-- Dumping data for table `skills_training`
 --
 
-INSERT INTO `skills_traingin` (`id`, `name`) VALUES
+INSERT INTO `skills_training` (`id`, `name`) VALUES
 (1, 'Welding'),
 (2, 'Hilot Wellness'),
 (3, 'Dressmaking'),
@@ -644,6 +657,34 @@ CREATE TABLE `trainees_profile` (
   `photo` varchar(255) DEFAULT NULL,
   `reset_token` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `trainees_profile`
+--
+
+INSERT INTO `trainees_profile` (`id`, `username`, `password`, `email`, `otp`, `otp_expiry`, `reset_token_expiry`, `is_verified`, `fname`, `lname`, `mname`, `address`, `contact_no`, `nationality`, `sex`, `civil_status`, `employment`, `dob`, `pob`, `age`, `educ_attain`, `parent`, `classification`, `disability`, `photo`, `reset_token`) VALUES
+(6, 'Azure', '$2y$10$ifO9SwO1uuY3lAQGWd0psO/Rw4DUcmHflj0xj.ViV3nJzA40KxGoq', 'heredape@asciibinder.net', '231766', '2025-04-17 22:02:42.000000', NULL, '1', 'Tallulah', 'Lewis', 'Caleb Bryan', 'Eveniet omnis sint', '738', 'Ad qui quia fuga La', 'female', 'male', 'student', '2011-05-25', NULL, NULL, 'cug', 'In omnis vero qui te', 'student', 'Recusandae Neque po', 'uploads/trainees/Azure/680107aa18808_coding.png', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `trainee_trainings`
+--
+
+CREATE TABLE `trainee_trainings` (
+  `id` int(11) NOT NULL,
+  `trainee_id` int(11) NOT NULL,
+  `training_id` int(11) NOT NULL,
+  `enrollment_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` varchar(50) DEFAULT 'active'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `trainee_trainings`
+--
+
+INSERT INTO `trainee_trainings` (`id`, `trainee_id`, `training_id`, `enrollment_date`, `status`) VALUES
+(1, 6, 3, '2025-04-17 21:52:42', 'active');
 
 -- --------------------------------------------------------
 
@@ -800,9 +841,9 @@ ALTER TABLE `save_job`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `skills_traingin`
+-- Indexes for table `skills_training`
 --
-ALTER TABLE `skills_traingin`
+ALTER TABLE `skills_training`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -830,6 +871,14 @@ ALTER TABLE `trainees_profile`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `trainee_trainings`
+--
+ALTER TABLE `trainee_trainings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `trainee_id` (`trainee_id`),
+  ADD KEY `training_id` (`training_id`);
+
+--
 -- Indexes for table `training`
 --
 ALTER TABLE `training`
@@ -849,7 +898,7 @@ ALTER TABLE `work_exp`
 -- AUTO_INCREMENT for table `admin_profile`
 --
 ALTER TABLE `admin_profile`
-  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `applicant_profile`
@@ -870,12 +919,6 @@ ALTER TABLE `cases`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `contact_us`
---
-ALTER TABLE `contact_us`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `current_employee`
 --
 ALTER TABLE `current_employee`
@@ -886,6 +929,12 @@ ALTER TABLE `current_employee`
 --
 ALTER TABLE `documents`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `documents_files`
+--
+ALTER TABLE `documents_files`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `employer`
@@ -921,7 +970,7 @@ ALTER TABLE `license`
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -942,10 +991,10 @@ ALTER TABLE `save_job`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `skills_traingin`
+-- AUTO_INCREMENT for table `skills_training`
 --
-ALTER TABLE `skills_traingin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `skills_training`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `survey_form`
@@ -969,7 +1018,13 @@ ALTER TABLE `techvoc_documents`
 -- AUTO_INCREMENT for table `trainees_profile`
 --
 ALTER TABLE `trainees_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `trainee_trainings`
+--
+ALTER TABLE `trainee_trainings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `training`
@@ -982,6 +1037,17 @@ ALTER TABLE `training`
 --
 ALTER TABLE `work_exp`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `trainee_trainings`
+--
+ALTER TABLE `trainee_trainings`
+  ADD CONSTRAINT `trainee_trainings_ibfk_1` FOREIGN KEY (`trainee_id`) REFERENCES `trainees_profile` (`id`),
+  ADD CONSTRAINT `trainee_trainings_ibfk_2` FOREIGN KEY (`training_id`) REFERENCES `skills_training` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,0 +1,8 @@
+System.Exception: Failed to post document to : https://gw.singlife.com/ext/v11/generate-documents/generate/. Status code: 401. Error: {"error":{"status":"UNAUTHORIZED","message":"Unable to process this request. - Authorization error: ArgoTokenException(errorCode=1096, customMessage=Token is expired, httpCode=400)"}}
+   at GalileoPlatforms.Web.External.Singlife.ESB.V2.ESBClientV2`1.PostData(String payload, String endPoint, String apiKey, String clientId, String clientSecret, CancellationToken cancellationToken)
+   at GalileoPlatforms.Web.External.Singlife.ESB.V2.ESBClientV2`1.PostDocumentAsync(String documentJson, CancellationToken cancellationToken)
+   at Singlife.DocGen.Api.Helpers.Helper.PostDocument(DocumentRequestModel documentBody, String documentId, IESBClientV2 esbClientV2, ILogger logger) in /src/Helpers/Helper.cs:line 87
+System.Exception: Failed to post document to : https://gw.singlife.com/ext/v11/generate-documents/generate/. Status code: 401. Error: {"error":{"status":"UNAUTHORIZED","message":"Unable to process this request. - Authorization error: ArgoTokenException(errorCode=1096, customMessage=Token is expired, httpCode=400)"}}
+   at GalileoPlatforms.Web.External.Singlife.ESB.V2.ESBClientV2`1.PostData(String payload, String endPoint, String apiKey, String clientId, String clientSecret, CancellationToken cancellationToken)
+   at GalileoPlatforms.Web.External.Singlife.ESB.V2.ESBClientV2`1.PostDocumentAsync(String documentJson, CancellationToken cancellationToken)
+   at Singlife.DocGen.Api.Helpers.Helper.PostDocument(DocumentRequestModel documentBody, String documentId, IESBClientV2 esbClientV2, ILogger logger) in /src/Helpers/Helper.cs:line 87

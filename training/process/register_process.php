@@ -47,21 +47,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contact = $_POST['Cnum'];
     $dob = $_POST['dob'];
     $sex = $_POST['sex'];
-    $presentadd = $_POST['present_address'];
-    $tertiary_school = $_POST['school_name1'];
-    $tertiary_graduate = $_POST['year_graduated1'];
-    $tertiary_award = $_POST['award_recieved1'];
-    $college_school = $_POST['school_name2'];
-    $college_graduate = $_POST['year_graduated2'];
-    $college_award = $_POST['award_recieved2'];
+    $present_address = $_POST['present_address'];
+    $nationality = $_POST['nationality'];
+    $civil_stat = $_POST['civil_stat'];
+    $educ = $_POST['educ'];
+    $parent = $_POST['parent'];
+    $classification = $_POST['classification'];
+    $disability = $_POST['disability'];
+    $training_id = $_POST['training_id'];
     $pic = $_FILES['pic'];
 
     // Validation
-    if (empty($username) || empty($email) || empty($password) || empty($fname) || empty($mname) || empty($lname) || empty($contact) || 
-        empty($dob) || empty($sex) || empty($presentadd) || empty($tertiary_school) || empty($tertiary_graduate) || 
-        empty($college_school) || empty($college_graduate) || empty($pic)) {
-        echo "All fields are required!";
-        exit;
+    $required_fields = [
+        $username, $email, $password, $fname, $lname, $contact, 
+        $dob, $sex, $present_address, $nationality, $civil_stat,
+        $educ, $parent, $classification, $training_id
+    ];
+    
+    foreach ($required_fields as $field) {
+        if (empty($field)) {
+            echo "All required fields must be filled!";
+            exit;
+        }
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -77,8 +84,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Hash the password before storing
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Create a folder for the company
-    $uploadDir = "../uploads/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $username) . "/";
+    // Create a folder for the trainee's uploads
+    $uploadDir = "../uploads/trainees/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $username) . "/";
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
@@ -86,23 +93,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle Image Upload
     $picPath = "";
     if ($pic['error'] == 0) {
-        $fileName = basename($pic["name"]);
-        $targetFilePath = $uploadDir . $fileName;
+        $fileName = uniqid() . '_' . basename($pic["name"]); // Add unique ID to filename
+        $targetDir = "uploads/trainees/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $username) . "/";
+        
+        // Create directory if it doesn't exist (relative to the script location)
+        if (!is_dir("../" . $targetDir)) {
+            mkdir("../" . $targetDir, 0777, true);
+        }
+        
+        $targetFilePath = "../" . $targetDir . $fileName;
         $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
 
         // Allowed file formats
         $allowedFormats = array("jpg", "jpeg", "png", "gif");
         if (in_array($fileType, $allowedFormats)) {
             if (move_uploaded_file($pic["tmp_name"], $targetFilePath)) {
-                $picPath = $targetFilePath;
+                // Store only the relative path in database (without ../)
+                $picPath = $targetDir . $fileName;
             } else {
                 echo "Error uploading file!";
                 exit;
             }
         } else {
-            echo "Invalid file format!";
+            echo "Invalid file format! Only JPG, JPEG, PNG & GIF are allowed.";
             exit;
         }
+    } else {
+        echo "Profile picture is required!";
+        exit;
     }
 
     // Database connection using PDO
@@ -122,50 +140,87 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $otp = rand(100000, 999999);
         $otp_expiry = date('Y-m-d H:i:s', strtotime('+10 minutes')); // Expiry in Manila Time
 
-        // Prepare SQL statement
-        // Store OTP and expiry in the database
-        $stmt = $pdo->prepare("INSERT INTO applicant_profile (username, email, password, fname, mname, lname, contact_no, dob, sex,present_address, 
-        tertiary_school, tertiary_graduated, tertiary_award, college_school, college_graduated, college_award, photo, otp, otp_expiry, is_verified) 
-        VALUES (:username, :email, :password, :fname, :mname, :lname, :contact, :dob, :sex, :presentadd, :tertiary_school, :tertiary_graduate, 
-        :tertiary_award, :college_school, :college_graduate, :college_award, :pic, :otp, :otp_expiry, 0)");
+        // Begin transaction
+        $pdo->beginTransaction();
 
+        // 1. Insert into trainees_profile
+        $stmt = $pdo->prepare("INSERT INTO trainees_profile (
+            username, email, password, fname, mname, lname, 
+            address, contact_no, nationality, sex, civil_status, 
+            employment, dob, educ_attain, parent, classification, 
+            disability, photo, otp, otp_expiry, is_verified
+        ) VALUES (
+            :username, :email, :password, :fname, :mname, :lname, 
+            :present_address, :contact, :nationality, :sex, :civil_stat, 
+            :classification, :dob, :educ, :parent, :classification, 
+            :disability, :photo, :otp, :otp_expiry, 0
+        )");
 
         // Bind parameters
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $hashed_password);
         $stmt->bindParam(':fname', $fname);
-        $stmt->bindParam(':mname', $mname); // Fixed
+        $stmt->bindParam(':mname', $mname);
         $stmt->bindParam(':lname', $lname);
+        $stmt->bindParam(':present_address', $present_address);
         $stmt->bindParam(':contact', $contact);
-        $stmt->bindParam(':dob', $dob);
+        $stmt->bindParam(':nationality', $nationality);
         $stmt->bindParam(':sex', $sex);
-        $stmt->bindParam(':presentadd', $presentadd); // Corrected variable name
-        $stmt->bindParam(':tertiary_school', $tertiary_school);
-        $stmt->bindParam(':tertiary_graduate', $tertiary_graduate);
-        $stmt->bindParam(':tertiary_award', $tertiary_award);
-        $stmt->bindParam(':college_school', $college_school);
-        $stmt->bindParam(':college_graduate', $college_graduate);
-        $stmt->bindParam(':college_award', $college_award);
-        $stmt->bindParam(':pic', $picPath);
+        $stmt->bindParam(':civil_stat', $civil_stat);
+        $stmt->bindParam(':classification', $classification);
+        $stmt->bindParam(':dob', $dob);
+        $stmt->bindParam(':educ', $educ);
+        $stmt->bindParam(':parent', $parent);
+        $stmt->bindParam(':disability', $disability);
+        $stmt->bindParam(':photo', $picPath);
         $stmt->bindParam(':otp', $otp);
         $stmt->bindParam(':otp_expiry', $otp_expiry);
-        
 
-        // Execute query
-        if ($stmt->execute()) {
-            if (sendOtpEmail($email, $otp)) {
-                // Redirect to OTP verification page
-                header("Location: ../otp_verification.php?email=" . urlencode($email));
-                exit();
-            } else {
-                echo "Failed to send OTP email!";
-            }
-        } else {
-            echo "Error in registration!";
+        if (!$stmt->execute()) {
+            throw new Exception("Error creating trainee profile");
         }
+
+        // Get the last inserted ID
+        $trainee_id = $pdo->lastInsertId();
+
+        // 2. Insert into trainee_trainings (enrollment record)
+        $enrollment_stmt = $pdo->prepare("INSERT INTO trainee_trainings (trainee_id, training_id) VALUES (:trainee_id, :training_id)");
+        $enrollment_stmt->bindParam(':trainee_id', $trainee_id);
+        $enrollment_stmt->bindParam(':training_id', $training_id);
+
+        if (!$enrollment_stmt->execute()) {
+            throw new Exception("Error enrolling trainee in training program");
+        }
+
+        // Commit transaction
+        $pdo->commit();
+
+        // Send OTP email
+        if (sendOtpEmail($email, $otp)) {
+            // Redirect to OTP verification page with email and training ID
+            header("Location: ../otp_verification.php?email=" . urlencode($email) . "&training_id=" . $training_id);
+            exit();
+        } else {
+            throw new Exception("Failed to send OTP email");
+        }
+
     } catch (PDOException $e) {
+        // Rollback transaction on error
+        if (isset($pdo) && $pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+        // Delete uploaded file if registration failed
+        if (!empty($picPath) && file_exists($picPath)) {
+            unlink($picPath);
+        }
         die("Database error: " . $e->getMessage());
+    } catch (Exception $e) {
+        // Delete uploaded file if registration failed
+        if (!empty($picPath) && file_exists($picPath)) {
+            unlink($picPath);
+        }
+        die("Error: " . $e->getMessage());
     }
 }
 ?>
