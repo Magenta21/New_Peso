@@ -1,24 +1,25 @@
 <?php
-header('Content-Type: application/json');
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "pesoo";
 
-// Database connection
-$db = new mysqli('localhost', 'root', '', 'pesoo');
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($db->connect_error) {
-    die(json_encode(['success' => false, 'message' => 'Database connection failed']));
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+$user_id = $_GET['employer_id'];
+$document_id = $_GET['id'];
 
-$doc_id = intval($_POST['doc_id']);
-$status = intval($_POST['status']);
-$comment = $db->real_escape_string($_POST['comment']);
+$sql = "UPDATE documents SET is_verified = 'verified' WHERE id = '$document_id'";
 
-$query = "UPDATE documents SET is_verified = ?, comment = ? WHERE id = ?";
-$stmt = $db->prepare($query);
-$stmt->bind_param('isi', $status, $comment, $doc_id);
-
-if ($stmt->execute()) {
-    echo json_encode(['success' => true]);
+if ($conn->query($sql) === TRUE) {
+    echo "Document verified successfully!";
+    header("Location: ../admin_home.php?page=users");
 } else {
-    echo json_encode(['success' => false, 'message' => $db->error]);
+    echo "Error: " . $sql . "<br>" . $conn->error;
 }
+
+$conn->close();
 ?>

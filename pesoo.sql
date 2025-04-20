@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2025 at 03:14 AM
+-- Generation Time: Apr 20, 2025 at 03:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -225,7 +225,7 @@ CREATE TABLE `documents` (
   `document_type` varchar(255) NOT NULL,
   `document_file` varchar(255) NOT NULL,
   `created_at` datetime(6) NOT NULL,
-  `is_verified` tinyint(1) NOT NULL,
+  `is_verified` varchar(100) DEFAULT NULL,
   `comment` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -234,24 +234,9 @@ CREATE TABLE `documents` (
 --
 
 INSERT INTO `documents` (`id`, `employer_id`, `document_type`, `document_file`, `created_at`, `is_verified`, `comment`) VALUES
-(1, 3, 'hoddies', 'documents/Final-presentation-aprroval.pdf', '2025-03-20 00:00:00.000000', 0, ''),
-(2, 3, 'hoddies1', 'documents/solicit1.pdf', '2025-03-31 00:00:00.000000', 0, '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `documents_files`
---
-
-CREATE TABLE `documents_files` (
-  `id` int(255) NOT NULL,
-  `employer_id` int(255) NOT NULL,
-  `document_id` int(255) NOT NULL,
-  `document_file` varchar(255) NOT NULL,
-  `created_at` varchar(255) NOT NULL,
-  `is_verified` varchar(255) NOT NULL,
-  `comment` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(1, 3, 'hoddies', 'documents/e-Phil-ID.pdf', '2025-03-20 00:00:00.000000', NULL, ''),
+(2, 3, 'hoddies1', 'documents/solicit1.pdf', '2025-03-31 00:00:00.000000', 'verified', ''),
+(3, 3, 'Jennifer Snyder', 'documents/ITEP414-SAM-Assignment-1-and-Task-1.pdf', '2025-04-17 00:00:00.000000', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -435,7 +420,6 @@ INSERT INTO `modules` (`id`, `training_id`, `module_name`, `module_description`,
 (2, 1, 'joints', 'making joints by welding', 'uploads/modules/68005905dabbe_Application_Form.pdf', '2025-04-17 09:27:33.000000'),
 (3, 2, 'Basic vitals checking', 'Checking of pulse, breathing and blood pressure', 'uploads/modules/68005b787a44e_ITEP_413___IMPLEMENTING_INFORMATION_SECURITY.pdf', '2025-04-17 09:38:00.000000'),
 (4, 2, 'Basic pattern for massage', 'Guide for basic massage', 'uploads/modules/68005da43f4db_pesodigitalmarketin.pdf', '2025-04-17 09:47:16.000000'),
-(5, 3, 'Patterns', 'Making dress patterns', 'uploads/modules/68019c874c10b_100_in_1_Medical_Plan_Policy_Contract.pdf', '2025-04-18 08:27:51.000000'),
 (6, 3, 'basic cutting', 'proper cutting technies and patterns', 'uploads/modules/68019fb62922e_e_Phil_ID.pdf', '2025-04-18 08:41:26.000000'),
 (7, 3, 'Florine Pouros', 'Sequi molestiae aspernatur nesciunt itaque.', 'uploads/modules/68019fc4878ed_LSPU_LB_CCS___Participant_Certificates.pdf', '2025-04-18 08:41:40.000000'),
 (8, 3, 'Trinity Wuckert', 'Magni qui exercitationem.', 'uploads/modules/68019fd582210_Performance_Task_2_Part_1_ITEP_413.pdf', '2025-04-18 08:41:57.000000'),
@@ -668,6 +652,29 @@ INSERT INTO `trainees_profile` (`id`, `username`, `password`, `email`, `otp`, `o
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `trainee_status_history`
+--
+
+CREATE TABLE `trainee_status_history` (
+  `id` int(11) NOT NULL,
+  `trainee_training_id` int(11) NOT NULL,
+  `old_status` varchar(50) DEFAULT NULL,
+  `new_status` varchar(50) NOT NULL,
+  `changed_by` int(11) DEFAULT NULL COMMENT 'Admin/user ID who made change',
+  `changed_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `notes` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `trainee_status_history`
+--
+
+INSERT INTO `trainee_status_history` (`id`, `trainee_training_id`, `old_status`, `new_status`, `changed_by`, `changed_at`, `notes`) VALUES
+(8, 1, 'next_batch', 'next_batch', NULL, '2025-04-18 13:44:37', '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `trainee_trainings`
 --
 
@@ -676,15 +683,17 @@ CREATE TABLE `trainee_trainings` (
   `trainee_id` int(11) NOT NULL,
   `training_id` int(11) NOT NULL,
   `enrollment_date` datetime NOT NULL DEFAULT current_timestamp(),
-  `status` varchar(50) DEFAULT 'active'
+  `status` enum('pending','accepted','graduated','next_batch','rejected') NOT NULL DEFAULT 'pending',
+  `completion_date` datetime DEFAULT NULL,
+  `status_changed_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `trainee_trainings`
 --
 
-INSERT INTO `trainee_trainings` (`id`, `trainee_id`, `training_id`, `enrollment_date`, `status`) VALUES
-(1, 6, 3, '2025-04-17 21:52:42', 'active');
+INSERT INTO `trainee_trainings` (`id`, `trainee_id`, `training_id`, `enrollment_date`, `status`, `completion_date`, `status_changed_at`) VALUES
+(1, 6, 3, '2025-04-17 21:52:42', 'accepted', NULL, '2025-04-18 14:36:34');
 
 -- --------------------------------------------------------
 
@@ -781,12 +790,6 @@ ALTER TABLE `documents`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `documents_files`
---
-ALTER TABLE `documents_files`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `employer`
 --
 ALTER TABLE `employer`
@@ -871,12 +874,19 @@ ALTER TABLE `trainees_profile`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `trainee_status_history`
+--
+ALTER TABLE `trainee_status_history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `trainee_training_id` (`trainee_training_id`);
+
+--
 -- Indexes for table `trainee_trainings`
 --
 ALTER TABLE `trainee_trainings`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `trainee_id` (`trainee_id`),
-  ADD KEY `training_id` (`training_id`);
+  ADD KEY `idx_trainee_status` (`trainee_id`,`status`),
+  ADD KEY `idx_training_status` (`training_id`,`status`);
 
 --
 -- Indexes for table `training`
@@ -928,13 +938,7 @@ ALTER TABLE `current_employee`
 -- AUTO_INCREMENT for table `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `documents_files`
---
-ALTER TABLE `documents_files`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `employer`
@@ -1021,6 +1025,12 @@ ALTER TABLE `trainees_profile`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `trainee_status_history`
+--
+ALTER TABLE `trainee_status_history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `trainee_trainings`
 --
 ALTER TABLE `trainee_trainings`
@@ -1041,6 +1051,12 @@ ALTER TABLE `work_exp`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `trainee_status_history`
+--
+ALTER TABLE `trainee_status_history`
+  ADD CONSTRAINT `trainee_status_history_ibfk_1` FOREIGN KEY (`trainee_training_id`) REFERENCES `trainee_trainings` (`id`);
 
 --
 -- Constraints for table `trainee_trainings`

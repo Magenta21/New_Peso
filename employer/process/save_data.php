@@ -3,43 +3,67 @@ include "../../db.php";
 session_start();
 
 $employerid = $_SESSION['employer_id'];
-// Check if the employer is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: employer_login.php");
     exit();
 }
 
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['file'])) {
-    $documents_name = $_POST['documents_name'];  // Document names
-    $date_upload = $_POST['date_upload'];        // Upload dates
-    $files = $_FILES['file'];                    // Files
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $documents_name = $_POST['documents_name'] ?? [];
+    $date_upload = $_POST['date_upload'] ?? [];
+    $document_ids = $_POST['document_ids'] ?? [];
+    $can_update = $_POST['can_update'] ?? [];
+    $files = $_FILES['file'] ?? [];
 
-    // Check if files are uploaded
+    $upload_dir = "documents/";
+    
     for ($i = 0; $i < count($documents_name); $i++) {
+        // Only process documents that can be updated (rejected ones)
+        if ($can_update[$i] != '1') continue;
+        
         $doc_name = $documents_name[$i];
         $upload_date = $date_upload[$i];
-        $file_name = $files['name'][$i];
-        $file_tmp_name = $files['tmp_name'][$i];
+        $document_id = $document_ids[$i];
         
-        // Directory to save the files
-        $upload_dir = "documents/";
-        $target_file = $upload_dir . basename($file_name);
-
-        // Check if file upload is successful
-        if (move_uploaded_file($file_tmp_name, $target_file)) {
-            // Insert the document data into the database
-            $sql = "INSERT INTO documents (employer_id, document_type, created_at, document_file) VALUES (?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssss", $employerid, $doc_name, $upload_date, $target_file);
-            $stmt->execute();
-            $stmt->close();
-        } else {
-            echo "Failed to upload file: $file_name";
+        // Prepare base update query (without file)
+        $sql = "UPDATE documents SET 
+                document_type = ?, 
+                created_at = ?, 
+                is_verified = NULL, 
+                comment = '' 
+                WHERE id = ? AND employer_id = ?";
+        
+        $params = [$doc_name, $upload_date, $document_id, $employerid];
+        $types = "ssii";
+        
+        // Check if file was uploaded for this document
+        if (!empty($files['name'][$i])) {
+            $file_name = $files['name'][$i];
+            $file_tmp_name = $files['tmp_name'][$i];
+            $target_file = $upload_dir . basename($file_name);
+            
+            if (move_uploaded_file($file_tmp_name, $target_file)) {
+                // Update query with file
+                $sql = "UPDATE documents SET 
+                        document_type = ?, 
+                        created_at = ?, 
+                        document_file = ?, 
+                        is_verified = NULL, 
+                        comment = '' 
+                        WHERE id = ? AND employer_id = ?";
+                $types = "sssii";
+                array_splice($params, 2, 0, $target_file);
+            }
         }
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param($types, ...$params);
+        $stmt->execute();
+        $stmt->close();
     }
     
     header("Location: ../employer_profile.php");
+    exit();
 }
 
 $conn->close();

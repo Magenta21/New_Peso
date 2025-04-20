@@ -111,3 +111,36 @@ a{
     color: #0D6EFD;
     font-weight: bold;
 }
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.text-success {
+    color: #28a745;
+}
+
+.text-danger {
+    color: #dc3545;
+}
+/* Add to your existing CSS */
+.readonly-field {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}
+
+.update-available {
+    background-color: #fff3cd;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.btn-update {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+}

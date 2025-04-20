@@ -1,0 +1,88 @@
+/* Modal styles */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Background overlay */
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    position: relative;
+    margin: 20% auto;
+    margin-top: 5%;
+    padding: 20px;
+    width: 100%;
+    max-width: 270vw;
+    background-color: none;
+    border-radius: 5px;
+  }
+  
+  .modal-container .modal-content{
+    width: 50vw;
+    max-width: 100vw; /* Adjust this value as needed to make the table smaller */
+    margin: 5vh auto; /* Center the table */
+  }
+  
+  .modal-container-upload .modal-content{
+    width: 40vw;
+    max-width: auto; /* Adjust this value as needed to make the table smaller */
+    margin: 5vh auto; /* Center the table */
+  }
+  
+  .closBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 30px;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    background: none;
+    outline: none;
+  }
+  
+  .closBtn:hover,
+  .closBtn:focus,
+  .seccloseBtn:hover,
+  .seccloseBtn:focus,
+  .thirdcloseBtn:hover,
+  .thirdcloseBtn:focus
+  .fourthcloseBtn:hover,
+  .fourthcloseBtn:focus,
+  .fourthcloseBtn:hover,
+  .fourthcloseBtn:focus {
+    color: red; /* Optional hover effect */
+  }
+  
+  
+    /* Style the form inputs */
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 15px 0;
+      box-sizing: border-box;
+    }
+    
+    .seccloseBtn {
+      float: right;
+      font-size: 30px;
+      cursor: pointer;
+    }
+  
+    .thirdcloseBtn {
+      float: right;
+      font-size: 30px;
+      cursor: pointer;
+    }
+  
+    .fourthcloseBtn {
+      float: right;
+      font-size: 30px;
+      cursor: pointer;
+    }

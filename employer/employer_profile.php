@@ -150,39 +150,69 @@ $stmt_new->close();
             <div id="documents" class="tab-content" style="display:none;">
                 <div class="card mb-4">
                     <div class="card-header">Documents</div>
-                        <div class="card-body">
-                            <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
-                                <div id="eligibility-container">
-                                    <?php 
-                                    // Loop through the fetched documents and display them in the form
-                                    foreach ($documents as $index => $doc) { 
-                                    ?>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="documents_name[]" value="<?php echo htmlspecialchars($doc['document_type']); ?>" placeholder="Document Name" required>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="date" class="form-control" name="date_upload[]" value="<?php echo isset($row['created_at']) ? htmlspecialchars($row['created_at']) : ''; ?>" required>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="file" class="form-control" name="file[]">
-                                            <!-- If there's an existing file, show a link to it -->
-                                            <?php if (!empty($doc['document_file'])): ?>
-                                                <a href="process/<?php echo $doc['document_file']; ?>" target="_blank">View File</a>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="col-md-1 text-center">
-                                            <button type="button" class="btn btn-danger" onclick="removeInputGroup(this)">Remove</button>
-                                        </div>
+                    <div class="card-body">
+                        <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
+                            <div id="eligibility-container">
+                                <?php 
+                                foreach ($documents as $index => $doc) { 
+                                    $statusClass = '';
+                                    $statusText = 'Pending';
+                                    $canUpdate = false;
+                                    
+                                    if ($doc['is_verified'] == "verified") {
+                                        $statusClass = 'text-success';
+                                        $statusText = 'Approved';
+                                    } elseif (!empty($doc['comment'])) {
+                                        $statusClass = 'text-danger';
+                                        $statusText = 'Rejected';
+                                        $canUpdate = true;
+                                    }
+                                ?>
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" name="documents_name[]" 
+                                            value="<?php echo htmlspecialchars($doc['document_type']); ?>" 
+                                            placeholder="Document Name" 
+                                            <?php if (!$canUpdate) echo 'readonly'; ?>>
                                     </div>
-                                    <?php } ?>
+                                    <div class="col-md-2">
+                                        <input type="date" class="form-control" name="date_upload[]" 
+                                            value="<?php echo date('Y-m-d', strtotime($doc['created_at'])); ?>" 
+                                            <?php if (!$canUpdate) echo 'readonly'; ?>>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <?php if ($canUpdate): ?>
+                                            <input type="file" class="form-control" name="file[]">
+                                        <?php endif; ?>
+                                        <?php if (!empty($doc['document_file'])): ?>
+                                            <a href="<?php echo $doc['document_file']; ?>" target="_blank">View File</a>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="status-badge <?php echo $statusClass; ?>">
+                                            <?php echo $statusText; ?>
+                                        </span>
+                                        <?php if (!empty($doc['comment'])): ?>
+                                            <div class="text-muted small">Comment: <?php echo htmlspecialchars($doc['comment']); ?></div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="col-md-1 text-center">
+                                        <?php if ($canUpdate): ?>
+                                            <button type="button" class="btn btn-danger" onclick="removeInputGroup(this)">Remove</button>
+                                        <?php endif; ?>
+                                    </div>
+                                    <input type="hidden" name="document_ids[]" value="<?php echo $doc['id']; ?>">
+                                    <input type="hidden" name="can_update[]" value="<?php echo $canUpdate ? '1' : '0'; ?>">
                                 </div>
-                                <button type="button" class="btn btn-primary" onclick="addInputGroup()">Add Another Set</button>
-                                <button type="submit" class="btn btn-success">Save Eligibility</button>
-                            </form>
-                        </div>
+                                <?php } ?>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="addInputGroup()">Add New Document</button>
+                            <button type="submit" class="btn btn-success">Update Rejected Documents</button>
+                        </form>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 
