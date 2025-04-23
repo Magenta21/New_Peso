@@ -157,8 +157,6 @@ $result_work_exp = $stmt_work_exp->get_result();
                                             <input type="text" name="name" class="form-control" value="<?php echo isset($row['username']) ? htmlspecialchars($row['username']) : ''; ?>" required>
                                     </div>
                                     <div class="col-md-6">
-                                            <label class="form-label">Password:</label>
-                                            <input type="password" name="pass" class="form-control" value="<?php echo isset($row['password']) ? htmlspecialchars($row['password']) : ''; ?>" required>
                                     </div>
                                     <div class="col-md-12">
                                             <label class="form-label">Email:</label>

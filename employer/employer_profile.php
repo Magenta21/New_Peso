@@ -66,7 +66,8 @@ $stmt_new->close();
         <div class="tabs d-flex justify-content-center mb-3">
                 <button class="btn btn-outline-primary me-2 active" onclick="switchTab(event, 'profile')">Profile</button>
                 <button class="btn btn-outline-primary me-2" onclick="switchTab(event, 'company_details')">Company Detais</button>
-                <button class="btn btn-outline-primary" onclick="switchTab(event, 'documents')">Documents</button>
+                <button class="btn btn-outline-primary" onclick="switchTab(event, 'documents1')">Documents</button>
+                <button class="btn btn-outline-primary" onclick="switchTab(event, 'documents2')">Updated Documents</button>
             </div>
             <div id="profile" class="tab-content">
                 <form action="process/save_profile.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
@@ -146,13 +147,26 @@ $stmt_new->close();
                 </form>
 
             </div>
-            
-            <div id="documents" class="tab-content" style="display:none;">
+
+            <div id="documents1" class="tab-content" style="display:none;">
                 <div class="card mb-4">
                     <div class="card-header">Documents</div>
+                        <div class="card-body">
+                            <form action="process/save_data2.php" method="POST" enctype="multipart/form-data">
+                                <div id="eligibility-container">
+                                </div>
+                                <button type="button" class="btn btn-primary" onclick="addInputGroup()">Add Another Set</button>
+                                <button type="submit" class="btn btn-success">Save Eligibility</button>
+                            </form>
+                        </div>
+                </div>
+            </div>
+            
+            <div id="documents2" class="tab-content" style="display:none;">
+                <div class="card mb-4">
+                    <div class="card-header">Updated Documents</div>
                     <div class="card-body">
                         <form action="process/save_data.php" method="POST" enctype="multipart/form-data">
-                            <div id="eligibility-container">
                                 <?php 
                                 foreach ($documents as $index => $doc) { 
                                     $statusClass = '';
@@ -205,8 +219,6 @@ $stmt_new->close();
                                     <input type="hidden" name="can_update[]" value="<?php echo $canUpdate ? '1' : '0'; ?>">
                                 </div>
                                 <?php } ?>
-                            </div>
-                            <button type="button" class="btn btn-primary" onclick="addInputGroup()">Add New Document</button>
                             <button type="submit" class="btn btn-success">Update Rejected Documents</button>
                         </form>
                     </div>

@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: ../training_home.php?training=$training_id");
             } else {
                 // Redirect to general trainee dashboard
-                header("Location: ../trainee_dashboard.php");
+                header("Location: ../training_home.php");
             }
             exit();
         } else {

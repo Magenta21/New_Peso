@@ -6,7 +6,6 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #d9d9d9;
 }
 
 h2 {
@@ -152,7 +151,7 @@ a.navlink:hover::before {
 }
 
 a.nav-link {
-    color: black;
+    color: rgb(255, 255, 255);
     text-decoration: none;
 }
 a.nav-link:hover {

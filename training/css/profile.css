@@ -140,3 +140,22 @@ a.navlink {
 .header .btn-light i {
     margin-right: 5px;
 }
+.back-button{
+    background-color: #0B5ED7;
+    color: white;
+    margin-top: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    border: none;
+    outline: none;
+}
+
+.back-button:hover{
+    background-color: #0A4FB5;
+    transform: translateX(-4px);
+}

@@ -9,21 +9,6 @@ if (!isset($_SESSION['employer_id'])) {
 $employer_id = $_SESSION['employer_id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve values from the form
-    $job_title      = $_POST['job_title'];
-    $company_name   = $_POST['company_name'];
-    $job_type       = $_POST['job_type'];
-    $salary         = $_POST['salary'];
-    $job_description= $_POST['job_description'];
-    $skills         = $_POST['skills'];  // Comma-separated skills from tags input
-    $vacant         = $_POST['vacant'];
-    $requirement    = $_POST['requirement'];
-    $work_location  = $_POST['work_location'];
-    $education      = $_POST['education'];
-    $remarks        = $_POST['remarks'];
-    $date_posted    = $_POST['date_posted'];
-    $is_active      = $_POST['is_active'];
-
     // Database connection parameters
     $host    = 'localhost';
     $db      = 'pesoo';
@@ -45,7 +30,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Database connection failed: " . $e->getMessage());
     }
 
-    // Prepare the INSERT query. Note that the "selected_option" field is used to store skills.
+    // First, check if all required documents are verified
+    $docCheckSql = "SELECT COUNT(*) as unverified_count FROM documents 
+                   WHERE employer_id = :employer_id AND (is_verified IS NULL OR is_verified != 'verified')";
+    $docStmt = $pdo->prepare($docCheckSql);
+    $docStmt->bindParam(':employer_id', $employer_id);
+    $docStmt->execute();
+    $result = $docStmt->fetch();
+    
+    if ($result['unverified_count'] > 0) {
+        // Redirect back with error message if documents aren't verified
+        header("Location: ../post_job.php?error=unverified_documents");
+        exit();
+    }
+
+    // If documents are verified, proceed with job posting
+    // Retrieve values from the form
+    $job_title      = $_POST['job_title'];
+    $company_name   = $_POST['company_name'];
+    $job_type       = $_POST['job_type'];
+    $salary         = $_POST['salary'];
+    $job_description= $_POST['job_description'];
+    $skills         = $_POST['skills'];  // Comma-separated skills from tags input
+    $vacant         = $_POST['vacant'];
+    $requirement    = $_POST['requirement'];
+    $work_location  = $_POST['work_location'];
+    $education      = $_POST['education'];
+    $remarks        = $_POST['remarks'];
+    $date_posted    = $_POST['date_posted'];
+    $is_active      = $_POST['is_active'];
+
+    // Prepare the INSERT query
     $sql = "INSERT INTO job_post 
             (employer_id, job_title, company_name, job_type, salary, job_description, selected_option, vacant, requirement, work_location, education, remarks, date_posted, is_active)
             VALUES 
@@ -60,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bindParam(':job_type', $job_type);
     $stmt->bindParam(':salary', $salary);
     $stmt->bindParam(':job_description', $job_description);
-    $stmt->bindParam(':selected_option', $skills); // Skills as comma-separated string
+    $stmt->bindParam(':selected_option', $skills);
     $stmt->bindParam(':vacant', $vacant);
     $stmt->bindParam(':requirement', $requirement);
     $stmt->bindParam(':work_location', $work_location);
@@ -71,9 +86,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Execute the statement and check for success
     if ($stmt->execute()) {
-        header("Location: ../post_job.php");
+        header("Location: ../post_job.php?success=job_posted");
     } else {
-        echo "Error inserting job post.";
+        header("Location: ../post_job.php?error=posting_failed");
     }
 }
 ?>

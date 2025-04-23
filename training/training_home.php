@@ -64,8 +64,8 @@ $modules_result = $stmt->get_result();
         }
 
         .training-banner {
-            background-color: var(--primary-color);
-            color: white;
+            background-color: #ffd580;
+            color: black;
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
@@ -93,7 +93,7 @@ $modules_result = $stmt->get_result();
         }
         
         .module-header {
-            background-color: var(--primary-color);
+            background-color: #006e90;
             color: white;
             padding: 15px;
         }
@@ -174,7 +174,7 @@ $modules_result = $stmt->get_result();
                     <?php endif; ?>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end text-center mt-2" aria-labelledby="profileDropdown">
-                    <li><a class="dropdown-item" href="employer_profile.php">Profile</a></li>
+                    <li><a class="dropdown-item" href="training_profile.php">Profile</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
                 </ul>

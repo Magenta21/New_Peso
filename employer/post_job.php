@@ -24,7 +24,17 @@ if (!$row) {
     die("User not found.");
 }
 
+if (isset($_GET['error'])) {
+  if ($_GET['error'] === 'unverified_documents') {
+      echo '<div class="alert alert-danger">You cannot post a job until all your documents are verified by the admin.</div>';
+  } elseif ($_GET['error'] === 'posting_failed') {
+      echo '<div class="alert alert-danger">Failed to post job. Please try again.</div>';
+  }
+}
 
+if (isset($_GET['success']) && $_GET['success'] === 'job_posted') {
+  echo '<div class="alert alert-success">Job posted successfully!</div>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
