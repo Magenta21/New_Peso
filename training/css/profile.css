@@ -154,7 +154,9 @@ a.navlink {
     border: none;
     outline: none;
 }
-
+a.back-button{
+    text-decoration: none;
+}
 .back-button:hover{
     background-color: #0A4FB5;
     transform: translateX(-4px);

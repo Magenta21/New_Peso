@@ -103,7 +103,7 @@ if (!$row) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Place of birth</label>
-                        <input type="text" name="pob" class="form-control" value="<?php echo isset($row['pob']) ? htmlspecialchars($row['pob']) : ''; ?>" required>
+                        <input type="date" name="pob" class="form-control" value="<?php echo isset($row['pob']) ? htmlspecialchars($row['pob']) : ''; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Civil Status</label>
