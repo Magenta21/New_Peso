@@ -158,10 +158,30 @@ if (!$row) {
             
             <div id="information2" class="tab-content" style="display:none;">
                 <form action="process/save_company_details.php" method="post" class="needs-validation" novalidate>
-                    <div class="mb-3">
-                        <label class="form-label">Nationality</label>
-                        <input type="text" name="nationality" class="form-control" value="<?php echo isset($row['nationality']) ? htmlspecialchars($row['nationality']) : ''; ?>" required>
-                    </div>
+                    <div class="row mb-3">
+                            <div class="mb-3">
+                                <label class="form-label">Spouse's Name:</label>
+                                <input type="text" name="spouse_name" class="form-control" value="<?php echo isset($row['spouse_name']) ? htmlspecialchars($row['spouse_name']) : ''; ?>">
+                            </div>
+
+                            <!-- Father -->
+                            <div class="mb-3">
+                                <label class="form-label">Father's Name:</label>
+                                <input type="text" name="father_name" class="form-control" value="<?php echo isset($row['father_name']) ? htmlspecialchars($row['father_name']) : ''; ?>">
+                            </div>
+
+                            <!-- Mother -->
+                            <div class="mb-3">
+                                <label class="form-label">Mother's Name:</label>
+                                <input type="text" name="mother_name" class="form-control" value="<?php echo isset($row['mother_name']) ? htmlspecialchars($row['mother_name']) : ''; ?>">
+                            </div>
+
+                            <!-- Emergency Contact -->
+                            <div class="mb-3">
+                                <label class="form-label">In Case of Emergency, Contact Person:</label>
+                                <input type="text" name="emergency_contact" class="form-control" value="<?php echo isset($row['emergency_contact']) ? htmlspecialchars($row['emergency_contact']) : ''; ?>">
+                            </div>
+                        </div>
                     <div class="mb-3">
                         <label class="form-label">Date of birth</label>
                         <input type="date" name="dob" class="form-control" value="<?php echo isset($row['dob']) ? htmlspecialchars($row['dob']) : ''; ?>" required>
