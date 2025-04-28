@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Check if username exists
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM applicant_profile WHERE username = :username");
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM trainees_profile WHERE username = :username");
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         if ($stmt->fetchColumn() > 0) {
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Check if email exists
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM applicant_profile WHERE email = :email");
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM trainees_profile WHERE email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         if ($stmt->fetchColumn() > 0) {
