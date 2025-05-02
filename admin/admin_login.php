@@ -61,7 +61,7 @@ if (isset($_SESSION['user'])) {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" style="color: black;">Applicant Forgot Password</h5>
+                    <h5 class="modal-title" style="color: black;">Admin Forgot Password</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">

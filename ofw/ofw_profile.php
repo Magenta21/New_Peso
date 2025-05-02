@@ -53,7 +53,7 @@ if (!$row) {
                     <button class="btn btn-outline-primary me-2" onclick="switchTab(event, 'information2')">Family Information</button>
                     <button class="btn btn-outline-primary me-2" onclick="switchTab(event, 'Employment_Details')">Employment Details</button>
             </div>
-                        <div id="profile" class="tab-content">
+            <div id="profile" class="tab-content">
                      <form action="process/save_profile.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                     <div class="text-center mb-4">
                         <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)">
@@ -80,11 +80,11 @@ if (!$row) {
                     <div class="row mb-3">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">First name:</label>
-                            <input type="text" name="fname" class="form-control" value="<?php echo isset($row['fname']) ? htmlspecialchars($row['fname']) : ''; ?>" required>
+                            <input type="text" name="first_name" class="form-control" value="<?php echo isset($row['first_name']) ? htmlspecialchars($row['first_name']) : ''; ?>" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Last name:</label>
-                            <input type="text" name="lname" class="form-control" value="<?php echo isset($row['lname']) ? htmlspecialchars($row['lname']) : ''; ?>" required>
+                            <input type="text" name="last_name" class="form-control" value="<?php echo isset($row['last_name']) ? htmlspecialchars($row['last_name']) : ''; ?>" required>
                         </div>
                     </div>
 
@@ -172,7 +172,7 @@ if (!$row) {
             </div>
             
             <div id="information2" class="tab-content" style="display:none;">
-                <form action="process/save_company_details.php" method="post" class="needs-validation" novalidate>
+                <form action="process/save_information2.php" method="post" class="needs-validation" novalidate>
                 <div class="row mb-3">
                         <div class="col-md-6 mb-1">
                             <label class="form-label">Spouse's Name:</label>
@@ -223,7 +223,7 @@ if (!$row) {
             </div>
 
                 <div id="Employment_Details" class="tab-content" style="display:none;">
-                    <form action="process/save_company_details.php" method="post" class="needs-validation" novalidate>
+                    <form action="process/save_employment.php" method="post" class="needs-validation" novalidate>
                         <!-- Occupation Row -->
                         <div class="row mb-3">
                             <div class="col-md-6 mb-1">
@@ -322,9 +322,7 @@ if (!$row) {
                     </form>
                 </div>
                                             
-                         
-                        
-               
+
 
         </div>
     </div>
