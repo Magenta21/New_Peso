@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "../db.php";
+include "../../db.php";
 
 // Check if user is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -23,7 +23,7 @@ $sql = "UPDATE ofw_profile SET
         employment_type = ?,
         country = ?,
         employment_form = ?,
-        aborad_contact = ?,
+        contact_abroad = ?,
         employer_abroad = ?,
         employer_address = ?,
         name_local_agency = ?,

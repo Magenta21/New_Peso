@@ -174,3 +174,48 @@ a.navlink {
         background-color: transparent;
     }
 }
+
+.form-container {
+    max-width: 800px;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    margin: 5vh auto;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  .custom-hover:hover {
+    background-color: #0d75dc; /* Light background color on hover */
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; 
+    width: auto;
+    margin-right: 10px; 
+  }
+
+  .table-containers {
+    display: flex;
+    justify-content: center;
+    margin: 5vh auto;
+    width: 80%;
+  }
+
+  .form-check-input {
+    border: 2px solid #333; /* Regular border */
+    border-radius: 50%; /* Circular border for radio button */
+    padding: 5px; /* Padding to make the border more visible */
+  }
+
+  .form-check-input:hover {
+    border-color: #007bff; /* Change border color on hover */
+  }
+
+  input[type="radio"] {
+    transform: scale(1.5); /* Adjust the scale as needed */
+    width: 15px;  /* Optional: Set a custom width */
+    height: 15px; /* Optional: Set a custom height */
+    margin: 5px; /* Optional: Add some margin for spacing */
+  }

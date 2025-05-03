@@ -22,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Set session variables
             $_SESSION['ofw_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            $_SESSION['company_name'] = $user['company_name'];
             $_SESSION['logged_in'] = true;
 
             // Redirect to employer dashboard
