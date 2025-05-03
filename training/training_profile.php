@@ -24,6 +24,16 @@ $row = $result->fetch_assoc();
 if (!$row) {
     die("User not found.");
 }
+
+if (isset($_SESSION['success_message'])) {
+    echo '<div class="alert alert-success">' . $_SESSION['success_message'] . '</div>';
+    unset($_SESSION['success_message']);
+}
+if (isset($_SESSION['error_message'])) {
+    echo '<div class="alert alert-danger">' . $_SESSION['error_message'] . '</div>';
+    unset($_SESSION['error_message']);
+}
+
 ?>
 
 
@@ -53,7 +63,7 @@ if (!$row) {
                 <button class="btn btn-outline-primary me-2" onclick="switchTab(event, 'information2')">Additional information</button>
             </div>
             <div id="profile" class="tab-content">
-                <form action="process/save_profile.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <form action="process/save_profile1.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                     <div class="text-center">
                         <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)">
                         <?php if (!empty($row['photo'])): ?>
@@ -92,7 +102,7 @@ if (!$row) {
             </div>
             
             <div id="information2" class="tab-content" style="display:none;">
-                <form action="process/save_company_details.php" method="post" class="needs-validation" novalidate>
+                <form action="process/save_profile2.php" method="post" class="needs-validation" novalidate>
                     <div class="mb-3">
                         <label class="form-label">Nationality</label>
                         <input type="text" name="nationality" class="form-control" value="<?php echo isset($row['nationality']) ? htmlspecialchars($row['nationality']) : ''; ?>" required>

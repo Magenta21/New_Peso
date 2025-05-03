@@ -1,100 +1,58 @@
 <?php
-session_start(); // Start the session to access user_id
+// save_profile2.php - For the second tab (Additional Information)
+include "../../db.php";
 
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+session_start();
 
-// Database configuration
-$host = 'localhost';
-$db = 'pesoo';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
-
-// Set up the PDO connection
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+// Check if user is logged in
+if (!isset($_SESSION['logged_in'])) {
+    header("Location: training_login.php");
     exit();
 }
 
-$updateSuccess = false;
-$errorMessage = '';
+$trainingid = $_SESSION['trainee_id'];
 
-// Process the form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
-    $tertiarySchool = htmlspecialchars($_POST['t_school_name']);
-    $tertiaryGraduated = htmlspecialchars($_POST['tertiary_graduated']);
-    $tertiaryAward = htmlspecialchars($_POST['award_recieved']);
-    $tertiaryCourse = htmlspecialchars($_POST['t_course']);
-    
-    $gradSchool = htmlspecialchars($_POST['g_school_name']);
-    $gradGraduated = htmlspecialchars($_POST['college_graduated']);
-    $gradAward = htmlspecialchars($_POST['college_award']);
-    $gradCourse = htmlspecialchars($_POST['g_course']);
+// Prepare update query
+$sql = "UPDATE trainees_profile SET 
+        nationality = ?, 
+        dob = ?, 
+        pob = ?, 
+        civil_status = ?, 
+        sex = ?, 
+        employment = ?, 
+        educ_attain = ?, 
+        parent = ?, 
+        classification = ?, 
+        disability = ? 
+        WHERE id = ?";
 
-    // Prepare the SQL query to insert or update the educational background
-    try {
-        $sql = "UPDATE applicant_profile SET 
-                tertiary_school = ?, 
-                tertiary_graduated = ?, 
-                tertiary_award = ?, 
-                tertiary_course = ?, 
-                college_school = ?, 
-                college_graduated = ?, 
-                college_award = ?, 
-                grad_course = ?
-                WHERE id = ?"; // Assuming you have applicant_id stored in the session
+$stmt = $conn->prepare($sql);
 
-        // Prepare the statement
-        $stmt = $pdo->prepare($sql);
+// Bind parameters
+$stmt->bind_param("ssssssssssi", 
+    $_POST['nationality'],
+    $_POST['dob'],
+    $_POST['pob'],
+    $_POST['civil_status'],
+    $_POST['sex'],
+    $_POST['employment'],
+    $_POST['educ_attain'],
+    $_POST['parent'],
+    $_POST['classification'],
+    $_POST['disability'],
+    $trainingid
+);
 
-        // Bind the values using an indexed array for ? placeholders
-        $params = [
-            $tertiarySchool, 
-            $tertiaryGraduated, 
-            $tertiaryAward, 
-            $tertiaryCourse, 
-            $gradSchool, 
-            $gradGraduated, 
-            $gradAward, 
-            $gradCourse,
-            $_SESSION['applicant_id']  // Assuming user ID is stored in session
-        ];
-
-        // Execute the statement with the parameters array
-        if ($stmt->execute($params)) {
-            $updateSuccess = true; // Set success flag
-        } else {
-            $errorMessage = "Failed to update educational background.";
-        }
-    } catch (PDOException $e) {
-        // Log or display the error message
-        $errorMessage = "Error: " . $e->getMessage();
-        echo "<pre>" . print_r($e, true) . "</pre>";  // Output the exception details for debugging
-    }
-
-    // Redirect based on success or failure
-    if ($updateSuccess) {
-        header('Location: ../training_profile.php');  // Redirect to profile page after successful update
-        exit();
-    } else {
-        // Show error message using JS
-        echo "<script>
-                alert('$errorMessage');
-                window.location.href = '../training_profile.php';
-              </script>";
-        exit();
-    }
+// Execute query
+if ($stmt->execute()) {
+    $_SESSION['success_message'] = "Additional information updated successfully!";
+} else {
+    $_SESSION['error_message'] = "Error updating information: " . $conn->error;
 }
+
+$stmt->close();
+$conn->close();
+
+header("Location: ../training_profile.php");
+exit();
 ?>
