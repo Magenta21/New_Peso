@@ -17,22 +17,22 @@
             </li>
             <li>
                 <a href="?page=users" class="<?= $page === 'users' ? 'active' : '' ?>">
-                    <i class="fas fa-users"></i> Employer Management
+                    <i class="fas fa-building"></i> Employer Management
                 </a>
             </li>
             <li>
                 <a href="?page=training" class="<?= $page === 'training' ? 'active' : '' ?>">
-                    <i class="fas fa-file-alt"></i> Training Management
+                    <i class="fas fa-users"></i> Training Management
                 </a>
             </li>
             <li>
-                <a href="?page=settings" class="<?= $page === 'settings' ? 'active' : '' ?>">
-                    <i class="fas fa-cog"></i> Settings
+                <a href="?page=ofw_cases" class="<?= $page === 'ofw_cases' ? 'active' : '' ?>">
+                    <i class="fas fa-plane"></i> OFW File Case
                 </a>
             </li>
             <li>
-                <a href="?page=reports" class="<?= $page === 'reports' ? 'active' : '' ?>">
-                    <i class="fas fa-chart-bar"></i> Reports
+                <a href="?page=survey" class="<?= $page === 'survey' ? 'active' : '' ?>">
+                    <i class="fas fa-poll"></i> Survey Management
                 </a>
             </li>
             <li>
