@@ -1,10 +1,10 @@
 <?php
-include 'conn_db.php';
+include '../../db.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Load Composer's autoloader
-require 'mailer/vendor/autoload.php';
+require '../../vendor/autoload.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $conn->real_escape_string($_POST['email']);
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->query($sql);
 
         // Send email with reset link
-        $reset_link = "http://localhost/peso/admin/reset_password.php?token=" . urlencode($token);
+        $reset_link = "http://localhost/NEW_PESO/admin/reset_password.php?token=" . urlencode($token);
 
         sendResetEmail($email, $reset_link);
 
