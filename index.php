@@ -82,7 +82,7 @@
                 </a>
                 <ul class="dropdown-menu bg-primary">
                     <li><a class="dropdown-item text-white" href="ofw/ofw_login.php">OFW-Family</a></li>
-                    <li><a class="dropdown-item text-white" href="ofw/ofw_benefits.php">OFW him/her self</a></li>
+                    <li><a class="dropdown-item text-white" href="ofw/ofw_login.php">OFW him/her self</a></li>
                     
                 </ul>
             </div>
@@ -98,7 +98,7 @@
                     <li class="dropdown-submenu">
                         <a class="dropdown-item text-white" href="#">Local</a>
                         <ul class="dropdown-menu bg-primary">
-                            <li><a class="dropdown-item text-white" href="employer/emplo_login.php">Login</a></li>
+                            <li><a class="dropdown-item text-white" href="employer/employer_login.php">Login</a></li>
                             <li><a class="dropdown-item text-white" href="employer/employer_register.php">Register</a></li>
                         </ul>
                     </li>

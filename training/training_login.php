@@ -90,7 +90,7 @@ $training_id = isset($_GET['training']) ? (int)$_GET['training'] : 0;
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="../php/send_reset_link.php" method="POST">
+                <form action="process/send_reset_link.php" method="POST">
                     <input type="hidden" name="user_type" value="trainee">
                     <div class="form-group">
                         <label for="email" style="color: black;">Enter your email address:</label>
