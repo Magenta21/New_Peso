@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2025 at 03:52 PM
+-- Generation Time: May 05, 2025 at 03:33 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -49,7 +49,8 @@ CREATE TABLE `admin_profile` (
 --
 
 INSERT INTO `admin_profile` (`ID`, `Username`, `Passwords`, `Email`, `Fname`, `Lname`, `Mname`, `Age`, `Cnumber`, `Haddress`, `otp`, `reset_token`, `is_verified`, `photo`) VALUES
-(1, 'Azure', '$2y$10$98Ebm5xfFXDPAlM3f0NzWePjyrbGC8SWB3xCp7Wu6/MYGpey21XOS', 'heredape@asciibinder.net', 'Frances', 'Townsend', 'Jermaine Anderson', 23, 99999, 'Qui amet in nostrud', '552307', NULL, 1, '../uploads/Azure/peso-ai-brush-removebg-ahka6q4e.png');
+(1, 'Azure', '$2y$10$98Ebm5xfFXDPAlM3f0NzWePjyrbGC8SWB3xCp7Wu6/MYGpey21XOS', 'heredape@asciibinder.net', 'Frances', 'Townsend', 'Jermaine Anderson', 23, 99999, 'Qui amet in nostrud', '552307', NULL, 1, '../uploads/Azure/peso-ai-brush-removebg-ahka6q4e.png'),
+(4, 'pesoo123', '$2y$10$HUUpVIyPlOx6mK4RXFxPQe9sKirHhlopmekfTymmaNqXE4j.9EMxu', 'pesolosbanos4@gmail.com', 'qwe', 'qwe', 'qwe', 25, 2147483647, 'qwe', '205921', NULL, 1, '../uploads/pesoo123/qweqe.jpg');
 
 -- --------------------------------------------------------
 
@@ -483,7 +484,7 @@ CREATE TABLE `ofw_profile` (
   `email` varchar(255) NOT NULL,
   `sss_no` int(255) NOT NULL,
   `pagibig_no` int(255) NOT NULL,
-  `philheath_no` int(255) NOT NULL,
+  `philhealth_no` int(255) NOT NULL,
   `passport_no` int(255) NOT NULL,
   `immigration_status` varchar(255) NOT NULL,
   `educational_background` varchar(255) NOT NULL,
@@ -524,7 +525,7 @@ CREATE TABLE `ofw_profile` (
 -- Dumping data for table `ofw_profile`
 --
 
-INSERT INTO `ofw_profile` (`id`, `otp`, `otp_expiry`, `reset_token`, `reset_token_expiry`, `is_verified`, `username`, `password`, `profile_image`, `last_name`, `first_name`, `middle_name`, `prefix`, `dob`, `sex`, `age`, `civil_status`, `house_address`, `contact_no`, `email`, `sss_no`, `pagibig_no`, `philheath_no`, `passport_no`, `immigration_status`, `educational_background`, `spouse_name`, `spouse_contact`, `fathers_name`, `fathers_address`, `mothers_name`, `mothers_address`, `emergency_contact_name`, `emergency_contact_number`, `occupation`, `income`, `employment_type`, `country`, `employment_form`, `employer_abroad`, `abroad_contact`, `employer_address`, `local_agencies`, `local_agency_no`, `name_local_agency`, `contact_person_local`, `address_local`, `email_personal_local`, `email_company_local`, `agency_abroad`, `contact_abroad`, `agency_person_abroad`, `address_abroad`, `email_abroad_personal`, `email_abroad_company`, `departure_date`, `arrival_date`) VALUES
+INSERT INTO `ofw_profile` (`id`, `otp`, `otp_expiry`, `reset_token`, `reset_token_expiry`, `is_verified`, `username`, `password`, `profile_image`, `last_name`, `first_name`, `middle_name`, `prefix`, `dob`, `sex`, `age`, `civil_status`, `house_address`, `contact_no`, `email`, `sss_no`, `pagibig_no`, `philhealth_no`, `passport_no`, `immigration_status`, `educational_background`, `spouse_name`, `spouse_contact`, `fathers_name`, `fathers_address`, `mothers_name`, `mothers_address`, `emergency_contact_name`, `emergency_contact_number`, `occupation`, `income`, `employment_type`, `country`, `employment_form`, `employer_abroad`, `abroad_contact`, `employer_address`, `local_agencies`, `local_agency_no`, `name_local_agency`, `contact_person_local`, `address_local`, `email_personal_local`, `email_company_local`, `agency_abroad`, `contact_abroad`, `agency_person_abroad`, `address_abroad`, `email_abroad_personal`, `email_abroad_company`, `departure_date`, `arrival_date`) VALUES
 (6, '518565', '2025-02-19 14:49:49.000000', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', 1, 'Ruth18', '$2y$10$j4z3TSpS/j9gSCtcuw6xc.yzlxbazX8mwnoxU4lmt8LZ/A8IiPUKK', '../uploads/Ruth18/11.jpg', 'Bode', 'Rowland', 'Jailyn Hirthe', '', '2025-03-18', 'male', 0, '', '6985 Breitenberg Shoals', 912345678, 'marklawrencemercado8@gmail.com', 0, 0, 0, 0, '', '', '', 0, '', '', '', '', 0, 0, '', 0, '', '', '', '', 0, '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000'),
 (7, '480058', '2025-02-21 14:34:23.000000', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', 1, 'Melany.Volkman', '$2y$10$cJ1RW.agwZBImdHCp.yWuOgr2e9N6QDgSCmMO/ILyFPDAEooukl16', 'uploads/Melany_Volkman/444.jpg', 'qwe', 'qwe', 'qwe', '', '2000-07-11', 'male', 0, '', 'rh45hgfghrdsh', 2147483647, 'pesolosbanos4@gmail.com', 0, 0, 0, 0, '', '', '', 0, '', '', '', '', 0, 0, '', 0, '', '', '', '', 0, '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000');
 
@@ -908,7 +909,7 @@ ALTER TABLE `work_exp`
 -- AUTO_INCREMENT for table `admin_profile`
 --
 ALTER TABLE `admin_profile`
-  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `applicant_profile`

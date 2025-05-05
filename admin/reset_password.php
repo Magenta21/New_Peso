@@ -1,6 +1,10 @@
 <?php
 include '../db.php';
 
+// Initialize variables
+$token = null;
+$email = null;
+
 // Check if the token is set
 if (isset($_GET['token'])) {
     $token = $_GET['token'];
@@ -9,7 +13,7 @@ if (isset($_GET['token'])) {
     $sql = "SELECT email, reset_token_expiry FROM admin_profile WHERE reset_token = '$token' AND reset_token_expiry > NOW()";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
+    if ($result && $result->num_rows > 0) {
         // Token is valid
         $row = $result->fetch_assoc();
         $email = $row['email'];
@@ -33,8 +37,8 @@ if (isset($_GET['token'])) {
 <body>
     <h2>Reset Password</h2>
     <form action="process/update_password.php" method="POST">
-        <input type="hidden" name="email" value="<?php echo $email; ?>">
-        <input type="hidden" name="token" value="<?php echo $token; ?>">
+        <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>">
+        <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
         <label for="new_password">New Password:</label>
         <input type="password" name="new_password" required>
         <button type="submit">Reset Password</button>
