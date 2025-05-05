@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashedPassword = password_hash($new_password, PASSWORD_BCRYPT);
 
     // Update the password in the database
-    $sql = "UPDATE admin_profile SET password = '$hashedPassword', reset_token = NULL, reset_token_expiry = NULL WHERE email = '$email'";
+    $sql = "UPDATE admin_profile SET passwords   = '$hashedPassword', reset_token = NULL, reset_token_expiry = NULL WHERE email = '$email'";
     if ($conn->query($sql) === TRUE) {
         echo "<script>alert('Password reset success.'); window.location.href='../admin_login.php';</script>";
     } else {
