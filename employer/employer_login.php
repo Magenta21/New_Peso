@@ -47,7 +47,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="../php/send_reset_link.php" method="POST">
+                    <form action="process/send_reset_link.php" method="POST">
                         <div class="form-group">
                             <label for="email" style="color: black;">Enter your email address:</label>
                             <input type="email" class="form-control" id="email" name="email" required>
