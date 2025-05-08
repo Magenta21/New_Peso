@@ -1,9 +1,9 @@
 body {
-	background: linear-gradient(to right, #D9D9D9, #1E1E1E);
+	background: #E1D9D1;
 	background-size: cover;
 }
 .header {
-    background: linear-gradient(to right, #8B0000 30%, #FF0000 80%, #FFC0CB 100%);
+    background: #0D6EFD;
     color: white;
     height: 50px;
     width: 100%;

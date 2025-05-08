@@ -144,19 +144,72 @@
     </div>
 
     <div class="container mt-4">
-        <div class="row mb-4 text-center">
-            <div class="col-8 text-center  text-black py-3 border border-5 border-primary p-5 rounded-5">
-                It is with great pride and commitment that we introduce the newly developed Public Employment Service Office (PESO) website, a vital step toward enhancing employment opportunities for our community. This platform is designed to connect job seekers with employers, provide access to training programs, and offer essential career guidance to empower our local workforce. As we strive for progress and inclusive growth, this digital initiative ensures that every resident of Los Baños has an accessible, transparent, and efficient employment service. Together, we build a future where opportunities are within reach for all.
+    <div id="welcomeCarousel" class="carousel slide shadow-lg" data-bs-ride="carousel">
+        <div class="carousel-inner rounded-4 overflow-hidden">
+            <!-- Slide 1 - Welcome Message -->
+            <div class="carousel-item active">
+                <div class="row g-0">
+                    <div class="col-md-8 bg-light p-5 d-flex align-items-center">
+                        <div class="text-center text-md-start">
+                            <h2 class="text-danger mb-4">Welcome to PESO Los Baños</h2>
+                            <p class="lead">
+                                It is with great pride and commitment that we introduce the newly developed Public Employment Service Office (PESO) website, a vital step toward enhancing employment opportunities for our community. This platform is designed to connect job seekers with employers, provide access to training programs, and offer essential career guidance to empower our local workforce.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 bg-danger d-flex align-items-center justify-content-center p-4">
+                        <img src="../img/mayor.jpg" alt="Mayor's Photo" class="img-fluid rounded-circle border border-4 border-white" style="width: 200px; height: 200px; object-fit: cover;">
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4">
-                <img src="img/mayor.jpg" alt="Sample Image" class="img-fluid  rounded-circle" style="width: 200px; height: 200px;">
+            
+            <!-- Slide 2 - Community Impact -->
+            <div class="carousel-item">
+                <div class="row g-0">
+                    <div class="col-md-8 bg-light p-5 d-flex align-items-center">
+                        <div class="text-center text-md-start">
+                            <h2 class="text-danger mb-4">Building Our Community</h2>
+                            <p class="lead">
+                                As we strive for progress and inclusive growth, this digital initiative ensures that every resident of Los Baños has an accessible, transparent, and efficient employment service. Together, we build a future where opportunities are within reach for all.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 bg-primary d-flex align-items-center justify-content-center p-4">
+                        <img src="../img/community.jpg" alt="Community Photo" class="img-fluid rounded-3" style="max-height: 300px; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 3 - Employment Services -->
+            <div class="carousel-item">
+                <div class="row g-0">
+                    <div class="col-md-8 bg-light p-5 d-flex align-items-center">
+                        <div class="text-center text-md-start">
+                            <h2 class="text-danger mb-4">Our Services</h2>
+                            <p class="lead">
+                                PESO Los Baños offers comprehensive employment services including job matching, career counseling, skills training, and livelihood programs. We bridge the gap between employers and job seekers to create a thriving local economy.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 bg-success d-flex align-items-center justify-content-center p-4">
+                        <img src="../img/services.jpg" alt="Services Photo" class="img-fluid rounded-3" style="max-height: 300px; object-fit: cover;">
+                    </div>
+                </div>
             </div>
         </div>
         
-        <div class="col mb-3 justify-content-center">
-        </div>
-
-        <div class="row mb-4 text-center">
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#welcomeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#welcomeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+        <div class="row mb-4 mt-4 text-center">
             <div class="col-md-4">
                 <div class="profile">
                     <img src="img/mission.png" alt="Profile 1" class="img-fluid" style="width: 100px; height: 100px;">
