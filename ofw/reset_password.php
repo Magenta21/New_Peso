@@ -27,21 +27,35 @@ if (isset($_GET['token'])) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password</title>
+    <link rel="stylesheet" href="css/reset_pass.css" defer>
+    <style>
+         
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h2>Reset Password</h2>
-    <form action="process/update_password.php" method="POST">
-        <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>">
-        <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
-        <label for="new_password">New Password:</label>
-        <input type="password" name="new_password" required>
-        <button type="submit">Reset Password</button>
-    </form>
+    <div class="reset-card">
+        <div class="reset-header">
+            <h2>Reset Password</h2>
+        </div>
+        <div class="reset-body">
+            <form action="process/update_password.php" method="POST">
+                <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>">
+                <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
+                <div class="form-group">
+                    <label for="new_password">New Password</label>
+                    <input type="password" name="new_password" id="new_password" required>
+                </div>
+                <button type="submit" class="reset-btn">Update Password</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
