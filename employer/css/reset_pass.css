@@ -1,0 +1,117 @@
+ /* Modern CSS Reset */
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f6f9fc 0%, #eef2f5 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Form Container */
+.reset-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    padding: 0;
+    width: 100%;
+    max-width: 420px;
+    overflow: hidden;
+}
+
+/* Header Section */
+.reset-header {
+    background:#0D6EFD;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.reset-header h2 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* Form Body */
+.reset-body {
+    padding: 30px;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #525f7f;
+}
+
+input[type="password"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+
+input[type="password"]:focus {
+    border-color:#0D6EFD;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* Button Styling */
+.reset-btn {
+    background:#0D6EFD;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.reset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(102, 126, 234, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .reset-card {
+        max-width: 100%;
+    }
+    
+    .reset-header {
+        padding: 25px;
+    }
+    
+    .reset-header h2 {
+        font-size: 24px;
+    }
+    
+    .reset-body {
+        padding: 25px;
+    }
+}

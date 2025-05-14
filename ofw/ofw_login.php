@@ -52,11 +52,11 @@ if (isset($_SESSION['user'])) {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" style="color: black;">Applicant Forgot Password</h5>
+                    <h5 class="modal-title" style="color: black;"> Forgot Password</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="../php/send_reset_link.php" method="POST">
+                    <form action="process/send_reset_link.php" method="POST">
                         <div class="form-group">
                             <label for="email" style="color: black;">Enter your email address:</label>
                             <input type="email" class="form-control" id="email" name="email" required>
@@ -68,8 +68,8 @@ if (isset($_SESSION['user'])) {
         </div>
     </div>
 
-    <script src="../bootstrap/js/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
