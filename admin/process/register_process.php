@@ -124,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Prepare SQL statement
         // Store OTP and expiry in the database
-        $stmt = $pdo->prepare("INSERT INTO admin_profile (Username, Email, Passwords, Fname, Mname, Lname, Age, Cnumber, Haddress, photo, otp, is_verified) 
+        $stmt = $pdo->prepare("INSERT INTO admin_profile (Username, Email, passwords, Fname, Mname, Lname, Age, Cnumber, Haddress, photo, otp, is_verified) 
         VALUES (:username, :email, :passwords, :fname, :mname, :lname, :age, :contact, :haddress, :pic, :otp, 0)");
 
 

@@ -1,10 +1,10 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    date_default_timezone_set('Asia/Manila'); // Ensure timezone is set
+    date_default_timezone_set('Asia/Manila');
 
     $email = $_POST['email'];
     $otp = $_POST['otp'];
-    $training_id = $_POST['training_id'];
+    $training_id = $_POST['training_id']; // Get training_id from POST
 
     $pdo = new PDO("mysql:host=localhost;dbname=pesoo;charset=utf8", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-        $current_time = date('Y-m-d H:i:s'); // Current Manila time
+        $current_time = date('Y-m-d H:i:s');
         $otp_expiry = $user['otp_expiry'];
 
         if ($user['otp'] == $otp && $current_time <= $otp_expiry) {
@@ -25,13 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':email', $email);
             $stmt->execute();
 
-            header("Location: ../trainees_login.php?training_id=" . $training_id);
+            // Redirect to login with training_id
+            header("Location: ../../training/training_login.php?training=" . $training_id);
+            exit();
         } else {
-            echo "Invalid or expired OTP. <a href='otp_verification.php?email=" . urlencode($email) . "'>Try Again</a>";
+            echo "Invalid or expired OTP. <a href='../otp_verification.php?email=" . 
+                 urlencode($email) . "&training_id=" . $training_id . "'>Try Again</a>";
         }
     } else {
         echo "No account found!";
     }
 }
-
 ?>
