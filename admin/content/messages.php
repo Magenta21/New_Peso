@@ -11,7 +11,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 // Function to generate and download Excel report
 if (isset($_POST['download_applicant_report'])) {
     // Create new Spreadsheet
-    $spreadsheet = new Spreadsheet();
+    $spreadsheet = new Spreadsheet();   
     
     // Remove default sheet (we'll create our own)
     $spreadsheet->removeSheetByIndex(0);
