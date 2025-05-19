@@ -37,7 +37,7 @@
             </li>
             <li>
                 <a href="?page=messages" class="<?= $page === 'messages' ? 'active' : '' ?>">
-                    <i class="fas fa-envelope"></i> Messages
+                    <i class="fas fa-envelope"></i> News Management
                 </a>
             </li>
             <li>
