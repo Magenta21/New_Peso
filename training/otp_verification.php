@@ -1,10 +1,11 @@
 <?php
-if (!isset($_GET['email'])) {
+if (!isset($_GET['email']) || !isset($_GET['training_id'])) {
     echo "Invalid request!";
     exit;
 }
 
-$email = $_GET['email']; // Get the email from URL
+$email = $_GET['email'];
+$training_id = $_GET['training_id'];
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +18,6 @@ $email = $_GET['email']; // Get the email from URL
     <title>OTP Verification</title>
 </head>
 <body>
-
     <div class="container mt-5">
         <div class="container-fluid bg-white shadow-lg w-50 mx-auto text-center p-3">
             <div class="row mb-2">
@@ -31,6 +31,7 @@ $email = $_GET['email']; // Get the email from URL
             <div class="row mb-1">
                 <form action="process/process_otp.php" method="POST">
                     <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>">
+                    <input type="hidden" name="training_id" value="<?php echo htmlspecialchars($training_id); ?>">
                     <label>Enter OTP:</label>
                     <input type="text" name="otp" class="otp-input" required>
             </div>

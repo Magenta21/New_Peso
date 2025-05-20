@@ -115,15 +115,15 @@ function sendInterviewEmail($toEmail, $name, $jobTitle, $datetime, $companyName,
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'jervinguevarra123@gmail.com';
-        $mail->Password = 'wdul asom bddj yhfd';
+        $mail->Username = 'pesolosbanos4@gmail.com';
+        $mail->Password = 'rooy awbq emme qqyt';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
         $mail->CharSet = 'UTF-8';
 
-        $mail->setFrom('jervinguevarra123@gmail.com', 'PESO Los Baños');
+        $mail->setFrom('pesolosbanos4@gmail.com', 'PESO Los Baños');
         $mail->addAddress($toEmail, $name);
-        $mail->addReplyTo('jervinguevarra123@gmail.com', 'PESO Los Baños');
+        $mail->addReplyTo('pesolosbanos4@gmail.com', 'PESO Los Baños');
 
         $formattedDate = date('F j, Y \a\t g:i a', strtotime($datetime));
         $mail->isHTML(true);

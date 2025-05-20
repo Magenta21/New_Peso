@@ -15,13 +15,13 @@ function sendRegistrationEmail($email, $userData, $otp) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'jervinguevarra123@gmail.com';
-        $mail->Password = 'wdul asom bddj yhfd'; // Use app-specific password
+        $mail->Username = 'pesolosbanos4@gmail.com';
+        $mail->Password = 'rooy awbq emme qqyt'; // Use app-specific password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         // Recipients
-        $mail->setFrom('jervinguevarra123@gmail.com', 'PESO Los Baños');
+        $mail->setFrom('pesolosbanos4@gmail.com', 'PESO Los Baños');
         $mail->addAddress($email); 
 
         // Content
