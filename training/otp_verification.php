@@ -19,7 +19,6 @@ $training_id = $_GET['training_id'];
     <title>OTP Verification</title>
 </head>
 <body>
-
     <div class="container mt-5">
         <div class="container-fluid bg-white shadow-lg w-50 mx-auto text-center p-3">
             <div class="row mb-2">

@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $email = $_POST['email'];
     $otp = $_POST['otp'];
-    $training_id = $_POST['training_id']; // Get training_id from POST
+    $training_id = $_POST['training_id']; // Get training_id from form
 
     $pdo = new PDO("mysql:host=localhost;dbname=pesoo;charset=utf8", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -25,12 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':email', $email);
             $stmt->execute();
 
-            // Redirect to login with training_id
-            header("Location: ../../training/training_login.php?training=" . $training_id);
+            // Redirect with training_id
+            header("Location: ../training_login.php?training=" . $training_id);
             exit();
         } else {
-            echo "Invalid or expired OTP. <a href='../otp_verification.php?email=" . 
-                 urlencode($email) . "&training_id=" . $training_id . "'>Try Again</a>";
+            echo "Invalid or expired OTP. <a href='../otp_verification.php?email=" . urlencode($email) . "&training_id=" . $training_id . "'>Try Again</a>";
         }
     } else {
         echo "No account found!";

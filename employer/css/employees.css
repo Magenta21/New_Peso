@@ -117,7 +117,8 @@ th {
 }
 
 .container {
-    padding: 5px; /* Reduce overall container padding */
+    padding: 5px;
+    /* Reduce overall container padding */
 }
 
 .col-md-2, .col-md-8 {
@@ -152,6 +153,10 @@ a.navlink:hover::before {
 
 a.nav-link {
     color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+#toggleButton, #toggleButton2, #toggleButton4 {
+    color: rgb(0, 0, 0);
     text-decoration: none;
 }
 a.nav-link:hover {

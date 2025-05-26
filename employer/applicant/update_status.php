@@ -62,13 +62,13 @@ if ($stmt->execute()) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'jervinguevarra123@gmail.com'; // Your email
-        $mail->Password = 'wdul asom bddj yhfd'; // Your app password
+        $mail->Username = 'pesolosbanos4@gmail.com'; // Your email
+        $mail->Password = 'rooy awbq emme qqyt'; // Your app password
         $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
         
         // Recipients
-        $mail->setFrom('jervinguevarra123@gmail.com', 'PESO Los Baños');
+        $mail->setFrom('pesolosbanos4@gmail.com', 'PESO Los Baños');
         $mail->addAddress($applicant['email'], $applicant['fname'] . ' ' . $applicant['lname']);
         
         // Content
@@ -89,7 +89,7 @@ if ($stmt->execute()) {
                 
                 <p><strong>Company:</strong> ' . htmlspecialchars($employer['company_name']) . '</p>
                 <p><strong>Address:</strong> ' . htmlspecialchars($employer['company_address']) . '</p>
-                <p><strong>Contact:</strong> ' . htmlspecialchars($employer['contact_no']) . '</p>
+                <p><strong>Contact:</strong> ' . htmlspecialchars($employer['company_contact']) . '</p>
                 
                 <p>Welcome to the team!</p>
                 <p>Sincerely,<br>PESO Los Baños</p>

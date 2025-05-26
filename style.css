@@ -266,11 +266,7 @@ h3,h2 {
     border-right: 0;
     border-bottom: 0.3em solid transparent;
     border-left: 0.3em solid;
-    float: right;
+   
     margin-top: 7px;
 }
 
-/* Keep original navbar color (don't change this) */
-.navbar.bg-primary {
-    /* Original navbar color stays here */
-}

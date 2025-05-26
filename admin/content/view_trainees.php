@@ -47,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_status'])) {
               $mail->isSMTP();
               $mail->Host = 'smtp.gmail.com';
               $mail->SMTPAuth = true;
-              $mail->Username = 'jervinguevarra123@gmail.com';
-              $mail->Password = 'wdul asom bddj yhfd';
+              $mail->Username = 'pesolosbanos4@gmail.com';
+              $mail->Password = 'rooy awbq emme qqyt';
               $mail->SMTPSecure = 'tls';
               $mail->Port = 587;
               

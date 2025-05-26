@@ -44,7 +44,7 @@ function sendResetEmail($email, $reset_link) {
         $mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through
         $mail->SMTPAuth = true;
         $mail->Username = 'pesolosbanos4@gmail.com'; // SMTP username
-        $mail->Password = 'tjfx zrvm epvf wwyy'; // SMTP password
+        $mail->Password = 'rooy awbq emme qqyt'; // SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 

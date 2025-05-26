@@ -7,8 +7,7 @@ if ($db->connect_error) {
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 $valid_pages = ['dashboard', 'users', 'training', 'ofw_cases', 'reports', 'messages'];
 if (!in_array($page, $valid_pages)) {
-    $page = 'dashboard';
-}
+    $page = 'dashboard';}
 ?>
 <!DOCTYPE html>
 <html lang="en">
