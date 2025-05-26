@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2025 at 03:33 AM
+-- Generation Time: May 26, 2025 at 08:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin_profile` (
   `ID` int(255) NOT NULL,
   `Username` varchar(255) NOT NULL,
-  `Passwords` varchar(255) NOT NULL,
+  `passwords` varchar(255) NOT NULL,
   `Email` varchar(255) NOT NULL,
   `Fname` varchar(255) NOT NULL,
   `Lname` varchar(255) NOT NULL,
@@ -39,7 +39,8 @@ CREATE TABLE `admin_profile` (
   `Cnumber` int(255) NOT NULL,
   `Haddress` varchar(255) DEFAULT NULL,
   `otp` varchar(255) DEFAULT NULL,
-  `reset_token` varchar(255) DEFAULT NULL,
+  `reset_token` varchar(255) NOT NULL,
+  `reset_token_expiry` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
   `is_verified` int(5) DEFAULT NULL,
   `photo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -48,9 +49,8 @@ CREATE TABLE `admin_profile` (
 -- Dumping data for table `admin_profile`
 --
 
-INSERT INTO `admin_profile` (`ID`, `Username`, `Passwords`, `Email`, `Fname`, `Lname`, `Mname`, `Age`, `Cnumber`, `Haddress`, `otp`, `reset_token`, `is_verified`, `photo`) VALUES
-(1, 'Azure', '$2y$10$98Ebm5xfFXDPAlM3f0NzWePjyrbGC8SWB3xCp7Wu6/MYGpey21XOS', 'heredape@asciibinder.net', 'Frances', 'Townsend', 'Jermaine Anderson', 23, 99999, 'Qui amet in nostrud', '552307', NULL, 1, '../uploads/Azure/peso-ai-brush-removebg-ahka6q4e.png'),
-(4, 'pesoo123', '$2y$10$HUUpVIyPlOx6mK4RXFxPQe9sKirHhlopmekfTymmaNqXE4j.9EMxu', 'pesolosbanos4@gmail.com', 'qwe', 'qwe', 'qwe', 25, 2147483647, 'qwe', '205921', NULL, 1, '../uploads/pesoo123/qweqe.jpg');
+INSERT INTO `admin_profile` (`ID`, `Username`, `passwords`, `Email`, `Fname`, `Lname`, `Mname`, `Age`, `Cnumber`, `Haddress`, `otp`, `reset_token`, `reset_token_expiry`, `is_verified`, `photo`) VALUES
+(15, 'Jac', '$2y$10$/ADkdewqh9hir7FmtYgeyu42q4N5CqkMFHFEtx68bWL4Mdce7VFZu', 'bzmqwgsuix@ibolinva.com', 'Olympia', 'Christian', 'Kylie Vasquez', 0, 581, 'Voluptatem dolore i', '704011', '5d2a7e3029bac67046fb726fe0e3cc2ad99011ceba00aa61da11e18f9a1694742931575076942b6bed2bd34b1f406c0e9b2a', '2025-05-26 07:01:03.000000', 1, '../uploads/Jac/0266554465.jpeg');
 
 -- --------------------------------------------------------
 
@@ -120,7 +120,7 @@ INSERT INTO `applicant_profile` (`id`, `username`, `password`, `is_verified`, `o
 (5, 'Lawrence123', '$2y$10$wmG6vvUGbNzVs93xEUVo6.8gp.H3gQ0ckYeQSdCgcl44fJJ4FFwlC', '1', '791946', '2025-03-17 14:44:36.000000', '', '', 'jervin1231@gmail.com', 'Mark Lawrence ', 'qwee', 'Ryan Campos', '2000-02-22', 'ccsDcS', 0, 0, 'male', 'single', 2147483647, '131243', 'uploads/Lawrence123/rizal.PNG', 'wqeqweqwe123', 123124325, 324234, 75676, 34242, 5453453, '2025-04-03 00:00:00.000000', 'CDLB', '2019-06-14', 'Academic Award', '2025-06-24', '2025-06-24', 'None', 'ICT', 'local', 'Los banos1, Calamba2, Sta. Cruz3', 'Virtual Assistant, Web Developer, IT specialist, Kargador', 'drgtgdrgdr', 'sergsegesrgser', 'dhrtyrtgdrgdr', 'restsegserser', 'tet4et', 'terteryrt', '', 'Employment', 20000, ''),
 (6, 'Patrick123', '$2y$10$GDhfOAg2HscIqvuzWs2djeay/xGP1vSzGaplyYg8y96/xf1ZvItrm', '1', '506994', '2025-03-27 10:23:37.000000', '', '', 'vetara3297@boyaga.com', 'Tite ', 'Patrick', 'ni', '2000-02-02', '', 0, 0, 'male', '', 2147483647, '', 'uploads/Patrick123/brave_screenshot_localhost.png', 'asdad', 0, 0, 0, 0, 0, NULL, 'asd', '2000-02-22', 'asd', 'asd', '2000-02-20', 'asd', '', '', '', '', '', '', '', '', '', '', '', 'Employment', 0, ''),
 (7, 'Markrrr', '$2y$10$eovoYRyRckMntWemzIpXFOvUHkMKwnuAMJwRqpRhV29w3xPG8LRUy', '0', '355618', '2025-04-03 14:56:09.000000', '', '', 'huhywypi@logsmarter.net', 'Mark', 'Mercado', 'Lawrence', '2000-12-23', '', 0, 0, 'male', '', 2147483647, '', '../uploads/Markrrr/Planet9_3840x2160.jpg', 'sadfawefw3', 0, 0, 0, 0, 0, NULL, 'afwefaw', '2002-05-21', 'wfafaefawe', 'ewdqedwe', '2024-03-31', 'qwerqweqd', '', '', '', '', '', '', '', '', '', '', '', 'Employment', 0, ''),
-(8, 'joker', '$2y$10$vgmaJDqF0BO4scQDxIHHZ.4k0unBO51XIHXljl0clMP26TTQO.nE6', '1', '940675', '2025-04-03 15:00:07.000000', '', '', '07h48r1hrn@vvatxiy.com', 'Mark', 'Mercado', 'Lawrence', '2000-12-23', '', 24, 0, 'male', 'single', 2147483647, '', 'uploads/joker/Planet9_3840x2160.jpg', 'sadfawefw3', 0, 0, 0, 0, 0, NULL, 'afwefaw', '2002-05-21', 'wfafaefawe', 'ewdqedwe', '2024-03-31', 'qwerqweqd', '', '', '', '', '', '', 'yes', '', '', '', '', 'Employment', 0, ''),
+(8, 'joker', '$2y$10$vgmaJDqF0BO4scQDxIHHZ.4k0unBO51XIHXljl0clMP26TTQO.nE6', '1', '940675', '2025-04-03 15:00:07.000000', '1bf963501b92a96ee43de8bc32bcac59903e8b507bad660a3a5210c828c0670ddfd4a09e7ca5b6fff3c9f357f86655c88b3c', '2025-05-26 14:03:29', 'db1u6cq8ju@vwhins.com', 'Mark', 'Mercado', 'Lawrence', '2000-12-23', '', 24, 0, 'male', 'single', 2147483647, '', 'uploads/joker/Planet9_3840x2160.jpg', 'sadfawefw3', 0, 0, 0, 0, 0, NULL, 'afwefaw', '2002-05-21', 'wfafaefawe', 'ewdqedwe', '2024-03-31', 'qwerqweqd', '', '', '', '', '', '', 'yes', '', '', '', '', 'Employment', 0, ''),
 (9, 'Batbat', '$2y$10$clFfpF56NfPfGi1anegZZ.Ix8zxFGsGz52ifKYRtvCWryWdCkQvJy', '1', '323304', '2025-04-04 14:35:31.000000', '', '', 'batbattmercado@gmail.com', 'Jervin', 'Guevarra', 'Campos', '2002-01-29', '', 0, 0, 'male', '', 2147483647, '', '../uploads/Batbat/Screenshot_20221129_041811.png', 'sdafaf2fffw4fwf', 0, 0, 0, 0, 0, NULL, 'Pulo', '2021-03-03', 'ewfwe', 'ewrw', '2025-04-01', 'ewfwew', '', '', '', '', '', '', '', '', '', '', '', 'Employment', 0, '');
 
 -- --------------------------------------------------------
@@ -909,7 +909,7 @@ ALTER TABLE `work_exp`
 -- AUTO_INCREMENT for table `admin_profile`
 --
 ALTER TABLE `admin_profile`
-  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `applicant_profile`
