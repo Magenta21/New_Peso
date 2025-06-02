@@ -6,8 +6,8 @@ if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
-$module_id = $_GET['id'] ?? 0;
-$training = $_GET['training'] ?? '';
+$module_id = $_GET['id'] ?? '';
+$training_id = $_GET['training_id'] ?? '';
 
 if ($module_id <= 0) {
     die("Invalid module ID");
@@ -35,9 +35,9 @@ if ($stmt->execute()) {
     if (file_exists($row['files'])) {
         unlink($row['files']);
     }
-    header("Location: ?page=training&action=view_modules&training=$training&success=Module deleted successfully");
+    header("Location: ?page=training&action=view_modules&training_id=$training_id&success=Module deleted successfully");
 } else {
-    header("Location: ?page=training&action=view_modules&training=$training&error=" . urlencode("Database error: " . $db->error));
+    header("Location: ?page=training&action=view_modules&training_id=$training_id&error=" . urlencode("Database error: " . $db->error));
 }
 
 $db->close();

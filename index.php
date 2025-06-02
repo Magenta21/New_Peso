@@ -7,6 +7,9 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css">
     
 </head>
 <body>
@@ -132,7 +135,7 @@
             
             <a href="joblist.php" class="nav-link px-3">JOBS</a>
             <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
-            <a href="news.php" class="nav-link px-3">NEWSdfhfdhdfhgfhfd</a>
+            <a href="news.php" class="nav-link px-3">NEWS</a>
         </div>
         <div class="ms-auto">
             
@@ -144,60 +147,93 @@
     <div class="banner">
     </div>
 
-    <div class="container mt-4">
-    <div id="welcomeCarousel" class="carousel slide shadow-lg" data-bs-ride="carousel" data-bs-interval="5000">
-        <div class="carousel-inner rounded-4 overflow-hidden">
+<div class="container mt-4">
+    <div id="welcomeCarousel" class="carousel slide shadow-lg" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="false">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#welcomeCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#welcomeCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#welcomeCarousel" data-bs-slide-to="2"></button>
+        </div>
+        
+        <div class="carousel-inner rounded-4 overflow-hidden" style="transition: transform 1s ease-in-out;">
             <!-- Slide 1 - Welcome Message -->
             <div class="carousel-item active">
-                <div class="row g-0">
-                    <div class="col-md-8 bg-light p-5 d-flex align-items-center">
-                        <div class="text-center text-md-start">
-                            <h2 class="text-danger mb-4 animate__animated animate__fadeInDown">Welcome to PESO Los Baños</h2>
-                            <p class="lead animate__animated animate__fadeIn animate__delay-1s">
-                                It is with great pride and commitment that we introduce the newly developed Public Employment Service Office (PESO) website, a vital step toward enhancing employment opportunities for our community. This platform is designed to connect job seekers with employers, provide access to training programs, and offer essential career guidance to empower our local workforce.
+                <div class="row g-0 h-100">
+                    <div class="col-md-8 bg-light p-5 d-flex align-items-center position-relative">
+                        <div class="text-center text-md-start slide-content">
+                            <h2 class="text-danger mb-4 slide-title">Welding</h2>
+                            <p class="lead slide-text">
+                              The Public Employment Service Office (PESO) in Batong Malake, Los Banos, may offer welding programs, particularly Shielded Metal Arc Welding (SMAW), through their training initiatives. These programs are often designed to enhance job skills and provide additional income opportunities for individuals. PESO, as a multi-service facility, is a strategic mechanism for government-initiated employment programs and activities. 
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-4 bg-danger d-flex align-items-center justify-content-center p-4">
-                        <img src="../img/mayor.jpg" alt="Mayor's Photo" class="img-fluid rounded-circle border border-4 border-white animate__animated animate__zoomIn" style="width: 200px; height: 200px; object-fit: cover;">
+                    <div class="col-md-4 bg-danger d-flex align-items-center justify-content-center p-4 position-relative">
+                        <img src="img/welding.jpeg" alt="welding" class="img-fluid rounded-circle border border-4 border-white slide-image" style="width: 200px; height: 200px; object-fit: cover;">
                     </div>
                 </div>
             </div>
             
             <!-- Slide 2 - Community Impact -->
             <div class="carousel-item">
-                <div class="row g-0">
-                    <div class="col-md-8 bg-light p-5 d-flex align-items-center">
-                        <div class="text-center text-md-start">
-                            <h2 class="text-danger mb-4 animate__animated animate__fadeInDown">Building Our Community</h2>
-                            <p class="lead animate__animated animate__fadeIn animate__delay-1s">
-                                As we strive for progress and inclusive growth, this digital initiative ensures that every resident of Los Baños has an accessible, transparent, and efficient employment service. Together, we build a future where opportunities are within reach for all.
+                <div class="row g-0 h-100">
+                    <div class="col-md-8 bg-light p-5 d-flex align-items-center position-relative">
+                        <div class="text-center text-md-start slide-content">
+                            <h2 class="text-danger mb-4 slide-title">Hilot-Wellness</h2>
+                            <p class="lead slide-text">
+                              Hilot wellness massage services offered in Public Employment Service Offices (PESOs) provide traditional Filipino therapeutic massage aimed at promoting relaxation, relieving stress, and improving overall well-being for clients, while also supporting employment and livelihood opportunities for trained massage therapists.
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-4 bg-primary d-flex align-items-center justify-content-center p-4">
-                        <img src="../img/community.jpg" alt="Community Photo" class="img-fluid rounded-3 animate__animated animate__zoomIn" style="max-height: 300px; object-fit: cover;">
+                    <div class="col-md-4 bg-primary d-flex align-items-center justify-content-center p-4 position-relative">
+                        <img src="img/hilot.jpeg" alt="Community Photo" class="img-fluid rounded-3 slide-image" style="max-height: 300px; object-fit: cover;">
                     </div>
                 </div>
             </div>
             
             <!-- Slide 3 - Employment Services -->
             <div class="carousel-item">
-                <div class="row g-0">
-                    <div class="col-md-8 bg-light p-5 d-flex align-items-center">
-                        <div class="text-center text-md-start">
-                            <h2 class="text-danger mb-4 animate__animated animate__fadeInDown">Our Services</h2>
-                            <p class="lead animate__animated animate__fadeIn animate__delay-1s">
-                                PESO Los Baños offers comprehensive employment services including job matching, career counseling, skills training, and livelihood programs. We bridge the gap between employers and job seekers to create a thriving local economy.
+                <div class="row g-0 h-100">
+                    <div class="col-md-8 bg-light p-5 d-flex align-items-center position-relative">
+                        <div class="text-center text-md-start slide-content">
+                            <h2 class="text-danger mb-4 slide-title">Dressmaking</h2>
+                            <p class="lead slide-text">
+                               Dressmaking services offered in Public Employment Service Offices (PESOs) involve the creation, alteration, and repair of clothing and garments, providing clients with custom-fit apparel while also serving as a livelihood and skills development opportunity for trained dressmakers.
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-4 bg-success d-flex align-items-center justify-content-center p-4">
-                        <img src="../img/services.jpg" alt="Services Photo" class="img-fluid rounded-3 animate__animated animate__zoomIn" style="max-height: 300px; object-fit: cover;">
+                    <div class="col-md-4 bg-success d-flex align-items-center justify-content-center p-4 position-relative">
+                        <img src="img/dressmaking.jpeg" alt="Services Photo" class="img-fluid rounded-3 slide-image" style="max-height: 300px; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="row g-0 h-100">
+                    <div class="col-md-8 bg-light p-5 d-flex align-items-center position-relative">
+                        <div class="text-center text-md-start slide-content">
+                            <h2 class="text-danger mb-4 slide-title">Computer Literate</h2>
+                            <p class="lead slide-text">
+                              Computer literacy programs offered in Public Employment Service Offices (PESOs) aim to equip individuals with essential digital skills, including basic computer operation, word processing, and internet navigation, to enhance their employability and adapt to the demands of a technology-driven workplace.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 bg-success d-flex align-items-center justify-content-center p-4 position-relative">
+                        <img src="img/computer.jpeg" alt="Services Photo" class="img-fluid rounded-3 slide-image" style="max-height: 300px; object-fit: cover;">
                     </div>
                 </div>
             </div>
         </div>
+        
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#welcomeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#welcomeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
 </div>
         
@@ -272,23 +308,59 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mt-2">
-                    <h6>REPUBLIC OF THE PHILIPPINES</h6>
-                    <p>All content is in the publick domain unless otherwise stated</p>
-                </div>
-                <div class="col-md-4 mt-2">
-                <h6 id="contact">CONTACT US</h6>
-                </div>
-                <div class="col-md-4 mt-2">
-                <h6>GOVERNMENT LINKS</h6>
-                </div>
-            </div>
-        </div>
 
+    </div>
+      <!-- Grid row -->
+            <div class="row">
+           
+                <!-- Grid column -->
+                <div class="col-md-12">
+           
+                    <!--Footer-->
+                    <footer class="page-footer blue text-center text-md-left mt-0">
+
+                        <!--Footer Links-->
+                        <div class="container-fluid">
+                            <div class="row">
+
+                                <!--First column-->
+                                <div class="col-md-6">
+                                    <h5 class="title mb-3">PESO Los Baños</h5>
+                                    <p style="text-align: justify; ">PESO Los Baños offers various employment and livelihood programs, including Livelihood Training to enhance skills for income generation, the Special Program for the Employment of Students (SPES) to support working students, Local Recruitment Activities (LRA) to connect job seekers with local employers, and Job Fairs to provide immediate employment opportunities. These initiatives aim to boost employment and economic growth in Los Baños, Laguna.</p>
+                                </div>
+                                <!--/.First column-->
+
+                                <!--Second column-->
+                                <div class="col-md-6">
+                                    <h5 class="title mb-3">Tie-Up Governments Links</h5>
+                                    <ul><li><a href="https://apps.ncr.dole.gov.ph" target="_blank" rel="noopener noreferrer" style="font-style: italic;">Department of Labor and Employment</a></li>
+                                       <ul><li><a href="https://owwa.gov.ph/" target="_blank" rel="noopener noreferrer" style="font-style: italic;">Overseas Workers Welfare Administration</a></li>
+                                       <ul><li><a href="https://dmw.gov.ph/" target="_blank" rel="noopener noreferrer" style="font-style: italic;"> Department of Migrant Workers</a></li>
+                                    <ul><li><a href="https://cfo.gov.ph/home" target="_blank" rel="noopener noreferrer" style="font-style: italic;"> Commission on Filipinos Overseas</a></li>
+                                    </ul>
+                                </div>
+                                <!--/.Second column-->
+                            </div>
+                        </div>
+                        <!--/.Footer Links-->
+
+                        <!--Copyright-->
+                        <div class="footer-copyright">
+                            <div class="container-fluid">
+                                © 2015 Copyright: <a href="https://www.MDBootstrap.com"> MDBootstrap.com </a>
+
+                            </div>
+                        </div>
+                        <!--/.Copyright-->
+
+                    </footer>
+                    <!--/.Footer-->
+           
+                </div>
+                <!-- Grid column -->
+           
+            </div>
+            <!-- Grid row -->
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -303,27 +375,43 @@
         document.addEventListener('DOMContentLoaded', function() {
         const carousel = document.querySelector('#welcomeCarousel');
         
-        // Add animation when slide changes
-        carousel.addEventListener('slide.bs.carousel', function (e) {
-            const nextSlide = e.relatedTarget;
-            const elements = nextSlide.querySelectorAll('.animate__animated');
+  // Enhance carousel transitions
+    document.addEventListener('DOMContentLoaded', function() {
+        const carousel = document.getElementById('welcomeCarousel');
+        
+        // Pause animation on hover
+        carousel.addEventListener('mouseenter', function() {
+            this.setAttribute('data-bs-pause', 'hover');
+        });
+        
+        carousel.addEventListener('mouseleave', function() {
+            this.setAttribute('data-bs-pause', 'false');
+        });
+        
+        // Smooth transition between slides
+        carousel.addEventListener('slide.bs.carousel', function(e) {
+            const activeItem = this.querySelector('.carousel-item.active');
+            const nextItem = this.querySelectorAll('.carousel-item')[e.to];
             
-            // Reset animations
-            elements.forEach(el => {
-                el.classList.remove('animate__fadeIn', 'animate__fadeInDown', 'animate__zoomIn');
-                void el.offsetWidth; // Trigger reflow
-            });
+            // Reset animations for incoming slide
+            if (nextItem) {
+                nextItem.querySelector('.slide-content').style.opacity = '0';
+                nextItem.querySelector('.slide-content').style.transform = 'translateY(20px)';
+                nextItem.querySelector('.slide-image').style.opacity = '0';
+                nextItem.querySelector('.slide-image').style.transform = 'scale(0.9)';
+            }
+        });
+        
+        carousel.addEventListener('slid.bs.carousel', function(e) {
+            const activeItem = this.querySelector('.carousel-item.active');
             
-            // Add animations with delays
-            setTimeout(() => {
-                const headings = nextSlide.querySelectorAll('h2');
-                const paragraphs = nextSlide.querySelectorAll('p');
-                const images = nextSlide.querySelectorAll('img');
-                
-                headings.forEach(h => h.classList.add('animate__fadeInDown'));
-                paragraphs.forEach(p => p.classList.add('animate__fadeIn'));
-                images.forEach(img => img.classList.add('animate__zoomIn'));
-            }, 50);
+            // Trigger animations for new active slide
+            if (activeItem) {
+                activeItem.querySelector('.slide-content').style.opacity = '1';
+                activeItem.querySelector('.slide-content').style.transform = 'translateY(0)';
+                activeItem.querySelector('.slide-image').style.opacity = '1';
+                activeItem.querySelector('.slide-image').style.transform = 'scale(1)';
+            }
         });
     });
 
