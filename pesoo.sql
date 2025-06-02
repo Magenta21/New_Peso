@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2025 at 08:56 AM
+-- Generation Time: Jun 02, 2025 at 08:59 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -50,7 +50,8 @@ CREATE TABLE `admin_profile` (
 --
 
 INSERT INTO `admin_profile` (`ID`, `Username`, `passwords`, `Email`, `Fname`, `Lname`, `Mname`, `Age`, `Cnumber`, `Haddress`, `otp`, `reset_token`, `reset_token_expiry`, `is_verified`, `photo`) VALUES
-(15, 'Jac', '$2y$10$/ADkdewqh9hir7FmtYgeyu42q4N5CqkMFHFEtx68bWL4Mdce7VFZu', 'bzmqwgsuix@ibolinva.com', 'Olympia', 'Christian', 'Kylie Vasquez', 0, 581, 'Voluptatem dolore i', '704011', '5d2a7e3029bac67046fb726fe0e3cc2ad99011ceba00aa61da11e18f9a1694742931575076942b6bed2bd34b1f406c0e9b2a', '2025-05-26 07:01:03.000000', 1, '../uploads/Jac/0266554465.jpeg');
+(15, 'Jac', '$2y$10$/ADkdewqh9hir7FmtYgeyu42q4N5CqkMFHFEtx68bWL4Mdce7VFZu', 'bzmqwgsuix@ibolinva.com', 'Olympia', 'Christian', 'Kylie Vasquez', 0, 581, 'Voluptatem dolore i', '704011', '5d2a7e3029bac67046fb726fe0e3cc2ad99011ceba00aa61da11e18f9a1694742931575076942b6bed2bd34b1f406c0e9b2a', '2025-05-26 07:01:03.000000', 1, '../uploads/Jac/0266554465.jpeg'),
+(16, 'admin', '$2y$10$txfb0RPNoWUaUGqTqasVYOx2s3EuNL/7i7rAGER2CQLhhLK5mmtEu', 'fuu16rk4sj@daouse.com', 'Rhiannon', 'Shaw', 'Vielka Bell', 0, 186, 'Assumenda nihil pers', '652866', '', '2025-06-02 05:35:07.901579', 1, '../uploads/admin/492008287_122126395892681954_5008804379961816881_n.jpg');
 
 -- --------------------------------------------------------
 
@@ -417,17 +418,8 @@ CREATE TABLE `modules` (
 --
 
 INSERT INTO `modules` (`id`, `training_id`, `module_name`, `module_description`, `files`, `date_created`) VALUES
-(1, 1, 'Spotting', 'learning the basics', 'uploads/modules/680056f2ac76f_PESO.pdf', '2025-04-17 09:18:42.000000'),
-(2, 1, 'joints', 'making joints by welding', 'uploads/modules/68005905dabbe_Application_Form.pdf', '2025-04-17 09:27:33.000000'),
-(3, 2, 'Basic vitals checking', 'Checking of pulse, breathing and blood pressure', 'uploads/modules/68005b787a44e_ITEP_413___IMPLEMENTING_INFORMATION_SECURITY.pdf', '2025-04-17 09:38:00.000000'),
-(4, 2, 'Basic pattern for massage', 'Guide for basic massage', 'uploads/modules/68005da43f4db_pesodigitalmarketin.pdf', '2025-04-17 09:47:16.000000'),
-(6, 3, 'basic cutting', 'proper cutting technies and patterns', 'uploads/modules/68019fb62922e_e_Phil_ID.pdf', '2025-04-18 08:41:26.000000'),
-(7, 3, 'Florine Pouros', 'Sequi molestiae aspernatur nesciunt itaque.', 'uploads/modules/68019fc4878ed_LSPU_LB_CCS___Participant_Certificates.pdf', '2025-04-18 08:41:40.000000'),
-(8, 3, 'Trinity Wuckert', 'Magni qui exercitationem.', 'uploads/modules/68019fd582210_Performance_Task_2_Part_1_ITEP_413.pdf', '2025-04-18 08:41:57.000000'),
-(9, 3, 'Amya Champlin', 'Molestiae voluptas quis quo ullam unde ducimus impedit qui saepe.', 'uploads/modules/68019fe318c3c_Application_Form.pdf', '2025-04-18 08:42:11.000000'),
-(10, 3, 'Elwin Goldner', 'Incidunt deserunt accusamus adipisci excepturi dolorem itaque eligendi distinctio voluptas.', 'D:\\xampp\\htdocs\\peso\\admin\\content/uploads/modules/6801a2ff357f5_pesodigitalmarketin.pdf', '2025-04-18 08:55:27.000000'),
-(11, 3, 'Kane Weimann', 'Quis dolore accusamus veritatis saepe vitae quisquam odio.', 'uploads/modules/6801a37d7ca0f_ITEP_413___IMPLEMENTING_INFORMATION_SECURITY.pdf', '2025-04-18 08:57:33.000000'),
-(12, 3, 'Maude Nikolaus', 'Repudiandae accusamus sed repellat molestiae quam ut maxime est.', 'uploads/modules/6801a43b16c49_e_Phil_ID.pdf', '2025-04-18 09:00:43.000000');
+(15, 4, 'Aurelia Jenkins', 'Quo dolores ut est d', 'uploads/modules/683d46e1d7489_Parent_Consent.pdf', '2025-06-02 14:38:25.000000'),
+(16, 4, 'Nathan Bennett', 'Enim perspiciatis q', 'uploads/modules/683d46f73e8c8_Grades_Report.pdf', '2025-06-02 14:38:47.000000');
 
 -- --------------------------------------------------------
 
@@ -441,19 +433,20 @@ CREATE TABLE `news` (
   `image` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `schedule_date` date DEFAULT NULL,
-  `create_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` enum('draft','published','archived') NOT NULL DEFAULT 'draft',
+  `content` text NOT NULL,
+  `updated_at` timestamp(6) NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `news`
 --
 
-INSERT INTO `news` (`id`, `title`, `image`, `description`, `schedule_date`, `create_at`) VALUES
-(1, 'New Tech Innovation Announced', 'news/i1.webp', 'A breakthrough in AI technology has been announced, revolutionizing automation.', '2025-03-01', '2025-02-16 18:45:38'),
-(2, 'Local Sports Team Wins Championship', 'news/i2.webp', 'The city celebrates as the home team claims victory in the national championship.', '2025-03-05', '2025-02-16 18:46:05'),
-(3, 'Weather Alert: Heavy Rain Expected', 'news/i3.webp', 'Meteorologists warn of incoming heavy rainfall and possible flooding.', '2025-02-25', '2025-02-16 18:46:12'),
-(4, 'New Legislation Passed for Green Energy', 'news/i4.webp', 'The government has approved a new bill promoting renewable energy solutions.', '2025-03-10', '2025-02-16 18:46:19'),
-(5, 'Upcoming Music Festival Lineup Revealed', 'news/i5.webp', 'Top artists are set to perform at the annual summer music festival.', '2025-03-15', '2025-02-16 18:46:29');
+INSERT INTO `news` (`id`, `title`, `image`, `description`, `schedule_date`, `created_at`, `status`, `content`, `updated_at`) VALUES
+(1, 'New Tech Innovation Announced', 'news/i1.webp', 'A breakthrough in AI technology has been announced, revolutionizing automation.', '2025-03-01', '2025-02-16 18:45:38', 'draft', '', NULL),
+(3, 'Weather Alert: Heavy Rain Expected', 'news/i3.webp', 'Meteorologists warn of incoming heavy rainfall and possible flooding.', '2025-02-25', '2025-02-16 18:46:12', 'draft', '', NULL),
+(5, 'Upcoming Music Festival Lineup Revealed', 'news/i5.webp', 'Top artists are set to perform at the annual summer music festival.', '2025-03-15', '2025-06-02 05:59:05', 'published', '', '2025-06-02 05:59:05.000000');
 
 -- --------------------------------------------------------
 
@@ -909,7 +902,7 @@ ALTER TABLE `work_exp`
 -- AUTO_INCREMENT for table `admin_profile`
 --
 ALTER TABLE `admin_profile`
-  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `applicant_profile`
@@ -975,7 +968,7 @@ ALTER TABLE `license`
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `news`
