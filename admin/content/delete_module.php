@@ -41,10 +41,10 @@ if ($stmt->execute()) {
         unlink($row['files']);
     }
     $db->close();
-    header("Location: ../admin_home.php");
+    header("Location: ../admin_home.php?page=training&action=view_modules&training_id=$training_id&success=Module deleted successfully");
     exit(); // Add this to stop script execution after redirect
 } else {
     $db->close();
-    header("Location: ../admin_home.php");
+    header("Location: ../admin_home.php?page=training&action=view_modules&training_id=$training_id");
     exit();
 }
