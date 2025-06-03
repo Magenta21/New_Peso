@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['logged_in'])) {
+    header('Location: admin_login.php');
+    exit;
+}
 // Database connection
 $db = new mysqli('localhost', 'root', '', 'pesoo');
 
@@ -6,11 +11,11 @@ if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
-$module_id = $_GET['id'] ?? '';
-$training_id = $_GET['training_id'] ?? '';
+$module_id = $_GET['id'] ?? 0;
+$training_id = $_GET['training_id'] ?? 0;
 
-if ($module_id <= 0) {
-    die("Invalid module ID");
+if ($module_id <= 0 || $training_id <= 0) {
+    die("Invalid module ID or training ID");
 }
 
 // First get file path to delete the file
@@ -32,13 +37,14 @@ $stmt->bind_param('i', $module_id);
 
 if ($stmt->execute()) {
     // Delete the file
-    if (file_exists($row['files'])) {
+    if (!empty($row['files']) && file_exists($row['files'])) {
         unlink($row['files']);
     }
-    header("Location: ?page=training&action=view_modules&training_id=$training_id&success=Module deleted successfully");
+    $db->close();
+    header("Location: ../admin_home.php");
+    exit(); // Add this to stop script execution after redirect
 } else {
-    header("Location: ?page=training&action=view_modules&training_id=$training_id&error=" . urlencode("Database error: " . $db->error));
+    $db->close();
+    header("Location: ../admin_home.php");
+    exit();
 }
-
-$db->close();
-?>
