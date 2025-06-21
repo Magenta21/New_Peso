@@ -49,7 +49,7 @@ $success = $_GET['success'] ?? '';
     $stmt->bind_param('i', $training_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     if ($result->num_rows > 0) {
         echo '<table style="width: 100%; border-collapse: collapse;">
                 <thead>
@@ -61,26 +61,26 @@ $success = $_GET['success'] ?? '';
                     </tr>
                 </thead>
                 <tbody>';
-        
+
         while ($row = $result->fetch_assoc()) {
             echo '<tr style="border-bottom: 1px solid #ddd;">
-                    <td style="padding: 12px; vertical-align: middle;">'.htmlspecialchars($row['module_name']).'</td>
-                    <td style="padding: 12px; vertical-align: middle;">'.htmlspecialchars($row['module_description']).'</td>
-                    <td style="padding: 12px; vertical-align: middle;">'.htmlspecialchars($row['date_created']).'</td>
+                    <td style="padding: 12px; vertical-align: middle;">' . htmlspecialchars($row['module_name']) . '</td>
+                    <td style="padding: 12px; vertical-align: middle;">' . htmlspecialchars($row['module_description']) . '</td>
+                    <td style="padding: 12px; vertical-align: middle;">' . htmlspecialchars($row['date_created']) . '</td>
                     <td style="padding: 12px; vertical-align: middle;">
-                        <a href="'.htmlspecialchars($row['files']).'" target="_blank" class="btn-primary" style="padding: 5px 10px; text-decoration: none; display: inline-block;">
+                        <a href="' . htmlspecialchars($row['files']) . '" target="_blank" class="btn-primary" style="padding: 5px 10px; text-decoration: none; display: inline-block;">
                             <i class="fas fa-eye"></i> View
                         </a>
-                        <a href="?page=training&action=edit_module&training_id='.$training_id.'&id='.$row['id'].'" class="btn-warning" style="padding: 5px 10px; text-decoration: none; display: inline-block;">
+                        <a href="?page=training&action=edit_module&training_id=' . $training_id . '&id=' . $row['id'] . '" class="btn-warning" style="padding: 5px 10px; text-decoration: none; display: inline-block;">
                             <i class="fas fa-edit"></i> Edit
                         </a>
-                        <a href="content/delete_module.php?id='.$row['id'].'&training_id='.$training_id.'" class="btn-danger" style="padding: 5px 10px; text-decoration: none; display: inline-block;" onclick="return confirm(\'Are you sure you want to delete this module?\')">
+                        <a href="content/delete_module.php?id=' . $row['id'] . '&training_id=' . $training_id . '" class="btn-danger" style="padding: 5px 10px; text-decoration: none; display: inline-block;" onclick="return confirm(\'Are you sure you want to delete this module?\')">
                             <i class="fas fa-trash"></i> Delete
                         </a>
                     </td>
                   </tr>';
         }
-        
+
         echo '</tbody></table>';
     } else {
         echo '<div class="alert" style="padding: 15px; background-color: #e7f5fe; color: #296fa8; border-radius: 4px;">
