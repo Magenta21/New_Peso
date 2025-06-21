@@ -6,7 +6,7 @@ if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
-$training_id = (int)$_GET['training_id'] ?? 0;
+$training_id =$_GET['training_id'];
 
 // Get training details
 $stmt = $db->prepare("SELECT * FROM skills_training WHERE id = ?");
