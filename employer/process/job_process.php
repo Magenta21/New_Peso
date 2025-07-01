@@ -31,15 +31,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // First, check if all required documents are verified
-    $docCheckSql = "SELECT COUNT(*) as unverified_count FROM documents 
-                   WHERE employer_id = :employer_id AND (is_verified IS NULL OR is_verified != 'verified')";
+   $docCheckSql = "SELECT COUNT(*) as verified_count FROM documents 
+               WHERE employer_id = :employer_id AND is_verified = 'verified'";
     $docStmt = $pdo->prepare($docCheckSql);
     $docStmt->bindParam(':employer_id', $employer_id);
     $docStmt->execute();
     $result = $docStmt->fetch();
-    
-    if ($result['unverified_count'] > 0) {
-        // Redirect back with error message if documents aren't verified
+
+    if ($result['verified_count'] < 3) {
+        // Redirect back with error message if less than 3 documents are verified
         header("Location: ../post_job.php?error=unverified_documents");
         exit();
     }

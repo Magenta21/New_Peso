@@ -212,7 +212,7 @@
                 <div class="row g-0 h-100">
                     <div class="col-md-8 bg-light p-5 d-flex align-items-center position-relative">
                         <div class="text-center text-md-start slide-content">
-                            <h2 class="text-danger mb-4 slide-title">Computer Literate</h2>
+                            <h2 class="text-danger mb-4 slide-title">Computer Literacy</h2>
                             <p class="lead slide-text">
                               Computer literacy programs offered in Public Employment Service Offices (PESOs) aim to equip individuals with essential digital skills, including basic computer operation, word processing, and internet navigation, to enhance their employability and adapt to the demands of a technology-driven workplace.
                             </p>
@@ -347,7 +347,7 @@
                         <!--Copyright-->
                         <div class="footer-copyright">
                             <div class="container-fluid">
-                                © 2015 Copyright: <a href="https://www.MDBootstrap.com"> MDBootstrap.com </a>
+                                © 2025 Copyright: <a href=""> LSPU STUDENTS </a>
 
                             </div>
                         </div>
