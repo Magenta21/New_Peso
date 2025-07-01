@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $content = $_POST['content'];
         $schedule_date = $_POST['schedule_date'];
         $status = $_POST['status'];
-        
+
         // Handle image upload
         $image = null;
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -25,13 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $image = 'uploads/news/' . $imageName;
             }
         }
-        
+
         $stmt = $conn->prepare("INSERT INTO news (title, image, description, content, schedule_date, status) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssss", $title, $image, $description, $content, $schedule_date, $status);
         $stmt->execute();
         $success = "News created successfully!";
     }
-    
+
     if (isset($_POST['update_news'])) {
         // Update news
         $id = $_POST['id'];
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $content = $_POST['content'];
         $schedule_date = $_POST['schedule_date'];
         $status = $_POST['status'];
-        
+
         // Handle image update
         $image = $_POST['current_image'];
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -55,28 +55,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $image = 'uploads/news/' . $imageName;
             }
         }
-        
+
         $stmt = $conn->prepare("UPDATE news SET title=?, image=?, description=?, content=?, schedule_date=?, status=?, updated_at=NOW() WHERE id=?");
         $stmt->bind_param("ssssssi", $title, $image, $description, $content, $schedule_date, $status, $id);
         $stmt->execute();
         $success = "News updated successfully!";
     }
-    
+
     if (isset($_POST['delete_news'])) {
         // Delete news
         $id = $_POST['id'];
-        
+
         // First get image path to delete file
         $stmt = $conn->prepare("SELECT image FROM news WHERE id=?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
         $news = $result->fetch_assoc();
-        
-        if ($news['image'] && file_exists("../".$news['image'])) {
-            unlink("../".$news['image']);
+
+        if ($news['image'] && file_exists("../" . $news['image'])) {
+            unlink("../" . $news['image']);
         }
-        
+
         $stmt = $conn->prepare("DELETE FROM news WHERE id=?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Get all news for listing
 $news = [];
-$result = $conn->query("SELECT * FROM news ORDER BY schedule_date DESC, created_at DESC");
+$result = $conn->query("SELECT * FROM news ORDER BY schedule_date DESC, create_at DESC");
 if ($result) {
     $news = $result->fetch_all(MYSQLI_ASSOC);
 }
@@ -100,7 +100,7 @@ if ($result) {
 </div>
 
 <?php if (isset($success)): ?>
-<div class="alert alert-success"><?= $success ?></div>
+    <div class="alert alert-success"><?= $success ?></div>
 <?php endif; ?>
 
 <div class="table-responsive">
@@ -117,35 +117,34 @@ if ($result) {
         </thead>
         <tbody>
             <?php foreach ($news as $item): ?>
-            <tr>
-                <td>
-                    <?php if ($item['image']): ?>
-                    <img src="../<?= htmlspecialchars($item['image']) ?>" alt="News Image" style="max-width: 100px; max-height: 60px;">
-                    <?php endif; ?>
-                </td>
-                <td><?= htmlspecialchars($item['title']) ?></td>
-                <td><?= htmlspecialchars(substr($item['description'], 0, 50)) ?>...</td>
-                <td><?= $item['schedule_date'] ? date('M d, Y', strtotime($item['schedule_date'])) : 'Not scheduled' ?></td>
-                <td>
-                    <span class="badge bg-<?= 
-                        $item['status'] === 'published' ? 'success' : 
-                        ($item['status'] === 'draft' ? 'warning' : 'secondary') 
-                    ?>">
-                        <?= ucfirst($item['status']) ?>
-                    </span>
-                </td>
-                <td>
-                    <button class="btn btn-sm btn-primary edit-news" data-id="<?= $item['id'] ?>">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <form method="POST" style="display:inline;">
-                        <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                        <button type="submit" name="delete_news" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
-                            <i class="fas fa-trash"></i>
+                <tr>
+                    <td>
+                        <?php if ($item['image']): ?>
+                            <img src="../<?= htmlspecialchars($item['image']) ?>" alt="News Image" style="max-width: 100px; max-height: 60px;">
+                        <?php endif; ?>
+                    </td>
+                    <td><?= htmlspecialchars($item['title']) ?></td>
+                    <td><?= htmlspecialchars(substr($item['description'], 0, 50)) ?>...</td>
+                    <td><?= $item['schedule_date'] ? date('M d, Y', strtotime($item['schedule_date'])) : 'Not scheduled' ?></td>
+                    <td>
+                        <span class="badge bg-<?=
+                                                $item['status'] === 'published' ? 'success' : ($item['status'] === 'draft' ? 'warning' : 'secondary')
+                                                ?>">
+                            <?= ucfirst($item['status']) ?>
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary edit-news" data-id="<?= $item['id'] ?>">
+                            <i class="fas fa-edit"></i>
                         </button>
-                    </form>
-                </td>
-            </tr>
+                        <form method="POST" style="display:inline;">
+                            <input type="hidden" name="id" value="<?= $item['id'] ?>">
+                            <button type="submit" name="delete_news" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
@@ -255,41 +254,41 @@ if ($result) {
 </div>
 
 <script>
-// Handle edit button clicks
-document.querySelectorAll('.edit-news').forEach(button => {
-    button.addEventListener('click', async function() {
-        const id = this.getAttribute('data-id');
-        
-        try {
-            const response = await fetch(`content/get_news.php?id=${id}`);
-            const newsItem = await response.json();
-            
-            // Populate the edit form
-            document.getElementById('edit_id').value = newsItem.id;
-            document.getElementById('edit_title').value = newsItem.title;
-            document.getElementById('edit_description').value = newsItem.description;
-            document.getElementById('edit_content').value = newsItem.content;
-            document.getElementById('edit_schedule_date').value = newsItem.schedule_date;
-            document.getElementById('edit_status').value = newsItem.status;
-            document.getElementById('edit_current_image').value = newsItem.image;
-            
-            // Show image preview if exists
-            const previewDiv = document.getElementById('edit_image_preview');
-            previewDiv.innerHTML = '';
-            if (newsItem.image) {
-                previewDiv.innerHTML = `
+    // Handle edit button clicks
+    document.querySelectorAll('.edit-news').forEach(button => {
+        button.addEventListener('click', async function() {
+            const id = this.getAttribute('data-id');
+
+            try {
+                const response = await fetch(`content/get_news.php?id=${id}`);
+                const newsItem = await response.json();
+
+                // Populate the edit form
+                document.getElementById('edit_id').value = newsItem.id;
+                document.getElementById('edit_title').value = newsItem.title;
+                document.getElementById('edit_description').value = newsItem.description;
+                document.getElementById('edit_content').value = newsItem.content;
+                document.getElementById('edit_schedule_date').value = newsItem.schedule_date;
+                document.getElementById('edit_status').value = newsItem.status;
+                document.getElementById('edit_current_image').value = newsItem.image;
+
+                // Show image preview if exists
+                const previewDiv = document.getElementById('edit_image_preview');
+                previewDiv.innerHTML = '';
+                if (newsItem.image) {
+                    previewDiv.innerHTML = `
                     <p>Current Image:</p>
                     <img src="../${newsItem.image}" alt="Current Image" style="max-width: 200px;">
                 `;
+                }
+
+                // Show the modal
+                const modal = new bootstrap.Modal(document.getElementById('editNewsModal'));
+                modal.show();
+            } catch (error) {
+                console.error('Error fetching news:', error);
+                alert('Failed to load news data');
             }
-            
-            // Show the modal
-            const modal = new bootstrap.Modal(document.getElementById('editNewsModal'));
-            modal.show();
-        } catch (error) {
-            console.error('Error fetching news:', error);
-            alert('Failed to load news data');
-        }
+        });
     });
-});
 </script>
