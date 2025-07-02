@@ -129,7 +129,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                             <?php if(!empty($row['photo'])): ?>
                                 <img src="<?php echo $row['photo']; ?>" alt="Profile Picture" class="profile-pic rounded-circle border mb-5" id="profilePic" onclick="document.getElementById('fileInput').click();">
                             <?php else: ?>
-                                <img src="../img/user-placeholder.png" alt="Profile Picture" class="profile-pic rounded-circle border mb-5" id="profilePic" onclick="document.getElementById('fileInput').click();">
+                                <img src="/img/user-placeholder.png" alt="Profile Picture" class="profile-pic rounded-circle border mb-5" id="profilePic" onclick="document.getElementById('fileInput').click();">
                             <?php endif; ?>
                         </div>
                         <button class="list-group-item list-group-item-action active" onclick="switchTab(event, 'profile')">Profile</button>

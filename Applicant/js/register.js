@@ -13,7 +13,7 @@ function showStep(step) {
 }
 
 window.nextStep = function () {
-    const inputs = formSteps[currentStep].querySelectorAll("input, select");
+    const inputs = formSteps[currentStep].querySelectorAll("input[required], select[required]");
     let valid = true;
 
     inputs.forEach((input) => {

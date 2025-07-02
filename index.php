@@ -34,8 +34,8 @@
                     <ul class="dropdown-menu bg-primary">
                         <li><a class="dropdown-item text-white" href="Applicant/applicant_login.php">Login</a></li>
                         <li><a class="dropdown-item text-white" href="Applicant/applicant_register.php">Register</a></li>
-                        <li><a class="dropdown-item text-white" href="#aboutus">About Us</a></li>
-                        <li><a class="dropdown-item text-white" href="#contact">Contact Us</a></li>
+                        
+                        
                     </ul>
                 </div>
                 <div class="vr d-none d-sm-flex mx-2" style="height: 40px; opacity: 0.5;"></div>
@@ -125,7 +125,7 @@
                         <li class="dropdown-submenu">
                             <a class="dropdown-item text-white" href="#">Agency</a>
                             <ul class="dropdown-menu bg-primary">
-                                <li><a class="dropdown-item text-white" href="employer/employeryer_login.php">Login</a></li>
+                                <li><a class="dropdown-item text-white" href="employer/employer_login.php">Login</a></li>
                                 <li><a class="dropdown-item text-white" href="employer/employer_register.php">Register</a></li>
                             </ul>
                         </li>
