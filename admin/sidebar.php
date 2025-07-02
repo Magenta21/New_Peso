@@ -8,7 +8,7 @@
                 <?= isset($_SESSION['admin_avatar']) ? '' : substr($_SESSION['admin_name'] ?? 'A', 0, 1) ?>
             </div>
         </div>
-        
+
         <ul class="nav-links">
             <li>
                 <a href="?page=dashboard" class="<?= $page === 'dashboard' ? 'active' : '' ?>">
@@ -38,6 +38,11 @@
             <li>
                 <a href="?page=messages" class="<?= $page === 'messages' ? 'active' : '' ?>">
                     <i class="fas fa-envelope"></i> News Management
+                </a>
+            </li>
+            <li>
+                <a href="?page=service_applications" class="<?= $page === 'service_applications' ? 'active' : '' ?>">
+                    <i class="fas fa-file-signature"></i> Service Applications
                 </a>
             </li>
             <li>
