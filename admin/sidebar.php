@@ -1,3 +1,4 @@
+    <?php ?>
     <div class="sidebar">
         <div class="profile">
             <div class="admin-name">
