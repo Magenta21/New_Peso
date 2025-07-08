@@ -2,18 +2,17 @@
 // Database connection
 require_once '../db.php';
 
-// Check if Twilio is properly installed and configured
-$twilioConfigPath = '../config/twilio.php';
-if (!file_exists($twilioConfigPath)) {
-    die("Twilio configuration file not found at $twilioConfigPath");
+// Load Semaphore configuration
+$semaphoreConfigPath = '../config/semaphore.php';
+if (!file_exists($semaphoreConfigPath)) {
+    die("Semaphore configuration file not found at $semaphoreConfigPath");
 }
 
-// Load Twilio configuration
-$twilioConfig = include $twilioConfigPath;
+$semaphoreConfig = include $semaphoreConfigPath;
 
-// Verify Twilio configuration
-if (!isset($twilioConfig['account_sid'], $twilioConfig['auth_token'], $twilioConfig['twilio_number'])) {
-    die("Invalid Twilio configuration. Please check config/twilio.php");
+// Verify Semaphore configuration
+if (!isset($semaphoreConfig['api_key'], $semaphoreConfig['sender_name'])) {
+    die("Invalid Semaphore configuration. Please check config/semaphore.php");
 }
 
 // Get the current tab (default to tupad)
@@ -44,18 +43,13 @@ if (isset($_POST['action']) && isset($_POST['id'])) {
 
     // Send SMS if accepted
     if ($_POST['action'] === 'accept') {
-        // Verify Twilio SDK is available
-        if (!class_exists('Twilio\Rest\Client')) {
-            error_log("Twilio SDK not found. Please run 'composer require twilio/sdk'");
-        } else {
-            sendTwilioSMS(
-                $applicant['phone'],
-                $applicant['service_type'],
-                $applicant['first_name'],
-                $applicant['last_name'],
-                $twilioConfig
-            );
-        }
+        sendSemaphoreSMS(
+            $applicant['phone'],
+            $applicant['service_type'],
+            $applicant['first_name'],
+            $applicant['last_name'],
+            $semaphoreConfig
+        );
     }
 
     // Redirect to avoid form resubmission
@@ -64,65 +58,52 @@ if (isset($_POST['action']) && isset($_POST['id'])) {
 }
 
 /**
- * Send SMS using Twilio
+ * Send SMS using Semaphore.co
  */
-function sendTwilioSMS($phoneNumber, $serviceType, $firstName, $lastName, $config)
+function sendSemaphoreSMS($phoneNumber, $serviceType, $firstName, $lastName, $config)
 {
-    // Clean and format phone number
-    $phoneNumber = formatPhoneNumber($phoneNumber);
-
-    try {
-        $client = new Twilio\Rest\Client($config['account_sid'], $config['auth_token']);
-
-        // Customize your message here
-        $messageBody = "Dear $firstName $lastName,\n\n";
-        $messageBody .= "Your $serviceType application has been APPROVED.\n";
-        $messageBody .= "Please visit PESO Office within 3 working days.\n";
-        $messageBody .= "Bring valid ID and this message for verification.\n\n";
-        $messageBody .= "For inquiries: (02) 123-4567";
-
-        $message = $client->messages->create(
-            $phoneNumber, // Recipient
-            [
-                'from' => $config['twilio_number'],
-                'body' => $messageBody
-            ]
-        );
-
-        // Log successful sending
-        logSMS($phoneNumber, $message->sid, 'Success');
-    } catch (Exception $e) {
-        // Log errors
-        logSMS($phoneNumber, '', 'Failed: ' . $e->getMessage());
-    }
-}
-
-/**
- * Format phone number for Twilio
- */
-function formatPhoneNumber($phoneNumber)
-{
-    // Remove all non-numeric characters
+    // Clean phone number (remove all non-numeric characters)
     $phoneNumber = preg_replace('/[^0-9]/', '', $phoneNumber);
 
-    // Format for Philippines (adjust for your country)
+    // Format for Philippines (Semaphore expects 09... or +63... format)
     if (strlen($phoneNumber) === 10 && $phoneNumber[0] === '0') {
-        return '+63' . substr($phoneNumber, 1);
-    }
-    if (strlen($phoneNumber) === 11 && substr($phoneNumber, 0, 2) === '09') {
-        return '+63' . substr($phoneNumber, 1);
-    }
-    if (strlen($phoneNumber) === 12 && substr($phoneNumber, 0, 3) === '639') {
-        return '+' . $phoneNumber;
+        $phoneNumber = '63' . substr($phoneNumber, 1);
+    } elseif (strlen($phoneNumber) === 11 && substr($phoneNumber, 0, 2) === '09') {
+        $phoneNumber = '63' . substr($phoneNumber, 1);
     }
 
-    return $phoneNumber; // Return as-is if doesn't match expected formats
+    // Prepare message
+    $message = "Hi $firstName $lastName! Your $serviceType application has been approved. ";
+    $message .= "Please visit our office for next steps. Thank you!";
+
+    // Prepare API request
+    $url = 'https://api.semaphore.co/api/v4/messages';
+    $data = [
+        'apikey' => $config['api_key'],
+        'number' => $phoneNumber,
+        'message' => $message,
+        'sendername' => $config['sender_name']
+    ];
+
+    // Send request using cURL
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    // Log the result
+    logSMS($phoneNumber, $httpCode, $response);
 }
 
 /**
  * Log SMS sending attempts
  */
-function logSMS($phoneNumber, $messageId, $status)
+function logSMS($phoneNumber, $statusCode, $response)
 {
     $logDir = '../logs';
     if (!file_exists($logDir)) {
@@ -130,11 +111,11 @@ function logSMS($phoneNumber, $messageId, $status)
     }
 
     $logEntry = sprintf(
-        "[%s] Number: %s | Status: %s | Message ID: %s\n",
+        "[%s] Number: %s | Status: %d | Response: %s\n",
         date('Y-m-d H:i:s'),
         $phoneNumber,
-        $status,
-        $messageId
+        $statusCode,
+        $response
     );
 
     file_put_contents($logDir . '/sms.log', $logEntry, FILE_APPEND);
@@ -151,8 +132,7 @@ $stmt->close();
 $conn->close();
 ?>
 
-<!-- Rest of your HTML remains exactly the same -->
-
+<!-- The rest of your HTML remains exactly the same -->
 
 <div class="page-header">
     <h1><i class="fas fa-file-signature"></i> Service Applications</h1>

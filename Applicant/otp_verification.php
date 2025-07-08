@@ -9,6 +9,7 @@ $email = $_GET['email']; // Get the email from URL
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,16 +17,15 @@ $email = $_GET['email']; // Get the email from URL
     <link rel="stylesheet" href="css/otp_ver.css">
     <title>OTP Verification</title>
 </head>
-<body>
 
-    </div>
+<body>
     <div class="container mt-5">
         <div class="container-fluid bg-white shadow-lg w-50 mx-auto text-center p-3">
             <div class="row mb-2">
                 <h2>Verify Your Email</h2>
             </div>
             <div class="row mb-1">
-                <p>An OTP has been sent to your email: 
+                <p>An OTP has been sent to your email:
                     <span class="highlight-email"><?php echo htmlspecialchars($email); ?></span>
                 </p>
             </div>
@@ -35,14 +35,23 @@ $email = $_GET['email']; // Get the email from URL
                     <label>Enter OTP:</label>
                     <input type="text" name="otp" class="otp-input" required>
             </div>
-            <div class="row mb-1">
-                <div class="col-8"></div>
-                <div class="col-4 ">
+            <div class="row mb-3">
+                <div class="col-8">
+
+                </div>
+                <div class="col-4">
                     <button type="submit" class="btn btn-primary verify-btn">Verify</button>
                 </div>
+                <div class="col-8">
+
+                </div>
+                <div class="col-4 mt-4">
+                    <a href="process/resend_otp.php?email=<?php echo urlencode($email); ?>" class="btn btn-secondary">Resend OTP</a>
+                </div>
             </div>
-        </div>
             </form>
+        </div>
     </div>
 </body>
+
 </html>
