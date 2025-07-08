@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $statusClass = "";
 
     if ($user) {
+        date_default_timezone_set('Asia/Manila');
         $current_time = date('Y-m-d H:i:s'); // Current Manila time
         $otp_expiry = $user['otp_expiry'];
 
@@ -42,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../css/process_otp.css">
 
 </head>
+
 <body>
     <div class="header">
         <div class="container-fluid">
@@ -68,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="otp-container">
             <h2>OTP Verification</h2>
             <p class="email-text">Verifying account for: <span class="highlight-email"><?php echo htmlspecialchars($email); ?></span></p>
-            
+
             <div class="status-message <?php echo $statusClass; ?>">
                 <?php echo $statusMessage; ?>
             </div>
@@ -81,4 +84,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </body>
+
 </html>

@@ -1,6 +1,7 @@
 <?php
 if (isset($_GET['email'])) {
     $email = $_GET['email'];
+    $training_id = $_POST['training_id'];
 
     // Load Composer's autoloader (if using Composer)
     require '../../vendor/autoload.php';
@@ -15,7 +16,7 @@ if (isset($_GET['email'])) {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Update OTP in database
-        $stmt = $pdo->prepare("UPDATE applicant_profile SET otp = :otp, otp_expiry = :otp_expiry WHERE email = :email AND is_verified = 0");
+        $stmt = $pdo->prepare("UPDATE trainees_profile SET otp = :otp, otp_expiry = :otp_expiry WHERE email = :email AND is_verified = 0");
         $stmt->bindParam(':otp', $otp);
         $stmt->bindParam(':otp_expiry', $otp_expiry);
         $stmt->bindParam(':email', $email);
@@ -76,21 +77,21 @@ if (isset($_GET['email'])) {
             $mail->send();
 
             // Redirect back with success message
-            header("Location: ../otp_verification.php?email=" . urlencode($email) . "&resend=success");
+            header("Location: ../otp_verification.php?email=" . urlencode($email) . "&resend=success&training_id" . urlencode($training_id));
             exit;
         } catch (Exception $e) {
             // Log error and redirect with error message
             error_log("Mailer Error: " . $mail->ErrorInfo);
-            header("Location: ../otp_verification.php?email=" . urlencode($email) . "&error=mail_failed");
+            header("Location: ../otp_verification.php?email=" . urlencode($email) . "&error=mail_failed&training_id" . urlencode($training_id));
             exit;
         }
     } catch (PDOException $e) {
         // Handle database errors
         error_log("Database Error: " . $e->getMessage());
-        header("Location: ../otp_verification.php?email=" . urlencode($email) . "&error=database_error");
+        header("Location: ../otp_verification.php?email=" . urlencode($email) . "&error=database_error&training_id" . urlencode($training_id));
         exit;
     }
 } else {
-    header("Location: ../otp_verification.php?error=no_email");
+    header("Location: ../otp_verification.php?error=no_email&training_id" . urlencode($training_id));
     exit;
 }

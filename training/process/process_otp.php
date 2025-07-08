@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
+        date_default_timezone_set('Asia/Manila');
         $current_time = date('Y-m-d H:i:s');
         $otp_expiry = $user['otp_expiry'];
 
@@ -30,9 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         } else {
             echo "Invalid or expired OTP. <a href='../otp_verification.php?email=" . urlencode($email) . "&training_id=" . $training_id . "'>Try Again</a>";
+            exit;
         }
     } else {
-        echo "No account found!";
+        header("Location: ../otp_verification.php?email=" . urlencode($email) . "&error=no_account");
+        exit;
     }
 }
-?>

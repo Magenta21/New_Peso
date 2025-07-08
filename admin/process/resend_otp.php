@@ -15,9 +15,8 @@ if (isset($_GET['email'])) {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Update OTP in database
-        $stmt = $pdo->prepare("UPDATE applicant_profile SET otp = :otp, otp_expiry = :otp_expiry WHERE email = :email AND is_verified = 0");
+        $stmt = $pdo->prepare("UPDATE admin_profile SET otp = :otp WHERE email = :email AND is_verified = 0");
         $stmt->bindParam(':otp', $otp);
-        $stmt->bindParam(':otp_expiry', $otp_expiry);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
 
