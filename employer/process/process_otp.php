@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $statusMessage = "";
-    $statusClass = "";
+    $redirect = "../employer_login.php";
 
     if ($user) {
         date_default_timezone_set('Asia/Manila');
@@ -29,60 +29,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
 
             $statusMessage = "OTP Verified! Your account is now activated.";
-            $statusClass = "success";
         } else {
             $statusMessage = "Invalid or expired OTP. Please try again.";
-            $statusClass = "error";
+            $redirect = "../otp_verification.php?email=" . urlencode($email);
         }
     } else {
         $statusMessage = "No account found!";
-        $statusClass = "error";
+        $redirect = "../otp_verification.php?email=" . urlencode($email);
     }
+
+    // Output JavaScript for alert and redirect
+    echo "<script>
+        alert('" . addslashes($statusMessage) . "');
+        window.location.href = '" . $redirect . "';
+    </script>";
+    exit();
 }
-?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTP Verification</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/process_otp.css">
-
-</head>
-
-<body>
-    <div class="header">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-md-2">
-                    <img src="../img/logolb.png" alt="lblogo" class="logo">
-                </div>
-                <div class="col-md-8 mt-2">
-                    <h3 class="header-text">MUNICIPALITY OF LOS BANOS</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="otp-container">
-            <h2>OTP Verification</h2>
-            <p class="email-text">Verifying account for: <span class="highlight-email"><?php echo htmlspecialchars($email); ?></span></p>
-
-            <div class="status-message <?php echo $statusClass; ?>">
-                <?php echo $statusMessage; ?>
-            </div>
-
-            <?php if ($statusClass === "success"): ?>
-                <a href="../employer_login.php" class="btn btn-success">Go to Login</a>
-            <?php else: ?>
-                <a href="../otp_verification.php?email=<?php echo urlencode($email); ?>" class="btn btn-danger">Try Again</a>
-            <?php endif; ?>
-        </div>
-    </div>
-</body>
-
-</html>
+// If not a POST request, redirect to login
+header("Location: ../employer_login.php");
+exit();
