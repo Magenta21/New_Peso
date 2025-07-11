@@ -2,17 +2,17 @@
 // Database connection
 require_once '../db.php';
 
-// Load Semaphore configuration
-$semaphoreConfigPath = '../config/semaphore.php';
-if (!file_exists($semaphoreConfigPath)) {
-    die("Semaphore configuration file not found at $semaphoreConfigPath");
+// Load ClickSend configuration
+$clicksendConfigPath = '../config/clicksend.php';
+if (!file_exists($clicksendConfigPath)) {
+    die("ClickSend configuration file not found at $clicksendConfigPath");
 }
 
-$semaphoreConfig = include $semaphoreConfigPath;
+$clicksendConfig = include $clicksendConfigPath;
 
-// Verify Semaphore configuration
-if (!isset($semaphoreConfig['api_key'], $semaphoreConfig['sender_name'])) {
-    die("Invalid Semaphore configuration. Please check config/semaphore.php");
+// Verify ClickSend configuration
+if (!isset($clicksendConfig['username'], $clicksendConfig['api_key'], $clicksendConfig['sender_name'])) {
+    die("Invalid ClickSend configuration. Please check config/clicksend.php");
 }
 
 // Get the current tab (default to tupad)
@@ -43,12 +43,12 @@ if (isset($_POST['action']) && isset($_POST['id'])) {
 
     // Send SMS if accepted
     if ($_POST['action'] === 'accept') {
-        sendSemaphoreSMS(
+        sendClickSendSMS(
             $applicant['phone'],
             $applicant['service_type'],
             $applicant['first_name'],
             $applicant['last_name'],
-            $semaphoreConfig
+            $clicksendConfig
         );
     }
 
@@ -58,14 +58,14 @@ if (isset($_POST['action']) && isset($_POST['id'])) {
 }
 
 /**
- * Send SMS using Semaphore.co
+ * Send SMS using ClickSend
  */
-function sendSemaphoreSMS($phoneNumber, $serviceType, $firstName, $lastName, $config)
+function sendClickSendSMS($phoneNumber, $serviceType, $firstName, $lastName, $config)
 {
     // Clean phone number (remove all non-numeric characters)
     $phoneNumber = preg_replace('/[^0-9]/', '', $phoneNumber);
 
-    // Format for Philippines (Semaphore expects 09... or +63... format)
+    // Format for Philippines (ClickSend expects 09... or +63... format)
     if (strlen($phoneNumber) === 10 && $phoneNumber[0] === '0') {
         $phoneNumber = '63' . substr($phoneNumber, 1);
     } elseif (strlen($phoneNumber) === 11 && substr($phoneNumber, 0, 2) === '09') {
@@ -77,20 +77,28 @@ function sendSemaphoreSMS($phoneNumber, $serviceType, $firstName, $lastName, $co
     $message .= "Please visit our office for next steps. Thank you!";
 
     // Prepare API request
-    $url = 'https://api.semaphore.co/api/v4/messages';
+    $url = 'https://rest.clicksend.com/v3/sms/send';
     $data = [
-        'apikey' => $config['api_key'],
-        'number' => $phoneNumber,
-        'message' => $message,
-        'sendername' => $config['sender_name']
+        'messages' => [
+            [
+                'source' => 'php',
+                'from' => $config['sender_name'],
+                'body' => $message,
+                'to' => $phoneNumber
+            ]
+        ]
     ];
 
     // Send request using cURL
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json',
+        'Authorization: Basic ' . base64_encode($config['username'] . ':' . $config['api_key'])
+    ]);
 
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);

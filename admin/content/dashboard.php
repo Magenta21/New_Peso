@@ -6,7 +6,7 @@
 <div class="dashboard-content">
     <p>Welcome back, <strong><?= htmlspecialchars($_SESSION['admin_name'] ?? 'Admin') ?></strong>!</p>
     <p>Here's a quick overview of your administration panel.</p>
-    <a href="content/generate_report.php" class="btn btn-primary">Download Full Report (PDF)</a>
+    <a href="content/report_form.php" class="btn btn-primary">Print Report</a>
 
     <?php
     // Database connection (adjust credentials as needed)
