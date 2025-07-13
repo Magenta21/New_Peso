@@ -14,6 +14,10 @@ class ComposerStaticInitb43b945cb3549b372e77d4336d8ea78c
     );
 
     public static $prefixLengthsPsr4 = array (
+        'a' => 
+        array (
+            'apimatic\\jsonmapper\\' => 20,
+        ),
         'S' => 
         array (
             'Semaphore\\' => 10,
@@ -29,9 +33,17 @@ class ComposerStaticInitb43b945cb3549b372e77d4336d8ea78c
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
+        'C' => 
+        array (
+            'ClickSendLib\\' => 13,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'apimatic\\jsonmapper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/apimatic/jsonmapper/src',
+        ),
         'Semaphore\\' => 
         array (
             0 => __DIR__ . '/..' . '/kickstartph/semaphore-client/src',
@@ -56,6 +68,20 @@ class ComposerStaticInitb43b945cb3549b372e77d4336d8ea78c
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'ClickSendLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/clicksend/clicksend-php/src',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'U' => 
+        array (
+            'Unirest\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/mashape/unirest-php/src',
+            ),
+        ),
     );
 
     public static $classMap = array (
@@ -79,6 +105,7 @@ class ComposerStaticInitb43b945cb3549b372e77d4336d8ea78c
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitb43b945cb3549b372e77d4336d8ea78c::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitb43b945cb3549b372e77d4336d8ea78c::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitb43b945cb3549b372e77d4336d8ea78c::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitb43b945cb3549b372e77d4336d8ea78c::$classMap;
 
         }, null, ClassLoader::class);
