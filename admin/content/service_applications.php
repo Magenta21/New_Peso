@@ -3,17 +3,14 @@
 require_once '../db.php';
 
 // Load ClickSend configuration
-$clicksendConfigPath = '../config/clicksend.php';
-if (!file_exists($clicksendConfigPath)) {
-    die("ClickSend configuration file not found at $clicksendConfigPath");
-}
+require_once '../vendor/autoload.php';
 
-$clicksendConfig = include $clicksendConfigPath;
+// Configure ClickSend
+$config = ClickSend\Configuration::getDefaultConfiguration()
+    ->setUsername('pesolosbanos')
+    ->setPassword('B80E06B5-BF40-AA00-554F-921BA7C37709');
 
-// Verify ClickSend configuration
-if (!isset($clicksendConfig['username'], $clicksendConfig['api_key'], $clicksendConfig['sender_name'])) {
-    die("Invalid ClickSend configuration. Please check config/clicksend.php");
-}
+$apiInstance = new ClickSend\Api\SMSApi(new GuzzleHttp\Client(), $config);
 
 // Get the current tab (default to tupad)
 $tab = isset($_GET['tab']) ? $_GET['tab'] : 'tupad';
@@ -29,27 +26,85 @@ if (isset($_POST['action']) && isset($_POST['id'])) {
 
     // First get applicant details before updating
     $stmt = $conn->prepare("SELECT * FROM service_applications WHERE id = ?");
+    if (!$stmt) {
+        die("Database prepare failed: " . $conn->error);
+    }
     $stmt->bind_param("i", $id);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        die("Database execute failed: " . $stmt->error);
+    }
     $result = $stmt->get_result();
     $applicant = $result->fetch_assoc();
     $stmt->close();
 
-    // Update status
-    $stmt = $conn->prepare("UPDATE service_applications SET status = ? WHERE id = ?");
-    $stmt->bind_param("si", $status, $id);
-    $stmt->execute();
-    $stmt->close();
+    if (!$applicant) {
+        die("Applicant not found");
+    }
 
-    // Send SMS if accepted
-    if ($_POST['action'] === 'accept') {
-        sendClickSendSMS(
-            $applicant['phone'],
-            $applicant['service_type'],
-            $applicant['first_name'],
-            $applicant['last_name'],
-            $clicksendConfig
-        );
+    // Update status
+    $conn->begin_transaction();
+    try {
+        $stmt = $conn->prepare("UPDATE service_applications SET status = ? WHERE id = ?");
+        if (!$stmt) {
+            throw new Exception("Database prepare failed: " . $conn->error);
+        }
+        $stmt->bind_param("si", $status, $id);
+        if (!$stmt->execute()) {
+            throw new Exception("Database execute failed: " . $stmt->error);
+        }
+        $stmt->close();
+
+        // Send SMS if accepted
+        if ($_POST['action'] === 'accept') {
+            // Format phone number
+            $phoneNumber = preg_replace('/[^0-9]/', '', $applicant['phone']);
+            if (preg_match('/^(0|63)/', $phoneNumber)) {
+                if (substr($phoneNumber, 0, 1) === '0') {
+                    $phoneNumber = '63' . substr($phoneNumber, 1);
+                }
+                $phoneNumber = '+' . $phoneNumber;
+            }
+
+            // Prepare message
+            $message = "Hi {$applicant['first_name']} {$applicant['last_name']}! Your {$applicant['service_type']} application has been approved. ";
+            $message .= "Please visit our office for next steps. Thank you!";
+
+            // Create SMS message object
+            $msg = new \ClickSend\Model\SmsMessage();
+            $msg->setBody($message);
+            $msg->setTo($phoneNumber);
+            $msg->setSource("php-sdk");
+
+            // Create message collection
+            $sms_messages = new \ClickSend\Model\SmsMessageCollection();
+            $sms_messages->setMessages([$msg]);
+
+            try {
+                $result = $apiInstance->smsSendPost($sms_messages);
+
+                // Log the result
+                $logDir = '../logs';
+                if (!file_exists($logDir)) {
+                    mkdir($logDir, 0755, true);
+                }
+
+                $logEntry = sprintf(
+                    "[%s] Number: %s | Response: %s\n",
+                    date('Y-m-d H:i:s'),
+                    $phoneNumber,
+                    json_encode($result)
+                );
+
+                file_put_contents($logDir . '/sms.log', $logEntry, FILE_APPEND);
+            } catch (Exception $e) {
+                throw new Exception("SMS sending failed: " . $e->getMessage());
+            }
+        }
+
+        $conn->commit();
+    } catch (Exception $e) {
+        $conn->rollback();
+        die("Error: " . $e->getMessage());
     }
 
     // Redirect to avoid form resubmission
@@ -57,83 +112,16 @@ if (isset($_POST['action']) && isset($_POST['id'])) {
     exit;
 }
 
-/**
- * Send SMS using ClickSend
- */
-function sendClickSendSMS($phoneNumber, $serviceType, $firstName, $lastName, $config)
-{
-    // Clean phone number (remove all non-numeric characters)
-    $phoneNumber = preg_replace('/[^0-9]/', '', $phoneNumber);
-
-    // Format for Philippines (ClickSend expects 09... or +63... format)
-    if (strlen($phoneNumber) === 10 && $phoneNumber[0] === '0') {
-        $phoneNumber = '63' . substr($phoneNumber, 1);
-    } elseif (strlen($phoneNumber) === 11 && substr($phoneNumber, 0, 2) === '09') {
-        $phoneNumber = '63' . substr($phoneNumber, 1);
-    }
-
-    // Prepare message
-    $message = "Hi $firstName $lastName! Your $serviceType application has been approved. ";
-    $message .= "Please visit our office for next steps. Thank you!";
-
-    // Prepare API request
-    $url = 'https://rest.clicksend.com/v3/sms/send';
-    $data = [
-        'messages' => [
-            [
-                'source' => 'php',
-                'from' => $config['sender_name'],
-                'body' => $message,
-                'to' => $phoneNumber
-            ]
-        ]
-    ];
-
-    // Send request using cURL
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Content-Type: application/json',
-        'Authorization: Basic ' . base64_encode($config['username'] . ':' . $config['api_key'])
-    ]);
-
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    // Log the result
-    logSMS($phoneNumber, $httpCode, $response);
-}
-
-/**
- * Log SMS sending attempts
- */
-function logSMS($phoneNumber, $statusCode, $response)
-{
-    $logDir = '../logs';
-    if (!file_exists($logDir)) {
-        mkdir($logDir, 0755, true);
-    }
-
-    $logEntry = sprintf(
-        "[%s] Number: %s | Status: %d | Response: %s\n",
-        date('Y-m-d H:i:s'),
-        $phoneNumber,
-        $statusCode,
-        $response
-    );
-
-    file_put_contents($logDir . '/sms.log', $logEntry, FILE_APPEND);
-}
-
 // Get applications for the current tab
 $stmt = $conn->prepare("SELECT * FROM service_applications WHERE service_type = ? ORDER BY application_date DESC");
+if (!$stmt) {
+    die("Database prepare failed: " . $conn->error);
+}
 $service_name = ucfirst($tab);
 $stmt->bind_param("s", $service_name);
-$stmt->execute();
+if (!$stmt->execute()) {
+    die("Database execute failed: " . $stmt->error);
+}
 $result = $stmt->get_result();
 $applications = $result->fetch_all(MYSQLI_ASSOC);
 $stmt->close();

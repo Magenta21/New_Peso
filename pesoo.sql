@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2025 at 11:51 AM
+-- Generation Time: Jul 15, 2025 at 11:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,6 +44,14 @@ CREATE TABLE `admin_profile` (
   `is_verified` int(5) DEFAULT NULL,
   `photo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin_profile`
+--
+
+INSERT INTO `admin_profile` (`ID`, `Username`, `passwords`, `Email`, `Fname`, `Lname`, `Mname`, `Age`, `Cnumber`, `Haddress`, `otp`, `reset_token`, `reset_token_expiry`, `is_verified`, `photo`) VALUES
+(1, 'Admin', '$2y$10$O1E2P/Xg2P0p.J8U83uDpOVSH6RwWVoreghhHmssDJpwSkJsoq4Na', '73ijnn12uw@wyoxafp.com', 'Lydia', 'Walker', 'Elaine Murphy', 0, 561, 'Et architecto volupt', '890257', '', '2025-07-11 10:16:09.806518', 1, '../uploads/Admin/474043763_2836446049861869_694324624727446876_n.jpg'),
+(2, 'Admin', '$2y$10$3ev96ibfOjkS4u9bGFbR5.Bnaiv9I2SnTFC7d0aJM9VrB3K86sCza', '73ijnn12uw@wyoxafp.com', 'Lydia', 'Walker', 'Elaine Murphy', 0, 561, 'Et architecto volupt', '890257', '', '2025-07-11 10:16:09.806518', 1, '../uploads/Admin/474043763_2836446049861869_694324624727446876_n.jpg');
 
 -- --------------------------------------------------------
 
@@ -99,7 +107,8 @@ CREATE TABLE `applicant_profile` (
   `resume` varchar(255) NOT NULL,
   `applicant_type` enum('Training','Employment') NOT NULL,
   `expected_salary` int(255) NOT NULL,
-  `grad_course` varchar(255) NOT NULL
+  `grad_course` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -211,7 +220,8 @@ CREATE TABLE `employer` (
   `tel_num` varchar(255) NOT NULL,
   `company_email` varchar(255) NOT NULL,
   `hr_email` varchar(255) NOT NULL,
-  `company_photo` varchar(255) NOT NULL
+  `company_photo` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -379,7 +389,8 @@ CREATE TABLE `ofw_profile` (
   `email_abroad_personal` varchar(255) NOT NULL,
   `email_abroad_company` varchar(255) NOT NULL,
   `departure_date` datetime(6) NOT NULL,
-  `arrival_date` datetime(6) NOT NULL
+  `arrival_date` datetime(6) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -420,6 +431,13 @@ CREATE TABLE `service_applications` (
   `status` enum('Pending','Approved','Rejected','Processing') DEFAULT 'Pending',
   `notes` text DEFAULT NULL COMMENT 'Admin notes'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `service_applications`
+--
+
+INSERT INTO `service_applications` (`id`, `service_type`, `first_name`, `last_name`, `middle_name`, `suffix`, `birthdate`, `gender`, `address`, `email`, `phone`, `id_type`, `id_number`, `purpose`, `agree_terms`, `application_date`, `status`, `notes`) VALUES
+(1, 'SPES', 'Beverly', 'Orn', 'Humberto Stokes', 'Perferendi', '2025-01-04', 'Female', '22439 Paolo Bridge', 'your.email+fakedata19021@gmail.com', '+639915209066', 'Postal ID', '535', 'Quibusdam quidem soluta repellat commodi a.', 1, '2025-07-11 12:56:27', 'Approved', NULL);
 
 -- --------------------------------------------------------
 
@@ -755,7 +773,7 @@ ALTER TABLE `work_exp`
 -- AUTO_INCREMENT for table `admin_profile`
 --
 ALTER TABLE `admin_profile`
-  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `applicant_profile`
@@ -845,7 +863,7 @@ ALTER TABLE `save_job`
 -- AUTO_INCREMENT for table `service_applications`
 --
 ALTER TABLE `service_applications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `skills_training`
