@@ -17,12 +17,12 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if (!$result) {
-    die("Invalid query: " . $conn->error); 
+    die("Invalid query: " . $conn->error);
 }
 
 $row = $result->fetch_assoc();
-$preferred = isset($row['preferred_occupation']) ? explode(',', $row['preferred_occupation']): '';
-$work = isset($row['work_location']) ? explode(',', $row['work_location']): '';
+$preferred = isset($row['preferred_occupation']) ? explode(',', $row['preferred_occupation']) : '';
+$work = isset($row['work_location']) ? explode(',', $row['work_location']) : '';
 $passportExpiry = isset($row['passport_expiry']) ? new DateTime($row['passport_expiry']) : null;
 $passportExpiryFormatted = $passportExpiry ? $passportExpiry->format('Y-m-d') : '';
 if (!$row) {
@@ -56,12 +56,17 @@ $stmt_work_exp = $conn->prepare($sql_work_exp);
 $stmt_work_exp->bind_param("i", $applicant_profile);
 $stmt_work_exp->execute();
 $result_work_exp = $stmt_work_exp->get_result();
+
+$otherSkills = !empty($row['selected_option']) ?
+    explode(',', $row['selected_option']) :
+    [];
 ?>
 
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,30 +77,35 @@ $result_work_exp = $stmt_work_exp->get_result();
     <link rel="stylesheet" href="css/profile.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-            /* Remove background and add hover effect to the icon and text */
-            .navbar .btn-light {
-                background-color: transparent;
-                border: none;
-                color: #000; /* Default text color */
-            }
+        /* Remove background and add hover effect to the icon and text */
+        .navbar .btn-light {
+            background-color: transparent;
+            border: none;
+            color: #000;
+            /* Default text color */
+        }
 
-            .navbar .btn-light i, 
-            .navbar .btn-light span {
-                color: inherit; /* Inherit text color */
-            }
-            i, span {
-                font-weight: 900;
-                font-size: 1em;
-            }
+        .navbar .btn-light i,
+        .navbar .btn-light span {
+            color: inherit;
+            /* Inherit text color */
+        }
 
-            .navbar .btn-light:hover i, 
-            .navbar .btn-light:hover span {
-                color: #C21807; /* Scarlet or dark red color on hover */
-                font-weight: 900;
-            }
+        i,
+        span {
+            font-weight: 900;
+            font-size: 1em;
+        }
 
+        .navbar .btn-light:hover i,
+        .navbar .btn-light:hover span {
+            color: #C21807;
+            /* Scarlet or dark red color on hover */
+            font-weight: 900;
+        }
     </style>
 </head>
+
 <body>
     <div class="header">
         <div class="container-fluid">
@@ -122,11 +132,11 @@ $result_work_exp = $stmt_work_exp->get_result();
         <div class="card p-4 shadow">
             <div class="row">
                 <div class="col-md-3">
-                
+
                     <!-- Vertical List for Tabs (Navigation) -->
                     <div class="list-group">
                         <div class="text-center">
-                            <?php if(!empty($row['photo'])): ?>
+                            <?php if (!empty($row['photo'])): ?>
                                 <img src="<?php echo $row['photo']; ?>" alt="Profile Picture" class="profile-pic rounded-circle border mb-5" id="profilePic" onclick="document.getElementById('fileInput').click();">
                             <?php else: ?>
                                 <img src="/img/user-placeholder.png" alt="Profile Picture" class="profile-pic rounded-circle border mb-5" id="profilePic" onclick="document.getElementById('fileInput').click();">
@@ -148,109 +158,109 @@ $result_work_exp = $stmt_work_exp->get_result();
                     <div id="profile" class="tab-content" style="display:block;">
                         <form action="process/save_profile1.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                             <div class="text-center">
-                                    <!-- <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)"> -->
-                                    <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)">
+                                <!-- <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)"> -->
+                                <input type="file" id="fileInput" class="d-none" name="fileInput" onchange="updateProfilePic(event)">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label">Username:</label>
+                                    <input type="text" name="name" class="form-control" value="<?php echo isset($row['username']) ? htmlspecialchars($row['username']) : ''; ?>" required>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                            <label class="form-label">Username:</label>
-                                            <input type="text" name="name" class="form-control" value="<?php echo isset($row['username']) ? htmlspecialchars($row['username']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                    </div>
-                                    <div class="col-md-12">
-                                            <label class="form-label">Email:</label>
-                                            <input type="email" name="email" class="form-control" value="<?php echo isset($row['email']) ? htmlspecialchars($row['email']) : ''; ?>" required>
-                                    </div>
+                                <div class="col-md-6">
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Email:</label>
+                                    <input type="email" name="email" class="form-control" value="<?php echo isset($row['email']) ? htmlspecialchars($row['email']) : ''; ?>" required>
+                                </div>
 
-                                    <div class="col-md-4">
-                                            <label class="form-label">First name:</label>
-                                            <input type="text" name="fname" class="form-control" value="<?php echo isset($row['fname']) ? htmlspecialchars($row['fname']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-4">
-                                            <label class="form-label">Middle name:</label>
-                                            <input type="text" name="mname" class="form-control" value="<?php echo isset($row['mname']) ? htmlspecialchars($row['mname']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-4">
-                                            <label class="form-label">Last name:</label>
-                                            <input type="text" name="lname" class="form-control" value="<?php echo isset($row['lname']) ? htmlspecialchars($row['lname']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Contact number:</label>
-                                            <input type="tel" name="contact" class="form-control" value="<?php echo isset($row['contact_no']) ? htmlspecialchars($row['contact_no']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Date of Birth:</label>
-                                            <input type="date" name="dob" class="form-control" value="<?php echo isset($row['dob']) ? htmlspecialchars($row['dob']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Place Of Birth:</label>
-                                            <input type="text" name="pob" class="form-control" value="<?php echo isset($row['pob']) ? htmlspecialchars($row['pob']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Religion:</label>
-                                            <input type="text" name="religion" class="form-control" value="<?php echo isset($row['religion']) ? htmlspecialchars($row['religion']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Present Address:</label>
-                                            <input type="text" name="address" class="form-control" value="<?php echo isset($row['present_address']) ? htmlspecialchars($row['present_address']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Civil Status:</label>
-                                            <select name="civil_status" class="form-control" required>
-                                                <option value="single" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'single' ? 'selected' : ''; ?>>Single</option>
-                                                <option value="married" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'married' ? 'selected' : ''; ?>>Married</option>
-                                                <option value="widowed" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'widowed' ? 'selected' : ''; ?>>Widowed</option>
-                                                <option value="separated" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'separated' ? 'selected' : ''; ?>>Separated</option>
-                                                <option value="live_in" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'live_in' ? 'selected' : ''; ?>>Live-In</option>
-                                            </select>
-                                    </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">First name:</label>
+                                    <input type="text" name="fname" class="form-control" value="<?php echo isset($row['fname']) ? htmlspecialchars($row['fname']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Middle name:</label>
+                                    <input type="text" name="mname" class="form-control" value="<?php echo isset($row['mname']) ? htmlspecialchars($row['mname']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Last name:</label>
+                                    <input type="text" name="lname" class="form-control" value="<?php echo isset($row['lname']) ? htmlspecialchars($row['lname']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Contact number:</label>
+                                    <input type="tel" name="contact" class="form-control" value="<?php echo isset($row['contact_no']) ? htmlspecialchars($row['contact_no']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Date of Birth:</label>
+                                    <input type="date" name="dob" class="form-control" value="<?php echo isset($row['dob']) ? htmlspecialchars($row['dob']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Place Of Birth:</label>
+                                    <input type="text" name="pob" class="form-control" value="<?php echo isset($row['pob']) ? htmlspecialchars($row['pob']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Religion:</label>
+                                    <input type="text" name="religion" class="form-control" value="<?php echo isset($row['religion']) ? htmlspecialchars($row['religion']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Present Address:</label>
+                                    <input type="text" name="address" class="form-control" value="<?php echo isset($row['present_address']) ? htmlspecialchars($row['present_address']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Civil Status:</label>
+                                    <select name="civil_status" class="form-control" required>
+                                        <option value="single" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'single' ? 'selected' : ''; ?>>Single</option>
+                                        <option value="married" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'married' ? 'selected' : ''; ?>>Married</option>
+                                        <option value="widowed" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'widowed' ? 'selected' : ''; ?>>Widowed</option>
+                                        <option value="separated" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'separated' ? 'selected' : ''; ?>>Separated</option>
+                                        <option value="live_in" <?php echo isset($row['civil_status']) && $row['civil_status'] == 'live_in' ? 'selected' : ''; ?>>Live-In</option>
+                                    </select>
+                                </div>
 
-                                    <div class="col-md-6">
-                                            <label class="form-label">Sex:</label>
-                                            <select name="sex" class="form-control" required>
-                                                <option value="male" <?php echo isset($row['sex']) && $row['sex'] == 'male' ? 'selected' : ''; ?>>Male</option>
-                                                <option value="female" <?php echo isset($row['sex']) && $row['sex'] == 'female' ? 'selected' : ''; ?>>Female</option>
-                                            </select>
-                                    </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Sex:</label>
+                                    <select name="sex" class="form-control" required>
+                                        <option value="male" <?php echo isset($row['sex']) && $row['sex'] == 'male' ? 'selected' : ''; ?>>Male</option>
+                                        <option value="female" <?php echo isset($row['sex']) && $row['sex'] == 'female' ? 'selected' : ''; ?>>Female</option>
+                                    </select>
+                                </div>
 
-                                    <div class="col-md-6">
-                                            <label class="form-label">Height:</label>
-                                            <input type="text" name="height" class="form-control" value="<?php echo isset($row['height']) ? htmlspecialchars($row['height']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Tin:</label>
-                                            <input type="tel" name="tin" class="form-control" value="<?php echo isset($row['tin']) ? htmlspecialchars($row['tin']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">GSIS/SSS Number.:</label>
-                                            <input type="text" name="sss_no" class="form-control" value="<?php echo isset($row['sss_no']) ? htmlspecialchars($row['sss_no']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Pag Ibig Number:</label>
-                                            <input type="text" name="pag_ibig_number" class="form-control" value="<?php echo isset($row['pagibig_no']) ? htmlspecialchars($row['pagibig_no']) : ''; ?>" required>
-                                    </div>
-                                            <div class="col-md-6">
-                                            <label class="form-label">Philhealth number:</label>
-                                            <input type="text" name="philhealth_no" class="form-control" value="<?php echo isset($row['philhealth_no']) ? htmlspecialchars($row['philhealth_no']) : ''; ?>" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label class="form-label">Landline:</label>
-                                            <input type="text" name="landline" class="form-control" value="<?php echo isset($row['landline']) ? htmlspecialchars($row['landline']) : ''; ?>" required>
-                                    </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Height:</label>
+                                    <input type="text" name="height" class="form-control" value="<?php echo isset($row['height']) ? htmlspecialchars($row['height']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Tin:</label>
+                                    <input type="tel" name="tin" class="form-control" value="<?php echo isset($row['tin']) ? htmlspecialchars($row['tin']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">GSIS/SSS Number.:</label>
+                                    <input type="text" name="sss_no" class="form-control" value="<?php echo isset($row['sss_no']) ? htmlspecialchars($row['sss_no']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Pag Ibig Number:</label>
+                                    <input type="text" name="pag_ibig_number" class="form-control" value="<?php echo isset($row['pagibig_no']) ? htmlspecialchars($row['pagibig_no']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Philhealth number:</label>
+                                    <input type="text" name="philhealth_no" class="form-control" value="<?php echo isset($row['philhealth_no']) ? htmlspecialchars($row['philhealth_no']) : ''; ?>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Landline:</label>
+                                    <input type="text" name="landline" class="form-control" value="<?php echo isset($row['landline']) ? htmlspecialchars($row['landline']) : ''; ?>" required>
+                                </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6">
-                                        <label class="form-label">Disability:</label>
-                                        <select name="disability" class="form-control" id="disability" required>
-                                            <option value="none" <?php echo isset($row['disability']) && $row['disability'] == 'none' ? 'selected' : ''; ?>>None</option>
-                                            <option value="visual" <?php echo isset($row['disability']) && $row['disability'] == 'visual' ? 'selected' : ''; ?>>Visual</option>
-                                            <option value="hearing" <?php echo isset($row['disability']) && $row['disability'] == 'hearing' ? 'selected' : ''; ?>>Hearing</option>
-                                            <option value="speech" <?php echo isset($row['disability']) && $row['disability'] == 'speech' ? 'selected' : ''; ?>>Speech</option>
-                                            <option value="physical" <?php echo isset($row['disability']) && $row['disability'] == 'physical' ? 'selected' : ''; ?>>Physical</option>
-                                            <option value="others" <?php echo isset($row['disability']) && $row['disability'] == 'others' ? 'selected' : ''; ?>>Specify</option>
-                                        </select>
+                                    <label class="form-label">Disability:</label>
+                                    <select name="disability" class="form-control" id="disability" required>
+                                        <option value="none" <?php echo isset($row['disability']) && $row['disability'] == 'none' ? 'selected' : ''; ?>>None</option>
+                                        <option value="visual" <?php echo isset($row['disability']) && $row['disability'] == 'visual' ? 'selected' : ''; ?>>Visual</option>
+                                        <option value="hearing" <?php echo isset($row['disability']) && $row['disability'] == 'hearing' ? 'selected' : ''; ?>>Hearing</option>
+                                        <option value="speech" <?php echo isset($row['disability']) && $row['disability'] == 'speech' ? 'selected' : ''; ?>>Speech</option>
+                                        <option value="physical" <?php echo isset($row['disability']) && $row['disability'] == 'physical' ? 'selected' : ''; ?>>Physical</option>
+                                        <option value="others" <?php echo isset($row['disability']) && $row['disability'] == 'others' ? 'selected' : ''; ?>>Specify</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-6 mt-4" id="disability_specify_container" style="display:none;">
@@ -261,16 +271,16 @@ $result_work_exp = $stmt_work_exp->get_result();
 
                             <div class="row">
                                 <div class="col-md-6">
-                                        <label class="form-label">Are you a 4Ps beneficiary?:</label>
-                                        <select name="four_ps" class="form-control" id="four_ps" required>
-                                            <option value="yes" <?php echo isset($row['four_ps']) && $row['four_ps'] == 'yes' ? 'selected' : ''; ?>>Yes</option>
-                                            <option value="no" <?php echo isset($row['four_ps']) && $row['four_ps'] == 'no' ? 'selected' : ''; ?>>No</option>
-                                        </select>
+                                    <label class="form-label">Are you a 4Ps beneficiary?:</label>
+                                    <select name="four_ps" class="form-control" id="four_ps" required>
+                                        <option value="yes" <?php echo isset($row['four_ps']) && $row['four_ps'] == 'yes' ? 'selected' : ''; ?>>Yes</option>
+                                        <option value="no" <?php echo isset($row['four_ps']) && $row['four_ps'] == 'no' ? 'selected' : ''; ?>>No</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-6" id="household_id_container" style="display:none;">
-                                        <label class="form-label">If yes, Household ID No.:</label>
-                                        <input type="text" name="household_id" class="form-control" value="<?php echo isset($row['household_id']) ? htmlspecialchars($row['household_id']) : ''; ?>" required>
+                                    <label class="form-label">If yes, Household ID No.:</label>
+                                    <input type="text" name="household_id" class="form-control" value="<?php echo isset($row['household_id']) ? htmlspecialchars($row['household_id']) : ''; ?>" required>
                                 </div>
                             </div>
 
@@ -280,8 +290,8 @@ $result_work_exp = $stmt_work_exp->get_result();
 
                     <div id="educational_background" class="tab-content" style="display:none;">
                         <form action="process/save_profile2.php" method="post" class="needs-validation" novalidate>
-                           <!-- Educational Background Form -->
-                           <h3>Tertiary</h3>    
+                            <!-- Educational Background Form -->
+                            <h3>Tertiary</h3>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="form-label">School Name</label>
@@ -291,7 +301,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                                     <label class="form-label">Year Graduated</label>
                                     <input type="date" name="tertiary_graduated" class="form-control" value="<?php echo isset($row['tertiary_graduated']) ? htmlspecialchars($row['tertiary_graduated']) : ''; ?>" required>
                                 </div>
-                        
+
                                 <div class="col-md-6">
                                     <label class="form-label">Award Recieved</label>
                                     <input type="text" name="award_recieved" class="form-control" value="<?php echo isset($row['tertiary_award']) ? htmlspecialchars($row['tertiary_award']) : ''; ?>" required>
@@ -311,7 +321,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                                     <label class="form-label">Year Graduated</label>
                                     <input type="date" name="college_graduated" class="form-control" value="<?php echo isset($row['college_graduated']) ? htmlspecialchars($row['college_graduated']) : ''; ?>" required>
                                 </div>
-                        
+
                                 <div class="col-md-6">
                                     <label class="form-label">Award Recieved</label>
                                     <input type="text" name="college_award" class="form-control" value="<?php echo isset($row['college_award']) ? htmlspecialchars($row['college_award']) : ''; ?>" required>
@@ -321,7 +331,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                                     <input type="text" name="g_course" class="form-control" value="<?php echo isset($row['grad_course']) ? htmlspecialchars($row['grad_course']) : ''; ?>" required>
                                 </div>
                             </div>
-                                <button type="submit" class="btn btn-primary w-100">Save</button>
+                            <button type="submit" class="btn btn-primary w-100">Save</button>
                         </form>
                     </div>
 
@@ -415,55 +425,55 @@ $result_work_exp = $stmt_work_exp->get_result();
                             <div class="card-header">Documents</div>
                             <div class="card-body">
                                 <form action="process/save_profile4.php" method="POST" enctype="multipart/form-data">
-                                            <!-- Training Container -->
-                                            <div id="training-container">
-                                                <div class="row mb-4">
-                                                    <div class="col-md-12">
-                                                        <h4>Technical/Vocational and Other Training</h4>
-                                                    </div>
-                                                </div>
-                                            <?php if ($result_training->num_rows > 0): ?>
-                                                <?php while ($row_training = $result_training->fetch_assoc()): ?>
-                                                    <div class="row mb-4 mt-4">
-                                                    <!-- Training Name -->
-                                                        <div class="col-md-2">
-                                                            <input type="text" class="form-control" name="training[]" value="<?php echo isset($row_training['training']) ? htmlspecialchars($row_training['training']) : ''; ?>" placeholder="Vocational/Training" required>
-                                                        </div>
-                                                    <!-- Start and End Date -->
-                                                        <div class="col-md-2">
-                                                            <input type="date" class="form-control" name="start_date[]" value="<?php echo isset($row_training['start_date']) ? htmlspecialchars($row_training['start_date']) : ''; ?>" required>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <span class="align-self-center">to</span>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <input type="date" class="form-control" name="end_date[]" value="<?php echo isset($row_training['end_date']) ? htmlspecialchars($row_training['end_date']) : ''; ?>" required>
-                                                        </div>
-                                                    <!-- Institution -->
-                                                        <div class="col-md-2">
-                                                            <input type="text" class="form-control" name="institution[]" value="<?php echo isset($row_training['institution']) ? htmlspecialchars($row_training['institution']) : ''; ?>" placeholder="Institution" required>
-                                                        </div>
-                                                    <!-- Certificate Upload -->
-                                                        <div class="col-md-2 mt-4">
-                                                            <?php if (!empty($row_training['certificate_path'])): ?>
-                                                                <a href="<?php echo htmlspecialchars($row_training['certificate_path']); ?>" target="_blank">View Certificate</a>
-                                                            <?php else: ?>
-                                                                No certificate uploaded.
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                <?php endwhile; ?>
-                                            <?php else: ?>
-                                            <!-- No training records found, show an empty row for new input -->
-                                            <?php endif; ?>
-                                        </div>
-                                                
-                                        <!-- Button to Add Another Training Set -->
-                                        <div class="row">
-                                            <div class="col-md-12 text-right">
-                                                <button type="button" class="btn btn-primary" onclick="addTrainingGroup()">Add Another Training Set</button>
+                                    <!-- Training Container -->
+                                    <div id="training-container">
+                                        <div class="row mb-4">
+                                            <div class="col-md-12">
+                                                <h4>Technical/Vocational and Other Training</h4>
                                             </div>
                                         </div>
+                                        <?php if ($result_training->num_rows > 0): ?>
+                                            <?php while ($row_training = $result_training->fetch_assoc()): ?>
+                                                <div class="row mb-4 mt-4">
+                                                    <!-- Training Name -->
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control" name="training[]" value="<?php echo isset($row_training['training']) ? htmlspecialchars($row_training['training']) : ''; ?>" placeholder="Vocational/Training" required>
+                                                    </div>
+                                                    <!-- Start and End Date -->
+                                                    <div class="col-md-2">
+                                                        <input type="date" class="form-control" name="start_date[]" value="<?php echo isset($row_training['start_date']) ? htmlspecialchars($row_training['start_date']) : ''; ?>" required>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <span class="align-self-center">to</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input type="date" class="form-control" name="end_date[]" value="<?php echo isset($row_training['end_date']) ? htmlspecialchars($row_training['end_date']) : ''; ?>" required>
+                                                    </div>
+                                                    <!-- Institution -->
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control" name="institution[]" value="<?php echo isset($row_training['institution']) ? htmlspecialchars($row_training['institution']) : ''; ?>" placeholder="Institution" required>
+                                                    </div>
+                                                    <!-- Certificate Upload -->
+                                                    <div class="col-md-2 mt-4">
+                                                        <?php if (!empty($row_training['certificate_path'])): ?>
+                                                            <a href="<?php echo htmlspecialchars($row_training['certificate_path']); ?>" target="_blank">View Certificate</a>
+                                                        <?php else: ?>
+                                                            No certificate uploaded.
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                            <?php endwhile; ?>
+                                        <?php else: ?>
+                                            <!-- No training records found, show an empty row for new input -->
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <!-- Button to Add Another Training Set -->
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <button type="button" class="btn btn-primary" onclick="addTrainingGroup()">Add Another Training Set</button>
+                                        </div>
+                                    </div>
 
                                     <button type="submit" class="btn btn-primary w-100 mt-4">Save Documents</button>
                                 </form>
@@ -502,7 +512,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                                                         <input type="checkbox" <?php echo $row_language['speak_i'] == 1 ? 'checked' : ''; ?> readonly>
                                                     </div>
                                                     <div class="col-2">
-                                                    <input type="checkbox" <?php echo $row_language['understand_i'] == 1 ? 'checked' : ''; ?> readonly>
+                                                        <input type="checkbox" <?php echo $row_language['understand_i'] == 1 ? 'checked' : ''; ?> readonly>
                                                     </div>
                                                 </div>
                                             <?php endwhile; ?>
@@ -525,68 +535,68 @@ $result_work_exp = $stmt_work_exp->get_result();
                             <div class="card-header">Eligibility and Professional License</div>
                             <div class="card-body">
                                 <form action="process/save_profile6.php" method="POST" enctype="multipart/form-data">
-                                        <!-- Eligibility/Professional License Card -->
-                                        <div id="eligibility-container">
-                                            <div class="row mb-4">
-                                                <div class="col-md-12">
-                                                    <h4>Eligibility/Professional License</h4>
-                                                </div>
+                                    <!-- Eligibility/Professional License Card -->
+                                    <div id="eligibility-container">
+                                        <div class="row mb-4">
+                                            <div class="col-md-12">
+                                                <h4>Eligibility/Professional License</h4>
                                             </div>
-                                            <div class="row mb-2">
-                                                <div class="col-md-2 text-center">
-                                                    <label>Eligibility (Civil Service)</label>
-                                                </div>
-                                                <div class="col-md-2 text-center">
-                                                    <label>Rating</label>
-                                                </div>
-                                                <div class="col-md-2 text-center">
-                                                    <label>Date of Examination</label>
-                                                </div>
-                                                <div class="col-md-4 text-center">
-                                                    <label>Professional License (PRC) (upload file)</label>
-                                                </div>
-                                                <div class="col-md-1 text-center">
-                                                    <label>Action</label>
-                                                </div>
-                                            </div>
-
-                                            <!-- Loop through the result set and display existing data as read-only -->
-                                            <?php if ($result_license->num_rows > 0): ?>
-                                                <?php while ($row_license = $result_license->fetch_assoc()): ?>
-                                                    <div class="row mb-2">
-                                                        <div class="col-md-2">
-                                                            <!-- Display existing eligibility -->
-                                                            <p><?php echo htmlspecialchars($row_license['eligibility']); ?></p>
-                                                            <input type="hidden" name="existing_eligibility[]" value="<?php echo htmlspecialchars($row_license['eligibility']); ?>">
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <!-- Display existing rating -->
-                                                            <p><?php echo htmlspecialchars($row_license['rating']); ?></p>
-                                                            <input type="hidden" name="existing_rating[]" value="<?php echo htmlspecialchars($row_license['rating']); ?>">
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <!-- Display existing date of examination -->
-                                                            <p><?php echo htmlspecialchars($row_license['doe']); ?></p>
-                                                            <input type="hidden" name="existing_doe[]" value="<?php echo htmlspecialchars($row_license['doe']); ?>">
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <!-- Display existing PRC path (with link to the file) -->
-                                                            <?php if (!empty($row_license['prc_path'])): ?>
-                                                                <a href="<?php echo htmlspecialchars($row_license['prc_path']); ?>" class="form-control" target="_blank">View License</a>
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
-
-                                            <!-- Empty row for new inputs -->
-                                                <!-- Button to Add Another Training Set -->
-                                                <div class="row">
-                                                    <div class="col-md-12 text-right">
-                                                        <button type="button" class="btn btn-primary" onclick="addInputGroup()">Add Another</button>
-                                                    </div>
-                                                </div>
                                         </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-2 text-center">
+                                                <label>Eligibility (Civil Service)</label>
+                                            </div>
+                                            <div class="col-md-2 text-center">
+                                                <label>Rating</label>
+                                            </div>
+                                            <div class="col-md-2 text-center">
+                                                <label>Date of Examination</label>
+                                            </div>
+                                            <div class="col-md-4 text-center">
+                                                <label>Professional License (PRC) (upload file)</label>
+                                            </div>
+                                            <div class="col-md-1 text-center">
+                                                <label>Action</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Loop through the result set and display existing data as read-only -->
+                                        <?php if ($result_license->num_rows > 0): ?>
+                                            <?php while ($row_license = $result_license->fetch_assoc()): ?>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-2">
+                                                        <!-- Display existing eligibility -->
+                                                        <p><?php echo htmlspecialchars($row_license['eligibility']); ?></p>
+                                                        <input type="hidden" name="existing_eligibility[]" value="<?php echo htmlspecialchars($row_license['eligibility']); ?>">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <!-- Display existing rating -->
+                                                        <p><?php echo htmlspecialchars($row_license['rating']); ?></p>
+                                                        <input type="hidden" name="existing_rating[]" value="<?php echo htmlspecialchars($row_license['rating']); ?>">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <!-- Display existing date of examination -->
+                                                        <p><?php echo htmlspecialchars($row_license['doe']); ?></p>
+                                                        <input type="hidden" name="existing_doe[]" value="<?php echo htmlspecialchars($row_license['doe']); ?>">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <!-- Display existing PRC path (with link to the file) -->
+                                                        <?php if (!empty($row_license['prc_path'])): ?>
+                                                            <a href="<?php echo htmlspecialchars($row_license['prc_path']); ?>" class="form-control" target="_blank">View License</a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                            <?php endwhile; ?>
+                                        <?php endif; ?>
+
+                                        <!-- Empty row for new inputs -->
+                                        <!-- Button to Add Another Training Set -->
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="button" class="btn btn-primary" onclick="addInputGroup()">Add Another</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <button type="submit" class="btn btn-primary w-100 mt-4">Save Documents</button>
                                 </form>
                             </div>
@@ -595,7 +605,9 @@ $result_work_exp = $stmt_work_exp->get_result();
 
                     <div id="we" class="tab-content" style="display:none;">
                         <div class="card mb-4">
-                            <div class="card-header"><h4>Work Experience (Limit to 10-year period)</h4></div>
+                            <div class="card-header">
+                                <h4>Work Experience (Limit to 10-year period)</h4>
+                            </div>
                             <div class="card-body">
                                 <form action="process/save_profile7.php" method="POST" enctype="multipart/form-data">
                                     <div class="row mb-2 text-center fw-bold">
@@ -654,7 +666,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                             </div>
                         </div>
                     </div>
-,
+                    ,
                     <div id="ss" class="tab-content" style="display:none;">
                         <div class="card mb-4 mt-4">
                             <div class="card-header">Skills Acquired</div>
@@ -663,56 +675,56 @@ $result_work_exp = $stmt_work_exp->get_result();
                                     <div class="card-body">
                                         <label for="dynamicSelect">Choose acquired Skills:</label>
                                         <select id="dynamicSelect" name="other_skills[]" multiple class="form-select">
-                                        <option value="add">Add a new skills</option>
-                                        <option value="Auto Mechanic">Auto Mechanic</option>
-                                        <option value="Beautician">Beautician</option>
-                                        <option value="Carpentry Work">Carpentry Work</option>
-                                        <option value="Computer Literate">Computer Literate</option>
-                                        <option value="Domestic Chores">Domestic Chores</option>
-                                        <option value="Driver">Driver</option>
-                                        <option value="Electrician">Electrician</option>
-                                        <option value="Embroidery">Embroidery</option>
-                                        <option value="Gardening">Gardening</option>
-                                        <option value="Masonry">Masonry</option>
-                                        <option value="Painter/Artist">Painter/Artist</option>
-                                        <option value="Painting Jobs">Painting Jobs</option>
-                                        <option value="Photography">Photography</option>
-                                        <option value="Plumbing">Plumbing</option>
-                                        <option value="Sewing">Sewing Dresses</option>
-                                        <option value="Stenography">Stenography</option>
-                                        <option value="Tailoring">Tailoring</option>
+                                            <option value="add">Add a new skills</option>
+                                            <option value="Auto Mechanic">Auto Mechanic</option>
+                                            <option value="Beautician">Beautician</option>
+                                            <option value="Carpentry Work">Carpentry Work</option>
+                                            <option value="Computer Literate">Computer Literate</option>
+                                            <option value="Domestic Chores">Domestic Chores</option>
+                                            <option value="Driver">Driver</option>
+                                            <option value="Electrician">Electrician</option>
+                                            <option value="Embroidery">Embroidery</option>
+                                            <option value="Gardening">Gardening</option>
+                                            <option value="Masonry">Masonry</option>
+                                            <option value="Painter/Artist">Painter/Artist</option>
+                                            <option value="Painting Jobs">Painting Jobs</option>
+                                            <option value="Photography">Photography</option>
+                                            <option value="Plumbing">Plumbing</option>
+                                            <option value="Sewing">Sewing Dresses</option>
+                                            <option value="Stenography">Stenography</option>
+                                            <option value="Tailoring">Tailoring</option>
                                         </select>
 
                                         <div id="newOptionContainer" class="mt-3">
-                                        <input type="text" id="newOption" placeholder="Enter new option" class="form-control mb-2">
-                                        <button id="addButton" type="button" class="btn btn-primary">Add Option</button>
+                                            <input type="text" id="newOption" placeholder="Enter new option" class="form-control mb-2">
+                                            <button id="addButton" type="button" class="btn btn-primary">Add Option</button>
                                         </div>
 
                                         <input type="hidden" name="selectedOptions" id="selectedOptionsHidden">
                                         <div id="selectedOptionsContainer" class="mt-3">
-                                        <h5>Selected Skills:</h5>
-                                        <ul id="selectedOptionsList">
-                                            <?php if (!empty($otherSkills)): ?>
-                                            <?php foreach ($otherSkills as $skill): ?>
-                                                <li><?php echo htmlspecialchars(trim($skill)); ?></li>
-                                            <?php endforeach; ?>
-                                            <?php else: ?>
-                                            <li>No skills found.</li>
-                                            <?php endif; ?>
-                                        </ul>
+                                            <h5>Selected Skills:</h5>
+                                            <ul id="selectedOptionsList">
+                                                <?php if (!empty($otherSkills)): ?>
+                                                    <?php foreach ($otherSkills as $skill): ?>
+                                                        <li><?php echo htmlspecialchars(trim($skill)); ?></li>
+                                                    <?php endforeach; ?>
+                                                <?php else: ?>
+                                                    <li>No skills found.</li>
+                                                <?php endif; ?>
+                                            </ul>
                                         </div>
                                     </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary w-100 mt-4">Save Documents</button>
-                                </form>
                             </div>
+                            <button type="submit" class="btn btn-primary w-100 mt-4">Save Documents</button>
+                            </form>
                         </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
-    </div>                              
+    </div>
+    </div>
 
     <script>
         function switchTab(event, tabName) {
@@ -730,72 +742,72 @@ $result_work_exp = $stmt_work_exp->get_result();
         }
 
         //selection option
-                // Show/Hide the text input based on the selected disability
-            document.getElementById('disability').addEventListener('change', function() {
-                var disabilitySelect = this.value;
-                var disabilitySpecifyContainer = document.getElementById('disability_specify_container');
-                
-                if (disabilitySelect === 'others') {
-                    disabilitySpecifyContainer.style.display = 'block'; // Show input if 'Others' is selected
-                } else {
-                    disabilitySpecifyContainer.style.display = 'none'; // Hide input if another option is selected
-                }
-            });
+        // Show/Hide the text input based on the selected disability
+        document.getElementById('disability').addEventListener('change', function() {
+            var disabilitySelect = this.value;
+            var disabilitySpecifyContainer = document.getElementById('disability_specify_container');
 
-            // Check initial selected value and show the text input if needed
-            if (document.getElementById('disability').value === 'others') {
-                document.getElementById('disability_specify_container').style.display = 'block';
+            if (disabilitySelect === 'others') {
+                disabilitySpecifyContainer.style.display = 'block'; // Show input if 'Others' is selected
+            } else {
+                disabilitySpecifyContainer.style.display = 'none'; // Hide input if another option is selected
             }
+        });
 
-            // Show/Hide the Household ID input field based on the selection
-            document.getElementById('four_ps').addEventListener('change', function() {
-                var fourPsSelect = this.value;
-                var householdIdContainer = document.getElementById('household_id_container');
-                
-                if (fourPsSelect === 'yes') {
-                    householdIdContainer.style.display = 'block'; // Show input if 'Yes' is selected
-                } else {
-                    householdIdContainer.style.display = 'none'; // Hide input if 'No' is selected
-                }
-            });
+        // Check initial selected value and show the text input if needed
+        if (document.getElementById('disability').value === 'others') {
+            document.getElementById('disability_specify_container').style.display = 'block';
+        }
 
-            // Check initial selected value and show the Household ID input if needed
-            if (document.getElementById('four_ps').value === 'yes') {
-                document.getElementById('household_id_container').style.display = 'block';
+        // Show/Hide the Household ID input field based on the selection
+        document.getElementById('four_ps').addEventListener('change', function() {
+            var fourPsSelect = this.value;
+            var householdIdContainer = document.getElementById('household_id_container');
+
+            if (fourPsSelect === 'yes') {
+                householdIdContainer.style.display = 'block'; // Show input if 'Yes' is selected
+            } else {
+                householdIdContainer.style.display = 'none'; // Hide input if 'No' is selected
             }
-            
-            // Show the appropriate input fields based on the selected location
-            document.getElementById('preferred-location').addEventListener('change', function() {
-                var locationType = this.value;
-                var localFields = document.getElementById('local-location-fields');
-                var overseasFields = document.getElementById('overseas-location-fields');
+        });
 
-                // Show Local fields and hide Overseas fields
-                if (locationType === 'local') {
-                    localFields.style.display = 'block'; // Show local input fields
-                    overseasFields.style.display = 'none'; // Hide overseas input fields
-                }
-                // Show Overseas fields and hide Local fields
-                else if (locationType === 'overseas') {
-                    localFields.style.display = 'none'; // Hide local input fields
-                    overseasFields.style.display = 'block'; // Show overseas input fields
-                } else {
-                    localFields.style.display = 'none'; // Hide both if no option selected
-                    overseasFields.style.display = 'none'; // Hide both if no option selected
-                }
-            });
-            
-            //training information
-            function addTrainingGroup() {
-                // Get the training container where rows are added
-                const container = document.getElementById('training-container');
+        // Check initial selected value and show the Household ID input if needed
+        if (document.getElementById('four_ps').value === 'yes') {
+            document.getElementById('household_id_container').style.display = 'block';
+        }
 
-                // Create a new div element for the row
-                const newRow = document.createElement('div');
-                newRow.classList.add('row', 'mb-4');
+        // Show the appropriate input fields based on the selected location
+        document.getElementById('preferred-location').addEventListener('change', function() {
+            var locationType = this.value;
+            var localFields = document.getElementById('local-location-fields');
+            var overseasFields = document.getElementById('overseas-location-fields');
 
-                // Set the inner HTML of the new row
-                newRow.innerHTML = `
+            // Show Local fields and hide Overseas fields
+            if (locationType === 'local') {
+                localFields.style.display = 'block'; // Show local input fields
+                overseasFields.style.display = 'none'; // Hide overseas input fields
+            }
+            // Show Overseas fields and hide Local fields
+            else if (locationType === 'overseas') {
+                localFields.style.display = 'none'; // Hide local input fields
+                overseasFields.style.display = 'block'; // Show overseas input fields
+            } else {
+                localFields.style.display = 'none'; // Hide both if no option selected
+                overseasFields.style.display = 'none'; // Hide both if no option selected
+            }
+        });
+
+        //training information
+        function addTrainingGroup() {
+            // Get the training container where rows are added
+            const container = document.getElementById('training-container');
+
+            // Create a new div element for the row
+            const newRow = document.createElement('div');
+            newRow.classList.add('row', 'mb-4');
+
+            // Set the inner HTML of the new row
+            newRow.innerHTML = `
                     <!-- Training Name -->
                     <div class="col-md-5">
                         <input type="text" class="form-control" name="training[]" placeholder="Vocational/Training" required>
@@ -824,20 +836,20 @@ $result_work_exp = $stmt_work_exp->get_result();
                     </div>
                 `;
 
-                // Append the newly created row to the container
-                container.appendChild(newRow);
-            }
+            // Append the newly created row to the container
+            container.appendChild(newRow);
+        }
 
-            // Function to remove a training row when the remove button is clicked
-            function removeTrainingGroup(button) {
-                // Find the parent row of the clicked remove button and remove it
-                button.closest('.row').remove();
-            }
+        // Function to remove a training row when the remove button is clicked
+        function removeTrainingGroup(button) {
+            // Find the parent row of the clicked remove button and remove it
+            button.closest('.row').remove();
+        }
 
-            //eligibility and professional license
-            function addInputGroup() {
-                const container = $("#eligibility-container");
-                const newRow = $(`
+        //eligibility and professional license
+        function addInputGroup() {
+            const container = $("#eligibility-container");
+            const newRow = $(`
                     <div class="row mb-3">
                         <div class="col-md-3">
                             <input type="text" class="form-control" name="documents_name[]" placeholder="Document Name" required>
@@ -856,41 +868,41 @@ $result_work_exp = $stmt_work_exp->get_result();
                         </div>
                     </div>
                 `);
-                container.append(newRow);
-            }
+            container.append(newRow);
+        }
 
-            function removeInputGroup(button) {
-                $(button).closest('.row').remove();
-            }
+        function removeInputGroup(button) {
+            $(button).closest('.row').remove();
+        }
 
-            //skills
-            document.addEventListener('DOMContentLoaded', function() {
-                const selectElement = document.getElementById('dynamicSelect');
-                const newOptionInput = document.getElementById('newOption');
-                const addButton = document.getElementById('addButton');
-                const newOptionContainer = document.getElementById('newOptionContainer');
-                const selectedOptionsList = document.getElementById('selectedOptionsList');
-                const form = document.getElementById('optionsForm');
-                const selectedOptionsHidden = document.getElementById('selectedOptionsHidden'); // The hidden input field
+        //skills
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectElement = document.getElementById('dynamicSelect');
+            const newOptionInput = document.getElementById('newOption');
+            const addButton = document.getElementById('addButton');
+            const newOptionContainer = document.getElementById('newOptionContainer');
+            const selectedOptionsList = document.getElementById('selectedOptionsList');
+            const form = document.getElementById('optionsForm');
+            const selectedOptionsHidden = document.getElementById('selectedOptionsHidden'); // The hidden input field
 
-                let selectedOptions = new Set(); // Use a Set to store unique selected options
+            let selectedOptions = new Set(); // Use a Set to store unique selected options
 
-                // Function to update the displayed selected options
-                function updateSelectedOptions() {
-                    selectedOptionsList.innerHTML = ''; // Clear the current list
-                    
-                    // Loop through selected options and display them
-                    selectedOptions.forEach(optionValue => {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = optionValue;
-                        listItem.addEventListener('click', function() {
-                            removeOption(optionValue); // Allow removing option on click
-                        });
-                        selectedOptionsList.appendChild(listItem);
+            // Function to update the displayed selected options
+            function updateSelectedOptions() {
+                selectedOptionsList.innerHTML = ''; // Clear the current list
+
+                // Loop through selected options and display them
+                selectedOptions.forEach(optionValue => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = optionValue;
+                    listItem.addEventListener('click', function() {
+                        removeOption(optionValue); // Allow removing option on click
                     });
+                    selectedOptionsList.appendChild(listItem);
+                });
 
-                    // Update the hidden field with selected options
-                    updateHiddenField();
+                // Update the hidden field with selected options
+                updateHiddenField();
             }
 
             // Remove option from the selected options
@@ -931,7 +943,7 @@ $result_work_exp = $stmt_work_exp->get_result();
                     const newOption = document.createElement('option');
                     newOption.value = newOptionValue;
                     newOption.textContent = newOptionValue;
-                    
+
                     // Add the new option to the select element
                     selectElement.appendChild(newOption);
 
@@ -1003,17 +1015,17 @@ $result_work_exp = $stmt_work_exp->get_result();
             button.closest('.row').remove();
         }
 
-            // Function to add a new work experience row dynamically
-            function addWorkExperienceGroup() {
-                // Get the input container for Work Experience
-                const container = document.getElementById('work-experience-container');
+        // Function to add a new work experience row dynamically
+        function addWorkExperienceGroup() {
+            // Get the input container for Work Experience
+            const container = document.getElementById('work-experience-container');
 
-                // Create a new row for work experience input group
-                const newRow = document.createElement('div');
-                newRow.classList.add('row', 'mb-3');
+            // Create a new row for work experience input group
+            const newRow = document.createElement('div');
+            newRow.classList.add('row', 'mb-3');
 
-                // Add the new input fields for work experience
-                newRow.innerHTML = `
+            // Add the new input fields for work experience
+            newRow.innerHTML = `
                     <div class="col-md-2">
                         <input type="text" class="form-control" name="company[]" placeholder="Company Name">
                     </div>
@@ -1038,21 +1050,22 @@ $result_work_exp = $stmt_work_exp->get_result();
                     </div>
                 `;
 
-                // Append the new row to the container
-                container.appendChild(newRow);
-            }
+            // Append the new row to the container
+            container.appendChild(newRow);
+        }
 
-            function removeInputGroup(button) {
-                // Remove the row that contains the clicked button
-                button.parentElement.parentElement.remove();
-            }
+        function removeInputGroup(button) {
+            // Remove the row that contains the clicked button
+            button.parentElement.parentElement.remove();
+        }
 
-            function removeWorkExperienceGroup(button) {
-                // Remove the row that contains the clicked button
-                button.parentElement.parentElement.remove();
-            }
+        function removeWorkExperienceGroup(button) {
+            // Remove the row that contains the clicked button
+            button.parentElement.parentElement.remove();
+        }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
