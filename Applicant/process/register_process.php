@@ -95,7 +95,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allowedFormats = array("jpg", "jpeg", "png", "gif");
         if (in_array($fileType, $allowedFormats)) {
             if (move_uploaded_file($pic["tmp_name"], $targetFilePath)) {
-                $picPath = $targetFilePath;
+                // Remove the ../ from the path for database storage
+                $picPath = "uploads/" . preg_replace('/[^A-Za-z0-9_\-]/', '_', $username) . "/" . $fileName;
             } else {
                 echo "Error uploading file!";
                 exit;
@@ -105,6 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
     }
+
+// Now $picPath will be like "uploads/username/filename.jpg" for your SQL database
 
     // Database connection using PDO
     $host = "localhost";

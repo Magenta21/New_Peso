@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->query($sql);
 
         // Send email with reset link
-        $reset_link = "http://localhost/NEW_PESO/admin/reset_password.php?token=" . urlencode($token);
+        $reset_link = "http://peso.rf.gd/NEW_PESO/admin/reset_password.php?token=" . urlencode($token);
 
         sendResetEmail($email, $reset_link);
 

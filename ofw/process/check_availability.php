@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response = ["usernameTaken" => false, "emailTaken" => false];
 
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=pesoo;charset=utf8", "root", "");
+        $pdo = new PDO("mysql:host=sql305.infinityfree.com;dbname=if0_39380841_peso;charset=utf8", "if0_39380841", "pesolosbanos4");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Check if username exists

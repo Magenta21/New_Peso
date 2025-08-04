@@ -11,7 +11,7 @@ if (isset($_GET['email'])) {
     $otp_expiry = date('Y-m-d H:i:s', strtotime('+10 minutes')); // OTP valid for 10 minutes
 
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=pesoo;charset=utf8", "root", "");
+        $pdo = new PDO("mysql:host=sql305.infinityfree.com;dbname=if0_39380841_peso;charset=utf8", "if0_39380841", "pesolosbanos4");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Update OTP in database

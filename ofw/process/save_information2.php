@@ -9,10 +9,10 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Database configuration
-$host = 'localhost';
-$db = 'pesoo';
-$user = 'root';
-$pass = '';
+$host = 'sql305.infinityfree.com';
+$db = 'if0_39380841_peso';
+$user = 'if0_39380841';
+$pass = 'pesolosbanos4';
 $charset = 'utf8mb4';
 
 try {

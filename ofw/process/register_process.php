@@ -103,10 +103,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Database connection using PDO
-    $host = "localhost";
-    $dbname = "pesoo";
-    $db_username = "root";
-    $db_password = "";
+    $host = "sql305.infinityfree.com";
+    $dbname = "if0_39380841_peso";
+    $db_username = "if0_39380841";
+    $db_password = "pesolosbanos4";
 
     try {
         $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $db_username, $db_password);

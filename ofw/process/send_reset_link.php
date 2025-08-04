@@ -23,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "UPDATE ofw_profile SET reset_token = '$token', reset_token_expiry = '$expiry_time' WHERE email = '$email'";
         $conn->query($sql);
 
-        // Send email with reset link
-        $reset_link = "http://localhost/NEW_PESO/ofw/reset_password.php?token=" . urlencode($token);
+        // Send email with reset link       
+        $reset_link = "http://peso.rf.gd/NEW_PESO/ofw/reset_password.php?token=" . urlencode($token);
 
         sendResetEmail($email, $reset_link);
 
