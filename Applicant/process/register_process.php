@@ -1,4 +1,5 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -7,7 +8,8 @@ use PHPMailer\PHPMailer\Exception;
 require '../../vendor/autoload.php';
 
 // Function to send OTP Email
-function sendOtpEmail($email, $otp) {
+function sendOtpEmail($email, $otp)
+{
     $mail = new PHPMailer(true);
     try {
         // SMTP Server settings
@@ -58,9 +60,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pic = $_FILES['pic'];
 
     // Validation
-    if (empty($username) || empty($email) || empty($password) || empty($fname) || empty($mname) || empty($lname) || empty($contact) || 
-        empty($dob) || empty($sex) || empty($presentadd) || empty($tertiary_school) || empty($tertiary_graduate) || 
-        empty($college_school) || empty($college_graduate) || empty($user_type) || empty($pic)) {
+    if (
+        empty($username) || empty($email) || empty($password) || empty($fname) || empty($mname) || empty($lname) || empty($contact) ||
+        empty($dob) || empty($sex) || empty($presentadd) || empty($tertiary_school) || empty($tertiary_graduate) ||
+        empty($college_school) || empty($college_graduate) || empty($user_type) || empty($pic)
+    ) {
         echo "All fields are required!";
         exit;
     }
@@ -153,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':pic', $picPath);
         $stmt->bindParam(':otp', $otp);
         $stmt->bindParam(':otp_expiry', $otp_expiry);
-        
+
 
         // Execute query
         if ($stmt->execute()) {
@@ -171,4 +175,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Database error: " . $e->getMessage());
     }
 }
-?>
