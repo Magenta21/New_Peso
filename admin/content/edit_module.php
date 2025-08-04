@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         // Handle file upload if a new file was provided
         if (!empty($_FILES['module_file']['name'])) {
-            $upload_dir = 'uploads/modules/';
+            $upload_dir = 'content/uploads/modules/';
             if (!file_exists($upload_dir)) {
                 mkdir($upload_dir, 0777, true);
             }
