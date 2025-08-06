@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $otp = $_POST['otp'];
 
-    $pdo = new PDO("mysql:host=sql305.infinityfree.com;dbname=if0_39380841_peso;charset=utf8", "if0_39380841", "pesolosbanos4");
+    $pdo = new PDO("mysql:host=localhost;dbname=pesoo;charset=utf8", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Fetch OTP details from database
